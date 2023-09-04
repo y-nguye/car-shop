@@ -2,15 +2,31 @@
 
 class ProductController
 {
-    public function index()
+    public function index($db)
     {
-        // Xử lý và hiển thị trang chủ
-        include __DIR__ . "/../views/product/index.php";
+        $data = $db->getAllData();
+        include __DIR__ . "/../views/backend/product/index.php";
     }
 
-    public function add()
+    public function add($db)
     {
-        // Xử lý và hiển thị trang chủ
-        include __DIR__ . "/../views/product/add.php";
+        include __DIR__ . "/../views/backend/product/add.php";
+
+        if (isset($_POST['add-btn'])) {
+            $name = $_POST['sp_ten'];
+            $price = $_POST['sp_gia'];
+            $db->setData($name, $price);
+            header("location: ../product");
+        }
+    }
+
+    public function edit($db, $vars)
+    {
+        include __DIR__ . "/../views/backend/product/edit.php";
+    }
+
+    public function delete($db, $vars)
+    {
+        include __DIR__ . "/../views/backend/product/delete.php";
     }
 }

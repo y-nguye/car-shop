@@ -10,20 +10,21 @@
 <body>
     <div>
         <h3>Danh sách sản phẩm</h3>
-        <a href='index.php?action=add'>Thêm sản phẩm</a>
+        <a href='./product/add'>Thêm sản phẩm</a>
         <br />
         <br />
         <?php
-        $data = $db->getAllData();
         while ($row = $data->fetch_assoc()) {
             print_cars($row);
+            echo '<a href="./product/edit/' . $row['id']  . '">Sửa</a>';
+            echo '<a href="./product/delete/' . $row['id']  . '">Xoá</a> <br/>';
         }
         ?>
+
     </div>
 </body>
 
 </html>
-
 
 <?php
 function print_cars($row)

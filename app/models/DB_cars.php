@@ -1,6 +1,6 @@
 <?php
 
-class DataBase
+class CarsData
 {
     private $hostname = "localhost";
     private $username = "root";
@@ -31,7 +31,7 @@ class DataBase
 
     public function getData($id)
     {
-        $sql = "SELECT id, name, price FROM $this->table WHERE id = $id";
+        $sql = "SELECT id, name, price FROM $this->table WHERE id = $id;";
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
@@ -53,15 +53,15 @@ class DataBase
         }
     }
 
-    public function setData($hoten, $namsinh, $quequan)
+    public function setData($name, $price)
     {
-        $sql = "INSERT INTO $this->table (id, name, yearold, address) VALUES (null, '$hoten', '$namsinh', '$quequan')";
+        $sql = "INSERT INTO $this->table (id, name, price) VALUES (null, '$name', '$price')";
         $this->execute($sql);
     }
 
-    public function updateData($id, $hoten, $namsinh, $quequan)
+    public function updateData($id, $name, $price)
     {
-        $sql = "UPDATE $this->table SET name = '$hoten', yearold = '$namsinh', address = '$quequan'
+        $sql = "UPDATE $this->table SET name = '$name', price = '$price'
         WHERE id = '$id'";
         return $this->execute($sql);
     }

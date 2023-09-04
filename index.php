@@ -1,7 +1,7 @@
 <?php
 
 include('app/models/DB_cars.php');
-$db = new DataBase;
+$db = new CarsData;
 $db->connect();
 
 // Sử dụng ánh xạ URL thay cho tham số controller truyền thống

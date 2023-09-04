@@ -4,13 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm sản phẩm</title>
+    <link href="./style.css" rel="stylesheet" type="text/css">
+    <title>Trang chủ</title>
 </head>
 
 <body>
-    <div>
-        <h3>Thêm sản phẩm</h3>
-    </div>
+    <h1 class="header">Hello, tôi là Trang chủ</h1>
 </body>
 
 </html>
