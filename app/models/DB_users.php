@@ -1,12 +1,12 @@
 <?php
 
-class CarsData
+class UserData
 {
     private $hostname = "localhost";
     private $username = "root";
     private $password = "";
     private $dbname = "car_shop";
-    private $table = "cars";
+    private $table = "users";
 
     private $conn = null;
     private $result = null;
@@ -38,7 +38,7 @@ class CarsData
 
     public function getData($id)
     {
-        $sql = "SELECT car_id, car_name, car_price, car_quantity, car_producer_id, car_type_id  FROM $this->table WHERE car_id = $id;";
+        $sql = "SELECT id, name, price FROM $this->table WHERE id = $id;";
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {

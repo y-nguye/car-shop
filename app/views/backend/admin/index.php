@@ -4,16 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xoá sản phẩm</title>
+    <?php include 'app/views/resources/css/styles.php' ?>
+    <title>Admin</title>
 </head>
 
 <body>
-    <div>
-        <h3>Xoá sản phẩm</h3>
-        <?php
-        echo "Xoa thông tin người dùng có ID $id";
-        ?>
-    </div>
+    <h1 class="header">Hello, tôi là Trang chủ Admin</h1>
 </body>
 
 </html>

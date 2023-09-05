@@ -11,10 +11,7 @@
     <div>
         <h3>Sửa sản phẩm</h3>
         <?php
-        echo "Sửa thông tin người dùng có ID ";
-        foreach ($vars as $key) {
-            echo $key;
-        };
+        echo "Sửa thông tin người dùng có ID $id ";
         ?>
     </div>
 </body>

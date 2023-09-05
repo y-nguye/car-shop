@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php include 'app/views/resources/css/styles.php' ?>
     <title>Danh sách sản phẩm</title>
 </head>
 
@@ -16,8 +17,6 @@
         <?php
         while ($row = $data->fetch_assoc()) {
             print_cars($row);
-            echo '<a href="./product/edit/' . $row['id']  . '">Sửa</a>';
-            echo '<a href="./product/delete/' . $row['id']  . '">Xoá</a> <br/>';
         }
         ?>
 
@@ -32,5 +31,7 @@ function print_cars($row)
     foreach ($row as $key => $value) {
         echo $key . ': ' . $value . " | ";
     }
+    echo '<a href="./product/edit/' . $row['car_id']  . '">Sửa</a>';
+    echo '<a href="./product/delete/' . $row['car_id']  . '">Xoá</a> <br/>';
 }
 ?>

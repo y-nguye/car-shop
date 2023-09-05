@@ -5,19 +5,14 @@ require 'vendor/autoload.php';
 use FastRoute\RouteCollector;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
-    $r->addGroup('/car-shop/product', function (RouteCollector $r) {
-        $r->addRoute('GET', '', 'ProductController@index');
-        $r->addRoute('GET', '/add', 'ProductController@add');
-        $r->addRoute('GET', '/edit/{id:\d+}', 'ProductController@edit');
-        $r->addRoute('GET', '/delete/{id:\d+}', 'ProductController@delete');
-    });
-    $r->addRoute('GET',  '/car-shop', 'HomeController@index');
+    $r->addGroup('/car-shop', require 'home.php');
+    // $r->addGroup('/car-shop/cart', require 'cart.php');
+    $r->addGroup('/car-shop/admin', require 'admin.php');
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
-// Strip query string (?foo=bar) and decode URI
 if (false !== $pos = strpos($uri, '?')) {
     $uri = substr($uri, 0, $pos);
 }
@@ -50,6 +45,6 @@ switch ($routeInfo[0]) {
         // Gọi phương thức của controller được xác định bởi $methodName.
         // $vars là một mảng chứa các biến đối số được trích xuất từ URL, 
         // và $db à một đối tượng cơ sở dữ liệu.
-        call_user_func([$controller, $methodName], $db, $vars);
+        call_user_func([$controller, $methodName], $db_cars, $vars);
         break;
 }
