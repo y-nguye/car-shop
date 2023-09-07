@@ -1,40 +1,10 @@
 <?php
 
-class CarsData
+include_once 'app/models/DB_connect.php';
+
+class CarsData extends DataBase
 {
-    private $hostname = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $dbname = "car_shop";
     private $table = "cars";
-
-    private $conn = null;
-    private $result = null;
-
-    public function connect()
-    {
-        try {
-            $this->conn = new mysqli($this->hostname, $this->username, $this->password, $this->dbname);
-
-            if ($this->conn->connect_error) {
-                throw new Exception("Kết nối thất bại: " . $this->conn->connect_error);
-            }
-            // Thiết lập bảng mã kết nối
-            if (!$this->conn->set_charset('utf8')) {
-                throw new Exception("Lỗi khi thiết lập bảng mã kết nối: " . $this->conn->error);
-            }
-            return $this->conn;
-        } catch (Exception $e) {
-            echo "Lỗi: " . $e->getMessage();
-            exit();
-        }
-    }
-
-    public function execute($sql)
-    {
-        $this->result = $this->conn->query($sql);
-        return $this->result;
-    }
 
     public function getData($id)
     {
@@ -51,18 +21,75 @@ class CarsData
     public function getAllData()
     {
         $sql = "SELECT * FROM $this->table;";
-        $this->result = $this->execute($sql);;
-
+        $this->result = $this->execute($sql);
         if ($this->result->num_rows > 0) {
-            return $this->result;
+            $data = [];
+            while ($row = $this->result->fetch_assoc()) {
+                $data[] = array(
+                    'car_id' => $row['car_id'],
+                    'car_name' => $row['car_name'],
+                    'car_seat_id' => $row['car_seat_id'],
+                    'car_price' => $row['car_price'],
+                    'car_quantity' => $row['car_quantity'],
+                    'car_describe' => $row['car_describe'],
+                    'car_detail_describe' => $row['car_detail_describe'],
+                    'car_img' => $row['car_img'],
+                    'car_fuel_id' => $row['car_fuel_id'],
+                    'car_type_id' => $row['car_type_id'],
+                    'car_producer_id' => $row['car_producer_id'],
+                    'car_added_day' => $row['car_added_day'],
+                    'car_deleted' => $row['car_deleted'],
+                );
+            }
+            return $data;
         } else {
             echo "Không có kết quả.";
         }
     }
 
-    public function setData($name, $price)
-    {
-        $sql = "INSERT INTO $this->table (id, name, price) VALUES (null, '$name', $price);";
+    public function setData(
+        $car_name,
+        $car_price,
+        $car_quantity,
+        $car_describe,
+        $car_detail_describe,
+        $car_img,
+        $car_seat_id,
+        $car_fuel_id,
+        $car_type_id,
+        $car_producer_id
+    ) {
+
+        $sql = "INSERT INTO $this->table
+                    (car_id,
+                    car_name,
+                    car_price,
+                    car_quantity,
+                    car_describe,
+                    car_detail_describe,
+                    car_img,
+                    car_seat_id,
+                    car_fuel_id,
+                    car_type_id,
+                    car_producer_id,
+                    car_added_day,
+                    car_deleted)
+                VALUES (
+                    null,
+                    '$car_name',
+                    $car_price,
+                    $car_quantity,
+                    '$car_describe',
+                    '$car_detail_describe',
+                    '$car_img',
+                    $car_seat_id,
+                    $car_fuel_id,
+                    $car_type_id,
+                    $car_producer_id,
+                    NOW(),
+                    0);";
+
+        var_dump($sql);
         $this->execute($sql);
     }
 

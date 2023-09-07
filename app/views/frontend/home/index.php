@@ -15,9 +15,9 @@
     include_once 'app/views/resources/layouts/header.php'
     ?>
 
-    <div class="container-xxl">
+    <div class="container-lg">
         <div class="d-flex justify-content-center">
-            <div id="carouselExampleCaptions" class="carousel slide rounded-3" data-bs-ride="carousel">
+            <div id="carouselExampleCaptions" class="carousel card slide rounded-3" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -58,35 +58,35 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+        </div>
+
+        <h2 class="mt-4">Top xe bán chạy trong mỗi dòng xe</h2>
+
+        <div class="row row-cols-2">
+            <?php
+            for ($i = 0; $i < 4; $i++) { ?>
+                <div class="col mt-4">
+                    <div class="card text-white">
+                        <img src="assets/imgs/mb_a_class_w177_2018_road.jpg" class="card-img" alt="mb">
+                        <div class="card-img-overlay">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <p class="card-text">Last updated 3 mins ago</p>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
 
         </div>
-        <h1 class="text-danger"></i> Hello, đây là trang chủ cửa hành xe hơi tốt nhất việt nam</h1>
 
-        <h3>Danh sách sản phẩm</h3>
-        <br />
-        <?php
-        while ($row = $data->fetch_assoc()) {
-            print_cars($row);
-        }
-        ?>
     </div>
 
     <?php
-    include_once 'app/views/resources/layouts/header.php';
-    include 'app/views/resources/script/script.php'
+    include_once 'app/views/resources/script/script.php';
     ?>
 
 </body>
 
 </html>
-
-
-<?php
-function print_cars($row)
-{
-    foreach ($row as $key => $value) {
-        echo $key . ': ' . $value . " | ";
-    }
-    echo "<br />";
-}
-?>

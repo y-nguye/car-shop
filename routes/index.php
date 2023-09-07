@@ -6,7 +6,6 @@ use FastRoute\RouteCollector;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addGroup('/car-shop', require 'home.php');
-    // $r->addGroup('/car-shop/cart', require 'cart.php');
     $r->addGroup('/car-shop/admin', require 'admin.php');
 });
 
@@ -45,6 +44,6 @@ switch ($routeInfo[0]) {
         // Gọi phương thức của controller được xác định bởi $methodName.
         // $vars là một mảng chứa các biến đối số được trích xuất từ URL, 
         // và $db à một đối tượng cơ sở dữ liệu.
-        call_user_func([$controller, $methodName], $db_cars, $vars);
+        call_user_func([$controller, $methodName], $DB, $vars);
         break;
 }

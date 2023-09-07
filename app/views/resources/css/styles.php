@@ -48,8 +48,8 @@
         text-decoration: none;
     }
 
-    a[href]:hover {
+    /* a[href]:hover {
         color: var(--text-color);
         text-decoration: underline;
-    }
+    } */
 </style>
