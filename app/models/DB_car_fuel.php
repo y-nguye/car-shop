@@ -28,7 +28,7 @@ class CarFuelData extends DataBase
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_fuel_id' => $row['car_fuel_id'],
-                    'car_fuel_type' => $row['car_fuel_type'],
+                    'car_fuel' => $row['car_fuel'],
                 );
             }
             return $data;

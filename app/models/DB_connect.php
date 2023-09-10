@@ -8,6 +8,7 @@ class DataBase
     private $dbname = "car_shop";
     public $conn = null;
     public $result = null;
+    public $id = null;
 
     public function connect()
     {
@@ -31,6 +32,7 @@ class DataBase
     public function execute($sql)
     {
         $this->result = $this->conn->query($sql);
+        $this->id = $this->conn->insert_id;
         return $this->result;
     }
 }

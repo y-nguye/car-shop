@@ -2,13 +2,13 @@
 
 class HomeController
 {
-    public function index($DB, $type)
+    public function index($DB)
     {
         $DB['db_cars']->connect();
-        $DB['db_car_types']->connect();
+        $DB['db_car_type']->connect();
 
         $data_cars = $DB['db_cars']->getAllData();
-        $data_car_types = $DB['db_car_types']->getAllData();
+        $data_car_type = $DB['db_car_type']->getAllData();
         include __DIR__ . "/../views/frontend/home/index.php";
         // } else echo $type;
     }

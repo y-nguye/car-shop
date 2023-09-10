@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include 'app/views/resources/css/styles.php' ?>
-    <link href="./productPageStyle.css" rel="stylesheet" type="text/css" />
+    <?php include_once 'app/views/resources/css/styles.php' ?>
+    <?php include_once 'app/views/backend/product/productPageStyle.php'; ?>
     <title>Danh sách sản phẩm</title>
 </head>
 
@@ -14,32 +14,32 @@
         <div class="row">
             <div class="col-3">
 
-                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light rounded-3 custom-sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light rounded-3 sticky-top custom-sidebar">
                     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <i class="bi bi-car-front-fill fs-4 ms-2 me-2"></i><span class="fs-4">Admin</span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="../" class="nav-link sidebar-item">
+                            <a href="/car-shop/admin" class="nav-link sidebar-item">
                                 <i class=" bi bi-house-door me-2"></i>
                                 Trang chủ
                             </a>
                         </li>
                         <li>
-                            <a href="./" class="nav-link sidebar-item active">
-                                <i class="bi bi-grid me-2"></i>
-                                Quản lý sản phẩm
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link sidebar-item">
+                            <a href="/car-shop/admin/user" class="nav-link sidebar-item">
                                 <i class="bi bi-person me-2"></i>
                                 Quản lý khách hàng
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link sidebar-item">
+                            <a href="/car-shop/admin/product" class="nav-link sidebar-item active">
+                                <i class="bi bi-grid me-2"></i>
+                                Quản lý sản phẩm
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/car-shop/admin/product/trash" class="nav-link sidebar-item">
                                 <i class="bi bi-trash me-2"></i>
                                 Thùng rác
                             </a>
@@ -62,56 +62,82 @@
                         </ul>
                     </div>
                 </div>
+
             </div>
 
+
             <div class="col-9">
+                <form name="formListCars" method="post" action="">
 
-                <nav class="navbar navbar-light bg-light rounded-3 mb-4">
-                    <form class="container-fluid justify-content-start">
-                        <a href="./add">
-                            <button class="btn btn-sm btn-outline-secondary me-2" type="button">
+                    <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 custom-toolbar">
+                        <div class="container-fluid justify-content-start">
+                            <span class="fs-5"><b>Danh sách sản phẩm</b></span>
+
+                            <button type="button" class="btn btn-sm btn-primary ms-auto me-4 btn-add" href="/car-shop/admin/product/add">
                                 <i class="bi bi-plus-circle"></i>
-                                Thêm
+                                Thêm mới
                             </button>
-                        </a>
-                        <a href="./product/edit">
-                            <button class="btn btn-sm btn-outline-secondary me-2" type="button">
+
+                            <button type="button" class="btn btn-sm btn-outline-secondary me-2 btn-edit disabled">
                                 <i class="bi bi-pencil"></i>
-                                Sửa
                             </button>
-                        </a>
-                        <button class="btn btn-sm btn-outline-danger" type="button"><i class="bi bi-trash"></i> Xoá</button>
-                    </form>
-                </nav>
 
-                <table id="danhsach" class="table table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th><input id="checkbox-all" class="form-check-input" type="checkbox" value=""></th>
-                            <th>Mã</th>
-                            <th>Tên</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            <th>Mô tả ngắn</th>
-                        </tr>
-                    </thead>
+                            <button type="button" class="btn btn-sm btn-outline-danger btn-delete disabled" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </nav>
 
-                    <tbody>
-                        <?php foreach ($data_cars as $value) { ?>
-                            <tr name="carsID">
-                                <td><input class="form-check-input" type="checkbox" value=""></td>
-                                <td><?= $value['car_id'] ?></td>
-                                <td><?= $value['car_name'] ?></td>
-                                <td><?= number_format($value['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
-                                <td><?= $value['sp_mota_ngan'] ?></td>
-                                <td>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+                    <div class="p-2">
+                        <table id="danhsach" class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"><input id="checkbox-all" class="form-check-input" type="checkbox" value="" /></th>
+                                    <th>Mã</th>
+                                    <th>Tên</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Ngày cập nhật</th>
+                                </tr>
+                            </thead>
 
+                            <tbody>
+                                <?php foreach ($data_cars as $value) { ?>
+                                    <tr name="car_item_row">
+                                        <td class="text-center" name="checkbox-td"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $value['car_id'] ?>" data-car_id="<?= $value['car_id'] ?>"></td>
+                                        <td><?= $value['car_id'] ?></td>
+                                        <td><?= $value['car_name'] ?></td>
+                                        <td><?= number_format($value['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
+                                        <td><?= $value['car_quantity'] ?></td>
+                                        <td><?= $value['car_update_day'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
 
+                            <tfoot></tfoot>
+
+                        </table>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận xoá</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Dữ liệu sẽ được chuyển vào thùng rác. Bạn thật sự muốn xoá chứ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="btnDelete" class="btn btn-danger btn-delete__confirm">Xoá</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -121,32 +147,108 @@
     ?>
 
     <script>
-        var checkboxAll = document.getElementById('checkbox-all');
-        var carItemCheckboxNodelist = document.querySelectorAll("tr[name='carsID']");
-        // Spread operator
-        var carItemCheckbox = [...carItemCheckboxNodelist];
-
-        carItemCheckboxNodelist.forEach(function(tr) {
-            tr.addEventListener('click', function(event) {
-                var target = event.target;
-                if (!target.matches("input[type='checkbox']")) {
-                    this.querySelectorAll("input[type='checkbox']").forEach(function(checkbox) {
-                        checkbox.checked = !checkbox.checked;
-                    });
-                    console.log(tr);
-                }
-                var isNotCheckedAll = carItemCheckbox.some(x => x.querySelector("input[type='checkbox']").checked === false);
-                checkboxAll.checked = !isNotCheckedAll;
+        $(function() {
+            $('#danhsach').DataTable({
+                searching: true,
+                order: [
+                    [1, "asc"]
+                ],
+                columnDefs: [{
+                    targets: [0],
+                    orderable: false,
+                    searchable: false
+                }]
             });
         });
 
-        checkboxAll.addEventListener('change', function(event) {
+        var carsForm = document.forms['formListCars'];
+        const btnAdd = document.querySelector('.btn-add');
+        const btnEdit = document.querySelector('.btn-edit');
+        const btnDelete = document.querySelector('.btn-delete');
+        const btnDeleteConfrim = document.querySelector('.btn-delete__confirm');
+        const checkboxAll = document.getElementById('checkbox-all');
+        const carItemCheckboxNodelist = document.querySelectorAll("tr[name='car_item_row']");
+        const carItemCheckbox = [...carItemCheckboxNodelist]; // Spread operator
+        const checkboxTd = document.querySelectorAll("td[name='checkbox-td']");
+
+        // ----------------------------- Xử lý các sự kiện Button -----------------------------------
+
+        btnAdd.addEventListener("click", () => {
+            window.location.href = "/car-shop/admin/product/add";
+        });
+
+        btnEdit.addEventListener("click", () => {
+            carItemCheckbox.forEach((x) => {
+                checkbox = x.querySelector("input[name='car_ids[]']");
+                if (checkbox.checked === true) {
+                    var car_id = checkbox.dataset.car_id;
+                    window.location.href = "/car-shop/admin/product/edit/" + car_id;
+                }
+            })
+        });
+
+        btnDeleteConfrim.addEventListener('click', () => {
+            carsForm.action = '/car-shop/admin/product/delete';
+            carsForm.submit();
+        });
+
+        // ----------------------------- Xử lý các sự kiện checkbox -----------------------------------
+
+        checkboxAll.addEventListener('change', function() {
             var isCheckedAll = this.checked;
             carItemCheckbox.forEach((x) => {
-                const checkbox = x.querySelector("input[type='checkbox']");
+                const checkbox = x.querySelector("input[name='car_ids[]']");
                 checkbox.checked = isCheckedAll;
             });
+            toolBarActiveByCheckbox();
         });
+
+        checkboxTd.forEach((x) => {
+            x.addEventListener('click', function(e) {
+                var target = e.target;
+                if (!target.matches("input[name='car_ids[]']")) {
+                    const checkbox = this.querySelector("input[name='car_ids[]']");
+                    checkbox.checked = !checkbox.checked;
+                }
+            })
+        });
+
+        carItemCheckbox.forEach(function(tr) {
+            tr.addEventListener('click', function(e) {
+                var target = e.target;
+
+                if (!target.matches("input[name='car_ids[]']") && !target.matches("td[name='checkbox-td']")) {
+                    const checkbox = this.querySelector("input[name='car_ids[]']");
+                    const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");
+                    if (checkboxItemsChecked.length < 2) {
+                        checkboxItemsChecked.forEach(x => x.checked = false);
+                    }
+                    checkbox.checked = !checkbox.checked;
+                }
+
+                var isNotCheckedAll = carItemCheckbox.some((x) => {
+                    return x.querySelector("input[name='car_ids[]']").checked === false;
+                });
+
+                checkboxAll.checked = !isNotCheckedAll;
+                toolBarActiveByCheckbox();
+            });
+        });
+
+
+        function toolBarActiveByCheckbox() {
+            const checkboxItems = document.querySelectorAll("input[name='car_ids[]']:checked");
+            if (checkboxItems.length == 0) {
+                btnEdit.classList.add('disabled');
+                btnDelete.classList.add('disabled');
+            } else if (checkboxItems.length == 1) {
+                btnEdit.classList.remove('disabled');
+                btnDelete.classList.remove('disabled');
+            } else {
+                btnEdit.classList.add('disabled');
+                btnDelete.classList.remove('disabled');
+            }
+        }
     </script>
 
 </body>
