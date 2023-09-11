@@ -65,8 +65,8 @@
 
             </div>
 
-
             <div class="col-9">
+
                 <form name="formListCars" method="post" action="">
 
                     <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 custom-toolbar">
@@ -89,7 +89,7 @@
                     </nav>
 
                     <div class="p-2">
-                        <table id="danhsach" class="table table-hover table-striped table-bordered">
+                        <table id="danhsach" class="table table-hover table-bordered">
                             <thead>
                                 <tr>
                                     <th class="text-center"><input id="checkbox-all" class="form-check-input" type="checkbox" value="" /></th>
@@ -103,13 +103,13 @@
 
                             <tbody>
                                 <?php foreach ($data_cars as $value) { ?>
-                                    <tr name="car_item_row">
+                                    <tr class="car_item_row">
                                         <td class="text-center" name="checkbox-td"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $value['car_id'] ?>" data-car_id="<?= $value['car_id'] ?>"></td>
                                         <td><?= $value['car_id'] ?></td>
                                         <td><?= $value['car_name'] ?></td>
                                         <td><?= number_format($value['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
                                         <td><?= $value['car_quantity'] ?></td>
-                                        <td><?= $value['car_update_day'] ?></td>
+                                        <td><?= $value['car_update_at'] ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -167,9 +167,8 @@
         const btnDelete = document.querySelector('.btn-delete');
         const btnDeleteConfrim = document.querySelector('.btn-delete__confirm');
         const checkboxAll = document.getElementById('checkbox-all');
-        const carItemCheckboxNodelist = document.querySelectorAll("tr[name='car_item_row']");
-        const carItemCheckbox = [...carItemCheckboxNodelist]; // Spread operator
-        const checkboxTd = document.querySelectorAll("td[name='checkbox-td']");
+        const checkboxItemsNodelist = document.querySelectorAll('.car_item_row');
+        const checkboxItems = [...checkboxItemsNodelist]; // Spread operator
 
         // ----------------------------- Xử lý các sự kiện Button -----------------------------------
 
@@ -178,7 +177,7 @@
         });
 
         btnEdit.addEventListener("click", () => {
-            carItemCheckbox.forEach((x) => {
+            checkboxItems.forEach((x) => {
                 checkbox = x.querySelector("input[name='car_ids[]']");
                 if (checkbox.checked === true) {
                     var car_id = checkbox.dataset.car_id;
@@ -196,58 +195,57 @@
 
         checkboxAll.addEventListener('change', function() {
             var isCheckedAll = this.checked;
-            carItemCheckbox.forEach((x) => {
+            checkboxItems.forEach((x) => {
                 const checkbox = x.querySelector("input[name='car_ids[]']");
                 checkbox.checked = isCheckedAll;
             });
-            toolBarActiveByCheckbox();
+            activeRowBackground();
+            buttonOnToolBarActiveByCheckbox();
         });
 
-        checkboxTd.forEach((x) => {
-            x.addEventListener('click', function(e) {
+        checkboxItems.forEach(function(rowListItem) {
+            rowListItem.addEventListener('click', function(e) {
                 var target = e.target;
+
+                // Loại bỏ xung đột khi click vào thẻ input
                 if (!target.matches("input[name='car_ids[]']")) {
-                    const checkbox = this.querySelector("input[name='car_ids[]']");
-                    checkbox.checked = !checkbox.checked;
-                }
-            })
-        });
-
-        carItemCheckbox.forEach(function(tr) {
-            tr.addEventListener('click', function(e) {
-                var target = e.target;
-
-                if (!target.matches("input[name='car_ids[]']") && !target.matches("td[name='checkbox-td']")) {
                     const checkbox = this.querySelector("input[name='car_ids[]']");
                     const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");
                     if (checkboxItemsChecked.length < 2) {
                         checkboxItemsChecked.forEach(x => x.checked = false);
                     }
                     checkbox.checked = !checkbox.checked;
+                    checkboxItemsChecked.forEach(x => x.closest("tr").classList.remove("table-active"));
                 }
 
-                var isNotCheckedAll = carItemCheckbox.some((x) => {
+                var isNotCheckedAll = checkboxItems.some((x) => {
                     return x.querySelector("input[name='car_ids[]']").checked === false;
                 });
 
                 checkboxAll.checked = !isNotCheckedAll;
-                toolBarActiveByCheckbox();
+                activeRowBackground();
+                buttonOnToolBarActiveByCheckbox();
             });
         });
 
-
-        function toolBarActiveByCheckbox() {
-            const checkboxItems = document.querySelectorAll("input[name='car_ids[]']:checked");
-            if (checkboxItems.length == 0) {
+        function buttonOnToolBarActiveByCheckbox() {
+            const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");
+            if (checkboxItemsChecked.length == 0) {
                 btnEdit.classList.add('disabled');
                 btnDelete.classList.add('disabled');
-            } else if (checkboxItems.length == 1) {
+            } else if (checkboxItemsChecked.length == 1) {
                 btnEdit.classList.remove('disabled');
                 btnDelete.classList.remove('disabled');
             } else {
                 btnEdit.classList.add('disabled');
                 btnDelete.classList.remove('disabled');
             }
+        }
+
+        function activeRowBackground() {
+            const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");
+            checkboxItems.forEach(x => x.closest("tr").classList.remove("table-active"));
+            checkboxItemsChecked.forEach(x => x.closest("tr").classList.add("table-active"));
         }
     </script>
 

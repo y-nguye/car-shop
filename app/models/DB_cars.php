@@ -1,8 +1,8 @@
 <?php
 
-include_once 'app/models/DB_connect.php';
+include_once 'app/models/Database_manager.php';
 
-class CarsData extends DataBase
+class CarsData extends DatabaseManager
 {
     private $table = "cars";
 
@@ -19,9 +19,9 @@ class CarsData extends DataBase
                         car_type_id,
                         car_transmission_id,
                         car_producer_id,
-                        car_update_day,
+                        car_update_at,
                         car_deleted,
-                        car_deleted_day
+                        car_deleted_at
                         FROM $this->table WHERE car_id = $car_id AND car_deleted = 0;";
 
         $this->result = $this->execute($sql);
@@ -37,8 +37,8 @@ class CarsData extends DataBase
     {
         $sql = "SELECT * FROM $this->table WHERE car_deleted = 0;";
         $this->result = $this->execute($sql);
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_id' => $row['car_id'],
@@ -52,21 +52,21 @@ class CarsData extends DataBase
                     'car_type_id' => $row['car_type_id'],
                     'car_transmission_id' => $row['car_transmission_id'],
                     'car_producer_id' => $row['car_producer_id'],
-                    'car_update_day' => $row['car_update_day'],
+                    'car_update_at' => $row['car_update_at'],
                     'car_deleted' => $row['car_deleted'],
-                    'car_deleted_day' => $row['car_deleted_day'],
+                    'car_deleted_at' => $row['car_deleted_at'],
                 );
             }
-            return $data;
         }
+        return $data;
     }
 
     public function getAllDataDeleted()
     {
         $sql = "SELECT * FROM $this->table WHERE car_deleted = 1;";
         $this->result = $this->execute($sql);
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_id' => $row['car_id'],
@@ -80,13 +80,13 @@ class CarsData extends DataBase
                     'car_type_id' => $row['car_type_id'],
                     'car_transmission_id' => $row['car_transmission_id'],
                     'car_producer_id' => $row['car_producer_id'],
-                    'car_update_day' => $row['car_update_day'],
+                    'car_update_at' => $row['car_update_at'],
                     'car_deleted' => $row['car_deleted'],
-                    'car_deleted_day' => $row['car_deleted_day'],
+                    'car_deleted_at' => $row['car_deleted_at'],
                 );
             }
-            return $data;
         }
+        return $data;
     }
 
     public function setData(
@@ -114,9 +114,9 @@ class CarsData extends DataBase
                     car_type_id,
                     car_transmission_id,
                     car_producer_id,
-                    car_update_day,
+                    car_update_at,
                     car_deleted,
-                    car_deleted_day)
+                    car_deleted_at)
                 VALUES (
                     null,
                     '$car_name',
@@ -160,7 +160,7 @@ class CarsData extends DataBase
                     car_type_id = $car_type_id,
                     car_transmission_id = $car_transmission_id,
                     car_producer_id = $car_producer_id,
-                    car_update_day = NOW()
+                    car_update_at = NOW()
                 WHERE car_id = $car_id;";
 
         return $this->execute($sql);
@@ -169,14 +169,14 @@ class CarsData extends DataBase
     public function restore($ids)
     {
         $ids = implode(' ,', $ids);
-        $sql = "UPDATE $this->table SET car_deleted = 0, car_update_day = NOW() WHERE  car_id IN ($ids);";
+        $sql = "UPDATE $this->table SET car_deleted = 0, car_update_at = NOW() WHERE  car_id IN ($ids);";
         return $this->execute($sql);
     }
 
     public function softDelete($ids)
     {
         $ids = implode(' ,', $ids);
-        $sql = "UPDATE $this->table SET car_deleted = 1, car_deleted_day = NOW() WHERE car_id IN ($ids);";
+        $sql = "UPDATE $this->table SET car_deleted = 1, car_deleted_at = NOW() WHERE car_id IN ($ids);";
         return $this->execute($sql);
     }
 

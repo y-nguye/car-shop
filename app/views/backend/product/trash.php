@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include 'app/views/resources/css/styles.php' ?>
+    <?php include_once 'app/views/resources/css/styles.php' ?>
+    <?php include_once 'app/views/backend/product/productPageStyle.php'; ?>
     <title>Danh sách sản phẩm</title>
 </head>
 
@@ -13,7 +14,7 @@
         <div class="row">
             <div class="col-3">
 
-                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light rounded-3 custom-sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light rounded-3 sticky-top custom-sidebar">
                     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <i class="bi bi-car-front-fill fs-4 ms-2 me-2"></i><span class="fs-4">Admin</span>
                     </a>
@@ -67,7 +68,7 @@
             <div class="col-9">
 
                 <form name="formCarTrash" method="post" action="">
-                    <nav class="navbar navbar-light bg-light rounded-3 mb-4">
+                    <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 custom-toolbar">
                         <div class="container-fluid justify-content-start">
 
                             <span class="fs-5"><b>Sản phẩm đã xoá</b></span>
@@ -83,9 +84,9 @@
                         </div>
                     </nav>
 
-                    <div class="container-fluid">
-                        <table id="danhsach" class="table table-hover table-striped table-bordered">
-                            <thead class="table-header-custom">
+                    <div class="p-2">
+                        <table id="danhsach" class="table table-hover table-bordered">
+                            <thead>
                                 <tr>
                                     <th class="text-center"><input id="checkbox-all" class="form-check-input" type="checkbox" value="" /></th>
                                     <th>Mã</th>
@@ -98,13 +99,13 @@
 
                             <tbody>
                                 <?php foreach ($data_cars as $value) { ?>
-                                    <tr name="car_item_row">
+                                    <tr class="car_item_row">
                                         <td class="text-center" name="checkbox-td"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $value['car_id'] ?>" data-car_id="<?= $value['car_id'] ?>"></td>
                                         <td><?= $value['car_id'] ?></td>
                                         <td><?= $value['car_name'] ?></td>
                                         <td><?= number_format($value['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
                                         <td><?= $value['car_quantity'] ?></td>
-                                        <td><?= $value['car_deleted_day'] ?></td>
+                                        <td><?= $value['car_deleted_at'] ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -116,7 +117,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận xoá</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -154,78 +155,78 @@
             });
         });
 
-        var restoreCarsForm = document.forms['formCarTrash'];
+        var trashCarsForm = document.forms['formCarTrash'];
         const btnRestore = document.querySelector('.btn-restore');
         const btnDelete = document.querySelector('.btn-delete');
         const btnForceDelete = document.querySelector('.btn-force-delete__confirm');
         const checkboxAll = document.getElementById('checkbox-all');
-        const carItemCheckboxNodelist = document.querySelectorAll("tr[name='car_item_row']");
-        const carItemCheckbox = [...carItemCheckboxNodelist]; // Spread operator
-        const checkboxTd = document.querySelectorAll("td[name='checkbox-td']");
+        const checkboxItemsNodelist = document.querySelectorAll('.car_item_row');
+        const checkboxItems = [...checkboxItemsNodelist]; // Spread operator
 
         // ----------------------------- Xử lý các sự kiện Button -----------------------------------
 
         btnRestore.addEventListener('click', function() {
-            restoreCarsForm.action = '/car-shop/admin/product/trash/restore';
-            restoreCarsForm.submit();
+            trashCarsForm.action = '/car-shop/admin/product/trash/restore';
+            trashCarsForm.submit();
         });
 
         btnForceDelete.addEventListener('click', function() {
-            restoreCarsForm.action = '/car-shop/admin/product/trash/force-delete';
-            restoreCarsForm.submit();
+            trashCarsForm.action = '/car-shop/admin/product/trash/force-delete';
+            trashCarsForm.submit();
         });
 
         // ----------------------------- Xử lý các sự kiện checkbox -----------------------------------
 
         checkboxAll.addEventListener('change', function() {
             var isCheckedAll = this.checked;
-            carItemCheckbox.forEach((x) => {
+            checkboxItems.forEach((x) => {
                 const checkbox = x.querySelector("input[name='car_ids[]']");
                 checkbox.checked = isCheckedAll;
             });
-            toolBarActiveByCheckbox();
+            activeRowBackground();
+            buttonOnToolBarActiveByCheckbox();
         });
 
-        checkboxTd.forEach((x) => {
-            x.addEventListener('click', function(e) {
+        checkboxItems.forEach(function(rowListItem) {
+            rowListItem.addEventListener('click', function(e) {
                 var target = e.target;
+
+                // Loại bỏ xung đột khi click vào thẻ input
                 if (!target.matches("input[name='car_ids[]']")) {
                     const checkbox = this.querySelector("input[name='car_ids[]']");
+                    const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");
+                    if (checkboxItemsChecked.length < 2) {
+                        checkboxItemsChecked.forEach(x => x.checked = false);
+                    }
                     checkbox.checked = !checkbox.checked;
+                    checkboxItemsChecked.forEach(x => x.closest("tr").classList.remove("table-active"));
                 }
 
-            })
-        });
-
-        carItemCheckbox.forEach(function(tr) {
-            tr.addEventListener('click', function(e) {
-                var target = e.target;
-
-                if (!target.matches("input[name='car_ids[]']") && !target.matches("td[name='checkbox-td']")) {
-                    const checkbox = this.querySelector("input[name='car_ids[]']");
-                    const checkboxItems = document.querySelectorAll("input[name='car_ids[]']:checked");
-                    checkboxItems.forEach(x => x.checked = false);
-                    checkbox.checked = !checkbox.checked;
-                }
-
-                var isNotCheckedAll = carItemCheckbox.some((x) => {
+                var isNotCheckedAll = checkboxItems.some((x) => {
                     return x.querySelector("input[name='car_ids[]']").checked === false;
                 });
 
                 checkboxAll.checked = !isNotCheckedAll;
-                toolBarActiveByCheckbox();
+                activeRowBackground();
+                buttonOnToolBarActiveByCheckbox();
             });
         });
 
-        function toolBarActiveByCheckbox() {
-            const checkboxItem = document.querySelectorAll("input[name='car_ids[]']:checked");
-            if (checkboxItem.length == 0) {
+        function buttonOnToolBarActiveByCheckbox() {
+            const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");
+            if (checkboxItemsChecked.length == 0) {
                 btnRestore.classList.add('disabled');
                 btnDelete.classList.add('disabled');
             } else {
                 btnRestore.classList.remove('disabled');
                 btnDelete.classList.remove('disabled');
             }
+        }
+
+        function activeRowBackground() {
+            const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");
+            checkboxItems.forEach(x => x.closest("tr").classList.remove("table-active"));
+            checkboxItemsChecked.forEach(x => x.closest("tr").classList.add("table-active"));
         }
     </script>
 

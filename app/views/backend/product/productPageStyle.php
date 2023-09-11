@@ -1,8 +1,8 @@
 <style>
     .custom-sidebar {
-        height: 100vh;
+        /* height: 100vh; */
         top: 5px;
-        padding: 5px;
+        /* padding: 5px; */
     }
 
     .custom-toolbar {
@@ -27,9 +27,23 @@
         max-width: 200px;
     }
 
+    .table-active {
+        background-color: #dddddd !important;
+    }
+
     .preview-img {
-        width: 500px;
+        width: 50%;
+        padding: 4px;
+        border-radius: 10px;
         aspect-ratio: 16/9;
         object-fit: cover;
+    }
+
+    /* #cke_car_detail_describe {
+        border-color: red !important;
+    } */
+
+    .container-validate {
+        border: 1px solid red !important;
     }
 </style>

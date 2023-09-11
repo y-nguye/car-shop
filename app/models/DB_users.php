@@ -1,8 +1,8 @@
 <?php
 
-include_once 'app/models/DB_connect.php';
+include_once 'app/models/Database_manager.php';
 
-class UserData extends DataBase
+class UserData extends DatabaseManager
 {
     private $table = "users";
 

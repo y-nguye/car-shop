@@ -1,6 +1,6 @@
 <?php
 
-include('app/models/DB_connect.php');
+include('app/models/Database_manager.php');
 include('app/models/DB_cars.php');
 include('app/models/DB_car_seat.php');
 include('app/models/DB_car_fuel.php');
@@ -20,6 +20,7 @@ $db_car_producer = new CarProducerData;
 $db_car_img = new CarImgData;
 $db_admin = new AdminData;
 $db_users = new UserData;
+
 
 $DB = array(
     'db_cars' => $db_cars,

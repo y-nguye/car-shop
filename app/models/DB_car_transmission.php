@@ -1,8 +1,8 @@
 <?php
 
-include_once 'app/models/DB_connect.php';
+include_once 'app/models/Database_manager.php';
 
-class CarTransmissionData extends DataBase
+class CarTransmissionData extends DatabaseManager
 {
     private $table = "car_transmission";
 

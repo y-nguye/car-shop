@@ -1,6 +1,6 @@
 <?php
 
-class DataBase
+class DatabaseManager
 {
     private $hostname = "localhost";
     private $username = "root";
@@ -26,6 +26,14 @@ class DataBase
         } catch (Exception $e) {
             echo "Lỗi: " . $e->getMessage();
             exit();
+        }
+    }
+
+    public function disconnect()
+    {
+        if ($this->conn !== null) {
+            $this->conn->close();
+            $this->conn = null; // Đặt đối tượng kết nối về giá trị null để đảm bảo không sử dụng nó sau khi đã đóng kết nối.
         }
     }
 
