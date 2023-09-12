@@ -1,8 +1,11 @@
 <style>
     .custom-sidebar {
-        /* height: 100vh; */
-        top: 5px;
+        height: 100vh;
+        /* top: 5px; */
         /* padding: 5px; */
+        border-left: 1px solid #ebebeb;
+        border-right: 1px solid #ebebeb;
+        background-color: white;
     }
 
     .custom-toolbar {

@@ -3,7 +3,7 @@ include_once 'app/models/Database_manager.php';
 
 class CarTypesData extends DatabaseManager
 {
-    private $table = "car_types";
+    private $table = "car_type";
 
     public function getData($car_type_id)
     {
