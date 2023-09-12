@@ -304,11 +304,12 @@ class ProductController
     {
         $car_id = implode('', $vars);
 
+        // Kết nối và lấy dữ liệu
         $DB['db_cars']->connect();
         $DB['db_car_seat']->connect();
         $DB['db_car_fuel']->connect();
         $DB['db_car_type']->connect();
-        $DB['db_transmission']->connect();
+        $DB['db_car_transmission']->connect();
         $DB['db_car_producer']->connect();
         $DB['db_car_img']->connect();
 
@@ -335,9 +336,6 @@ class ProductController
             $car_transmission_id = empty($_POST['car_transmission_id']) ? 'NULL' : $_POST['car_transmission_id'];
             $car_producer_id = empty($_POST['car_producer_id']) ? 'NULL' : $_POST['car_producer_id'];
 
-            date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $car_img_filename = $_POST['car_img_filename'];
-
             $DB['db_cars']->updateData(
                 $car_id,
                 $car_name,
@@ -351,29 +349,14 @@ class ProductController
                 $car_transmission_id,
                 $car_producer_id
             );
-            if (!empty($_FILES['car_img_filename']['name'])) {
+
+            if (!empty($_FILES['car_img_filename']['name'][0])) {
+                var_dump("Hello World");
+                die();
                 $uploadDir = __DIR__ . '/../../assets/uploads/';
-
-                // name của thẻ input chọn file
-                $newFileName = date('Ymd_His') . '_' . $_FILES['car_img_filename']['name'];
-
-                if (is_writable($uploadDir)) {
-                    echo "Thư mục có quyền ghi";
-                } else {
-                    echo "Thư mục không có quyền ghi";
-                }
-
-                if (move_uploaded_file($_FILES['car_img_filename']['tmp_name'], $uploadDir . $newFileName)) {
-                    echo "Di chuyển thành công";
-                } else {
-                    // Có lỗi xảy ra
-                    $error = error_get_last();
-                    echo "Lỗi: " . $error['message'];
-                }
-
-                $DB['db_car_img']->updateData($data_car_img['car_img_id'], $newFileName, $car_id);
+                $DB['db_car_img']->updateData($data_car_img, $_FILES['car_img_filename'], $car_id, $uploadDir);
             }
-            echo '<script>location.href = "../"</>';
+            echo '<script>location.href = "../"</script>';
         }
     }
 
@@ -382,7 +365,7 @@ class ProductController
         if (isset($_POST['btnDelete'])) {
             $DB['db_cars']->connect();
             $DB['db_cars']->softDelete($_POST['car_ids']);
-            echo '<script>location.href = "./"</script>';
+            echo '<script>location.href = "./"</>';
         }
     }
 

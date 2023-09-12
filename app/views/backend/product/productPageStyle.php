@@ -35,16 +35,12 @@
     }
 
     .preview-img {
-        width: 50%;
+        width: 33%;
         padding: 4px;
         border-radius: 10px;
         aspect-ratio: 16/9;
         object-fit: cover;
     }
-
-    /* #cke_car_detail_describe {
-        border-color: red !important;
-    } */
 
     .container-validate {
         border: 1px solid red !important;

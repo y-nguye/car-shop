@@ -7,7 +7,7 @@ class CarImgData extends DatabaseManager
 
     public function getData($car_img_id)
     {
-        $sql = "SELECT car_img_id, car_img_filename, car_id FROM $this->table WHERE car_id = $car_img_id;";
+        $sql = "SELECT car_img_id, car_img_filename, car_id FROM $this->table WHERE car_img_id = $car_img_id;";
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
@@ -20,11 +20,10 @@ class CarImgData extends DatabaseManager
     public function getAllData($car_id)
     {
         $sql = "SELECT * FROM $this->table WHERE car_id = $car_id;";
-        $this->result = $this->execute($sql);;
+        $this->result = $this->execute($sql);
 
         $data = [];
         if ($this->result->num_rows > 0) {
-            return $this->result;
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_img_id' => $row['car_img_id'],
@@ -37,21 +36,21 @@ class CarImgData extends DatabaseManager
         return $data;
     }
 
-    public function setData($car_img_file, $car_id, $uploadDir)
+    public function setData($car_img_files_from_input, $car_id, $uploadDir)
     {
+        if (!is_writable($uploadDir)) {
+            echo "Thư mục không có quyền ghi";
+            die;
+        }
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $valuesInsertToQuery = '';
-        foreach ($car_img_file['name'] as $key => $name) {
+        foreach ($car_img_files_from_input['name'] as $key => $name) {
             $name =  $key . '_' .  date('Ymd_His_') . $name;
-            if (!is_writable($uploadDir)) {
-                echo "Thư mục không có quyền ghi";
-                die;
-            }
-            if (!move_uploaded_file($car_img_file['tmp_name'][$key], $uploadDir . $name)) {
+            if (!move_uploaded_file($car_img_files_from_input['tmp_name'][$key], $uploadDir . $name)) {
                 $error = error_get_last();
                 echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";
             }
-            $valuesInsertToQuery =  $valuesInsertToQuery . "( null, '$name', NOW(), $car_id),";
+            $valuesInsertToQuery =  $valuesInsertToQuery . "(null, '$name', NOW(), $car_id),";
         }
         // Loại bỏ dấu ',' cuối cùng
         $valuesInsertToQuery = rtrim($valuesInsertToQuery, ',');
@@ -59,16 +58,59 @@ class CarImgData extends DatabaseManager
         $this->execute($sql);
     }
 
-    public function updateData($car_img_id, $car_img_filename, $car_id)
+    public function updateData($data_car_img, $car_img_files_from_input, $car_id, $uploadDir)
     {
-        $sql = "UPDATE $this->table SET car_img_filename = '$car_img_filename', car_id = $car_id
-        WHERE car_img_id = $car_img_id;";
-        return $this->execute($sql);
+        if (!is_writable($uploadDir)) {
+            echo "Thư mục không có quyền ghi";
+            die;
+        }
+
+        $flag = false;
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+        foreach ($car_img_files_from_input['name'] as $key => $name) {
+            $name =  $key . '_' .  date('Ymd_His_') . $name;
+
+            if (isset($data_car_img[$key]['car_img_id'])) {
+                count($car_img_files_from_input['name']) - 1 == $key && $flag = true;
+
+                if (!move_uploaded_file($car_img_files_from_input['tmp_name'][$key], $uploadDir . $name)) {
+                    $error = error_get_last();
+                    echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";
+                    die();
+                }
+                // Xoá hình cũ để tránh rác
+                unlink($uploadDir . $data_car_img[$key]['car_img_filename']);
+
+                $sql = "UPDATE $this->table SET car_img_filename = '$name', car_img_update_at = NOW(), car_id = $car_id
+            WHERE car_img_id = " . $data_car_img[$key]['car_img_id'] . ";";
+                $this->execute($sql);
+
+                if ($flag) {
+                    for ($i = $key + 1; $i <= count($data_car_img) - 1; $i++) {
+                        unlink($uploadDir . $data_car_img[$i]['car_img_filename']);
+                        $sql = "UPDATE $this->table SET car_img_filename = NULL, car_img_update_at = NOW(), car_id = $car_id
+                    WHERE car_img_id =" . $data_car_img[$i]['car_img_id'] . ";";
+                        $this->execute($sql);
+                    }
+                    $flag = false;
+                }
+            } else {
+                var_dump("Dữ liệu thêm nhiều hơn" . $name);
+                if (!move_uploaded_file($car_img_files_from_input['tmp_name'][$key], $uploadDir . $name)) {
+                    $error = error_get_last();
+                    echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";
+                    die();
+                }
+                $sql = "INSERT INTO $this->table (car_img_id, car_img_filename, car_img_update_at, car_id) VALUES (null, '$name', NOW(), $car_id);";
+                $this->execute($sql);
+            };
+        }
     }
 
-    public function deleteData($car_img_id)
+    public function deleteData($car_id)
     {
-        $sql = "DELETE FROM $this->table WHERE car_img_id = $car_img_id;";
+        $sql = "DELETE FROM $this->table WHERE car_id = $car_id;";
         return $this->execute($sql);
     }
 }
