@@ -9,7 +9,7 @@ include('app/models/DB_car_transmission.php');
 include('app/models/DB_car_producer.php');
 include('app/models/DB_car_img.php');
 include('app/models/DB_admin.php');
-include('app/models/DB_users.php');
+include('app/models/DB_user.php');
 
 $db_cars = new CarsData;
 $db_car_seat = new CarSeatData;
@@ -19,7 +19,7 @@ $db_car_transmission = new CarTransmissionData;
 $db_car_producer = new CarProducerData;
 $db_car_img = new CarImgData;
 $db_admin = new AdminData;
-$db_users = new UserData;
+$db_user = new UserData;
 
 
 $DB = array(
@@ -31,5 +31,5 @@ $DB = array(
     'db_car_producer' => $db_car_producer,
     'db_car_img' => $db_car_img,
     'db_admin' => $db_admin,
-    'db_users' => $db_users
+    'db_user' => $db_user
 );

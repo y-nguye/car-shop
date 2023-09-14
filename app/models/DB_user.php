@@ -4,11 +4,11 @@ include_once 'app/models/Database_manager.php';
 
 class UserData extends DatabaseManager
 {
-    private $table = "users";
+    private $table = "user";
 
-    public function getData($id)
+    public function getData($user_username)
     {
-        $sql = "SELECT id, name, price FROM $this->table WHERE id = $id;";
+        $sql = "SELECT * FROM $this->table WHERE user_username = '$user_username' OR user_email = '$user_username';";
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
@@ -32,20 +32,20 @@ class UserData extends DatabaseManager
 
     public function setData($name, $price)
     {
-        $sql = "INSERT INTO $this->table (id, name, price) VALUES (null, '$name', $price);";
+        $sql = "INSERT INTO $this->table (user_id, name, price) VALUES (null, '$name', $price);";
         $this->execute($sql);
     }
 
-    public function updateData($id, $name, $price)
+    public function updateData($user_id, $name, $price)
     {
         $sql = "UPDATE $this->table SET name = '$name', price = $price
-        WHERE id = $id;";
+        WHERE user_id = $user_id;";
         return $this->execute($sql);
     }
 
-    public function deleteData($id)
+    public function deleteData($user_id)
     {
-        $sql = "DELETE FROM $this->table WHERE id = $id;";
+        $sql = "DELETE FROM $this->table WHERE user_id = $user_id;";
         return $this->execute($sql);
     }
 }

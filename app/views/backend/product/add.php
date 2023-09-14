@@ -23,7 +23,7 @@
 
             <div class="col-9">
 
-                <form id="formAdd" name="formAdd" method="post" action="" enctype="multipart/form-data">
+                <form id="addForm" name="addForm" method="post" action="" enctype="multipart/form-data">
 
                     <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 custom-toolbar">
                         <div class="d-flex justify-content-start">
@@ -153,29 +153,12 @@
                         <hr>
 
                         <div class="d-flex justify-content-start mb-3">
-                            <button type="submit" name="btnAdd" id="liveAlertBtn" class="btn btn-primary disabled btn-add">Thêm</button>
+                            <button type="button" name="btnAdd" id="liveAlertBtn" class="btn btn-primary disabled btn-add">Thêm</button>
                             <button type="button" id="backToTop" class="btn btn-secondary ms-auto me-3">Lên đầu trang</button>
                             <button type="button" class="btn btn-danger btn-go-back">Quay lại</button>
                         </div>
 
-                        <div class="modal fade" id="goBackModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận quay lại</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Dữ liệu đã được điền sẽ mất. Bạn thật sự muốn quay lại danh sách chứ?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" name="btnGoBack" class="btn btn-danger btn-go-back__confirm">Quay lại</button>
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Chờ đã..</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    </div>
                 </form>
             </div>
         </div>
@@ -223,8 +206,7 @@
             alertPlaceholder.appendChild(wrapper);
         }
 
-
-        const formAdd = document.getElementById('formAdd');
+        const addForm = document.getElementById('addForm');
         const btnAdd = document.querySelector('.btn-add');
         const btnGoBack = document.querySelector('.btn-go-back');
         const btnGoBackHeader = document.querySelector('.btn-go-back-header');
@@ -233,24 +215,26 @@
         let formChanged = false;
 
         // Bắt đầu theo dõi sự thay đổi trên các trường input
-        formAdd.addEventListener('change', () => {
-            changeAttributeHandler();
+        addForm.addEventListener('change', () => {
+            formChanged = true;
+            btnAdd.classList.remove('disabled');
         });
 
         // Bắt đầu theo dõi sự thay đổi trên trường CKEDITOR
         CKEDITOR.instances.car_detail_describe.on('change', function() {
-            changeAttributeHandler();
+            formChanged = true;
+            btnAdd.classList.remove('disabled');
         });
 
+        btnAdd.addEventListener("click", () => {
+            formChanged = false;
+        });
         // -------------- Nút "Quay lại" ------------------
         btnGoBack.addEventListener("click", () => {
-            if (!formChanged) {
-                window.location.href = "/car-shop/admin/product";
-            }
-        });
+            window.location.href = "/car-shop/admin/product";
 
-        // -------------- Nút xác nhận "Quay lại" ------------------
-        btnGoBackConfirm.addEventListener("click", () => {
+        });
+        btnGoBackHeader.addEventListener("click", () => {
             window.location.href = "/car-shop/admin/product";
         });
 
@@ -262,46 +246,18 @@
             });
         });
 
-
-        const goBackModal = new bootstrap.Modal(document.getElementById('goBackModal'));
-
         // Bắt sự kiện beforeunload để hiển thị thông báo xác nhận
         window.addEventListener("beforeunload", function(e) {
             if (formChanged) {
                 // Hiển thị thông báo xác nhận
                 var confirmationMessage = "Bạn có chắc chắn muốn rời khỏi trang? Dữ liệu bạn đã nhập có thể không được lưu lại.";
-
                 // Thêm thông báo vào sự kiện
-                // e.returnValue = confirmationMessage;
-
+                e.returnValue = confirmationMessage;
                 // Trả về thông báo để hiển thị trong trình duyệt
-                // return confirmationMessage;
-                // $('#goBackModal').modal('show');
-                goBackModal.show();
-                // Ngăn trình duyệt hiển thị thông báo mặc định
-                e.preventDefault();
+                return confirmationMessage;
 
-
-                // Thêm sự kiện cho nút "Xác Nhận" trong modal
-                // document.getElementById('confirmLeave').addEventListener('click', function() {
-                //     // Đặt lại biến isDataChanged thành false để cho phép rời khỏi trang
-                //     isDataChanged = false;
-                //     // Đóng modal
-                //     $('#confirmationModal').modal('hide');
-                //     // Rời khỏi trang
-                //     window.location.href = 'https://google.com'; // Thay đổi URL tùy ý
-                // });
             }
         });
-
-        function changeAttributeHandler() {
-            formChanged = true;
-            btnAdd.classList.remove('disabled');
-            btnGoBack.setAttribute("data-bs-target", "#goBackModal");
-            btnGoBack.setAttribute("data-bs-toggle", "modal");
-            // btnGoBackHeader.setAttribute("data-bs-target", "#goBackModal");
-            // btnGoBackHeader.setAttribute("data-bs-toggle", "modal");
-        };
 
         // Validation
         $(function() {

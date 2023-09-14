@@ -15,7 +15,7 @@
     include_once 'app/views/resources/layouts/header.php'
     ?>
 
-    <div class="container-lg">
+    <div class="container-lg body-home-page">
         <div class="d-flex justify-content-center">
             <div id="carouselExampleCaptions" class="carousel card slide rounded-3" data-bs-ride="carousel">
                 <div class="carousel-indicators">

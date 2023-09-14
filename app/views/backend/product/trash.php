@@ -56,7 +56,7 @@
                             <tbody>
                                 <?php foreach ($data_cars as $value) { ?>
                                     <tr class="car_item_row">
-                                        <td class="text-center" name="checkbox-td"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $value['car_id'] ?>" data-car_id="<?= $value['car_id'] ?>"></td>
+                                        <td name="checkbox-td" class="text-center"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $value['car_id'] ?>" data-car_id="<?= $value['car_id'] ?>"></td>
                                         <td><?= $value['car_id'] ?></td>
                                         <td><?= $value['car_name'] ?></td>
                                         <td><?= number_format($value['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
@@ -65,7 +65,6 @@
                                     </tr>
                                 <?php } ?>
                             </tbody>
-                            <tfoot></tfoot>
                         </table>
 
                         <!-- Modal -->
@@ -116,6 +115,7 @@
         const btnDelete = document.querySelector('.btn-delete');
         const btnForceDelete = document.querySelector('.btn-force-delete__confirm');
         const checkboxAll = document.getElementById('checkbox-all');
+        const checkboxTd = document.querySelectorAll("td[name='checkbox-td']");
         const checkboxItemsNodelist = document.querySelectorAll('.car_item_row');
         const checkboxItems = [...checkboxItemsNodelist]; // Spread operator
 
@@ -151,9 +151,7 @@
                 if (!target.matches("input[name='car_ids[]']")) {
                     const checkbox = this.querySelector("input[name='car_ids[]']");
                     const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");
-                    if (checkboxItemsChecked.length < 2) {
-                        checkboxItemsChecked.forEach(x => x.checked = false);
-                    }
+                    checkboxItemsChecked.forEach(x => x.checked = false);
                     checkbox.checked = !checkbox.checked;
                     checkboxItemsChecked.forEach(x => x.closest("tr").classList.remove("table-active"));
                 }
@@ -167,6 +165,18 @@
                 buttonOnToolBarActiveByCheckbox();
             });
         });
+
+        checkboxTd.forEach(td => {
+            td.addEventListener("click", function(e) {
+                var target = e.target;
+                if (!target.matches("input[name='car_ids[]']")) {
+                    const checkbox = this.querySelector("input[name='car_ids[]']");
+                    const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");
+                    checkbox.checked = !checkbox.checked;
+                    checkboxItemsChecked.forEach(x => x.closest("tr").classList.remove("table-active"));
+                }
+            });
+        })
 
         function buttonOnToolBarActiveByCheckbox() {
             const checkboxItemsChecked = document.querySelectorAll("input[name='car_ids[]']:checked");

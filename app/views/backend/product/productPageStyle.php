@@ -28,6 +28,7 @@
     .table td {
         text-overflow: ellipsis;
         max-width: 200px;
+        user-select: none;
     }
 
     .table-active {

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 class ProductController
 {
     public function index($DB)
@@ -351,11 +353,19 @@ class ProductController
             );
 
             if (!empty($_FILES['car_img_filename']['name'][0])) {
-                var_dump("Hello World");
-                die();
                 $uploadDir = __DIR__ . '/../../assets/uploads/';
                 $DB['db_car_img']->updateData($data_car_img, $_FILES['car_img_filename'], $car_id, $uploadDir);
             }
+
+            // Ngắt kết nối cho các đối tượng con
+            $DB['db_cars']->disconnect();
+            $DB['db_car_seat']->disconnect();
+            $DB['db_car_fuel']->disconnect();
+            $DB['db_car_type']->disconnect();
+            $DB['db_car_transmission']->disconnect();
+            $DB['db_car_producer']->disconnect();
+            $DB['db_car_img']->disconnect();
+
             echo '<script>location.href = "../"</script>';
         }
     }
@@ -365,7 +375,7 @@ class ProductController
         if (isset($_POST['btnDelete'])) {
             $DB['db_cars']->connect();
             $DB['db_cars']->softDelete($_POST['car_ids']);
-            echo '<script>location.href = "./"</>';
+            echo '<script>location.href = "./"</script>';
         }
     }
 

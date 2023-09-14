@@ -23,7 +23,7 @@
 
             <div class="col-9">
 
-                <form id="formEdit" name="formEdit" method="post" action="" enctype="multipart/form-data">
+                <form id="editForm" name="editForm" method="post" action="" enctype="multipart/form-data">
 
                     <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 custom-toolbar">
                         <div class="d-flex justify-content-start">
@@ -187,31 +187,11 @@
                         <hr>
 
                         <div class="d-flex justify-content-start mb-3">
-                            <button name="btnEdit" type="submit" id="liveAlertBtn" class="btn btn-primary disabled btn-update">Cập nhật</button>
-                            <button id="backToTop" class="btn btn-secondary ms-auto me-3" type="button">Lên đầu trang</button>
+                            <button type="submit" name="btnEdit" id="liveAlertBtn" class="btn btn-primary disabled btn-update">Cập nhật</button>
+                            <button type="button" id="backToTop" class="btn btn-secondary ms-auto me-3">Lên đầu trang</button>
                             <button type="button" class="btn btn-danger btn-go-back">Quay lại</button>
                         </div>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="goBackModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Lưu thay đổi?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Bạn có muốn lưu dữ liệu đã thay đổi không?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button name="btnGoBackConfirm" type="button" class="btn btn-danger btn-go-back__confirm">Không lưu</button>
-                                        <button name="btnEdit" type="submit" class="btn btn-primary">Lưu</button>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chờ đã...</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    </div>
                 </form>
             </div>
         </div>
@@ -258,34 +238,33 @@
         }
 
         // ----------------------------------------------------------------
-        const formEdit = document.getElementById('formEdit');
+        const editForm = document.getElementById('editForm');
         const btnUpdate = document.querySelector('.btn-update');
         const btnGoBack = document.querySelector('.btn-go-back');
         const btnGoBackHeader = document.querySelector('.btn-go-back-header');
-        const btnGoBackConfirm = document.querySelector('.btn-go-back__confirm');
 
         // Tạo một biến để theo dõi trạng thái sự thay đổi
         let formChanged = false;
 
         // Bắt đầu theo dõi sự thay đổi trên các trường input
-        formEdit.addEventListener('change', () => {
-            changeAttributeHandler();
+        editForm.addEventListener('change', () => {
+            formChanged = true;
+            btnUpdate.classList.remove('disabled');
         });
 
         // Bắt đầu theo dõi sự thay đổi trên trường CKEDITOR
         CKEDITOR.instances.car_detail_describe.on('change', function() {
-            changeAttributeHandler();
+            formChanged = true;
+            btnUpdate.classList.remove('disabled');
         });
 
-        // -------------- Nút "Quay lại" ------------------
+        btnUpdate.addEventListener("click", () => {
+            formChanged = false;
+        });
         btnGoBack.addEventListener("click", () => {
-            if (!formChanged) {
-                window.location.href = "/car-shop/admin/product";
-            }
+            window.location.href = "/car-shop/admin/product";
         });
-
-        // -------------- Nút xác nhận "Không lưu" ------------------
-        btnGoBackConfirm.addEventListener("click", () => {
+        btnGoBackHeader.addEventListener("click", () => {
             window.location.href = "/car-shop/admin/product";
         });
 
@@ -297,14 +276,17 @@
             });
         });
 
-        function changeAttributeHandler() {
-            formChanged = true;
-            btnUpdate.classList.remove('disabled');
-            btnGoBack.setAttribute("data-bs-target", "#goBackModal");
-            btnGoBack.setAttribute("data-bs-toggle", "modal");
-            btnGoBackHeader.setAttribute("data-bs-target", "#goBackModal");
-            btnGoBackHeader.setAttribute("data-bs-toggle", "modal");
-        };
+        // Bắt sự kiện beforeunload để hiển thị thông báo xác nhận
+        window.addEventListener("beforeunload", function(e) {
+            if (formChanged) {
+                // Hiển thị thông báo xác nhận
+                var confirmationMessage = "Bạn có chắc chắn muốn rời khỏi trang? Dữ liệu bạn đã nhập có thể không được lưu lại.";
+                // Thêm thông báo vào sự kiện
+                e.returnValue = confirmationMessage;
+                // Trả về thông báo để hiển thị trong trình duyệt
+                return confirmationMessage;
+            }
+        });
 
         // Validation
         $(function() {
