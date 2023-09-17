@@ -2,16 +2,16 @@
 include_once 'app/views/resources/layouts/headerStyles.php';
 ?>
 
-<div class="fixed-top blur-body-page"></div>
+<div class="fixed-top blur-below-navbar"></div>
 
 <nav class="navbar d-block fixed-top navbar-expand-lg custom-navbar">
     <div class="container-lg">
-        <a class="navbar-brand text-dark car-logo" href="/car-shop"><i class="bi bi-car-front-fill"></i></a>
+        <a class="navbar-brand text-dark car-logo ps-2 pe-2 m-0" href="/car-shop"><i class="bi bi-car-front-fill"></i></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="h4"><i class="bi bi-list"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mb-2 mb-lg-0 navbar-list">
+            <ul class="navbar-nav mb-lg-0 navbar-list">
 
                 <?php foreach ($data_car_type as $value) { ?>
                     <?=
@@ -28,18 +28,14 @@ include_once 'app/views/resources/layouts/headerStyles.php';
                     <a class="nav-link text-dark" href="/car-shop/ho-tro">Hỗ trợ</a>
                 </li>
                 <li class="nav-item">
-                    <!-- <a class="nav-link text-dark bag" href="/car-shop/cart" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Giỏ hàng"><i class="bi bi-bag-fill"></i></a> -->
                     <button type="button" class="nav-link btn text-dark bag"><i class="bi bi-bag-fill"></i></button>
                 </li>
             </ul>
         </div>
 
     </div>
-    <div class="extension-nav-bar-by-bag">
-        <div class="container-lg bag-info">
-
-
-
+    <div class="expand-navbar-by-bag">
+        <div class="container-lg bag-into">
 
             <?php if (isset($_SESSION['cart'])) {
                 if ($_SESSION['cart'] > 1) { ?>
@@ -93,47 +89,45 @@ include_once 'app/views/resources/layouts/headerStyles.php';
 <div class="empty-space-below-navbar"></div>
 
 <script>
-    const customNavbar = document.querySelector('.custom-navbar');
     const bag = document.querySelector('.bag');
-    const bagInfo = document.querySelector('.bag-info');
-    const extensionNavBar = document.querySelector('.extension-nav-bar-by-bag');
+    const bagInto = document.querySelector('.bag-into');
+    const expandNavBar = document.querySelector('.expand-navbar-by-bag');
     const cartBtn = document.querySelector('.cart-btn');
-    const blurBodyPage = document.querySelector('.blur-body-page');
+    const blurBelowNavBar = document.querySelector('.blur-below-navbar');
 
-    const children = bagInfo.children;
+    const children = bagInto.children;
     const totalHeight = Array.from(children).reduce((acc, child) => {
-        console.log(acc);
         return acc + child.clientHeight + parseInt(window.getComputedStyle(child).marginTop)
     }, 0);
 
     bag.addEventListener('click', () => {
-        extensionNavBar.classList.toggle('expand-nav-bar');
-        blurBodyPage.classList.toggle('blured');
+        expandNavBar.classList.toggle('extension-navbar');
+        blurBelowNavBar.classList.toggle('blurred');
 
-        if (document.querySelector('.expand-nav-bar')) {
-            extensionNavBar.style.height = `${totalHeight + 80}px`;
+        if (document.querySelector('.extension-navbar')) {
+            expandNavBar.style.height = `${totalHeight + 80}px`;
         } else {
-            extensionNavBar.style.height = '0px';
+            expandNavBar.style.height = '0px';
         }
 
-        if (!document.querySelector('.blured')) {
+        bagInto.classList.toggle('extension-bag-into');
+
+        if (!document.querySelector('.blurred')) {
             setTimeout(function() {
-                blurBodyPage.style.visibility = "hidden";
+                blurBelowNavBar.style.visibility = "hidden";
             }, 320)
         } else {
-            blurBodyPage.style.visibility = "visible";
+            blurBelowNavBar.style.visibility = "visible";
         }
-
-        bagInfo.classList.toggle('expand-bag-info');
     });
 
-    blurBodyPage.addEventListener('click', () => {
-        extensionNavBar.classList.remove('expand-nav-bar');
-        blurBodyPage.classList.remove('blured');
-        extensionNavBar.style.height = '0px';
-        bagInfo.classList.remove('expand-bag-info');
+    blurBelowNavBar.addEventListener('click', () => {
+        expandNavBar.classList.remove('extension-navbar');
+        blurBelowNavBar.classList.remove('blurred');
+        expandNavBar.style.height = '0px';
+        bagInto.classList.remove('extension-bag-into');
         setTimeout(function() {
-            blurBodyPage.style.visibility = "hidden";
+            blurBelowNavBar.style.visibility = "hidden";
         }, 320)
     });
 

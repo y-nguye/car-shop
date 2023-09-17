@@ -15,7 +15,8 @@
         }
     }
 
-    .navbar-toggler:focus {
+    .navbar-toggler:focus,
+    .bag:focus {
         box-shadow: none;
     }
 
@@ -23,23 +24,23 @@
         width: 100%;
     }
 
-    .extension-nav-bar-by-bag {
+    .expand-navbar-by-bag {
         height: 0;
         transition: all 0.3s ease;
         visibility: hidden;
         overflow: hidden;
     }
 
-    .expand-nav-bar {
+    .extension-navbar {
         visibility: visible;
     }
 
-    .bag-info {
+    .bag-into {
         opacity: 0;
         transition: all 0.3s ease;
     }
 
-    .expand-bag-info {
+    .extension-bag-into {
         padding-top: 30px;
         opacity: 1;
         transition: all 0.3s ease;
@@ -51,15 +52,11 @@
         object-fit: cover;
     }
 
-    .fs-7 {
-        font-size: 14px;
-    }
-
     .empty-space-below-navbar {
         height: 60px;
     }
 
-    .blur-body-page {
+    .blur-below-navbar {
         height: 100vh;
         opacity: 0;
         backdrop-filter: blur(15px);
@@ -69,7 +66,7 @@
         visibility: hidden;
     }
 
-    .blured {
+    .blurred {
         opacity: 1;
         visibility: visible;
     }

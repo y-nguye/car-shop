@@ -165,7 +165,6 @@
     </div>
 
 
-
     <?php
     include_once 'app/views/resources/script/script.php';
     ?>

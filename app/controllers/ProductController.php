@@ -73,7 +73,7 @@ class ProductController
             // Rule: maxlength 10
             else if (strlen($car_name) > 50) {
                 $errors['car_name'][] = [
-                    'rule' => 'minlength',
+                    'rule' => 'maxlength',
                     'rule_value' => 100,
                     'value' => $car_name,
                     'msg' => 'Tên sản phẩm tối đa có 50 ký tự',

@@ -11,7 +11,9 @@ class HomeController
         $data_cars = $DB['db_cars']->getAllData();
         $data_car_type = $DB['db_car_type']->getAllData();
         include __DIR__ . "/../views/frontend/home/index.php";
-        // } else echo $type;
+
+        $DB['db_cars']->disconnect();
+        $DB['db_car_type']->disconnect();
     }
     public function type($DB, $type)
     {

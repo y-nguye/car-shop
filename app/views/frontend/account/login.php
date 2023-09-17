@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include 'app/views/resources/css/styles.php' ?>
-    <title>Document</title>
+    <title>Đăng nhập</title>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
                     <label for="floatingPassword">Mật khẩu</label>
                 </div>
                 <button type="submit" name="loginBtn" class="btn btn-secondary p-3">Đăng nhập</button>
-                <span class="mt-3">Chưa có tài khoản? <a href="#">tạo ngay nào</a></span>
+                <span class="mt-3">Chưa có tài khoản? <a href="/car-shop/account/signup">tạo ngay nào</a></span>
             </div>
         </form>
 

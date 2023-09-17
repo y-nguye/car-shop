@@ -18,6 +18,30 @@ class UserData extends DatabaseManager
         }
     }
 
+    public function checkDataByUsername($user_username)
+    {
+        $sql = "SELECT * FROM $this->table WHERE user_username = '$user_username';";
+        $this->result = $this->execute($sql);
+
+        if ($this->result->num_rows > 0) {
+            return $this->result->fetch_assoc();
+        } else {
+            return false;
+        }
+    }
+
+    public function checkDataByEmail($user_email)
+    {
+        $sql = "SELECT * FROM $this->table WHERE user_email = '$user_email';";
+        $this->result = $this->execute($sql);
+
+        if ($this->result->num_rows > 0) {
+            return $this->result->fetch_assoc();
+        } else {
+            return false;
+        }
+    }
+
     public function getAllData()
     {
         $sql = "SELECT * FROM $this->table;";
@@ -30,9 +54,27 @@ class UserData extends DatabaseManager
         }
     }
 
-    public function setData($name, $price)
+    public function setData($user_username, $user_password, $user_fullname, $user_tel, $user_email, $user_address)
     {
-        $sql = "INSERT INTO $this->table (user_id, name, price) VALUES (null, '$name', $price);";
+        $sql = "INSERT INTO $this->table (user_id,
+                                        user_username,
+                                        user_password,
+                                        user_fullname,
+                                        user_tel,
+                                        user_email,
+                                        user_address,
+                                        user_avt,
+                                        user_is_admin)
+                                    VALUES (
+                                        null,
+                                        '$user_username',
+                                        '$user_password',
+                                        '$user_fullname',
+                                        '$user_tel',
+                                        '$user_email',
+                                        '$user_address',
+                                        NULL,
+                                        0);";
         $this->execute($sql);
     }
 

@@ -48,4 +48,8 @@
         color: var(--text-color);
         text-decoration: underline;
     } */
+
+    .fs-7 {
+        font-size: 14px;
+    }
 </style>
