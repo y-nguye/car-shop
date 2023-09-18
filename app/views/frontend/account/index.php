@@ -30,32 +30,30 @@
             <div class="row">
                 <div class="col-1"></div>
                 <div class="col-3">
-                    <img class="rounded-circle border border-1 ms-3" src="/car-shop/assets/imgs/avt/avt-1.jpg" alt="" style="width: 150px; aspect-ratio: 1/1;">
-                    <h5 class="mt-3 ms-3">Nguyễn Hoài Ý</h5>
-                    <div class="ms-3">
-                        <span>nguyenhoaiy7@gmail.com</span>
+                    <form name="formAvatar" method="post" action="/car-shop/account/edit-avatar" enctype="multipart/form-data">
+                        <input type="file" name="user_avt" id="avatarInput" style="display: none;" accept="image/*" />
+                        <div class="avatar-container rounded-circle ms-3">
+                            <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/<?php if ($data_user['user_avt']) echo $data_user['user_avt'];
+                                                                                                                            else echo "no-avt.jpg" ?>" alt="">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center avatar-edit"><i class="bi bi-camera fs-1 text-white"></i></div>
+                            <div class="update-button-group">
+                                <button type="submit" name="btnOkUpdateAvatar" class="btn btn-outline-secondary btn-ok-update-avatar"><i class="bi bi-check2"></i></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-cancer-update-avatar"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                    <h5 class="mt-3 ms-3"><?= $data_user['user_fullname'] ?></h5>
+                    <div class="mt-3 ms-3">
+                        <span><?= $data_user['user_email'] ?></span>
                     </div>
-                    <div class="d-flex flex-column flex-shrink-0 p-3 sticky-top custom-sidebar" style="width: 90%;">
-                        <ul class="nav nav-pills flex-column mb-auto">
-                            <li class="nav-item">
-                                <a class="nav-link btn-personInfo active">
-                                    Thông tin cá nhân
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link sidebar-item btn-cartInfo">
-                                    Thông tin đơn hàng
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link sidebar-item btn-cartInfo" href="/car-shop/admin">
-                                    Truy cập hệ thống quản trị
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="ms-3 text-secondary">
+                        <span>@<?= $data_user['user_username'] ?></span>
                     </div>
+                    <?php if ($data_user['user_is_admin']) { ?>
+                        <a class="mt-3 nav-link sidebar-item btn-cartInfo" href="/car-shop/admin">
+                            Truy cập hệ thống quản trị
+                        </a>
+                    <?php } ?>
                 </div>
                 <div class="col-7 body-content-info">
 
@@ -72,52 +70,51 @@
     ?>
 
     <script>
-        const sidebarItems = document.querySelectorAll('.nav-link');
-        const btnPersonInfo = document.querySelector('.btn-personInfo');
-        const btnCartInfo = document.querySelector('.btn-cartInfo');
-        const bodyContentInfo = document.querySelector('.body-content-info');
         const btnUpdate = document.querySelector('.btn-update');
         const editForm = document.querySelector('.edit-form');
-
-        btnPersonInfo.addEventListener('click', () => {
-            sidebarItems.forEach(x => {
-                x.classList.remove('active');
-            })
-            btnPersonInfo.classList.add('active');
-            // lấy nội dung của tệp PHP bằng Fetch API.
-            fetch('/car-shop/app/views/frontend/account/components/personInfo.php')
-                .then(response => response.text())
-                .then(data => {
-                    bodyContentInfo.innerHTML = data;
-
-                    const btnUpdate = document.querySelector('.btn-update');
-                    const editForm = document.querySelector('.edit-form');
-
-                    editForm.addEventListener('change', () => {
-                        formChanged = true;
-                        btnUpdate.classList.add('active');
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        });
-
-        btnCartInfo.addEventListener('click', () => {
-            sidebarItems.forEach(x => {
-                x.classList.remove('active');
-            })
-            btnCartInfo.classList.add('active');
-            fetch('/car-shop/app/views/frontend/account/components/orderInfo.php')
-                .then(response => response.text())
-                .then(data => {
-                    bodyContentInfo.innerHTML = data;
-
-                })
-                .catch(error => console.error('Error:', error));
-        });
 
         editForm.addEventListener('change', () => {
             formChanged = true;
             btnUpdate.classList.add('active');
+        });
+
+
+        // Lấy thẻ input và ảnh đại diện
+        const avatarInput = document.getElementById("avatarInput");
+        const avatarImage = document.getElementById("avatar");
+        const avatarEdit = document.querySelector(".avatar-edit");
+        const updateButtonGroup = document.querySelector(".update-button-group");
+
+        var avatarImageBackupSrc = avatarImage.src;
+
+        // Thêm sự kiện click vào ảnh đại diện
+        avatarEdit.addEventListener("click", function() {
+            // Khi người dùng click vào ảnh đại diện, kích hoạt sự kiện click cho input
+            avatarInput.click();
+        });
+
+        // Thêm sự kiện change cho input để xử lý khi người dùng chọn ảnh mới
+        avatarInput.addEventListener("change", function() {
+            const selectedFile = avatarInput.files[0];
+
+            if (selectedFile) {
+                // Kiểm tra xem người dùng đã chọn ảnh chưa
+                const reader = new FileReader();
+
+
+                reader.onload = function(e) {
+                    // Hiển thị ảnh mới lên ảnh đại diện
+                    avatarImage.src = e.target.result;
+                    updateButtonGroup.classList.add("update-button-group-active");
+                };
+
+                reader.readAsDataURL(selectedFile);
+            }
+
+            document.querySelector(".btn-cancer-update-avatar").addEventListener("click", function() {
+                avatarImage.src = avatarImageBackupSrc;
+                updateButtonGroup.classList.remove("update-button-group-active");
+            });
         });
     </script>
 

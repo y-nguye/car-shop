@@ -23,7 +23,11 @@
                 <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 custom-toolbar">
                     <div class="container-fluid justify-content-start">
                         <span class="fs-5"><b>Trang chủ Admin</b></span>
-                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
+                        <a type="button" class="btn btn-sm btn-primary ms-auto me-2 btn-add" href="/car-shop/account">
+                            <i class="bi bi-person"></i>
+                            Trang cá nhân
+                        </a>
+                        <button type="button" class="btn btn-sm btn-primary btn-add" href="/car-shop/admin">
                             <i class="bi bi-telephone"></i>
                             Liên hệ
                         </button>

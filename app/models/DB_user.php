@@ -78,10 +78,32 @@ class UserData extends DatabaseManager
         $this->execute($sql);
     }
 
-    public function updateData($user_id, $name, $price)
+    public function updateData($user_id, $user_fullname, $user_tel, $user_address)
     {
-        $sql = "UPDATE $this->table SET name = '$name', price = $price
+        $sql = "UPDATE $this->table SET user_fullname = '$user_fullname', user_tel = '$user_tel', user_address = '$user_address' 
         WHERE user_id = $user_id;";
+        return $this->execute($sql);
+    }
+
+    public function updateAvatar($user_id, $user_avt_new,  $user_avt_old, $uploadDir)
+    {
+        if (!is_writable($uploadDir)) {
+            echo "Thư mục không có quyền ghi";
+            die;
+        }
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $name =  date('Ymd_His_') . $user_avt_new['name'];
+
+        if (!move_uploaded_file($user_avt_new['tmp_name'], $uploadDir . $name)) {
+            $error = error_get_last();
+            echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";
+            die();
+        }
+
+        // Xoá hình cũ để tránh rác
+        unlink($uploadDir . $user_avt_old);
+
+        $sql = "UPDATE $this->table SET user_avt = '$name' WHERE user_id = $user_id;";
         return $this->execute($sql);
     }
 

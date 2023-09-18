@@ -16,15 +16,13 @@ class AccountController
             die();
         }
 
+        $DB['db_user']->connect();
         $DB['db_car_type']->connect();
+        $data_user = $DB['db_user']->getData($_SESSION["user_username"]);
         $data_car_type = $DB['db_car_type']->getAllData();
 
         $lastName = strrchr($_SESSION['user_fullname'], ' ');
         include_once __DIR__ . "/../views/frontend/account/index.php";
-
-        if (isset($_POST["editBtn"])) {
-            echo $_POST['user_fullname'];
-        }
 
         $DB['db_car_type']->disconnect();
     }
@@ -51,10 +49,12 @@ class AccountController
             if ($data_user && password_verify($password, $data_user["user_password"])) {
                 // Đăng nhập thành công
                 $_SESSION["logged"] = true;
+                $_SESSION["user_id"] = $data_user["user_id"];
                 $_SESSION["user_fullname"] = $data_user["user_fullname"];
                 $_SESSION["user_tel"] = $data_user["user_tel"];
                 $_SESSION["user_address"] = $data_user["user_address"];
                 $_SESSION["user_email"] = $data_user["user_email"];
+                $_SESSION["user_username"] = $data_user["user_username"];
                 $_SESSION["user_avt"] = $data_user["user_avt"];
                 $_SESSION["user_is_admin"] = $data_user["user_is_admin"];
 
@@ -77,10 +77,12 @@ class AccountController
     public function logout($DB)
     {
         unset($_SESSION["logged"]);
+        unset($_SESSION["user_id"]);
         unset($_SESSION["user_fullname"]);
         unset($_SESSION["user_tel"]);
         unset($_SESSION["user_address"]);
         unset($_SESSION["user_email"]);
+        unset($_SESSION["user_username"]);
         unset($_SESSION["user_avt"]);
         unset($_SESSION["user_is_admin"]);
         echo '<script>location.href = "/car-shop"</script>';
@@ -346,8 +348,44 @@ class AccountController
         }
     }
 
+
+    public function editPersonInfo($DB)
+    {
+        $DB['db_user']->connect();
+        if (isset($_POST["btnEdit"])) {
+            $user_fullname = $_POST["user_fullname"];
+            $user_tel = $_POST["user_tel"];
+            $user_address = $_POST["user_address"];
+            $DB['db_user']->updateData($_SESSION["user_id"], $user_fullname, $user_tel, $user_address);
+            $DB['db_user']->disconnect();
+            echo '<script>location.href = "/car-shop/account"</script>';
+        }
+    }
+
+    public function editAvatar($DB)
+    {
+        if (isset($_POST["btnOkUpdateAvatar"])) {
+            $uploadDir = __DIR__ . '/../../assets/imgs/avt/';
+            $DB['db_user']->connect();
+            $data_user = $DB['db_user']->getData($_SESSION["user_username"]);
+            $DB['db_user']->updateAvatar($_SESSION["user_id"], $_FILES['user_avt'], $data_user['user_avt'], $uploadDir);
+            echo '<script>location.href = "/car-shop/account"</script>';
+        }
+    }
+
     public function admin($DB)
     {
-        include_once __DIR__ . "/../views/backend/admin/index.php";
+        if (!isset($_SESSION["logged"])) {
+            echo '<script>location.href = "/car-shop/account/login"</script>';
+            die();
+        }
+
+        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
+            echo '<script>location.href = "/car-shop/account/login"</script>';
+            die();
+        }
+        if ($_SESSION["user_is_admin"]) {
+            include_once __DIR__ . "/../views/backend/admin/index.php";
+        } else echo '<script>location.href = "/car-shop/account"</script>';
     }
 }

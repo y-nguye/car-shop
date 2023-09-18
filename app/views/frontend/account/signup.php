@@ -88,7 +88,7 @@
                         email: true,
                         maxlength: 100,
                         remote: {
-                            url: "/car-shop/account/emailCheck",
+                            url: "/car-shop/account/email-check",
                             type: "post",
                             data: {
                                 username: function() {
@@ -103,7 +103,7 @@
                         minlength: 6,
                         maxlength: 100,
                         remote: {
-                            url: "/car-shop/account/usernameCheck",
+                            url: "/car-shop/account/username-check",
                             type: "post",
                             data: {
                                 username: function() {

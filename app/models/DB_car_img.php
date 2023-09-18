@@ -72,6 +72,7 @@ class CarImgData extends DatabaseManager
             $name =  $key . '_' .  date('Ymd_His_') . $name;
 
             if (isset($data_car_img[$key]['car_img_id'])) {
+                // Đánh dấu khi số lượng hình ảnh từ input = số lần lặp trong foreach
                 count($car_img_files_from_input['name']) - 1 == $key && $flag = true;
 
                 if (!move_uploaded_file($car_img_files_from_input['tmp_name'][$key], $uploadDir . $name)) {
@@ -86,7 +87,9 @@ class CarImgData extends DatabaseManager
             WHERE car_img_id = " . $data_car_img[$key]['car_img_id'] . ";";
                 $this->execute($sql);
 
+                // Nếu cờ được bật, đặt những cột thừa trong database về 'null' và xoá những hình ảnh thừa
                 if ($flag) {
+                    // Khi có những cột thừa...
                     for ($i = $key + 1; $i <= count($data_car_img) - 1; $i++) {
                         unlink($uploadDir . $data_car_img[$i]['car_img_filename']);
                         $sql = "UPDATE $this->table SET car_img_filename = NULL, car_img_update_at = NOW(), car_id = $car_id
@@ -95,8 +98,8 @@ class CarImgData extends DatabaseManager
                     }
                     $flag = false;
                 }
-            } else {
-                var_dump("Dữ liệu thêm nhiều hơn" . $name);
+            } else { // Dữ liệu hình ảnh thêm nhiều hơn so với trước khi cập nhật thì tạo thêm cột
+                // var_dump("Dữ liệu thêm nhiều hơn" . $name);
                 if (!move_uploaded_file($car_img_files_from_input['tmp_name'][$key], $uploadDir . $name)) {
                     $error = error_get_last();
                     echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";

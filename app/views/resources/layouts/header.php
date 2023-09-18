@@ -121,7 +121,7 @@ include_once 'app/views/resources/layouts/headerStyles.php';
         }
     });
 
-    blurBelowNavBar.addEventListener('click', () => {
+    blurBelowNavBar.addEventListener('mouseover', () => {
         expandNavBar.classList.remove('extension-navbar');
         blurBelowNavBar.classList.remove('blurred');
         expandNavBar.style.height = '0px';
