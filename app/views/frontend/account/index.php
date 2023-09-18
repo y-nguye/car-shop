@@ -79,28 +79,24 @@
         });
 
 
-        // Lấy thẻ input và ảnh đại diện
         const avatarInput = document.getElementById("avatarInput");
         const avatarImage = document.getElementById("avatar");
         const avatarEdit = document.querySelector(".avatar-edit");
         const updateButtonGroup = document.querySelector(".update-button-group");
+        const avatarImageBackupSrc = avatarImage.src;
 
-        var avatarImageBackupSrc = avatarImage.src;
-
-        // Thêm sự kiện click vào ảnh đại diện
         avatarEdit.addEventListener("click", function() {
             // Khi người dùng click vào ảnh đại diện, kích hoạt sự kiện click cho input
             avatarInput.click();
         });
 
-        // Thêm sự kiện change cho input để xử lý khi người dùng chọn ảnh mới
         avatarInput.addEventListener("change", function() {
             const selectedFile = avatarInput.files[0];
-
+            console.log(selectedFile);
             if (selectedFile) {
+                console.log('Hello');
                 // Kiểm tra xem người dùng đã chọn ảnh chưa
                 const reader = new FileReader();
-
 
                 reader.onload = function(e) {
                     // Hiển thị ảnh mới lên ảnh đại diện
@@ -112,6 +108,7 @@
             }
 
             document.querySelector(".btn-cancer-update-avatar").addEventListener("click", function() {
+                avatarInput.value = null;
                 avatarImage.src = avatarImageBackupSrc;
                 updateButtonGroup.classList.remove("update-button-group-active");
             });

@@ -11,7 +11,6 @@ $sidebar_items = [
 ?>
 
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sticky-top custom-sidebar">
-
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle ms-2 me-2">
@@ -20,7 +19,7 @@ $sidebar_items = [
         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
             <li><a class="dropdown-item" href="#">New project...</a></li>
             <li><a class="dropdown-item" href="#">Tuỳ chỉnh</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a class="dropdown-item" href="/car-shop/account">Trang cá nhân</a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>
@@ -39,8 +38,5 @@ $sidebar_items = [
         <?php } ?>
 
     </ul>
-    <hr>
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <i class="bi bi-car-front-fill fs-3 ms-2 me-2"></i><span class="fs-4">Quản trị</span>
-    </a>
+
 </div>
