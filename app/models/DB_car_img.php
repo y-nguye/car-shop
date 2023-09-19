@@ -19,7 +19,7 @@ class CarImgData extends DatabaseManager
 
     public function getAllData($car_id)
     {
-        $sql = "SELECT * FROM $this->table WHERE car_id = $car_id;";
+        $sql = "SELECT * FROM $this->table WHERE car_id = $car_id ORDER BY car_img_id ASC;";
         $this->result = $this->execute($sql);
 
         $data = [];

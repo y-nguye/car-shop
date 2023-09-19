@@ -146,7 +146,9 @@
 
                         <div class="container text-center">
                             <div id="image-preview-container" class="form-group mt-3">
-                                <img src="/car-shop/assets/imgs/no-img.jpg" alt="no-img" id="preview-img" class="preview-img" />
+                                <div class="preview-img-container-item">
+                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="no-img" id="preview-img" class="preview-img" />
+                                </div>
                             </div>
                         </div>
 
@@ -187,10 +189,21 @@
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
+                    const imageContainerItem = document.createElement('span');
+                    const imageTitle = document.createElement('div');
                     const image = document.createElement('img');
+
                     image.src = e.target.result;
+
+                    imageContainerItem.classList.add('preview-img-container-item');
                     image.classList.add('preview-img');
-                    imagePreviewContainer.appendChild(image);
+
+                    if (i == 0) imageTitle.textContent = 'Hình đại diện';
+                    else imageTitle.textContent = i;
+
+                    imageContainerItem.appendChild(image);
+                    imageContainerItem.appendChild(imageTitle);
+                    imagePreviewContainer.appendChild(imageContainerItem);
                 };
                 reader.readAsDataURL(file);
             }

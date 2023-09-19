@@ -60,7 +60,7 @@
         height: 100vh;
         opacity: 0;
         backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(15px);
         background-color: rgba(255, 255, 255, 0.4);
         transition: opacity 0.32s ease;
         visibility: hidden;

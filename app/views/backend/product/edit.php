@@ -176,11 +176,18 @@
 
                         <div class="container text-center">
                             <div id="image-preview-container" class="form-group mt-3">
-                                <?php foreach ($data_car_img as $img) {
-                                    if ($img['car_img_filename'] != NULL) {
-                                        echo '<img src="/car-shop/assets/uploads/' . $img['car_img_filename'] . '" alt="preview-img" class="preview-img" />';
-                                    }
-                                } ?>
+                                <?php foreach ($data_car_img as $index => $img) : ?>
+                                    <?php if ($img['car_img_filename'] != NULL) : ?>
+                                        <div class="preview-img-container-item">
+                                            <img src="/car-shop/assets/uploads/<?= $img['car_img_filename'] ?>" alt="preview-img" class="preview-img" />
+                                            <?php if ($index == 0) : ?>
+                                                <span>Hình đại diện</span>
+                                            <?php else : ?>
+                                                <span><?= $index ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             </div>
                         </div>
 
@@ -219,10 +226,21 @@
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
+                    const imageContainerItem = document.createElement('span');
+                    const imageTitle = document.createElement('div');
                     const image = document.createElement('img');
+
                     image.src = e.target.result;
+
+                    imageContainerItem.classList.add('preview-img-container-item');
                     image.classList.add('preview-img');
-                    imagePreviewContainer.appendChild(image);
+
+                    if (i == 0) imageTitle.textContent = 'Ảnh đại diện';
+                    else imageTitle.textContent = i;
+
+                    imageContainerItem.appendChild(image);
+                    imageContainerItem.appendChild(imageTitle);
+                    imagePreviewContainer.appendChild(imageContainerItem);
                 };
                 reader.readAsDataURL(file);
             }

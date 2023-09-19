@@ -35,9 +35,15 @@
         background-color: #dddddd !important;
     }
 
-    .preview-img {
-        width: 33%;
+    .preview-img-container-item {
+        width: 30%;
+        display: inline-block;
         padding: 4px;
+        margin-top: 4px;
+    }
+
+    .preview-img {
+        width: 100%;
         border-radius: 10px;
         aspect-ratio: 16/9;
         object-fit: cover;
