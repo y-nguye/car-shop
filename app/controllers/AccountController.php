@@ -41,8 +41,8 @@ class AccountController
         include_once __DIR__ . "/../views/frontend/account/login.php";
 
         if (isset($_POST["loginBtn"])) {
-            $username = $_POST["username"];
-            $password = $_POST["password"];
+            $username = $_POST["user_username"];
+            $password = $_POST["user_password"];
 
             $data_user = $DB['db_user']->getData($username);
 
@@ -67,9 +67,10 @@ class AccountController
                     echo '<script>location.href = "/car-shop/cart"</script>';
                 }
             } else {
-                var_dump($password);
                 // Đăng nhập thất bại
-                echo "Tên đăng nhập hoặc mật khẩu không đúng.";
+                echo    "<script>
+                        showAlert('Tên đăng nhập hoặc mật khẩu không đúng', 'danger');
+                        </script>";
             }
         }
     }
