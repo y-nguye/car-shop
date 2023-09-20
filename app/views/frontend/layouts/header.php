@@ -1,5 +1,5 @@
 <?php
-include_once 'app/views/resources/layouts/headerStyles.php';
+include_once 'app/views/frontend/layouts/headerStyles.php';
 ?>
 
 <div class="fixed-top blur-below-navbar"></div>

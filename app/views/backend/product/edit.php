@@ -23,7 +23,7 @@
 
             <div class="col-9">
 
-                <form id="editForm" name="editForm" method="post" action="" enctype="multipart/form-data">
+                <form id="formEdit" name="formEdit" method="post" action="" enctype="multipart/form-data">
 
                     <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 custom-toolbar">
                         <div class="d-flex justify-content-start">
@@ -43,14 +43,14 @@
                             <div class="col-6">
                                 <div class="form-group mb-3">
                                     <label for="car_name" class="form-label">Tên xe *</label>
-                                    <input type="text" name="car_name" id="car_name" class="form-control" value="<?= $data_car['car_name'] ?>" />
+                                    <input type="text" name="car_name" id="car_name" class="form-control remove-space-first" value="<?= $data_car['car_name'] ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                 </div>
                             </div>
 
                             <div class="col-2">
                                 <div class="form-group">
                                     <label for="" class="form-label">Dòng xe *</label>
-                                    <select class="form-select" name="car_type_id">
+                                    <select class="form-select" name="car_type_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                                         <option value="">---Chọn---</option>
                                         <?php foreach ($data_car_type as $value) { ?>
                                             <?php if ($value['car_type_id'] == $data_car['car_type_id']) { ?>
@@ -69,7 +69,7 @@
                             <div class="col-2">
                                 <div class="form-group">
                                     <label for="" class="form-label">Số chỗ ngồi *</label>
-                                    <select class="form-select" name="car_seat_id">
+                                    <select class="form-select" name="car_seat_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                                         <option value="">---Chọn---</option>
                                         <?php foreach ($data_car_seat as $value) { ?>
                                             <?php if ($value['car_seat_id'] == $data_car['car_seat_id']) { ?>
@@ -109,7 +109,7 @@
                                 <div class="form-group">
                                     <label for="car_price" class="form-label">Giá xe *</label>
                                     <div class="input-group">
-                                        <input type="text" name="car_price" id="car_price" class="form-control" value="<?= $data_car['car_price'] ?>" />
+                                        <input type="text" name="car_price" id="car_price" class="form-control remove-space-first" value="<?= $data_car['car_price']  ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                         <span class="input-group-text">VNĐ</span>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@
                             <div class="col-2">
                                 <div class="form-group">
                                     <label for="car_quantity" class="form-label">Số lượng *</label>
-                                    <input type="text" name="car_quantity" id="car_quantity" class="form-control" value="<?= $data_car['car_quantity'] ?>" />
+                                    <input type="text" name="car_quantity" id="car_quantity" class="form-control remove-space-first" value="<?= $data_car['car_quantity'] ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                 </div>
                             </div>
 
@@ -144,7 +144,7 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="" class="form-label">Loại hộp số *</label>
-                                    <select class="form-select" name="car_transmission_id">
+                                    <select class="form-select" name="car_transmission_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                                         <option value="">---Chọn---</option>
                                         <?php foreach ($data_car_transmission as $value) { ?>
                                             <?php if ($value['car_transmission_id'] == $data_car['car_transmission_id']) { ?>
@@ -162,11 +162,11 @@
 
                         <div class="form-group mt-3">
                             <label for="car_describe" class="form-label">Mô tả ngắn *</label>
-                            <textarea type="text" name="car_describe" id="car_describe" class="form-control"><?= $data_car['car_describe'] ?></textarea>
+                            <textarea type="text" name="car_describe" id="car_describe" class="form-control remove-space-first" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover"><?= $data_car['car_describe'] ?></textarea>
                         </div>
                         <div class="form-group mt-3">
-                            <label for="car_detail_describe" class="form-label">Mô tả chi tiết</label>
-                            <textarea type="text" name="car_detail_describe" id="car_detail_describe" class="form-control"><?= $data_car['car_detail_describe'] ?></textarea>
+                            <label for="car_detail_describe" class="form-label">Mô tả chi tiết *</label>
+                            <textarea type="text" name="car_detail_describe" id="car_detail_describe" class="form-control remove-space-first"><?= $data_car['car_detail_describe'] ?></textarea>
                         </div>
 
                         <div class="form-group mt-3">
@@ -203,6 +203,10 @@
             </div>
         </div>
     </div>
+
+    <?php
+    include_once 'app/views/frontend/layouts/footer.php';
+    ?>
 
     <?php
     include_once 'app/views/resources/script/script.php';
@@ -256,7 +260,7 @@
         }
 
         // ----------------------------------------------------------------
-        const editForm = document.getElementById('editForm');
+        const formEdit = document.getElementById('formEdit');
         const btnUpdate = document.querySelector('.btn-update');
         const btnGoBack = document.querySelector('.btn-go-back');
         const btnGoBackHeader = document.querySelector('.btn-go-back-header');
@@ -265,7 +269,7 @@
         let formChanged = false;
 
         // Bắt đầu theo dõi sự thay đổi trên các trường input
-        editForm.addEventListener('change', () => {
+        formEdit.addEventListener('change', () => {
             formChanged = true;
             btnUpdate.classList.remove('disabled');
         });
@@ -306,11 +310,48 @@
             }
         });
 
+
+        //-------------- Loại bỏ dấu cách đầu tiên khi nhập liệu --------------
+        const inputElementNodelist = document.querySelectorAll('.remove-space-first');
+
+        inputElementNodelist.forEach(x => {
+            x.addEventListener('input', function() {
+                let inputValue = this.value;
+                // Loại bỏ dấu cách ở đầu chuỗi
+                inputValue = inputValue.trimStart();
+                // Đặt lại giá trị của input thành chuỗi đã được xử lý
+                this.value = inputValue;
+            });
+        })
+
         // Validation
         $(function() {
-            $('#formAdd').validate({
+            $('#formEdit').validate({
                 errorClass: "is-invalid",
-                errorPlacement: function(error, element) {},
+                errorPlacement: function(error, element) {
+                    element.attr("data-bs-original-title", error.text());
+                    if (element.attr("id") == "car_detail_describe") {
+                        $('#cke_car_detail_describe').addClass('ckeditor-invalidate');
+                        $('#cke_car_detail_describe').attr("data-bs-toggle", "tooltip");
+                        $('#cke_car_detail_describe').attr("data-bs-placement", "right");
+                        $('#cke_car_detail_describe').attr("data-bs-trigger", "hover");
+                        $('#cke_car_detail_describe').attr("data-bs-original-title", error.text());
+                        var tooltip = new bootstrap.Tooltip($('#cke_car_detail_describe'));
+                    };
+                },
+                success: function(element) {
+                    console.log(element);
+                    element.removeAttr("data-bs-original-title");
+                    if (element.attr("id") == "car_detail_describe-error") {
+                        $('#cke_car_detail_describe').removeClass('ckeditor-invalidate');
+                        $('#cke_car_detail_describe').removeAttr("data-bs-toggle");
+                        $('#cke_car_detail_describe').removeAttr("data-bs-placement");
+                        $('#cke_car_detail_describe').removeAttr("data-bs-trigger");
+                        $('#cke_car_detail_describe').removeAttr("data-bs-original-title");
+                        var tooltip = new bootstrap.Tooltip($('#cke_car_detail_describe'));
+                    }
+                },
+                ignore: [],
                 rules: {
                     car_name: {
                         required: true,
@@ -319,7 +360,7 @@
                     },
                     car_price: {
                         required: true,
-                        minlength: 10,
+                        minlength: 7,
                         maxlength: 15,
                     },
                     car_quantity: {
@@ -340,7 +381,49 @@
                         minlength: 10,
                         maxlength: 200,
                     },
+                    car_detail_describe: {
+                        required: function() {
+                            CKEDITOR.instances.car_detail_describe.updateElement();
+                        },
+                        minlength: 100,
+                        maxlength: 5000,
+                    }
                 },
+                messages: {
+                    car_name: {
+                        required: 'Không được để trống',
+                        minlength: 'Tối thiểu 3 kí tự',
+                        maxlength: 'Tối đa 50 kí tự',
+                    },
+                    car_price: {
+                        required: 'Không được để trống',
+                        minlength: 'Tối thiểu 7 kí tự',
+                        maxlength: 'Tối đa 15 kí tự',
+                    },
+                    car_quantity: {
+                        required: 'Không được để trống',
+                        maxlength: 'Tối đa 2 kí tự',
+                    },
+                    car_type_id: {
+                        required: 'Chưa chọn',
+                    },
+                    car_seat_id: {
+                        required: 'Chưa chọn',
+                    },
+                    car_transmission_id: {
+                        required: 'Chưa chọn',
+                    },
+                    car_describe: {
+                        required: 'Không được để trống',
+                        minlength: 'Tối thiểu 10 kí tự',
+                        maxlength: 'Tối đa 200 kí tự',
+                    },
+                    car_detail_describe: {
+                        required: 'Không được để trống',
+                        minlength: 'Tối thiểu 100 kí tự',
+                        maxlength: 'Tối đa 5000 kí tự',
+                    },
+                }
             });
         });
     </script>

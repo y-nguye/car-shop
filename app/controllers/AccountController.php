@@ -351,8 +351,8 @@ class AccountController
 
     public function editPersonInfo($DB)
     {
-        $DB['db_user']->connect();
         if (isset($_POST["btnEdit"])) {
+            $DB['db_user']->connect();
             $user_fullname = $_POST["user_fullname"];
             $user_tel = $_POST["user_tel"];
             $user_address = $_POST["user_address"];
@@ -371,21 +371,5 @@ class AccountController
             $DB['db_user']->updateAvatar($_SESSION["user_id"], $_FILES['user_avt'], $data_user['user_avt'], $uploadDir);
             echo '<script>location.href = "/car-shop/account"</script>';
         }
-    }
-
-    public function admin($DB)
-    {
-        if (!isset($_SESSION["logged"])) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-
-        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-        if ($_SESSION["user_is_admin"]) {
-            include_once __DIR__ . "/../views/backend/admin/index.php";
-        } else echo '<script>location.href = "/car-shop/account"</script>';
     }
 }

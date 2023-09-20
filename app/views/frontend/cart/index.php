@@ -12,7 +12,7 @@
 <body>
 
     <?php
-    include_once 'app/views/resources/layouts/header.php'
+    include_once 'app/views/frontend/layouts/header.php';
     ?>
 
     <div class="container-lg">

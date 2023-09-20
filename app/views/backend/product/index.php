@@ -97,6 +97,10 @@
     </div>
 
     <?php
+    include_once 'app/views/frontend/layouts/footer.php';
+    ?>
+
+    <?php
     include_once 'app/views/resources/script/script.php';
     ?>
 

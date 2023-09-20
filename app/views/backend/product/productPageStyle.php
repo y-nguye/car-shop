@@ -1,11 +1,6 @@
 <style>
     .custom-sidebar {
-        height: 100vh;
-        /* top: 5px; */
-        /* padding: 5px; */
-        border-left: 1px solid #ebebeb;
-        border-right: 1px solid #ebebeb;
-        background-color: white;
+        height: calc(100vh - 150px);
     }
 
     .custom-toolbar {
@@ -51,5 +46,29 @@
 
     .container-validate {
         border: 1px solid red !important;
+    }
+
+    .tooltip-inner {
+        background-color: red;
+        color: white;
+    }
+
+    .bs-tooltip-end .tooltip-arrow::before {
+        border-right-color: red;
+        -webkit-border-right-color: red;
+    }
+
+    .bs-tooltip-top .tooltip-arrow::before {
+        border-top-color: red;
+        -webkit-border-top-color: red;
+    }
+
+    .bs-tooltip-bottom .tooltip-arrow::before {
+        border-bottom-color: red;
+        -webkit-border-bottom-color: red;
+    }
+
+    .ckeditor-invalidate {
+        border-color: red !important;
     }
 </style>

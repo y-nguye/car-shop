@@ -8,37 +8,73 @@ class CarsData extends DatabaseManager
 
     public function getData($car_id)
     {
-        $sql = "SELECT  car_id,
-                        car_name,
-                        car_price,
-                        car_quantity,
-                        car_describe,
-                        car_detail_describe,
-                        car_seat_id,
-                        car_fuel_id,
-                        car_type_id,
-                        car_transmission_id,
-                        car_producer_id,
-                        car_update_at,
-                        car_deleted,
-                        car_deleted_at
-                        FROM $this->table WHERE car_id = $car_id AND car_deleted = 0;";
+        $sql = "SELECT car.car_id, car.car_name, car.car_price, car.car_describe, car.car_detail_describe,
+                car_type.car_type_name,
+                car_seat.car_seat,
+                car_fuel.car_fuel,
+                car_transmission.car_transmission,
+                car_producer.car_producer_name,
+                MIN(car_img.car_img_filename) FROM cars car 
+                LEFT JOIN car_img ON car_img.car_id = car.car_id
+                LEFT JOIN car_type ON car_type.car_type_id = car.car_type_id 
+                LEFT JOIN car_seat ON car_seat.car_seat_id = car.car_seat_id
+                LEFT JOIN car_fuel ON car_fuel.car_fuel_id = car.car_fuel_id
+                LEFT JOIN car_transmission ON car_transmission.car_transmission_id = car.car_transmission_id
+                LEFT JOIN car_producer ON car_producer.car_producer_id = car.car_producer_id
+                WHERE car.car_deleted = 0 AND car.car_id = $car_id
+                GROUP BY car.car_id;";
 
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
-        } else {
-            echo "Không có kết quả";
         }
+        return null;
+    }
+
+    public function getDataByChoose($car_type_id = null, $car_producer_id = null, $car_transmission_id = null, $car_fuel_id = null)
+    {
+        $insertToQuery = '';
+        $car_type_id != null && $insertToQuery .= ' AND car.car_type_id = ' . $car_type_id;
+        $car_producer_id != null && $insertToQuery .= ' AND car.car_producer_id = ' . $car_producer_id;
+        $car_fuel_id != null && $insertToQuery .= ' AND car.car_fuel_id = ' . $car_fuel_id;
+        $car_transmission_id != null && $insertToQuery .= ' AND car.car_transmission_id = ' . $car_transmission_id;
+        $sql = "SELECT car.car_id, car.car_name, car.car_price, car.car_describe, car.car_type_id AS car_type_id, car_type.car_type_name, MIN(car_img.car_img_id) AS car_img_id, car_img.car_img_filename
+                FROM cars car
+                LEFT JOIN car_img ON car_img.car_id = car.car_id
+                LEFT JOIN car_type ON car_type.car_type_id = car.car_type_id
+                WHERE car.car_deleted = 0$insertToQuery
+                GROUP BY car.car_id, car.car_name, car.car_price, car.car_describe;";
+
+        $this->result = $this->execute($sql);
+
+        if ($this->result->num_rows > 0) {
+            $data = [];
+            while ($row = $this->result->fetch_assoc()) {
+                $data[] = array(
+                    'car_id' => $row['car_id'],
+                    'car_name' => $row['car_name'],
+                    'car_price' => $row['car_price'],
+                    'car_describe' => $row['car_describe'],
+                    'car_detail_describe' => $row['car_detail_describe'],
+                    'car_type_id' => $row['car_type_id'],
+                    'car_type_name' => $row['car_type_name'],
+                    'car_img_id' => $row['car_img_id'],
+                    'car_img_filename' => $row['car_img_filename'],
+                );
+            }
+            return $data;
+        }
+        return null;
     }
 
     public function getAllData()
     {
         $sql = "SELECT * FROM $this->table WHERE car_deleted = 0;";
         $this->result = $this->execute($sql);
-        $data = [];
+
         if ($this->result->num_rows > 0) {
+            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_id' => $row['car_id'],
@@ -57,16 +93,18 @@ class CarsData extends DatabaseManager
                     'car_deleted_at' => $row['car_deleted_at'],
                 );
             }
+            return $data;
         }
-        return $data;
+        return null;
     }
+
 
     public function getAllDataDeleted()
     {
         $sql = "SELECT * FROM $this->table WHERE car_deleted = 1;";
         $this->result = $this->execute($sql);
-        $data = [];
         if ($this->result->num_rows > 0) {
+            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_id' => $row['car_id'],
@@ -85,8 +123,9 @@ class CarsData extends DatabaseManager
                     'car_deleted_at' => $row['car_deleted_at'],
                 );
             }
+            return $data;
         }
-        return $data;
+        return null;
     }
 
     public function setData(

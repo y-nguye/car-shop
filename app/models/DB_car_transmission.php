@@ -8,14 +8,13 @@ class CarTransmissionData extends DatabaseManager
 
     public function getData($car_transmission_id)
     {
-        $sql = "SELECT car_transmission_id, car_transmission FROM $this->table WHERE car_transmission_id = $car_transmission_id;";
+        $sql = "SELECT * FROM $this->table WHERE car_transmission_id = $car_transmission_id;";
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
-        } else {
-            echo "Không có kết quả";
         }
+        return null;
     }
 
     public function getAllData()
@@ -32,8 +31,7 @@ class CarTransmissionData extends DatabaseManager
                 );
             }
             return $data;
-        } else {
-            echo "Không có kết quả.";
         }
+        return null;
     }
 }

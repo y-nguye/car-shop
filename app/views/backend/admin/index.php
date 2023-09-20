@@ -30,7 +30,7 @@
                     </div>
                 </nav>
 
-                <h1 class="ms-4">Xin chào admin, Ý</h1>
+                <h1 class="ms-4">Xin chào admin, <?= $lastName ?></h1>
                 <div class="row mt-5">
 
                     <div class="col-6 pe-4 d-flex align-items-center justify-content-end">
@@ -60,10 +60,15 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <?php
-        include_once 'app/views/resources/script/script.php';
-        ?>
+    <?php
+    include_once 'app/views/frontend/layouts/footer.php';
+    ?>
+
+    <?php
+    include_once 'app/views/resources/script/script.php';
+    ?>
 
 </body>
 

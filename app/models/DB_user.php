@@ -13,9 +13,8 @@ class UserData extends DatabaseManager
 
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
-        } else {
-            echo "Không có kết quả";
         }
+        return null;
     }
 
     public function checkDataByUsername($user_username)
@@ -25,9 +24,8 @@ class UserData extends DatabaseManager
 
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function checkDataByEmail($user_email)
@@ -37,9 +35,8 @@ class UserData extends DatabaseManager
 
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function getAllData()
@@ -49,9 +46,8 @@ class UserData extends DatabaseManager
 
         if ($this->result->num_rows > 0) {
             return $this->result;
-        } else {
-            echo "Không có kết quả.";
         }
+        return null;
     }
 
     public function setData($user_username, $user_password, $user_fullname, $user_tel, $user_email, $user_address)

@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include 'app/views/resources/css/styles.php' ?>
-    <link href="app/views/frontend/home/homePageStyle.css" rel="stylesheet" type="text/css" />
+    <?php include_once 'app/views/resources/css/styles.php' ?>
+    <?php include_once 'app/views/frontend/home/homePageStyle.php' ?>
     <title>Trang chủ</title>
 </head>
 
 <body>
 
     <?php
-    include_once 'app/views/resources/layouts/header.php'
+    include_once 'app/views/frontend/layouts/header.php';
     ?>
 
     <div class="container-lg body-home-page">
@@ -82,6 +82,10 @@
         </div>
 
     </div>
+
+    <?php
+    include_once 'app/views/frontend/layouts/footer.php';
+    ?>
 
     <?php
     include_once 'app/views/resources/script/script.php';

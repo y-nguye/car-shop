@@ -11,7 +11,7 @@
 
 <body>
     <?php
-    include_once 'app/views/resources/layouts/header.php';
+    include_once 'app/views/frontend/layouts/header.php';
     ?>
 
     <div class="bg-light">
@@ -64,6 +64,10 @@
             </div>
         </div>
     </div>
+
+    <?php
+    include_once 'app/views/frontend/layouts/footer.php';
+    ?>
 
     <?php
     include_once 'app/views/resources/script/script.php';

@@ -42,10 +42,6 @@ switch ($routeInfo[0]) {
         [$controllerName, $methodName] = explode('@', $handler);
         require 'app/controllers/' . $controllerName . '.php';
         $controller = new $controllerName();
-
-        // Gọi phương thức của controller được xác định bởi $methodName.
-        // $vars là một mảng chứa các biến đối số được trích xuất từ URL, 
-        // và $db à một đối tượng cơ sở dữ liệu.
         call_user_func([$controller, $methodName], $DB, $vars);
         break;
 }

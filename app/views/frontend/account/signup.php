@@ -11,13 +11,13 @@
 
 <body>
     <?php
-    include_once 'app/views/resources/layouts/header.php'
+    include_once 'app/views/frontend/layouts/header.php';
     ?>
 
     <div class="container-lg text-center">
 
         <form id="formSignup" name="formSignup" method="post" action="">
-            <div class="container mt-5 d-flex flex-column justify-content-center" style="width: 25rem;">
+            <div class="container pt-5 d-flex flex-column justify-content-center" style="width: 25rem;">
                 <h3 class="text-dark mb-4">Đăng kí</h3>
                 <div id="liveAlertPlaceholder" class="text-start"></div>
 
@@ -50,10 +50,14 @@
                     <label for="user_password_confirm">Nhập lại mật khẩu</label>
                 </div>
                 <button type="submit" name="signupBtn" class="btn btn-secondary p-3">Đăng kí</button>
-                <span class="mt-3">Đã có tài khoản? <a href="/car-shop/account/login">đăng nhập thôi</a></span>
+                <span class="mt-3 pb-5">Đã có tài khoản? <a href="/car-shop/account/login">đăng nhập thôi</a></span>
             </div>
         </form>
     </div>
+
+    <?php
+    include_once 'app/views/frontend/layouts/footer.php';
+    ?>
 
     <?php
     include_once 'app/views/resources/script/script.php';

@@ -11,17 +11,6 @@
         --font-family: 'IBM Plex Sans', sans-serif;
     }
 
-    * {
-        margin: 0;
-        padding: 0;
-        /* Đỡ hại não khi tính toán width height */
-        box-sizing: border-box;
-    }
-
-    html {
-        /* Sử dụng đơn vị REM (Root EM) */
-        font-size: 16px;
-    }
 
     body {
         font-family: var(--font-family);
@@ -30,7 +19,6 @@
         text-rendering: optimizeSpeed;
         color: var(--text-color);
     }
-
 
     ul {
         /* Loại bỏ dấu chấm từ danh sách không sắp xếp (unordered list) */
@@ -51,5 +39,13 @@
 
     .fs-7 {
         font-size: 14px;
+    }
+
+    .text-justify {
+        text-align: justify;
+    }
+
+    .push-footer-down-page {
+        min-height: calc(100vh - 150px - 60px);
     }
 </style>
