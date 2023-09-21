@@ -24,11 +24,11 @@ class ProductController
         $DB['db_car_producer']->connect();
         $DB['db_car_img']->connect();
 
-        $data_car_seat = $DB['db_car_seat']->getAllData();
-        $data_car_type = $DB['db_car_type']->getAllData();
-        $data_car_fuel = $DB['db_car_fuel']->getAllData();
-        $data_car_transmission = $DB['db_car_transmission']->getAllData();
-        $data_car_producer = $DB['db_car_producer']->getAllData();
+        $data_all_car_seat = $DB['db_car_seat']->getAllData();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $data_all_car_fuel = $DB['db_car_fuel']->getAllData();
+        $data_all_car_transmission = $DB['db_car_transmission']->getAllData();
+        $data_all_car_producer = $DB['db_car_producer']->getAllData();
 
         // USES
         include_once __DIR__ . "/../views/backend/product/add.php";
@@ -312,13 +312,14 @@ class ProductController
         $DB['db_car_producer']->connect();
         $DB['db_car_img']->connect();
 
-        $data_car = $DB['db_cars']->getData($car_id);
-        $data_car_seat = $DB['db_car_seat']->getAllData();
-        $data_car_type = $DB['db_car_type']->getAllData();
-        $data_car_fuel = $DB['db_car_fuel']->getAllData();
-        $data_car_transmission = $DB['db_car_transmission']->getAllData();
-        $data_car_producer = $DB['db_car_producer']->getAllData();
-        $data_car_img = $DB['db_car_img']->getAllData($car_id);
+        // getData thì trả về mảng 1 chiều, getAllData thì trả về mảng 2 chiều
+        $data_car = $DB['db_cars']->getDataByID($car_id);
+        $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($car_id);
+        $data_all_car_seat = $DB['db_car_seat']->getAllData();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $data_all_car_fuel = $DB['db_car_fuel']->getAllData();
+        $data_all_car_transmission = $DB['db_car_transmission']->getAllData();
+        $data_all_car_producer = $DB['db_car_producer']->getAllData();
 
         include __DIR__ . "/../views/backend/product/edit.php";
 
@@ -553,7 +554,7 @@ class ProductController
 
             if (!empty($_FILES['car_img_filename']['name'][0])) {
                 $uploadDir = __DIR__ . '/../../assets/uploads/';
-                $DB['db_car_img']->updateData($data_car_img, $_FILES['car_img_filename'], $car_id, $uploadDir);
+                $DB['db_car_img']->updateData($data_all_car_img, $_FILES['car_img_filename'], $car_id, $uploadDir);
             }
 
             // Ngắt kết nối cho các đối tượng con

@@ -13,7 +13,7 @@ include_once 'app/views/frontend/layouts/headerStyles.php';
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-lg-0 navbar-list">
 
-                <?php foreach ($data_car_type as $value) { ?>
+                <?php foreach ($data_all_car_type as $value) { ?>
                     <?=
                     '<li class="nav-item ms-4">
                     <a class="nav-link text-dark" href="/car-shop/type-' . convertToSlug($value['car_type_name']) . '">' . $value['car_type_name'] . '</a>

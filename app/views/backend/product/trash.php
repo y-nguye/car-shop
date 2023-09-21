@@ -59,8 +59,8 @@
                                         <td name="checkbox-td" class="text-center"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $value['car_id'] ?>" data-car_id="<?= $value['car_id'] ?>"></td>
                                         <td><?= $value['car_id'] ?></td>
                                         <td><?= $value['car_name'] ?></td>
-                                        <td><?= number_format($value['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
-                                        <td><?= $value['car_quantity'] ?></td>
+                                        <td class="text-end"><?= number_format($value['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
+                                        <td class="text-end"><?= $value['car_quantity'] ?></td>
                                         <td><?= $value['car_deleted_at'] ?></td>
                                     </tr>
                                 <?php } ?>

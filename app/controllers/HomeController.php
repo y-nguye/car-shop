@@ -8,8 +8,8 @@ class HomeController
         $DB['db_cars']->connect();
         $DB['db_car_type']->connect();
 
-        $data_cars = $DB['db_cars']->getAllData();
-        $data_car_type = $DB['db_car_type']->getAllData();
+        $data_all_cars = $DB['db_cars']->getAllData();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
 
         include __DIR__ . "/../views/frontend/home/index.php";
 
@@ -18,15 +18,17 @@ class HomeController
     }
     public function type($DB, $type)
     {
+        // Chuyển mảng thành chuỗi
         $type = implode('', $type);
         $DB['db_cars']->connect();
         $DB['db_car_type']->connect();
-        $data_car_type = $DB['db_car_type']->getAllData();
-        foreach ($data_car_type as $value) {
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        foreach ($data_all_car_type as $value) {
             if ($this->convertToSlug($value['car_type_name']) == $type) {
                 // Lấy dữ liệu theo loại 
-                $dataNameType = $value['car_type_name'];
-                $data = $DB['db_cars']->getDataByChoose($value['car_type_id']);
+                $nameType = $value['car_type_name'];
+                $data_all_with_img = $DB['db_cars']->getAllDataWithFirstImgByCarTypeID($value['car_type_id']);
+
                 // foreach ($data as $data) var_dump($data['car_id']);
             }
         }
@@ -37,11 +39,16 @@ class HomeController
         $DB['db_cars']->connect();
         $DB['db_car_img']->connect();
         $DB['db_car_type']->connect();
+        $DB['db_car_seat']->connect();
+        $DB['db_car_transmission']->connect();
 
-        $data_car = $DB['db_cars']->getData($vars['id']);
-        $data_car_type = $DB['db_car_type']->getAllData();
-        $data_car_img = $DB['db_car_img']->getAllData($vars['id']);
-        // var_dump($data_car_img[0]['car_img_filename']);
+        $data_car = $DB['db_cars']->getDataByID($vars['id']);
+        $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($vars['id']);
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $data_car_type = $DB['db_car_type']->getDataByID($data_car['car_type_id']);
+        $data_car_seat = $DB['db_car_seat']->getDataByID($data_car['car_seat_id']);
+        $data_car_transmission = $DB['db_car_transmission']->getDataByID($data_car['car_transmission_id']);
+
         include_once __DIR__ . "/../views/frontend/home/product.php";
     }
     public function service($DB, $type)

@@ -20,10 +20,15 @@
             <div class="col-7">
                 <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="rounded-3 mb-3 img-large">
                 <div class="d-flex align-items-center justify-content-center">
-                    <?php foreach ($data_car_img as $data) : ?>
+                    <?php foreach ($data_all_car_img as $data) : ?>
                         <?php if ($data['car_img_filename']) : ?>
                             <div class="d-flex flex-column align-items-center justify-content-center">
                                 <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="rounded-3 m-1 img-small">
+                                <div class="dot-img-small"></div>
+                            </div>
+                        <?php else : ?>
+                            <div class="d-flex flex-column align-items-center justify-content-center">
+                                <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="rounded-3 m-1 img-small">
                                 <div class="dot-img-small"></div>
                             </div>
                         <?php endif; ?>
@@ -41,19 +46,19 @@
                         <div class="col-4">
                             <div class="d-flex flex-column align-items-center justify-content-center">
                                 <span>Kiểu dáng</span>
-                                <span class="mt-2 p-1 fs-4"><?= $data_car['car_type_name'] ?></span>
+                                <span class="mt-2 p-1 fs-4"><?= $data_car_type['car_type_name'] ?></span>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="d-flex flex-column align-items-center justify-content-center">
                                 <span>Số chỗ ngồi</span>
-                                <span class="mt-2 p-1 fs-4"><?= $data_car['car_seat'] ?></span>
+                                <span class="mt-2 p-1 fs-4"><?= $data_car_seat['car_seat'] ?></span>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="d-flex flex-column align-items-center justify-content-center">
                                 <span>Loại hộp số</span>
-                                <span class="text-center p-1 mt-2 fs-4"><?= $data_car['car_transmission'] ?></span>
+                                <span class="text-center p-1 mt-2 fs-4"><?= $data_car_transmission['car_transmission'] ?></span>
                             </div>
                         </div>
                     </div>

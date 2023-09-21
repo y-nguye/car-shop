@@ -6,9 +6,9 @@ class CarProducerData extends DatabaseManager
 {
     private $table = "car_producer";
 
-    public function getData($id)
+    public function getDataByID($car_producer_id)
     {
-        $sql = "SELECT * FROM $this->table WHERE car_id = $id;";
+        $sql = "SELECT * FROM $this->table WHERE car_producer_id = $car_producer_id;";
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
