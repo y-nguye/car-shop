@@ -54,6 +54,35 @@ class HomeController
         $data_car_producer = $DB['db_car_producer']->getDataByID($data_car['car_producer_id']);
 
         include_once __DIR__ . "/../views/frontend/home/product.php";
+
+        if (isset($_POST['btnCostCalculator'])) {
+
+            $car_id = $_POST['car_id'];
+            $car_name = $_POST['car_name'];
+            $car_price = $_POST['car_price'];
+            $car_type_name = $_POST['car_type_name'];
+            $car_seat = $_POST['car_seat'];
+            $car_transmission = $_POST['car_transmission'];
+            $car_fuel = $_POST['car_fuel'];
+            $car_producer_name = $_POST['car_producer_name'];
+
+            $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
+            $car_img_filename = implode('', $data_car_img_filename);
+
+            $cart = [];
+            if (isset($_SESSION['cart'])) {
+                $cart = $_SESSION['cart'];
+            }
+
+            $cart[$car_id] = array(
+                'car_id' => $car_id,
+                'car_name' => $car_name,
+                'car_price' => $car_price,
+                'car_img_filename' => $car_img_filename,
+            );
+
+            $_SESSION['cart'] = $cart;
+        }
     }
     public function service($DB, $type)
     {

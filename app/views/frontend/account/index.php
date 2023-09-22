@@ -29,7 +29,6 @@
                     </div>
                 </div>
                 <div class="col-1"></div>
-                <!-- <h1 class="pt-5 pb-4">Xin chào, <?= $lastName ?></h1> -->
             </div>
         </div>
         <div class="container-lg">

@@ -30,8 +30,13 @@
                     <label for="user_tel">Số điện thoại</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" name="user_address" class="form-control" id="user_address" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
-                    <label for="user_address">Địa chỉ</label>
+                    <select class="form-select" name="user_province_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
+                        <option selected value="">---Chọn---</option>
+                        <?php foreach ($data_all_user_province as $value) { ?>
+                            <option value="<?= $value['user_province_id'] ?>"> <?= $value['user_province_name'] ?></option>
+                        <?php } ?>
+                    </select>
+                    <label for="" class="form-label">Nơi đăng kí xe</label>
                 </div>
                 <div class="form-floating mb-3 text-start">
                     <input type="email" name="user_email" class="form-control" id="user_email" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
@@ -83,9 +88,8 @@
                         required: true,
                         maxlength: 15,
                     },
-                    user_address: {
+                    user_province_id: {
                         required: true,
-                        maxlength: 100,
                     },
                     user_email: {
                         required: true,
@@ -136,9 +140,8 @@
                         required: "Không được để trống",
                         maxlength: "Số điện thoại không hợp lệ",
                     },
-                    user_address: {
-                        required: "Không được để trống",
-                        maxlength: "Địa chỉ quá dài",
+                    user_province_id: {
+                        required: "Chưa chọn",
                     },
                     user_email: {
                         required: "Không được để trống",

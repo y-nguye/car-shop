@@ -67,61 +67,75 @@
 
                 </div>
             </div>
+
             <div class="d-flex flex-column col-5 ps-5">
 
-                <h1 class="text-dark"><?= $data_car['car_name'] ?></h1>
-                <span class="fs-3"><?= number_format($data_car['car_price'], 0, ',', '.') ?> ₫</span>
+                <form name="formProductCar" method="post" action="">
+                    <h1 class="text-dark"><?= $data_car['car_name'] ?></h1>
+                    <span class="fs-3"><?= number_format($data_car['car_price'], 0, ',', '.') ?> ₫</span>
 
-                <div class="mt-4 pb-3 border-start border-end ">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="d-flex flex-column align-items-center justify-content-center">
-                                <span>Kiểu dáng</span>
-                                <span class="mt-2 p-1 fs-4"><?= $data_car_type['car_type_name'] ?></span>
+                    <div class="mt-4 pb-3 border-start border-end ">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="d-flex flex-column align-items-center justify-content-center">
+                                    <span>Kiểu dáng</span>
+                                    <span class="mt-2 p-1 fs-4"><?= $data_car_type['car_type_name'] ?></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="d-flex flex-column align-items-center justify-content-center">
-                                <span>Số chỗ ngồi</span>
-                                <span class="mt-2 p-1 fs-4"><?= $data_car_seat['car_seat'] ?></span>
+                            <div class="col-4">
+                                <div class="d-flex flex-column align-items-center justify-content-center">
+                                    <span>Số chỗ ngồi</span>
+                                    <span class="mt-2 p-1 fs-4"><?= $data_car_seat['car_seat'] ?></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="d-flex flex-column align-items-center justify-content-center">
-                                <span>Loại hộp số</span>
-                                <span class="text-center p-1 mt-2 fs-4"><?= $data_car_transmission['car_transmission'] ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-start border-end ">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="d-flex flex-column align-items-center justify-content-center ps-5">
-                                <span>Nhiên liệu</span>
-                                <span class="mt-2 p-1 fs-4"><?= $data_car_fuel['car_fuel'] ?></span>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="d-flex flex-column align-items-center justify-content-center pe-5">
-                                <span>Hãng sản xuất</span>
-                                <span class="mt-2 p-1 fs-4"><?= $data_car_producer['car_producer_name'] ?></span>
+                            <div class="col-4">
+                                <div class="d-flex flex-column align-items-center justify-content-center">
+                                    <span>Loại hộp số</span>
+                                    <span class="text-center p-1 mt-2 fs-4"><?= $data_car_transmission['car_transmission'] ?></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-
-
-                <div class="mt-auto">
-                    <button class="btn btn-primary mb-2 w-100">Dự toán chi phí</button>
-                    <div class="d-flex">
-                        <button class="btn btn-outline-primary w-50 me-2">Thêm vào giỏ hàng</button>
-                        <button class="btn btn-outline-secondary w-50">Đăng kí lái thử</button>
+                    <div class="mb-4 border-start border-end ">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="d-flex flex-column align-items-center justify-content-center ps-5">
+                                    <span>Nhiên liệu</span>
+                                    <span class="mt-2 p-1 fs-4"><?= $data_car_fuel['car_fuel'] ?></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex flex-column align-items-center justify-content-center pe-5">
+                                    <span>Hãng sản xuất</span>
+                                    <span class="mt-2 p-1 fs-4"><?= $data_car_producer['car_producer_name'] ?></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+
+                    <input type="hidden" name="car_id" value="<?= $data_car['car_id'] ?>" />
+                    <input type="hidden" name="car_name" value="<?= $data_car['car_name'] ?>" />
+                    <input type="hidden" name="car_price" value="<?= $data_car['car_price'] ?>" />
+                    <input type="hidden" name="car_type_name" value="<?= $data_car_type['car_type_name'] ?>" />
+                    <input type="hidden" name="car_seat" value="<?= $data_car_seat['car_seat'] ?>" />
+                    <input type="hidden" name="car_transmission" value="<?= $data_car_transmission['car_transmission'] ?>" />
+                    <input type="hidden" name="car_fuel" value="<?= $data_car_fuel['car_fuel'] ?>" />
+                    <input type="hidden" name="car_producer_name" value="<?= $data_car_producer['car_producer_name'] ?>" />
+
+                    <div class="mt-auto">
+                        <a class="btn btn-primary mb-2 w-100" href="/car-shop/cart/registration-fee/<?= $data['car_id'] ?>">Dự toán chi phí</a>
+                        <div class="d-flex">
+                            <button type="submit" name="btnCostCalculator" class="btn btn-outline-primary w-50 me-2">Thêm vào giỏ hàng</button>
+                            <button class="btn btn-outline-secondary w-50">Đăng kí lái thử</button>
+                        </div>
+                    </div>
+
+                </form>
+
             </div>
+
         </div>
 
         <div class="text-center">

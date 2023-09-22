@@ -18,8 +18,10 @@ class AccountController
 
         $DB['db_user']->connect();
         $DB['db_car_type']->connect();
+        $DB['db_user_province']->connect();
         $data_user = $DB['db_user']->getData($_SESSION["user_username"]);
         $data_all_car_type = $DB['db_car_type']->getAllData();
+        $data_all_user_province = $DB['db_user_province']->getAllData();
 
         $lastName = strrchr($_SESSION['user_fullname'], ' ');
         include_once __DIR__ . "/../views/frontend/account/index.php";
@@ -98,7 +100,9 @@ class AccountController
 
         $DB['db_user']->connect();
         $DB['db_car_type']->connect();
+        $DB['db_user_province']->connect();
         $data_car_type = $DB['db_car_type']->getAllData();
+        $data_all_user_province = $DB['db_user_province']->getAllData();
 
         include_once __DIR__ . "/../views/frontend/account/signup.php";
 
@@ -106,7 +110,7 @@ class AccountController
 
             $user_fullname = $_POST["user_fullname"];
             $user_tel = $_POST["user_tel"];
-            $user_address = $_POST["user_address"];
+            $user_province_id = $_POST["user_province_id"];
             $user_email = $_POST["user_email"];
             $user_username = $_POST["user_username"];
             $user_password = $_POST["user_password"];
@@ -176,21 +180,12 @@ class AccountController
 
             // 3. Kiểm tra địa chỉ
             // Rule: required
-            if (empty($user_address)) {
-                $errors['user_address'][] = [
+            if (empty($user_province_id)) {
+                $errors['user_province_id'][] = [
                     'rule' => 'required',
                     'rule_value' => true,
-                    'value' => $user_address,
-                    'msg' => 'Vui lòng nhập địa chỉ',
-                ];
-            }
-            // Rule: maxlength 100
-            elseif (strlen($user_address) > 100) {
-                $errors['user_address'][] = [
-                    'rule' => 'maxlength',
-                    'rule_value' => 100,
-                    'value' => $user_address,
-                    'msg' => 'Địa chỉ tối đa có 100 ký tự',
+                    'value' => $user_province_id,
+                    'msg' => 'Vui lòng chọn nơi đăng kí xe',
                 ];
             }
 

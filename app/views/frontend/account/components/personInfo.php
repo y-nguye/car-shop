@@ -1,7 +1,6 @@
 <?php
 $user_info = [
     ['Tên đầy đủ', '<i class="bi bi-person text-primary fs-4"></i>', 'user_fullname', $data_user['user_fullname']],
-    ['Địa chỉ', '<i class="bi bi-geo-alt text-primary fs-4"></i>', 'user_address', $data_user['user_address']],
     ['Số điện thoại', '<i class="bi bi-telephone text-primary fs-4"></i>', 'user_tel', $data_user['user_tel']],
 ];
 ?>
@@ -25,6 +24,29 @@ $user_info = [
                 </div>
             </div>
         <?php } ?>
+
+        <div class="col-6">
+            <div class="m-3 bg-light shadow-sm rounded card-custom" style="aspect-ratio: 4/1;">
+                <div class="rounded-3 p-3 pt-2 text-dark">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="text-dark m-0">Nơi đăng kí xe</h5>
+                        <i class="bi bi-geo-alt text-primary fs-4"></i>
+                    </div>
+                    <select class="form-select mt-3" name="user_province_id">
+                        <?php foreach ($data_all_user_province as $value) { ?>
+                            <?php if ($value['user_province_id'] == $data_user['user_province_id']) { ?>
+                                <option selected value="<?= $value['user_province_id'] ?>"> <?= $value['user_province_name'] ?></option>
+                            <?php } else { ?>
+                                <option value="<?= $value['user_province_id'] ?>"> <?= $value['user_province_name'] ?></option>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="d-flex align-items-center justify-content-end">
         <button type="submit" name="btnEdit" class="btn btn-primary align-self-end mt-3 me-3 btn-update">Cập nhật</button>

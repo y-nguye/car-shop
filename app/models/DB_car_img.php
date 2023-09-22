@@ -5,10 +5,10 @@ class CarImgData extends DatabaseManager
 {
     private $table = "car_img";
 
-    public function getDataByID($car_img_id)
+    public function getFirstDataByCarID($car_id)
     {
-        if (!$car_img_id) $car_img_id = 'NULL';
-        $sql = "SELECT * FROM $this->table WHERE car_img_id = $car_img_id;";
+        if (!$car_id) $car_id = 'NULL';
+        $sql = "SELECT MIN(car_img_filename) AS car_img_filename FROM $this->table WHERE car_id = $car_id;";
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
