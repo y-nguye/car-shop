@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once 'app/views/resources/css/styles.php' ?>
+    <?php include_once 'app/views/resources/styles/styles.php' ?>
     <?php include_once 'app/views/backend/product/productPageStyle.php'; ?>
-    <title>Danh sách sản phẩm</title>
+    <title>Trang chủ Admin</title>
 </head>
 
 <body>
@@ -30,12 +30,13 @@
                     </div>
                 </nav>
 
-                <h1 class="ms-4">Xin chào admin, <?= $lastName ?></h1>
-                <div class="row mt-5">
+                <h1 class="m-0 ms-4">Xin chào admin, <?= $lastName ?></h1>
 
-                    <div class="col-6 pe-4 d-flex align-items-center justify-content-end">
+                <div class="mt-5">
 
-                        <a class="border border-primary rounded-3" href="/car-shop/admin/product/add">
+                    <div class="d-flex justify-content-center">
+
+                        <a class="border border-primary rounded-3 me-3" href="/car-shop/admin/product/add">
                             <div class="card bg-light" style="width: 15rem; aspect-ratio: 1/1;">
                                 <div class="card-body text-center d-flex flex-column justify-content-center">
                                     <i class="bi bi-plus-circle fs-1"></i>
@@ -44,10 +45,7 @@
                             </div>
                         </a>
 
-                    </div>
-
-                    <div class="col-6 ps-4 d-flex align-items-center justify-content-start">
-                        <a class="border border-primary rounded-3" href="/car-shop/admin">
+                        <a class="border border-primary rounded-3 ms-3" href="/car-shop/admin">
                             <div class="card bg-light" style="width: 15rem; aspect-ratio: 1/1;">
                                 <div class="card-body text-center d-flex flex-column justify-content-center">
                                     <i class="bi bi-person-fill-gear fs-1"></i>
@@ -55,9 +53,12 @@
                                 </div>
                             </div>
                         </a>
+
                     </div>
 
                 </div>
+
+
             </div>
         </div>
     </div>

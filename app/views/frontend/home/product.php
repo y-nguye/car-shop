@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once 'app/views/resources/css/styles.php' ?>
+    <?php include_once 'app/views/resources/styles/styles.php' ?>
     <?php include_once 'app/views/frontend/home/homePageStyle.php' ?>
-    <title>Chi tiết xe</title>
+    <title><?= $data_car['car_name'] ?></title>
 </head>
 
 <body>
@@ -18,30 +18,61 @@
 
         <div class="row">
             <div class="col-7">
-                <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="rounded-3 mb-3 img-large">
-                <div class="d-flex align-items-center justify-content-center">
-                    <?php foreach ($data_all_car_img as $data) : ?>
-                        <?php if ($data['car_img_filename']) : ?>
-                            <div class="d-flex flex-column align-items-center justify-content-center">
-                                <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="rounded-3 m-1 img-small">
-                                <div class="dot-img-small"></div>
-                            </div>
-                        <?php else : ?>
-                            <div class="d-flex flex-column align-items-center justify-content-center">
-                                <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="rounded-3 m-1 img-small">
-                                <div class="dot-img-small"></div>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                <div class="d-flex">
+
+                    <div id="carouselIndicators" class="carousel slide rounded-3" data-bs-ride="true">
+                        <div class="carousel-indicators">
+                            <?php foreach ($data_all_car_img as $index => $data) : ?>
+                                <?php if (($index == 0)) continue ?>
+                                <?php if ($data['car_img_filename']) : ?>
+                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="<?= $index - 1 ?>" aria-label="Slide <?= $index ?>" <?php if ($index - 1 == 0) : ?> class="active" aria-current="true" <?php endif; ?>></button>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+
+                        </div>
+
+                        <div class="carousel-inner">
+
+                            <?php if (!$data['car_img_filename']) : ?>
+                                <div class="carousel-item active">
+                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
+                                </div>
+                            <?php endif ?>
+
+                            <?php foreach ($data_all_car_img as $index => $data) : ?>
+                                <!-- Loại bỏ hình đại diện -->
+                                <?php if ($index == 0) continue; ?>
+                                <?php if ($data['car_img_filename']) : ?>
+                                    <div class="carousel-item <?php if ($index == 1) echo 'active'; ?> " data-bs-interval="5000">
+                                        <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="d-block w-100">
+                                    </div>
+                                <?php else : ?>
+                                    <div class="carousel-item">
+                                        <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
+                                    </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
                 </div>
             </div>
             <div class="d-flex flex-column col-5 ps-5">
 
-                <h1><?= $data_car['car_name'] ?></h1>
-                <div class=""><span class="fs-3"><?= number_format($data_car['car_price'], 0, ',', '.') ?> VNĐ</span></div>
+                <h1 class="text-dark"><?= $data_car['car_name'] ?></h1>
+                <span class="fs-3"><?= number_format($data_car['car_price'], 0, ',', '.') ?> ₫</span>
 
-
-                <div class="mt-4 mb-4 border-start border-end ">
+                <div class="mt-4 pb-3 border-start border-end ">
                     <div class="row">
                         <div class="col-4">
                             <div class="d-flex flex-column align-items-center justify-content-center">
@@ -64,18 +95,37 @@
                     </div>
                 </div>
 
-                <div class="">
-                    <p class="text-justify mt-2 fs-5"><?= $data_car['car_describe'] ?></p>
+                <div class="mb-4 border-start border-end ">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-flex flex-column align-items-center justify-content-center ps-5">
+                                <span>Nhiên liệu</span>
+                                <span class="mt-2 p-1 fs-4"><?= $data_car_fuel['car_fuel'] ?></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex flex-column align-items-center justify-content-center pe-5">
+                                <span>Hãng sản xuất</span>
+                                <span class="mt-2 p-1 fs-4"><?= $data_car_producer['car_producer_name'] ?></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+
+
                 <div class="mt-auto">
-                    <button class="btn btn-primary mb-2 w-100">Dự toán</button>
+                    <button class="btn btn-primary mb-2 w-100">Dự toán chi phí</button>
                     <div class="d-flex">
                         <button class="btn btn-outline-primary w-50 me-2">Thêm vào giỏ hàng</button>
                         <button class="btn btn-outline-secondary w-50">Đăng kí lái thử</button>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="text-center">
+            <p class="mt-2 p-4 fs-4"> <?= $data_car['car_describe'] ?> </p>
         </div>
 
         <hr>
@@ -91,34 +141,9 @@
     include_once 'app/views/frontend/layouts/footer.php';
     ?>
 
-    <script>
-        const imgSmall = document.querySelectorAll('.img-small');
-        const imgLarge = document.querySelector('.img-large');
-        const dots = document.querySelectorAll('.dot-img-small');
-
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log(imgSmall[0].src);
-            imgLarge.src = imgSmall[0].src;
-            imgSmall[0].nextElementSibling.classList.add('dot-img-small-active');
-        });
-
-        imgSmall.forEach(x => {
-            x.addEventListener('click', () => {
-                if (imgLarge.src != x.src) {
-                    imgLarge.style.opacity = '0';
-                    setTimeout(() => {
-                        imgLarge.src = x.src;
-                        imgLarge.style.opacity = '1';
-                    }, 200)
-                    dots.forEach(x => {
-                        x.classList.remove('dot-img-small-active');
-                    });
-                    x.nextElementSibling.classList.add('dot-img-small-active');
-                }
-            });
-        });
-    </script>
-
+    <?php
+    include_once 'app/views/resources/script/script.php';
+    ?>
 
 </body>
 

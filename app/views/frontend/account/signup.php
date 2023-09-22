@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include 'app/views/resources/css/styles.php' ?>
+    <?php include_once 'app/views/resources/styles/styles.php' ?>
     <?php include_once 'app/views/frontend/account/accountPageStyle.php' ?>
     <title>Đăng kí</title>
 </head>

@@ -33,33 +33,22 @@
         background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
     }
 
-    .card {
-        border: none;
+    .card-type-page-custom {
+        transition: background-color 0.32s ease;
     }
 
-    .img-large {
-        width: 100%;
+    .card-type-page-custom:hover {
+        background-color: #f4f4f4;
+        transition: background-color 0.32s ease;
+    }
+
+    .img-on-card {
         aspect-ratio: 16/9;
         object-fit: cover;
-        transition: opacity 0.2s ease;
     }
 
-    .img-small {
-        width: 100px;
-        aspect-ratio: 16/9;
-        object-fit: cover;
-        cursor: pointer;
-    }
-
-    .dot-img-small {
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        transition: all 0.32s ease;
-        background-color: transparent;
-    }
-
-    .dot-img-small-active {
-        background-color: var(--bs-secondary);
+    .card-title {
+        bottom: 40px;
+        left: 50px;
     }
 </style>

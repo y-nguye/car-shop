@@ -6,7 +6,6 @@
         "ckeditor/ckeditor": "^4.22",
         "components/jquery": "^3.6",
         "datatables.net/datatables.net": "dev-master",
-        "datatables.net/datatables.net-bs5": "dev-master",
-        "enyo/dropzone": "^5.9"
+        "datatables.net/datatables.net-bs5": "dev-master"
     }
 }

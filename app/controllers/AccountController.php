@@ -19,7 +19,7 @@ class AccountController
         $DB['db_user']->connect();
         $DB['db_car_type']->connect();
         $data_user = $DB['db_user']->getData($_SESSION["user_username"]);
-        $data_car_type = $DB['db_car_type']->getAllData();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
 
         $lastName = strrchr($_SESSION['user_fullname'], ' ');
         include_once __DIR__ . "/../views/frontend/account/index.php";

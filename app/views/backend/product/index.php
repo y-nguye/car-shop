@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once 'app/views/resources/css/styles.php' ?>
+    <?php include_once 'app/views/resources/styles/styles.php' ?>
     <?php include_once 'app/views/backend/product/productPageStyle.php'; ?>
     <title>Danh sách sản phẩm</title>
 </head>

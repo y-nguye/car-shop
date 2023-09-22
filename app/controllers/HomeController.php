@@ -41,6 +41,8 @@ class HomeController
         $DB['db_car_type']->connect();
         $DB['db_car_seat']->connect();
         $DB['db_car_transmission']->connect();
+        $DB['db_car_fuel']->connect();
+        $DB['db_car_producer']->connect();
 
         $data_car = $DB['db_cars']->getDataByID($vars['id']);
         $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($vars['id']);
@@ -48,6 +50,8 @@ class HomeController
         $data_car_type = $DB['db_car_type']->getDataByID($data_car['car_type_id']);
         $data_car_seat = $DB['db_car_seat']->getDataByID($data_car['car_seat_id']);
         $data_car_transmission = $DB['db_car_transmission']->getDataByID($data_car['car_transmission_id']);
+        $data_car_fuel = $DB['db_car_fuel']->getDataByID($data_car['car_fuel_id']);
+        $data_car_producer = $DB['db_car_producer']->getDataByID($data_car['car_producer_id']);
 
         include_once __DIR__ . "/../views/frontend/home/product.php";
     }

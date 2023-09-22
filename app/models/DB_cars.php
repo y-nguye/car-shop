@@ -9,7 +9,6 @@ class CarsData extends DatabaseManager
     public function getDataByID($car_id)
     {
         $sql = "SELECT * FROM $this->table WHERE car_id = $car_id AND car_deleted = 0;";
-
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {

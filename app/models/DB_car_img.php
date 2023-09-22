@@ -5,8 +5,9 @@ class CarImgData extends DatabaseManager
 {
     private $table = "car_img";
 
-    public function getData($car_img_id)
+    public function getDataByID($car_img_id)
     {
+        if (!$car_img_id) $car_img_id = 'NULL';
         $sql = "SELECT * FROM $this->table WHERE car_img_id = $car_img_id;";
         $this->result = $this->execute($sql);
 
