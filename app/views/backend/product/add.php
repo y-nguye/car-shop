@@ -40,10 +40,17 @@
                         <div id="liveAlertPlaceholder"></div>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group mb-3">
                                     <label for="car_name" class="form-label">Tên xe *</label>
                                     <input type="text" name="car_name" id="car_name" class="form-control remove-space-first" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="car_engine" class="form-label">Động cơ *</label>
+                                    <input type="text" name="car_engine" id="car_engine" class="form-control remove-space-first" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                 </div>
                             </div>
 
@@ -95,7 +102,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="col-2">
                                 <div class="form-group">
@@ -322,6 +328,9 @@
                         minlength: 3,
                         maxlength: 50,
                     },
+                    car_engine: {
+                        required: true,
+                    },
                     car_price: {
                         required: true,
                         minlength: 7,
@@ -358,6 +367,9 @@
                         required: 'Không được để trống',
                         minlength: 'Tối thiểu 3 kí tự',
                         maxlength: 'Tối đa 50 kí tự',
+                    },
+                    car_engine: {
+                        required: 'Không được để trống',
                     },
                     car_price: {
                         required: 'Không được để trống',

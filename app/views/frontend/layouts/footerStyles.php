@@ -1,5 +1,6 @@
 <style>
     .footer-custom {
-        height: 150px;
+        height: var(--footer-height);
+        margin-top: var(--footer-margin-top);
     }
 </style>

@@ -53,7 +53,7 @@
     }
 
     .empty-space-below-navbar {
-        height: 60px;
+        height: var(--navbar-height);
     }
 
     .blur-below-navbar {

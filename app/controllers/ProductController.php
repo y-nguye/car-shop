@@ -41,6 +41,7 @@ class ProductController
             $car_quantity = $_POST['car_quantity'];
             $car_describe = $_POST['car_describe'];
             $car_detail_describe = $_POST['car_detail_describe'];
+            $car_engine = $_POST['car_engine'];
             $car_seat_id = empty($_POST['car_seat_id']) ? 'NULL' : $_POST['car_seat_id'];
             $car_fuel_id = empty($_POST['car_fuel_id']) ? 'NULL' : $_POST['car_fuel_id'];
             $car_type_id = empty($_POST['car_type_id']) ? 'NULL' : $_POST['car_type_id'];
@@ -79,8 +80,19 @@ class ProductController
                 ];
             }
 
+            // 2. Kiểm tra ô động cơ
+            // Rule: required
+            if (empty($car_engine)) {
+                $errors['car_engine'][] = [
+                    'rule' => 'required',
+                    'rule_value' => true,
+                    'value' => $car_engine,
+                    'msg' => 'Vui lòng nhập loại động cơ',
+                ];
+            }
 
-            // 2. Kiểm tra ô giá xe
+
+            // 3. Kiểm tra ô giá xe
             // Rule: required
             if (empty($car_price)) {
                 $errors['car_price'][] = [
@@ -119,7 +131,7 @@ class ProductController
             }
 
 
-            // 3. Kiểm tra ô số lượng
+            // 4. Kiểm tra ô số lượng
             // Rule: required
             if (empty($car_quantity)) {
                 $errors['car_quantity'][] = [
@@ -158,7 +170,7 @@ class ProductController
             }
 
 
-            // 4. Kiểm tra dòng xe
+            // 5. Kiểm tra dòng xe
             // Rule: required
             if ($car_type_id == 'NULL') {
                 $errors['car_type_id'][] = [
@@ -169,7 +181,7 @@ class ProductController
                 ];
             }
 
-            // 5. Kiểm tra số chỗ ngồi
+            // 6. Kiểm tra số chỗ ngồi
             // Rule: required
             if ($car_seat_id == 'NULL') {
                 $errors['car_seat_id'][] = [
@@ -180,7 +192,7 @@ class ProductController
                 ];
             }
 
-            // 6. Kiểm tra loại hộp số
+            // 7. Kiểm tra loại hộp số
             // Rule: required
             if ($car_transmission_id == 'NULL') {
                 $errors['car_transmission_id'][] = [
@@ -191,7 +203,7 @@ class ProductController
                 ];
             }
 
-            // 6. Kiểm tra mô tả ngắn
+            // 8. Kiểm tra mô tả ngắn
             // Rule: required
             if (empty($car_describe)) {
                 $errors['car_describe'][] = [
@@ -220,7 +232,7 @@ class ProductController
                 ];
             }
 
-            // 7. Kiểm tra mô tả chi tiết
+            // 9. Kiểm tra mô tả chi tiết
             // Rule: required
             if (empty($car_detail_describe)) {
                 $errors['car_detail_describe'][] = [
@@ -258,6 +270,7 @@ class ProductController
                     $car_quantity,
                     $car_describe,
                     $car_detail_describe,
+                    $car_engine,
                     $car_seat_id,
                     $car_fuel_id,
                     $car_type_id,
@@ -330,6 +343,7 @@ class ProductController
             $car_quantity = $_POST['car_quantity'];
             $car_describe = $_POST['car_describe'];
             $car_detail_describe = $_POST['car_detail_describe'];
+            $car_engine = $_POST['car_engine'];
             $car_seat_id = empty($_POST['car_seat_id']) ? 'NULL' : $_POST['car_seat_id'];
             $car_fuel_id = empty($_POST['car_fuel_id']) ? 'NULL' : $_POST['car_fuel_id'];
             $car_type_id = empty($_POST['car_type_id']) ? 'NULL' : $_POST['car_type_id'];
@@ -369,7 +383,19 @@ class ProductController
             }
 
 
-            // 2. Kiểm tra ô giá xe
+            // 2. Kiểm tra ô động cơ
+            // Rule: required
+            if (empty($car_engine)) {
+                $errors['car_engine'][] = [
+                    'rule' => 'required',
+                    'rule_value' => true,
+                    'value' => $car_engine,
+                    'msg' => 'Vui lòng nhập loại động cơ',
+                ];
+            }
+
+
+            // 3. Kiểm tra ô giá xe
             // Rule: required
             if (empty($car_price)) {
                 $errors['car_price'][] = [
@@ -408,7 +434,7 @@ class ProductController
             }
 
 
-            // 3. Kiểm tra ô số lượng
+            // 4. Kiểm tra ô số lượng
             // Rule: required
             if (empty($car_quantity)) {
                 $errors['car_quantity'][] = [
@@ -447,7 +473,7 @@ class ProductController
             }
 
 
-            // 4. Kiểm tra dòng xe
+            // 5. Kiểm tra dòng xe
             // Rule: required
             if ($car_type_id == 'NULL') {
                 $errors['car_type_id'][] = [
@@ -458,7 +484,7 @@ class ProductController
                 ];
             }
 
-            // 5. Kiểm tra số chỗ ngồi
+            // 6. Kiểm tra số chỗ ngồi
             // Rule: required
             if ($car_seat_id == 'NULL') {
                 $errors['car_seat_id'][] = [
@@ -469,7 +495,7 @@ class ProductController
                 ];
             }
 
-            // 6. Kiểm tra loại hộp số
+            // 7. Kiểm tra loại hộp số
             // Rule: required
             if ($car_transmission_id == 'NULL') {
                 $errors['car_transmission_id'][] = [
@@ -480,7 +506,7 @@ class ProductController
                 ];
             }
 
-            // 6. Kiểm tra mô tả ngắn
+            // 8. Kiểm tra mô tả ngắn
             // Rule: required
             if (empty($car_describe)) {
                 $errors['car_describe'][] = [
@@ -509,7 +535,7 @@ class ProductController
                 ];
             }
 
-            // 7. Kiểm tra mô tả chi tiết
+            // 9. Kiểm tra mô tả chi tiết
             // Rule: required
             if (empty($car_detail_describe)) {
                 $errors['car_detail_describe'][] = [
@@ -545,6 +571,7 @@ class ProductController
                 $car_quantity,
                 $car_describe,
                 $car_detail_describe,
+                $car_engine,
                 $car_seat_id,
                 $car_fuel_id,
                 $car_type_id,

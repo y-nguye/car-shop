@@ -40,10 +40,17 @@
                         <div id="liveAlertPlaceholder"></div>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group mb-3">
                                     <label for="car_name" class="form-label">Tên xe *</label>
                                     <input type="text" name="car_name" id="car_name" class="form-control remove-space-first" value="<?= $data_car['car_name'] ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="car_engine" class="form-label">Số lượng *</label>
+                                    <input type="text" name="car_engine" id="car_engine" class="form-control remove-space-first" value="<?= $data_car['car_engine'] ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                 </div>
                             </div>
 

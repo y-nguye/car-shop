@@ -14,7 +14,36 @@ class CarsData extends DatabaseManager
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
         }
-        return null;
+    }
+
+    public function getAllData()
+    {
+        $sql = "SELECT * FROM $this->table WHERE car_deleted = 0;";
+        $this->result = $this->execute($sql);
+
+        $data = [];
+        if ($this->result->num_rows > 0) {
+            while ($row = $this->result->fetch_assoc()) {
+                $data[] = array(
+                    'car_id' => $row['car_id'],
+                    'car_name' => $row['car_name'],
+                    'car_seat_id' => $row['car_seat_id'],
+                    'car_price' => $row['car_price'],
+                    'car_quantity' => $row['car_quantity'],
+                    'car_describe' => $row['car_describe'],
+                    'car_detail_describe' => $row['car_detail_describe'],
+                    'car_engine' => $row['car_engine'],
+                    'car_fuel_id' => $row['car_fuel_id'],
+                    'car_type_id' => $row['car_type_id'],
+                    'car_transmission_id' => $row['car_transmission_id'],
+                    'car_producer_id' => $row['car_producer_id'],
+                    'car_update_at' => $row['car_update_at'],
+                    'car_deleted' => $row['car_deleted'],
+                    'car_deleted_at' => $row['car_deleted_at'],
+                );
+            }
+        }
+        return $data;
     }
 
     public function getAllDataWithFirstImgByCarTypeID($car_type_id)
@@ -31,8 +60,8 @@ class CarsData extends DatabaseManager
 
         $this->result = $this->execute($sql);
 
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_id' => $row['car_id'],
@@ -44,39 +73,42 @@ class CarsData extends DatabaseManager
                     'car_img_filename' => $row['car_img_filename'],
                 );
             }
-            return $data;
         }
-        return null;
+        return $data;
     }
 
-    public function getAllData()
+    public function getAllDataWithSecondImgByCarIDs($car_ids)
     {
-        $sql = "SELECT * FROM $this->table WHERE car_deleted = 0;";
+        $car_ids = implode(' ,', $car_ids);
+        $sql = "SELECT
+                car.car_id,
+                car.car_name,
+                car.car_price,
+                car.car_describe,
+                (
+                    SELECT car_img.car_img_filename
+                    FROM car_img
+                    WHERE car_img.car_id = car.car_id
+                    LIMIT 1 OFFSET 1
+                ) AS car_img_filename
+            FROM cars car
+            WHERE car.car_deleted = 0 AND car.car_id IN ($car_ids);";
+
         $this->result = $this->execute($sql);
 
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_id' => $row['car_id'],
                     'car_name' => $row['car_name'],
-                    'car_seat_id' => $row['car_seat_id'],
                     'car_price' => $row['car_price'],
-                    'car_quantity' => $row['car_quantity'],
                     'car_describe' => $row['car_describe'],
-                    'car_detail_describe' => $row['car_detail_describe'],
-                    'car_fuel_id' => $row['car_fuel_id'],
-                    'car_type_id' => $row['car_type_id'],
-                    'car_transmission_id' => $row['car_transmission_id'],
-                    'car_producer_id' => $row['car_producer_id'],
-                    'car_update_at' => $row['car_update_at'],
-                    'car_deleted' => $row['car_deleted'],
-                    'car_deleted_at' => $row['car_deleted_at'],
+                    'car_img_filename' => $row['car_img_filename'],
                 );
             }
-            return $data;
         }
-        return null;
+        return $data;
     }
 
 
@@ -84,29 +116,19 @@ class CarsData extends DatabaseManager
     {
         $sql = "SELECT * FROM $this->table WHERE car_deleted = 1;";
         $this->result = $this->execute($sql);
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_id' => $row['car_id'],
                     'car_name' => $row['car_name'],
-                    'car_seat_id' => $row['car_seat_id'],
                     'car_price' => $row['car_price'],
                     'car_quantity' => $row['car_quantity'],
-                    'car_describe' => $row['car_describe'],
-                    'car_detail_describe' => $row['car_detail_describe'],
-                    'car_fuel_id' => $row['car_fuel_id'],
-                    'car_type_id' => $row['car_type_id'],
-                    'car_transmission_id' => $row['car_transmission_id'],
-                    'car_producer_id' => $row['car_producer_id'],
-                    'car_update_at' => $row['car_update_at'],
-                    'car_deleted' => $row['car_deleted'],
                     'car_deleted_at' => $row['car_deleted_at'],
                 );
             }
-            return $data;
         }
-        return null;
+        return $data;
     }
 
     public function setData(
@@ -115,6 +137,7 @@ class CarsData extends DatabaseManager
         $car_quantity,
         $car_describe,
         $car_detail_describe,
+        $car_engine,
         $car_seat_id,
         $car_fuel_id,
         $car_type_id,
@@ -129,6 +152,7 @@ class CarsData extends DatabaseManager
                     car_quantity,
                     car_describe,
                     car_detail_describe,
+                    car_engine,
                     car_seat_id,
                     car_fuel_id,
                     car_type_id,
@@ -144,6 +168,7 @@ class CarsData extends DatabaseManager
                     $car_quantity,
                     '$car_describe',
                     '$car_detail_describe',
+                    '$car_engine',
                     $car_seat_id,
                     $car_fuel_id,
                     $car_type_id,
@@ -163,6 +188,7 @@ class CarsData extends DatabaseManager
         $car_quantity,
         $car_describe,
         $car_detail_describe,
+        $car_engine,
         $car_seat_id,
         $car_fuel_id,
         $car_type_id,
@@ -175,6 +201,7 @@ class CarsData extends DatabaseManager
                     car_quantity = $car_quantity,
                     car_describe = '$car_describe',
                     car_detail_describe = '$car_detail_describe',
+                    car_engine = '$car_engine',
                     car_seat_id = $car_seat_id,
                     car_fuel_id = $car_fuel_id,
                     car_type_id = $car_type_id,

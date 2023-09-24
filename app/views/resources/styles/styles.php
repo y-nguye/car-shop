@@ -9,6 +9,9 @@
         --width-standard: 1320px;
 
         --font-family: 'IBM Plex Sans', sans-serif;
+        --navbar-height: 60px;
+        --footer-height: 150px;
+        --footer-margin-top: 20px;
     }
 
 
@@ -45,6 +48,6 @@
     }
 
     .push-footer-down-page {
-        min-height: calc(100vh - 150px - 60px);
+        min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - var(--footer-margin-top));
     }
 </style>

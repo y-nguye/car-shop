@@ -39,7 +39,7 @@ class AccountController
         $DB['db_user']->connect();
         $DB['db_car_type']->connect();
 
-        $data_car_type = $DB['db_car_type']->getAllData();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
         include_once __DIR__ . "/../views/frontend/account/login.php";
 
         if (isset($_POST["loginBtn"])) {
@@ -54,19 +54,17 @@ class AccountController
                 $_SESSION["user_id"] = $data_user["user_id"];
                 $_SESSION["user_fullname"] = $data_user["user_fullname"];
                 $_SESSION["user_tel"] = $data_user["user_tel"];
-                $_SESSION["user_address"] = $data_user["user_address"];
+                $_SESSION["user_province_id"] = $data_user["user_province_id"];
                 $_SESSION["user_email"] = $data_user["user_email"];
                 $_SESSION["user_username"] = $data_user["user_username"];
                 $_SESSION["user_avt"] = $data_user["user_avt"];
                 $_SESSION["user_is_admin"] = $data_user["user_is_admin"];
 
-                $_SESSION['cart'] = 2;
-
                 if ($_SESSION["user_is_admin"]) {
                     $DB['db_user']->disconnect();
                     echo '<script>location.href = "/car-shop/admin"</script>';
                 } else {
-                    echo '<script>location.href = "/car-shop/cart"</script>';
+                    echo '<script>location.href = "/car-shop/"</script>';
                 }
             } else {
                 // Đăng nhập thất bại
@@ -101,7 +99,7 @@ class AccountController
         $DB['db_user']->connect();
         $DB['db_car_type']->connect();
         $DB['db_user_province']->connect();
-        $data_car_type = $DB['db_car_type']->getAllData();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
         $data_all_user_province = $DB['db_user_province']->getAllData();
 
         include_once __DIR__ . "/../views/frontend/account/signup.php";
@@ -351,8 +349,14 @@ class AccountController
             $DB['db_user']->connect();
             $user_fullname = $_POST["user_fullname"];
             $user_tel = $_POST["user_tel"];
-            $user_address = $_POST["user_address"];
-            $DB['db_user']->updateData($_SESSION["user_id"], $user_fullname, $user_tel, $user_address);
+            $user_province_id = $_POST["user_province_id"];
+
+            // Cập nhật lại session
+            $_SESSION["user_fullname"] = $user_fullname;
+            $_SESSION["user_tel"] = $user_tel;
+            $_SESSION["user_province_id"] = $user_province_id;
+
+            $DB['db_user']->updateData($_SESSION["user_id"], $user_fullname, $user_tel, $user_province_id);
             $DB['db_user']->disconnect();
             echo '<script>location.href = "/car-shop/account"</script>';
         }
@@ -365,6 +369,12 @@ class AccountController
             $DB['db_user']->connect();
             $data_user = $DB['db_user']->getData($_SESSION["user_username"]);
             $DB['db_user']->updateAvatar($_SESSION["user_id"], $_FILES['user_avt'], $data_user['user_avt'], $uploadDir);
+            $data_user = $DB['db_user']->getData($_SESSION["user_username"]);
+
+            // Cập nhật lại session
+            $_SESSION["user_avt"] = $data_user['user_avt'];
+
+            $DB['db_user']->disconnect();
             echo '<script>location.href = "/car-shop/account"</script>';
         }
     }

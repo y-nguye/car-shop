@@ -50,7 +50,7 @@ class UserData extends DatabaseManager
         return null;
     }
 
-    public function setData($user_username, $user_password, $user_fullname, $user_tel, $user_email, $user_address)
+    public function setData($user_username, $user_password, $user_fullname, $user_tel, $user_email, $user_province_id)
     {
         $sql = "INSERT INTO $this->table (user_id,
                                         user_username,
@@ -58,7 +58,7 @@ class UserData extends DatabaseManager
                                         user_fullname,
                                         user_tel,
                                         user_email,
-                                        user_address,
+                                        user_province_id,
                                         user_avt,
                                         user_is_admin)
                                     VALUES (
@@ -68,15 +68,15 @@ class UserData extends DatabaseManager
                                         '$user_fullname',
                                         '$user_tel',
                                         '$user_email',
-                                        '$user_address',
+                                        '$user_province_id',
                                         NULL,
                                         0);";
         $this->execute($sql);
     }
 
-    public function updateData($user_id, $user_fullname, $user_tel, $user_address)
+    public function updateData($user_id, $user_fullname, $user_tel, $user_province_id)
     {
-        $sql = "UPDATE $this->table SET user_fullname = '$user_fullname', user_tel = '$user_tel', user_address = '$user_address' 
+        $sql = "UPDATE $this->table SET user_fullname = '$user_fullname', user_tel = '$user_tel', user_province_id = '$user_province_id' 
         WHERE user_id = $user_id;";
         return $this->execute($sql);
     }
@@ -89,7 +89,6 @@ class UserData extends DatabaseManager
         }
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $name =  date('Ymd_His_') . $user_avt_new['name'];
-
         if (!move_uploaded_file($user_avt_new['tmp_name'], $uploadDir . $name)) {
             $error = error_get_last();
             echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";

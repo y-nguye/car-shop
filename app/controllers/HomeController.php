@@ -7,8 +7,11 @@ class HomeController
     {
         $DB['db_cars']->connect();
         $DB['db_car_type']->connect();
+        $DB['db_car_img']->connect();
 
-        $data_all_cars = $DB['db_cars']->getAllData();
+        $data_all_car_by_car_ids_to_display_carouse = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([51, 49, 54]);
+        $data_all_car_by_car_ids_to_display_salling = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([48, 49, 54, 51]);
+
         $data_all_car_type = $DB['db_car_type']->getAllData();
 
         include __DIR__ . "/../views/frontend/home/index.php";
@@ -16,6 +19,7 @@ class HomeController
         $DB['db_cars']->disconnect();
         $DB['db_car_type']->disconnect();
     }
+
     public function type($DB, $type)
     {
         // Chuyển mảng thành chuỗi
@@ -28,14 +32,14 @@ class HomeController
                 // Lấy dữ liệu theo loại 
                 $nameType = $value['car_type_name'];
                 $data_all_with_img = $DB['db_cars']->getAllDataWithFirstImgByCarTypeID($value['car_type_id']);
-
-                // foreach ($data as $data) var_dump($data['car_id']);
             }
         }
         include __DIR__ . "/../views/frontend/home/type.php";
     }
+
     public function product($DB, $vars)
     {
+        $car_id = $vars['id'];
         $DB['db_cars']->connect();
         $DB['db_car_img']->connect();
         $DB['db_car_type']->connect();
@@ -44,18 +48,19 @@ class HomeController
         $DB['db_car_fuel']->connect();
         $DB['db_car_producer']->connect();
 
-        $data_car = $DB['db_cars']->getDataByID($vars['id']);
-        $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($vars['id']);
-        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $data_car = $DB['db_cars']->getDataByID($car_id);
+        $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($car_id);
         $data_car_type = $DB['db_car_type']->getDataByID($data_car['car_type_id']);
         $data_car_seat = $DB['db_car_seat']->getDataByID($data_car['car_seat_id']);
         $data_car_transmission = $DB['db_car_transmission']->getDataByID($data_car['car_transmission_id']);
         $data_car_fuel = $DB['db_car_fuel']->getDataByID($data_car['car_fuel_id']);
         $data_car_producer = $DB['db_car_producer']->getDataByID($data_car['car_producer_id']);
 
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+
         include_once __DIR__ . "/../views/frontend/home/product.php";
 
-        if (isset($_POST['btnCostCalculator'])) {
+        if (isset($_POST['btnRegistrationFee'])) {
 
             $car_id = $_POST['car_id'];
             $car_name = $_POST['car_name'];
@@ -82,20 +87,55 @@ class HomeController
             );
 
             $_SESSION['cart'] = $cart;
+            $_SESSION['from-registration-fee'] = true;
+            echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
+        }
+
+        if (isset($_POST['btnAddCarToCart'])) {
+
+            $car_id = $_POST['car_id'];
+            $car_name = $_POST['car_name'];
+            $car_price = $_POST['car_price'];
+            $car_type_name = $_POST['car_type_name'];
+            $car_seat = $_POST['car_seat'];
+            $car_transmission = $_POST['car_transmission'];
+            $car_fuel = $_POST['car_fuel'];
+            $car_producer_name = $_POST['car_producer_name'];
+
+            $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
+            $car_img_filename = implode('', $data_car_img_filename);
+
+            $cart = [];
+            if (isset($_SESSION['cart'])) {
+                $cart = $_SESSION['cart'];
+            }
+
+            $cart[$car_id] = array(
+                'car_id' => $car_id,
+                'car_name' => $car_name,
+                'car_price' => $car_price,
+                'car_img_filename' => $car_img_filename,
+            );
+
+            $_SESSION['cart'] = $cart;
+            echo '<script>location.href = "/car-shop/product/' . $car_id . '"</script>';
         }
     }
+
     public function service($DB, $type)
     {
         $type = implode('', $type);
         echo $type;
         // include __DIR__ . "/../views/backend/product/index.php";
     }
+
     public function support($DB, $type)
     {
         $type = implode('', $type);
         echo $type;
         // include __DIR__ . "/../views/backend/product/index.php";
     }
+
     private function convertToSlug($str, $delimiter = '-')
     {
         $unwanted_array = [

@@ -28,7 +28,6 @@ $DB = array(
     'db_car_transmission' => $db_car_transmission,
     'db_car_producer' => $db_car_producer,
     'db_car_img' => $db_car_img,
-    'db_admin' => $db_admin,
     'db_user' => $db_user,
     'db_user_province' => $db_user_province
 );

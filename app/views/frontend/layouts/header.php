@@ -28,7 +28,14 @@ include_once 'app/views/frontend/layouts/headerStyles.php';
                     <a class="nav-link text-dark" href="/car-shop/ho-tro">Hỗ trợ</a>
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="nav-link btn text-dark bag"><i class="bi bi-bag-fill"></i></button>
+                    <button type="button" class="nav-link btn text-dark position-relative bag">
+                        <i class="bi bi-bag-fill"></i>
+                        <?php if (isset($_SESSION['cart']) &&  count($_SESSION['cart']) != 0) : ?>
+                            <span class="position-absolute top-0 start-50 badge rounded-pill bg-dark">
+                                <?= count($_SESSION['cart']) ?>
+                            </span>
+                        <?php endif; ?>
+                    </button>
                 </li>
             </ul>
         </div>
@@ -37,29 +44,38 @@ include_once 'app/views/frontend/layouts/headerStyles.php';
     <div class="expand-navbar-by-bag">
         <div class="container-lg bag-into">
 
-            <?php if (isset($_SESSION['cart'])) {
-                if ($_SESSION['cart'] > 1) { ?>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h4 class="m-0">Giỏ hàng</h4>
-                        <button type="button" class="btn btn-primary cart-btn">Xem giỏ hàng</button>
-                    </div>
-                    <ul class="list-car-on-bag">
+            <?php if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) : ?>
+                <div class="d-flex align-items-center justify-content-between">
+                    <h4 class="m-0">Giỏ hàng</h4>
+                    <button type="button" class="btn btn-primary rounded-pill cart-btn">Xem giỏ hàng</button>
+                </div>
+                <ul class="list-car-on-bag">
+                    <?php foreach ($_SESSION['cart'] as $data_cart) : ?>
                         <li class="mt-4">
-                            <a class="text-dark" href="">
+                            <a class="text-dark" href="/car-shop/product/<?= $data_cart['car_id'] ?>">
                                 <div>
-                                    <img class="rounded-3 me-3 img-item-on-bag" src="assets/imgs/2020-Hyundai-Accent.jpg" alt="">
-                                    <span>Hyundai Accent 2023</span>
+                                    <img class="rounded-3 me-3 img-item-on-bag" src="/car-shop/assets/uploads/<?= $data_cart['car_img_filename'] ?>" alt="">
+                                    <span><?= $data_cart['car_name'] ?></span>
                                 </div>
                             </a>
                         </li>
-                    </ul>
-                <?php }
-            } else { ?>
+                    <?php endforeach; ?>
+                </ul>
+
+            <?php else : ?>
                 <div class="d-flex align-items-center justify-content-between">
                     <h4 class="m-0">Giỏ của bạn hiện trống</h4>
                 </div>
-                <div class="mt-4"><a class="text-dark text-decoration-underline" href="/car-shop/account/login">Đăng nhập</a> để xem bạn có món hàng nào được lưu hay không</div>
-            <?php } ?>
+                <?php if (isset($_SESSION['logged'])) : ?>
+                    <?php if ($_SESSION['logged']) : ?>
+                        <div class="mt-4"><a class="text-dark text-decoration-underline" href="/car-shop/">Mua sắm ngay</a></div>
+                    <?php else : ?>
+                        <div class="mt-4"><a class="text-dark text-decoration-underline" href="/car-shop/account/login">Đăng nhập</a> để xem bạn có món hàng nào được lưu hay không</div>
+                    <?php endif; ?>
+                <?php else : ?>
+                    <div class="mt-4"><a class="text-dark text-decoration-underline" href="/car-shop/account/login">Đăng nhập</a> để xem bạn có món hàng nào được lưu hay không</div>
+                <?php endif; ?>
+            <?php endif ?>
 
 
             <div class="mt-4 text-secondary"><span>Hồ sơ của tôi</span></div>
@@ -67,20 +83,18 @@ include_once 'app/views/frontend/layouts/headerStyles.php';
                 <li class="mt-2 fs-7"><a href=""><i class="bi bi-box align-middle me-2"></i>Đơn hàng</a></li>
                 <li class="mt-2 fs-7"><a href="/car-shop/account"><i class="bi bi-person-circle align-middle me-2"></i>Tài khoản</a></li>
 
-                <?php if (isset($_SESSION['logged'])) {
-                    if ($_SESSION['logged'] == true) { ?>
-                        <?php if ($_SESSION['user_is_admin']) { ?>
+                <?php if (isset($_SESSION['logged'])) : ?>
+                    <?php if ($_SESSION['logged'] == true) : ?>
+                        <?php if ($_SESSION['user_is_admin']) : ?>
                             <li class="mt-2 fs-7"><a href="/car-shop/admin"><i class="bi bi-server align-middle me-2"></i>Truy cập hệ thống quản trị</a></li>
-                        <?php } ?>
+                        <?php endif; ?>
                         <li class="mt-2 fs-7"><a href="/car-shop/account/logout"><i class="bi bi-box-arrow-left align-middle me-2"></i>Đăng xuất</a></li>
-                    <?php } else { ?>
+                    <?php else : ?>
                         <li class="mt-2 fs-7"><a href="/car-shop/account/login"><i class="bi bi-box-arrow-left align-middle me-2"></i>Đăng nhập</a></li>
-                    <?php
-                    }
-                } else { ?>
+                    <?php endif ?>
+                <?php else : ?>
                     <li class="mt-2 fs-7"><a href="/car-shop/account/login"><i class="bi bi-box-arrow-in-right align-middle me-2"></i>Đăng nhập</a></li>
-                <?php } ?>
-
+                <?php endif; ?>
             </ul>
         </div>
     </div>
