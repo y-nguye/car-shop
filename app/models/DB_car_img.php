@@ -14,7 +14,6 @@ class CarImgData extends DatabaseManager
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
         }
-        return null;
     }
 
     public function getAllDataByCarID($car_id)
@@ -22,8 +21,8 @@ class CarImgData extends DatabaseManager
         $sql = "SELECT * FROM $this->table WHERE car_id = $car_id ORDER BY car_img_id ASC;";
         $this->result = $this->execute($sql);
 
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_img_id' => $row['car_img_id'],
@@ -32,16 +31,15 @@ class CarImgData extends DatabaseManager
                     'car_id' => $row['car_id'],
                 );
             }
-            return $data;
         }
-        return null;
+        return $data;
     }
 
     public function setData($carImgFilesFromInput, $car_id, $uploadDir)
     {
         if (!is_writable($uploadDir)) {
             echo "Thư mục không có quyền ghi";
-            die;
+            die();
         }
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $valuesInsertToQuery = '';
@@ -63,7 +61,7 @@ class CarImgData extends DatabaseManager
     {
         if (!is_writable($uploadDir)) {
             echo "Thư mục không có quyền ghi";
-            die;
+            die();
         }
 
         $whenNumberOfImageOnInputEqualIndex = false;
@@ -108,11 +106,5 @@ class CarImgData extends DatabaseManager
                 $this->execute($sql);
             };
         }
-    }
-
-    public function deleteData($car_id)
-    {
-        $sql = "DELETE FROM $this->table WHERE car_id = $car_id;";
-        return $this->execute($sql);
     }
 }

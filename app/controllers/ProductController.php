@@ -564,36 +564,52 @@ class ProductController
                 ];
             }
 
-            $DB['db_cars']->updateData(
-                $car_id,
-                $car_name,
-                $car_price,
-                $car_quantity,
-                $car_describe,
-                $car_detail_describe,
-                $car_engine,
-                $car_seat_id,
-                $car_fuel_id,
-                $car_type_id,
-                $car_transmission_id,
-                $car_producer_id
-            );
+            // Người dùng không vi phạm quy luật nào cả --> tiến hành lưu
+            if (empty($errors)) {
 
-            if (!empty($_FILES['car_img_filename']['name'][0])) {
-                $uploadDir = __DIR__ . '/../../assets/uploads/';
-                $DB['db_car_img']->updateData($data_all_car_img, $_FILES['car_img_filename'], $car_id, $uploadDir);
+                $DB['db_cars']->updateData(
+                    $car_id,
+                    $car_name,
+                    $car_price,
+                    $car_quantity,
+                    $car_describe,
+                    $car_detail_describe,
+                    $car_engine,
+                    $car_seat_id,
+                    $car_fuel_id,
+                    $car_type_id,
+                    $car_transmission_id,
+                    $car_producer_id
+                );
+
+                if (!empty($_FILES['car_img_filename']['name'][0])) {
+                    $uploadDir = __DIR__ . '/../../assets/uploads/';
+                    $DB['db_car_img']->updateData($data_all_car_img, $_FILES['car_img_filename'], $car_id, $uploadDir);
+                }
+
+                // Ngắt kết nối cho các đối tượng con
+                $DB['db_cars']->disconnect();
+                $DB['db_car_seat']->disconnect();
+                $DB['db_car_fuel']->disconnect();
+                $DB['db_car_type']->disconnect();
+                $DB['db_car_transmission']->disconnect();
+                $DB['db_car_producer']->disconnect();
+                $DB['db_car_img']->disconnect();
+
+                echo '<script>location.href = "../"</script>';
+            } else {
+
+                $errorMsg = '';
+                foreach ($errors as $fields) {
+                    foreach ($fields as $field) {
+                        $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
+                    };
+                };
+
+                echo    "<script>
+                            showAlert('" . $errorMsg . "', 'danger');
+                        </script>";
             }
-
-            // Ngắt kết nối cho các đối tượng con
-            $DB['db_cars']->disconnect();
-            $DB['db_car_seat']->disconnect();
-            $DB['db_car_fuel']->disconnect();
-            $DB['db_car_type']->disconnect();
-            $DB['db_car_transmission']->disconnect();
-            $DB['db_car_producer']->disconnect();
-            $DB['db_car_img']->disconnect();
-
-            echo '<script>location.href = "../"</script>';
         }
     }
 
@@ -602,6 +618,10 @@ class ProductController
         if (isset($_POST['btnDelete'])) {
             $DB['db_cars']->connect();
             $DB['db_cars']->softDelete($_POST['car_ids']);
+
+            foreach ($_POST['car_ids'] as $car_id) {
+                if (isset($_SESSION['cart'][$car_id])) unset($_SESSION['cart'][$car_id]);
+            }
             echo '<script>location.href = "./"</script>';
             $DB['db_cars']->disconnect();
         }
@@ -627,11 +647,14 @@ class ProductController
 
     public function forceDelete($DB)
     {
+        $uploadDir = __DIR__ . '/../../assets/uploads/';
         if (isset($_POST['btnForceDelete'])) {
             $DB['db_cars']->connect();
-            $DB['db_cars']->forceDelete($_POST['car_ids']);
+            $DB['db_car_img']->connect();
+            $DB['db_cars']->forceDelete($_POST['car_ids'], $uploadDir);
             echo '<script>location.href = "./"</script>';
             $DB['db_cars']->disconnect();
+            $DB['db_car_img']->disconnect();
         }
     }
 }

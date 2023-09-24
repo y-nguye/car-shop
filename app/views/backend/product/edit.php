@@ -49,7 +49,7 @@
 
                             <div class="col-2">
                                 <div class="form-group">
-                                    <label for="car_engine" class="form-label">Số lượng *</label>
+                                    <label for="car_engine" class="form-label">Động cơ *</label>
                                     <input type="text" name="car_engine" id="car_engine" class="form-control remove-space-first" value="<?= $data_car['car_engine'] ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                 </div>
                             </div>
@@ -365,6 +365,9 @@
                         minlength: 3,
                         maxlength: 50,
                     },
+                    car_engine: {
+                        required: true,
+                    },
                     car_price: {
                         required: true,
                         minlength: 7,
@@ -401,6 +404,9 @@
                         required: 'Không được để trống',
                         minlength: 'Tối thiểu 3 kí tự',
                         maxlength: 'Tối đa 50 kí tự',
+                    },
+                    car_engine: {
+                        required: 'Không được để trống',
                     },
                     car_price: {
                         required: 'Không được để trống',

@@ -111,6 +111,43 @@ class CarsData extends DatabaseManager
         return $data;
     }
 
+    public function getAllDataWithSecondImgBy4NewUpdate($car_ids)
+    {
+        $car_ids = implode(' ,', $car_ids);
+        $sql = "SELECT
+                car.car_id,
+                car.car_name,
+                car.car_price,
+                car.car_describe,
+                (
+                    SELECT car_img.car_img_filename
+                    FROM car_img
+                    WHERE car_img.car_id = car.car_id
+                    LIMIT 1 OFFSET 1
+                ) AS car_img_filename
+            FROM cars car
+            WHERE car.car_deleted = 0 AND MAX(car.car_update_at);";
+
+        var_dump($sql);
+        die();
+
+        $this->result = $this->execute($sql);
+
+        $data = [];
+        if ($this->result->num_rows > 0) {
+            while ($row = $this->result->fetch_assoc()) {
+                $data[] = array(
+                    'car_id' => $row['car_id'],
+                    'car_name' => $row['car_name'],
+                    'car_price' => $row['car_price'],
+                    'car_describe' => $row['car_describe'],
+                    'car_img_filename' => $row['car_img_filename'],
+                );
+            }
+        }
+        return $data;
+    }
+
 
     public function getAllDataDeleted()
     {
@@ -227,10 +264,20 @@ class CarsData extends DatabaseManager
         return $this->execute($sql);
     }
 
-    public function forceDelete($ids)
+    public function forceDelete($ids, $uploadDir)
     {
+        foreach ($ids as $id) {
+            $sql = "SELECT car_img_filename FROM car_img WHERE car_id = $id;";
+
+            $this->result = $this->execute($sql);
+            if ($this->result->num_rows > 0) {
+                while ($row = $this->result->fetch_assoc()) {
+                    unlink($uploadDir . $row['car_img_filename']);
+                }
+            }
+        }
         $ids = implode(' ,', $ids);
         $sql = "DELETE FROM $this->table WHERE car_id IN ($ids);";
-        return $this->execute($sql);
+        $this->result = $this->execute($sql);
     }
 }
