@@ -1,5 +1,7 @@
 <?php
 
+include_once 'app/views/backend/layout/sideBarStyle.php';
+
 $sidebar_items = [
     ["admin", "/car-shop/admin", "<i class=' bi bi-house-door me-2'></i> Trang chủ"],
     ["user", "/car-shop/admin/user", "<i class='bi bi-person me-2'></i> Quản lý khách hàng"],
@@ -9,7 +11,7 @@ $sidebar_items = [
 
 ?>
 
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light sticky-top custom-sidebar">
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light sticky-top sidebar-custom">
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="/car-shop/assets/imgs/avt/<?php if (isset($_SESSION["user_avt"]) && $_SESSION["user_avt"]) echo $_SESSION["user_avt"];

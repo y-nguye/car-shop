@@ -5,7 +5,7 @@ require 'vendor/autoload.php';
 use FastRoute\RouteCollector;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
-    $r->addGroup('/car-shop', require 'home.php');
+    $r->addGroup('/car-shop', require 'store.php');
     $r->addGroup('/car-shop/cart', require 'cart.php');
     $r->addGroup('/car-shop/account', require 'account.php');
     $r->addGroup('/car-shop/admin', require 'admin.php');

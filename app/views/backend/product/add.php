@@ -25,7 +25,7 @@
 
                 <form id="formAdd" name="formAdd" method="post" action="" enctype="multipart/form-data">
 
-                    <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 custom-toolbar">
+                    <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
                         <div class="d-flex justify-content-start">
                             <button type="button" class="btn btn-sm ms-2 me-2 btn-go-back-header">
                                 <i class="bi bi-chevron-left"></i>

@@ -62,16 +62,16 @@
         object-fit: cover;
     }
 
-    .card-type-page-custom {
+    .card-custom__type-page {
         transition: background-color 0.32s ease;
     }
 
-    .card-type-page-custom:hover {
+    .card-custom__type-page:hover {
         background-color: #f4f4f4;
         transition: background-color 0.32s ease;
     }
 
-    .img-on-card {
+    .img-on-card__type-page {
         aspect-ratio: 16/9;
         object-fit: cover;
     }

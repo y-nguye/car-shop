@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-class HomeController
+class StoreController
 {
     public function index($DB)
     {
@@ -16,7 +16,7 @@ class HomeController
         // Hiển thị header
         $data_all_car_type = $DB['db_car_type']->getAllData();
 
-        include __DIR__ . "/../views/frontend/home/index.php";
+        include __DIR__ . "/../views/frontend/store/index.php";
 
         $DB['db_cars']->disconnect();
         $DB['db_car_type']->disconnect();
@@ -38,7 +38,7 @@ class HomeController
                 $data_all_with_img = $DB['db_cars']->getAllDataWithFirstImgByCarTypeID($value['car_type_id']);
             }
         }
-        include __DIR__ . "/../views/frontend/home/type.php";
+        include __DIR__ . "/../views/frontend/store/type.php";
     }
 
     public function product($DB, $vars)
@@ -63,7 +63,7 @@ class HomeController
         // Hiển thị header
         $data_all_car_type = $DB['db_car_type']->getAllData();
 
-        include_once __DIR__ . "/../views/frontend/home/product.php";
+        include_once __DIR__ . "/../views/frontend/store/product.php";
 
         if (isset($_POST['btnRegistrationFee'])) {
 

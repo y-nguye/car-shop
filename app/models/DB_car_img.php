@@ -64,7 +64,9 @@ class CarImgData extends DatabaseManager
             if (isset($data_all_car_img[$index]['car_img_id'])) {
                 // Đánh dấu khi số lượng hình ảnh từ input = số lần lặp trong foreach
                 count($carImgFilesFromInput['name']) - 1 == $index && $whenNumberOfImageOnInputEqualIndex = true;
+
                 $this->moveUploadedFile($carImgFilesFromInput, $index, $uploadDir, $name);
+
                 // Xoá hình cũ để tránh rác
                 unlink($uploadDir . $data_all_car_img[$index]['car_img_filename']);
 
@@ -92,8 +94,7 @@ class CarImgData extends DatabaseManager
             $valuesInsertIntoQuery =  $valuesInsertIntoQuery . "(null, '$name', NOW(), $car_id),";
         }
         // Loại bỏ dấu ',' cuối cùng
-        $valuesInsertIntoQuery = rtrim($valuesInsertIntoQuery, ',');
-        return $valuesInsertIntoQuery;
+        return rtrim($valuesInsertIntoQuery, ',');
     }
 
     private function deleteRedundantColumnsAndDeleteImgOnUploadsDir($data_all_car_img, $whenNumberOfImageOnInputEqualIndex, $index, $uploadDir)

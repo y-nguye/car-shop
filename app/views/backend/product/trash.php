@@ -24,7 +24,7 @@
             <div class="col-9">
 
                 <form name="formCarTrash" method="post" action="">
-                    <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 custom-toolbar">
+                    <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
                         <div class="container-fluid justify-content-start">
 
                             <span class="fs-5"><b>Sản phẩm đã xoá</b></span>

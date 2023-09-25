@@ -1,14 +1,9 @@
 <style>
-    .custom-sidebar {
-        height: calc(100vh - 150px - 20px);
-    }
-
-    .custom-toolbar {
+    .toolbar-custom {
         border: 1px solid rgba(209, 213, 219, 1);
         backdrop-filter: blur(15px) saturate(180%);
         -webkit-backdrop-filter: blur(16px) saturate(180%);
         background-color: rgba(255, 255, 255, 0.75);
-        /* background-color: rgba(255, 255, 255, 1); */
         top: 5px;
     }
 

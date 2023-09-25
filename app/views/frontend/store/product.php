@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/frontend/home/homePageStyle.php' ?>
+    <?php include_once 'app/views/frontend/store/storePageStyle.php' ?>
     <title><?= $data_car['car_name'] ?></title>
 </head>
 

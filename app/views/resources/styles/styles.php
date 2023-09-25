@@ -6,9 +6,8 @@
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
     :root {
-        --width-standard: 1320px;
-
         --font-family: 'IBM Plex Sans', sans-serif;
+        --width-standard: 1320px;
         --navbar-height: 60px;
         --footer-height: 150px;
         --footer-margin-top: 20px;
@@ -20,7 +19,6 @@
         font-size: 1rem;
         line-height: 1.5;
         text-rendering: optimizeSpeed;
-        color: var(--text-color);
     }
 
     ul {
