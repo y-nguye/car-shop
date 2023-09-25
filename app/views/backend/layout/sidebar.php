@@ -20,7 +20,6 @@ $sidebar_items = [
         </a>
         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
             <li><a class="dropdown-item" href="/car-shop/">Trang chủ cửa hàng</a></li>
-            <li><a class="dropdown-item" href="#">Tuỳ chỉnh</a></li>
             <li><a class="dropdown-item" href="/car-shop/account">Trang cá nhân</a></li>
             <li>
                 <hr class="dropdown-divider">

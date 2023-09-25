@@ -69,7 +69,7 @@ class AccountController
             } else {
                 // Đăng nhập thất bại
                 echo    "<script>
-                        showAlert('Tên đăng nhập hoặc mật khẩu không đúng', 'danger');
+                            showAlert('Tên đăng nhập hoặc mật khẩu không đúng', 'danger');
                         </script>";
             }
         }

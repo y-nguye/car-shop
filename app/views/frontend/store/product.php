@@ -28,11 +28,9 @@
                                     <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="<?= $index - 1 ?>" aria-label="Slide <?= $index ?>" <?php if ($index - 1 == 0) : ?> class="active" aria-current="true" <?php endif; ?>></button>
                                 <?php endif; ?>
                             <?php endforeach; ?>
-
                         </div>
 
                         <div class="carousel-inner">
-
                             <?php if (empty($data_all_car_img[1])) : ?>
                                 <div class="carousel-item carousel-item-custom__product-page active">
                                     <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
@@ -52,7 +50,6 @@
                                     </div>
                                 <?php endif; ?>
                             <?php endforeach; ?>
-
                         </div>
 
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
@@ -142,9 +139,7 @@
                     </div>
 
                 </form>
-
             </div>
-
         </div>
 
         <div class="text-center">

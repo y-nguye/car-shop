@@ -54,6 +54,7 @@
     .card-custom__home-page:hover {
         box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.2);
         transition: all 0.32s ease;
+        transform: translate(-1px, -1px);
     }
 
     .card-custom__home-page img {
@@ -85,5 +86,38 @@
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
+    }
+
+    .repair-services-img__service-page {
+        width: 50%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+
+    .periodic-maintenance-img-1__service-page {
+        width: 48%;
+        margin: 5px;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+
+    .periodic-maintenance-services-img-2__service-page {
+        height: 80%;
+    }
+
+    .support-img__support-page {
+        width: 100%;
+        /* aspect-ratio: 16/9; */
+        object-fit: cover;
+    }
+
+    .container-content-banner__support-page {
+        top: 110px;
+        width: 50%;
+    }
+
+    .content-banner__support-page {
+        font-size: 1.25rem;
+        font-weight: 500;
     }
 </style>

@@ -16,11 +16,8 @@
 
     <div class="container-lg pt-3 pb-3 push-footer-down-page">
         <div class="row">
-
             <?php if (empty($data_all_with_img)) : ?>
-
                 <h2>Xin lỗi, chúng tôi không còn dòng xe này...</h2>
-
             <?php else : ?>
                 <?php foreach ($data_all_with_img as $data) : ?>
                     <div class="col-md-4 mb-4">
@@ -40,14 +37,12 @@
                     </div>
                 <?php endforeach; ?>
             <?php endif ?>
-
         </div>
     </div>
 
     <?php
     include_once 'app/views/frontend/layouts/footer.php';
     ?>
-
 
 </body>
 

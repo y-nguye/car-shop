@@ -20,10 +20,8 @@
             <h1>Oh no! Cửa hàng đang bảo trì, quay lại sau nhé...</h1>
         <?php else : ?>
             <div class="d-flex justify-content-center">
-                <div id="carouselExampleCaptions" class="carousel card slide rounded-3" data-bs-ride="carousel">
-
+                <div id="carouselCaptions" class="carousel card slide rounded-3" data-bs-ride="carousel">
                     <div class="carousel-inner">
-
                         <?php foreach ($data_all_car_by_car_ids_to_display_carouse as $index => $data) : ?>
                             <a href="/car-shop/product/<?= $data['car_id'] ?>">
                                 <div class="carousel-item carousel-item-custom__home-page <?php if ($index == 0) echo "active" ?>">
@@ -40,13 +38,12 @@
                                 </div>
                             </a>
                         <?php endforeach; ?>
-
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
@@ -56,8 +53,7 @@
             <h2 class="mt-4">Top xe bán chạy trong mỗi dòng xe</h2>
 
             <div class="row row-cols-2">
-                <?php
-                foreach ($data_all_car_by_car_ids_to_display_salling as $data) : ?>
+                <?php foreach ($data_all_car_by_car_ids_to_display_salling as $data) : ?>
                     <div class="col mt-4">
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
                             <div class="card card-custom__home-page text-white">
@@ -75,14 +71,12 @@
                         </a>
                     </div>
                 <?php endforeach; ?>
-
             </div>
 
             <h2 class="mt-4">Xe mới nhập</h2>
 
             <div class="row row-cols-2">
-                <?php
-                foreach ($data_all_car_by_car_ids_to_display_four_newest as $data) : ?>
+                <?php foreach ($data_all_car_by_car_ids_to_display_four_newest as $data) : ?>
                     <div class="col mt-4">
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
                             <div class="card card-custom__home-page text-white">
@@ -100,7 +94,6 @@
                         </a>
                     </div>
                 <?php endforeach; ?>
-
             </div>
         <?php endif; ?>
 

@@ -122,18 +122,20 @@ class StoreController
         }
     }
 
-    public function service($DB, $type)
+    public function service($DB)
     {
-        $type = implode('', $type);
-        echo $type;
-        // include __DIR__ . "/../views/backend/product/index.php";
+        $DB['db_car_type']->connect();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        include __DIR__ . "/../views/frontend/store/service.php";
+        $DB['db_car_type']->disconnect();
     }
 
-    public function support($DB, $type)
+    public function support($DB)
     {
-        $type = implode('', $type);
-        echo $type;
-        // include __DIR__ . "/../views/backend/product/index.php";
+        $DB['db_car_type']->connect();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        include __DIR__ . "/../views/frontend/store/support.php";
+        $DB['db_car_type']->disconnect();
     }
 
     private function convertToSlug($str, $delimiter = '-')

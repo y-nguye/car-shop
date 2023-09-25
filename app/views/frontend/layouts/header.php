@@ -22,10 +22,10 @@ include_once 'app/views/frontend/layouts/headerStyles.php';
                 <?php } ?>
 
                 <li class="nav-item ms-auto me-4">
-                    <a class="nav-link text-dark" href="/car-shop/dich-vu">Dịch vụ</a>
+                    <a class="nav-link text-dark" href="/car-shop/service">Dịch vụ</a>
                 </li>
                 <li class="nav-item me-4">
-                    <a class="nav-link text-dark" href="/car-shop/ho-tro">Hỗ trợ</a>
+                    <a class="nav-link text-dark" href="/car-shop/support">Hỗ trợ</a>
                 </li>
                 <li class="nav-item">
                     <button type="button" class="nav-link btn text-dark position-relative bag">
