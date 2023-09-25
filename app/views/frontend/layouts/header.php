@@ -54,7 +54,11 @@ include_once 'app/views/frontend/layouts/headerStyles.php';
                         <li class="mt-4">
                             <a class="text-dark" href="/car-shop/product/<?= $data_cart['car_id'] ?>">
                                 <div>
-                                    <img class="rounded-3 me-3 img-item-on-bag" src="/car-shop/assets/uploads/<?= $data_cart['car_img_filename'] ?>" alt="">
+                                    <?php if (empty($data_cart['car_img_filename'])) : ?>
+                                        <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="rounded-3 me-3 img-item-on-bag">
+                                    <?php else : ?>
+                                        <img src="/car-shop/assets/uploads/<?= $data_cart['car_img_filename'] ?>" class="rounded-3 me-3 img-item-on-bag" alt="mb">
+                                    <?php endif; ?>
                                     <span><?= $data_cart['car_name'] ?></span>
                                 </div>
                             </a>

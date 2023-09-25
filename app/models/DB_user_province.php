@@ -14,7 +14,6 @@ class UserProvinceData extends DatabaseManager
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
         }
-        return null;
     }
 
     public function getAllData()
@@ -22,8 +21,8 @@ class UserProvinceData extends DatabaseManager
         $sql = "SELECT * FROM $this->table;";
         $this->result = $this->execute($sql);;
 
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'user_province_id' => $row['user_province_id'],
@@ -31,8 +30,7 @@ class UserProvinceData extends DatabaseManager
                     'user_registration_fee' => $row['user_registration_fee'],
                 );
             }
-            return $data;
         }
-        return null;
+        return $data;
     }
 }

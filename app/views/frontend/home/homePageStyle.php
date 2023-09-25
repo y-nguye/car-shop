@@ -11,6 +11,10 @@
         object-position: bottom;
     }
 
+    .carousel-no-img-custom__home-page {
+        object-position: unset !important;
+    }
+
     .carousel-control-prev,
     .carousel-control-next {
         width: 8%;
@@ -81,6 +85,5 @@
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
-        object-position: bottom;
     }
 </style>

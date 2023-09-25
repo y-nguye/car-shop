@@ -14,7 +14,6 @@ class CarTypeData extends DatabaseManager
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
         }
-        return null;
     }
 
     public function getAllData()
@@ -22,8 +21,8 @@ class CarTypeData extends DatabaseManager
         $sql = "SELECT * FROM $this->table;";
         $this->result = $this->execute($sql);
 
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_type_id' => $row['car_type_id'],
@@ -31,8 +30,7 @@ class CarTypeData extends DatabaseManager
                     'car_type_describe' => $row['car_type_describe'],
                 );
             }
-            return $data;
         }
-        return null;
+        return $data;
     }
 }

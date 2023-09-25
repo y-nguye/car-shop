@@ -15,15 +15,14 @@ class CarTransmissionData extends DatabaseManager
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
         }
-        return null;
     }
 
     public function getAllData()
     {
         $sql = "SELECT * FROM $this->table;";
         $this->result = $this->execute($sql);
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             // Trích xuất dữ liệu sang mảng liên hợp
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
@@ -31,8 +30,7 @@ class CarTransmissionData extends DatabaseManager
                     'car_transmission' => $row['car_transmission'],
                 );
             }
-            return $data;
         }
-        return null;
+        return $data;
     }
 }

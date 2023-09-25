@@ -15,7 +15,6 @@ class CarFuelData extends DatabaseManager
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
         }
-        return null;
     }
 
     public function getAllData()
@@ -23,16 +22,15 @@ class CarFuelData extends DatabaseManager
         $sql = "SELECT * FROM $this->table;";
         $this->result = $this->execute($sql);;
 
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_fuel_id' => $row['car_fuel_id'],
                     'car_fuel' => $row['car_fuel'],
                 );
             }
-            return $data;
         }
-        return null;
+        return $data;
     }
 }

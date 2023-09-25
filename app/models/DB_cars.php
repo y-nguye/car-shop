@@ -111,9 +111,8 @@ class CarsData extends DatabaseManager
         return $data;
     }
 
-    public function getAllDataWithSecondImgBy4NewUpdate($car_ids)
+    public function getAllDataWithSecondImgByFourNewUpdate()
     {
-        $car_ids = implode(' ,', $car_ids);
         $sql = "SELECT
                 car.car_id,
                 car.car_name,
@@ -126,10 +125,8 @@ class CarsData extends DatabaseManager
                     LIMIT 1 OFFSET 1
                 ) AS car_img_filename
             FROM cars car
-            WHERE car.car_deleted = 0 AND MAX(car.car_update_at);";
-
-        var_dump($sql);
-        die();
+            WHERE car.car_deleted = 0
+            ORDER BY car.car_update_at DESC LIMIT 4;";
 
         $this->result = $this->execute($sql);
 
@@ -266,6 +263,7 @@ class CarsData extends DatabaseManager
 
     public function forceDelete($ids, $uploadDir)
     {
+        // Xoá hình trong thư mục uploads
         foreach ($ids as $id) {
             $sql = "SELECT car_img_filename FROM car_img WHERE car_id = $id;";
 

@@ -43,7 +43,13 @@
                 <div class="mt-3 mb-3">
                     <?php if ($i != 0) echo "<hr>" ?>
                     <div class="d-flex align-items-center">
-                        <a href="/car-shop/product/<?= $data['car_id'] ?>"><img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="img-car-on-cart" alt="img-car-on-cart"></a>
+                        <a href="/car-shop/product/<?= $data['car_id'] ?>">
+                            <?php if (empty($data_cart['car_img_filename'])) : ?>
+                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-cart" alt="img-car-on-cart">
+                            <?php else : ?>
+                                <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="img-car-on-cart" alt="img-car-on-cart">
+                            <?php endif; ?>
+                        </a>
                         <div class="d-flex flex-column ms-5">
                             <h1 class="m-0"><?= $data['car_name'] ?></h1>
                             <p class="fs-3 m-0"><?= number_format($data['car_price'], 0, ',', '.') ?> ₫</p>

@@ -41,19 +41,10 @@ class CarImgData extends DatabaseManager
             echo "Thư mục không có quyền ghi";
             die();
         }
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $valuesInsertToQuery = '';
-        foreach ($carImgFilesFromInput['name'] as $index => $name) {
-            $name =  $index . '_' .  date('Ymd_His_') . $name;
-            if (!move_uploaded_file($carImgFilesFromInput['tmp_name'][$index], $uploadDir . $name)) {
-                $error = error_get_last();
-                echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";
-            }
-            $valuesInsertToQuery =  $valuesInsertToQuery . "(null, '$name', NOW(), $car_id),";
-        }
-        // Loại bỏ dấu ',' cuối cùng
-        $valuesInsertToQuery = rtrim($valuesInsertToQuery, ',');
-        $sql = "INSERT INTO $this->table (car_img_id, car_img_filename, car_img_update_at, car_id) VALUES $valuesInsertToQuery";
+
+        $valuesInsertIntoQuery = $this->moveUploadedFileAndReturnValuesInsertIntoQuery($carImgFilesFromInput, $car_id, $uploadDir);
+
+        $sql = "INSERT INTO $this->table (car_img_id, car_img_filename, car_img_update_at, car_id) VALUES $valuesInsertIntoQuery";
         $this->execute($sql);
     }
 
@@ -73,38 +64,56 @@ class CarImgData extends DatabaseManager
             if (isset($data_all_car_img[$index]['car_img_id'])) {
                 // Đánh dấu khi số lượng hình ảnh từ input = số lần lặp trong foreach
                 count($carImgFilesFromInput['name']) - 1 == $index && $whenNumberOfImageOnInputEqualIndex = true;
-
-                if (!move_uploaded_file($carImgFilesFromInput['tmp_name'][$index], $uploadDir . $name)) {
-                    $error = error_get_last();
-                    echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";
-                    die();
-                }
+                $this->moveUploadedFile($carImgFilesFromInput, $index, $uploadDir, $name);
                 // Xoá hình cũ để tránh rác
                 unlink($uploadDir . $data_all_car_img[$index]['car_img_filename']);
 
                 $sql = "UPDATE $this->table SET car_img_filename = '$name', car_img_update_at = NOW(), car_id = $car_id
-            WHERE car_img_id = " . $data_all_car_img[$index]['car_img_id'] . ";";
+                        WHERE car_img_id = " . $data_all_car_img[$index]['car_img_id'] . ";";
                 $this->execute($sql);
-
-                if ($whenNumberOfImageOnInputEqualIndex) {
-                    // Bắt đầu vòng lặp xoá cột thừa
-                    for ($i = $index + 1; $i <= count($data_all_car_img) - 1; $i++) {
-                        unlink($uploadDir . $data_all_car_img[$i]['car_img_filename']);
-                        $sql = "DELETE FROM $this->table WHERE car_img_id = " . $data_all_car_img[$i]['car_img_id'] . ";";
-                        $this->execute($sql);
-                    }
-                    $whenNumberOfImageOnInputEqualIndex = false;
-                }
-            } else { // Dữ liệu hình ảnh thêm nhiều hơn so với trước khi cập nhật thì tạo thêm cột
-                // var_dump("Dữ liệu thêm nhiều hơn" . $name);
-                if (!move_uploaded_file($carImgFilesFromInput['tmp_name'][$index], $uploadDir . $name)) {
-                    $error = error_get_last();
-                    echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";
-                    die();
-                }
+                $this->deleteRedundantColumnsAndDeleteImgOnUploadsDir($data_all_car_img, $whenNumberOfImageOnInputEqualIndex, $index, $uploadDir);
+            }
+            // Dữ liệu hình ảnh thêm nhiều hơn so với trước khi cập nhật thì tạo thêm cột
+            else {
+                $this->moveUploadedFile($carImgFilesFromInput, $index, $uploadDir, $name);
                 $sql = "INSERT INTO $this->table (car_img_id, car_img_filename, car_img_update_at, car_id) VALUES (null, '$name', NOW(), $car_id);";
                 $this->execute($sql);
             };
+        }
+    }
+
+    private function moveUploadedFileAndReturnValuesInsertIntoQuery($carImgFilesFromInput, $car_id, $uploadDir)
+    {
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $valuesInsertIntoQuery = '';
+        foreach ($carImgFilesFromInput['name'] as $index => $name) {
+            $name =  $index . '_' .  date('Ymd_His_') . $name;
+            $this->moveUploadedFile($carImgFilesFromInput, $index, $uploadDir, $name);
+            $valuesInsertIntoQuery =  $valuesInsertIntoQuery . "(null, '$name', NOW(), $car_id),";
+        }
+        // Loại bỏ dấu ',' cuối cùng
+        $valuesInsertIntoQuery = rtrim($valuesInsertIntoQuery, ',');
+        return $valuesInsertIntoQuery;
+    }
+
+    private function deleteRedundantColumnsAndDeleteImgOnUploadsDir($data_all_car_img, $whenNumberOfImageOnInputEqualIndex, $index, $uploadDir)
+    {
+        if ($whenNumberOfImageOnInputEqualIndex) {
+            // Bắt đầu vòng lặp xoá cột thừa
+            for ($i = $index + 1; $i <= count($data_all_car_img) - 1; $i++) {
+                unlink($uploadDir . $data_all_car_img[$i]['car_img_filename']);
+                $sql = "DELETE FROM $this->table WHERE car_img_id = " . $data_all_car_img[$i]['car_img_id'] . ";";
+                $this->execute($sql);
+            }
+        }
+    }
+
+    private function moveUploadedFile($carImgFilesFromInput, $index, $uploadDir, $name)
+    {
+        if (!move_uploaded_file($carImgFilesFromInput['tmp_name'][$index], $uploadDir . $name)) {
+            $error = error_get_last();
+            echo "Lỗi: " . $error['message'] . ". Không thể thêm hình ảnh";
+            die();
         }
     }
 }

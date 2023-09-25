@@ -5,7 +5,8 @@
         object-fit: cover;
     }
 
-    .img-car-on-registration-fee {
+    .img-car-on-registration-fee,
+    .img-car-on-pay {
         width: 600px;
         aspect-ratio: 16/9;
         object-fit: cover;

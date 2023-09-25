@@ -26,7 +26,11 @@
             <div class="row">
 
                 <div class="col-8 d-flex flex-column align-items-center">
-                    <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-registration-fee" alt="img-car-on-cart">
+                    <?php if (empty($data_cart['car_img_filename'])) : ?>
+                        <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-pay" alt="img-car-on-pay">
+                    <?php else : ?>
+                        <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-pay" alt="img-car-on-pay">
+                    <?php endif; ?>
                     <h1 class="mt-4"><?= $data_car['car_name'] ?></h1>
                     <span class="fs-4">Mạnh mẽ bên ngoài, tinh xảo bên trong</span>
                 </div>
@@ -56,7 +60,6 @@
                         <div class="rounded-3 p-3 pt-2">
                             <h6 class="m-0">Bàn giao tại cửa hàng</h6>
                             <select class="form-select mt-3" name="user_province_id">
-
                                 <?php foreach ($data_all_user_province as $value) : ?>
                                     <?php if ($value['user_province_id'] == $data_user_province_id) : ?>
                                         <option selected value="<?= $value['user_province_id'] ?>">Showroom <?= $value['user_province_name'] ?></option>

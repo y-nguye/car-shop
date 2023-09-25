@@ -15,24 +15,21 @@ class CarProducerData extends DatabaseManager
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
         }
-        return null;
     }
 
     public function getAllData()
     {
         $sql = "SELECT * FROM $this->table;";
         $this->result = $this->execute($sql);
+        $data = [];
         if ($this->result->num_rows > 0) {
-            $data = [];
-            // Trích xuất dữ liệu sang mảng liên hợp
             while ($row = $this->result->fetch_assoc()) {
                 $data[] = array(
                     'car_producer_id' => $row['car_producer_id'],
                     'car_producer_name' => $row['car_producer_name'],
                 );
             }
-            return $data;
         }
-        return null;
+        return $data;
     }
 }

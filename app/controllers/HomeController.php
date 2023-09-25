@@ -9,9 +9,11 @@ class HomeController
         $DB['db_car_type']->connect();
         $DB['db_car_img']->connect();
 
-        $data_all_car_by_car_ids_to_display_carouse = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([51, 49, 54]);
-        $data_all_car_by_car_ids_to_display_salling = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([48, 49, 54, 51]);
+        $data_all_car_by_car_ids_to_display_carouse = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([51, 49, 54, 64]);
+        $data_all_car_by_car_ids_to_display_salling = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([48, 49, 54, 64]);
+        $data_all_car_by_car_ids_to_display_four_newest = $DB['db_cars']->getAllDataWithSecondImgByFourNewUpdate();
 
+        // Hiển thị header
         $data_all_car_type = $DB['db_car_type']->getAllData();
 
         include __DIR__ . "/../views/frontend/home/index.php";
@@ -26,7 +28,9 @@ class HomeController
         $type = implode('', $type);
         $DB['db_cars']->connect();
         $DB['db_car_type']->connect();
+
         $data_all_car_type = $DB['db_car_type']->getAllData();
+
         foreach ($data_all_car_type as $value) {
             if ($this->convertToSlug($value['car_type_name']) == $type) {
                 // Lấy dữ liệu theo loại 
@@ -56,6 +60,7 @@ class HomeController
         $data_car_fuel = $DB['db_car_fuel']->getDataByID($data_car['car_fuel_id']);
         $data_car_producer = $DB['db_car_producer']->getDataByID($data_car['car_producer_id']);
 
+        // Hiển thị header
         $data_all_car_type = $DB['db_car_type']->getAllData();
 
         include_once __DIR__ . "/../views/frontend/home/product.php";
@@ -65,11 +70,6 @@ class HomeController
             $car_id = $_POST['car_id'];
             $car_name = $_POST['car_name'];
             $car_price = $_POST['car_price'];
-            $car_type_name = $_POST['car_type_name'];
-            $car_seat = $_POST['car_seat'];
-            $car_transmission = $_POST['car_transmission'];
-            $car_fuel = $_POST['car_fuel'];
-            $car_producer_name = $_POST['car_producer_name'];
 
             $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
             $car_img_filename = implode('', $data_car_img_filename);
