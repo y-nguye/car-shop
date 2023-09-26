@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/backend/product/productPageStyle.php'; ?>
-    <title>Sản phẩm đã xoá</title>
+    <?php include_once 'app/views/backend/product/productPagesStyle.php'; ?>
+    <title>Xe đã xoá</title>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
                     <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
                         <div class="container-fluid justify-content-start">
 
-                            <span class="fs-5"><b>Sản phẩm đã xoá</b></span>
+                            <span class="fs-5"><b>Danh sách xe đã xoá</b></span>
 
                             <button name="btnRestore" class="btn btn-sm btn-outline-secondary ms-auto me-2 btn-restore disabled">
                                 <i class="bi bi-arrow-counterclockwise"></i>
@@ -110,7 +110,10 @@
                     targets: [0],
                     orderable: false,
                     searchable: false
-                }]
+                }],
+                language: {
+                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
+                },
             });
         });
 

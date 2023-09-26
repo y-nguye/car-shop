@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/backend/product/productPageStyle.php'; ?>
+    <?php include_once 'app/views/backend/product/productPagesStyle.php'; ?>
     <title>Trang chủ Admin</title>
 </head>
 
@@ -40,7 +40,7 @@
                             <div class="card bg-light" style="width: 15rem; aspect-ratio: 1/1;">
                                 <div class="card-body text-center d-flex flex-column justify-content-center">
                                     <i class="bi bi-plus-circle fs-1"></i>
-                                    <h5 class="card-title pt-3">Thêm sản phẩm</h5>
+                                    <h5 class="card-title pt-3">Thêm xe</h5>
                                 </div>
                             </div>
                         </a>

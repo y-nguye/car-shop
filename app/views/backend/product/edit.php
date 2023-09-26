@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/backend/product/productPageStyle.php'; ?>
-    <title>Sửa sản phẩm</title>
+    <?php include_once 'app/views/backend/product/productPagesStyle.php'; ?>
+    <title>Sửa thông tin xe</title>
 </head>
 
 <body>
@@ -26,12 +26,23 @@
                 <form id="formEdit" name="formEdit" method="post" action="" enctype="multipart/form-data">
 
                     <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
-                        <div class="d-flex justify-content-start">
-                            <button type="button" class="btn btn-sm ms-2 me-2 btn-go-back-header">
+
+                        <div class="container-fluid ps-2">
+
+                            <button type="button" class="btn btn-sm btn-go-back-header">
                                 <i class="bi bi-chevron-left"></i>
                             </button>
-                            <span class="fs-5"><b>Sửa sản phẩm</b></span>
+
+                            <span class="fs-5 ms-2"><b>Sửa thông tin xe</b></span>
+
+                            <button type="button" class="btn btn-sm btn-primary ms-auto btn-add-car-producer">
+                                <i class="bi bi-plus-circle"></i>
+                                Thêm hãng sản xuất
+                            </button>
+
                         </div>
+
+
                     </nav>
 
 
@@ -268,6 +279,7 @@
 
         // ----------------------------------------------------------------
         const formEdit = document.getElementById('formEdit');
+        const btnAddProducer = document.querySelector('.btn-add-car-producer');
         const btnUpdate = document.querySelector('.btn-update');
         const btnGoBack = document.querySelector('.btn-go-back');
         const btnGoBackHeader = document.querySelector('.btn-go-back-header');
@@ -287,6 +299,10 @@
             btnUpdate.classList.remove('disabled');
         });
 
+        btnAddProducer.addEventListener("click", () => {
+            window.location.href = "/car-shop/admin/product/add-producer";
+
+        });
         btnUpdate.addEventListener("click", () => {
             formChanged = false;
         });

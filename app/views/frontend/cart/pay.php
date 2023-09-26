@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/frontend/cart/cartPageStyle.php' ?>
+    <?php include_once 'app/views/frontend/cart/cartPagesStyle.php' ?>
     <title>Thanh toán</title>
 </head>
 
@@ -14,100 +14,96 @@
     <?php
     include_once 'app/views/frontend/layouts/header.php';
     ?>
-    <div class="push-footer-down-page">
 
+    <div class="container-lg pt-3 push-footer-down-page">
+        <h2 class="mb-0">Thanh toán</h2>
 
-        <div class="container-lg">
-            <div class="pt-3 pb-3">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h2 class="mb-0">Thanh toán</h2>
-                </div>
-            </div>
-            <div class="row">
+        <hr>
 
-                <div class="col-8 d-flex flex-column align-items-center">
+        <div class="row">
+            <div class="col-8 d-flex flex-column align-items-center">
+                <a href="/car-shop/product/<?= $data_car['car_id'] ?>">
                     <?php if (empty($data_cart['car_img_filename'])) : ?>
                         <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-pay" alt="img-car-on-pay">
                     <?php else : ?>
                         <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-pay" alt="img-car-on-pay">
                     <?php endif; ?>
-                    <h1 class="mt-4"><?= $data_car['car_name'] ?></h1>
-                    <span class="fs-4">Mạnh mẽ bên ngoài, tinh xảo bên trong</span>
-                </div>
+                </a>
+                <h1 class="mt-4"><?= $data_car['car_name'] ?></h1>
+                <span class="text-center fs-4"><?= $data_car['car_describe'] ?></span>
+            </div>
 
-                <div class="col-4">
+            <div class="col-4">
 
-                    <form name="formPay" id="formPay" method="post" action="">
+                <form name="formPay" id="formPay" method="post" action="">
 
-                        <div class="rounded-3 p-3 pt-2">
-                            <h6 class="m-0">Tên khách hàng</h6>
-                            <?php if ($data_user_fullname) : ?>
-                                <input type="text" name="user_fullname" class="form-control mt-3" value="<?= $data_user_fullname ?>" disabled />
-                            <?php else : ?>
-                                <input type="text" name="user_fullname" class="form-control mt-3" />
-                            <?php endif; ?>
+                    <div class="pt-2">
+                        <label for="user_fullname">Tên khách hàng</label>
+                        <?php if ($data_user_fullname) : ?>
+                            <input type="text" name="user_fullname" id="user_fullname" class="form-control mt-2" value="<?= $data_user_fullname ?>" readonly />
+                        <?php else : ?>
+                            <input type="text" name="user_fullname" id="user_fullname" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="pt-2 mt-3">
+                        <label for="user_tel">Số điện thoại</label>
+                        <?php if ($data_user_tel) : ?>
+                            <input type="text" name="user_tel" id="user_tel" class="form-control mt-2" value="<?= $data_user_tel ?>" readonly />
+                        <?php else : ?>
+                            <input type="text" name="user_tel" id="user_tel" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="pt-2 mt-3">
+                        <label for="user_province_id">Bàn giao tại cửa hàng</label>
+                        <select class="form-select mt-2" id="user_province_id" name="user_province_id">
+                            <?php foreach ($data_all_user_province as $value) : ?>
+                                <?php if ($value['user_province_id'] == $data_user_province_id) : ?>
+                                    <option selected value="<?= $value['user_province_id'] ?>">Showroom <?= $value['user_province_name'] ?></option>
+                                <?php else : ?>
+                                    <option value="<?= $value['user_province_id'] ?>">Showroom <?= $value['user_province_name'] ?></option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="pt-2 mt-3 pb-2">
+                        <label class="">Phương thức thanh toán <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-info-circle"></i></a></label>
+
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                            <label class="form-check-label" for="flexRadioDefault1" style="user-select: none;">
+                                Trả thẳng
+                            </label>
                         </div>
-
-                        <div class="rounded-3 p-3 pt-2">
-                            <h6 class="m-0">Số điện thoại</h6>
-                            <?php if ($data_user_tel) : ?>
-                                <input type="text" name="user_tel" class="form-control mt-3" value="<?= $data_user_tel ?>" disabled />
-                            <?php else : ?>
-                                <input type="text" name="user_tel" class="form-control mt-3" />
-                            <?php endif; ?>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2" style="user-select: none;">
+                                Trả góp
+                            </label>
                         </div>
+                    </div>
 
-                        <div class="rounded-3 p-3 pt-2">
-                            <h6 class="m-0">Bàn giao tại cửa hàng</h6>
-                            <select class="form-select mt-3" name="user_province_id">
-                                <?php foreach ($data_all_user_province as $value) : ?>
-                                    <?php if ($value['user_province_id'] == $data_user_province_id) : ?>
-                                        <option selected value="<?= $value['user_province_id'] ?>">Showroom <?= $value['user_province_name'] ?></option>
-                                    <?php else : ?>
-                                        <option value="<?= $value['user_province_id'] ?>">Showroom <?= $value['user_province_name'] ?></option>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </select>
+                    <div class="mt-3">
+                        <hr>
+                        <div class="d-flex align-items-center justify-content-between text-secondary">
+                            <h6 class="m-0">Tổng chi phí đã dự tính:</h6>
+                            <div class="text-end"><?= number_format($data_car['total_price'], 0, ',', '.') ?> ₫</div>
                         </div>
-
-                        <div class="rounded-3 p-3 pt-2 pb-2">
-                            <h6 class="">Phương thức thanh toán <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-info-circle"></i></a></h6>
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    Trả thẳng
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    Trả góp
-                                </label>
-                            </div>
+                    </div>
+                    <div class="pb-2">
+                        <div class="pt-3 pb-3 d-flex align-items-center justify-content-between">
+                            <h6 class="m-0">Chi phí cọc trước 10%:</h6>
+                            <div class="text-end fs-3"><?= number_format($depositsPrice, 0, ',', '.') ?> ₫</div>
                         </div>
+                    </div>
 
-                        <div class="rounded-3 ps-3 pe-3">
-                            <hr>
-                            <div class="d-flex align-items-center justify-content-between text-secondary">
-                                <h6 class="m-0">Tổng chi phí đã dự tính</h6>
-                                <div class="text-end"><?= number_format($data_car['total_price'], 0, ',', '.') ?> ₫</div>
-                            </div>
-                        </div>
-                        <div class="rounded-3 ps-3 pb-3 pe-3">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h6 class="m-0">Phí cọc trước 10%</h6>
-                                <div class="text-end pt-3 pb-3 fs-3"><?= number_format($depositsPrice, 0, ',', '.') ?> ₫</div>
-                            </div>
-                        </div>
-
-
-                        <div class="d-flex flex-column align-items-center justify-content-between ps-3 pe-3">
-                            <button type="submit" name="btnPay" class="btn btn-primary w-100" href="#">Đặt cọc</button>
-                            <a class="mt-3" href="/car-shop/cart/registration-fee/<?= $car_id ?>">Quay về tính toán</a>
-                        </div>
-                    </form>
-                </div>
+                    <div class="d-flex flex-column align-items-center justify-content-between">
+                        <button type="submit" name="btnPay" class="btn btn-primary w-100" href="#">Đặt cọc</button>
+                        <a class="mt-3" href="/car-shop/cart/registration-fee/<?= $car_id ?>">Quay về tính toán</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -159,7 +155,12 @@
         $(document).ready(function() {
             $('#formPay').validate({
                 errorClass: "is-invalid",
-                errorPlacement: function(error, element) {},
+                errorPlacement: function(error, element) {
+                    element.attr("data-bs-original-title", error.text());
+                },
+                success: function(element) {
+                    element.removeAttr("data-bs-original-title");
+                },
                 rules: {
                     user_fullname: {
                         required: true,

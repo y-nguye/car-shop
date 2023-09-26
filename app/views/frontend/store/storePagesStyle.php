@@ -120,4 +120,25 @@
         font-size: 1.25rem;
         font-weight: 500;
     }
+
+    .img-car-on-test-drive__test-drive-page {
+        width: 600px;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+
+    .tooltip-inner {
+        background-color: red;
+        color: white;
+    }
+
+    .bs-tooltip-end .tooltip-arrow::before {
+        border-right-color: red;
+        -webkit-border-right-color: red;
+    }
+
+    .bs-tooltip-top .tooltip-arrow::before {
+        border-top-color: red;
+        -webkit-border-top-color: red;
+    }
 </style>

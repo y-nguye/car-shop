@@ -27,7 +27,6 @@ class CarTypeData extends DatabaseManager
                 $data[] = array(
                     'car_type_id' => $row['car_type_id'],
                     'car_type_name' => $row['car_type_name'],
-                    'car_type_describe' => $row['car_type_describe'],
                 );
             }
         }

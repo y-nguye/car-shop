@@ -136,7 +136,7 @@ class AccountController
                     'msg' => 'Tên đầy đủ phải tối thiểu 3 kí tự',
                 ];
             }
-            // Rule: maxlength 100
+            // Rule: maxlength 50
             elseif (strlen($user_fullname) > 50) {
                 $errors['user_fullname'][] = [
                     'rule' => 'maxlength',
@@ -163,7 +163,16 @@ class AccountController
                     'rule' => 'isNumber',
                     'rule_value' => true,
                     'value' => $user_tel,
-                    'msg' => 'Vui lòng nhập số điện thoại hợp lệ',
+                    'msg' => 'Số điện thoại không hợp lệ',
+                ];
+            }
+            // Rule: minlength 10
+            elseif (strlen($user_tel) < 10) {
+                $errors['user_tel'][] = [
+                    'rule' => 'minlength',
+                    'rule_value' => 10,
+                    'value' => $user_tel,
+                    'msg' => 'Số điện thoại không hợp lệ',
                 ];
             }
             // Rule: maxlength
@@ -172,11 +181,11 @@ class AccountController
                     'rule' => 'maxlength',
                     'rule_value' => 15,
                     'value' => $user_tel,
-                    'msg' => 'Số điện thoại quá dài',
+                    'msg' => 'Số điện thoại không hợp lệ',
                 ];
             }
 
-            // 3. Kiểm tra địa chỉ
+            // 3. Kiểm tra nơi đăng kiểm xe
             // Rule: required
             if (empty($user_province_id)) {
                 $errors['user_province_id'][] = [
@@ -325,6 +334,7 @@ class AccountController
             } else {
                 echo 'true';
             }
+            $DB['db_user']->disconnect();
         }
     }
 
@@ -339,6 +349,7 @@ class AccountController
             } else {
                 echo 'true';
             }
+            $DB['db_user']->disconnect();
         }
     }
 

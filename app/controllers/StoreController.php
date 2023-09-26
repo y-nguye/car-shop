@@ -70,6 +70,7 @@ class StoreController
             $car_id = $_POST['car_id'];
             $car_name = $_POST['car_name'];
             $car_price = $_POST['car_price'];
+            $car_describe = $_POST['car_describe'];
 
             $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
             $car_img_filename = implode('', $data_car_img_filename);
@@ -83,6 +84,7 @@ class StoreController
                 'car_id' => $car_id,
                 'car_name' => $car_name,
                 'car_price' => $car_price,
+                'car_describe' => $car_describe,
                 'car_img_filename' => $car_img_filename,
             );
 
@@ -96,11 +98,7 @@ class StoreController
             $car_id = $_POST['car_id'];
             $car_name = $_POST['car_name'];
             $car_price = $_POST['car_price'];
-            $car_type_name = $_POST['car_type_name'];
-            $car_seat = $_POST['car_seat'];
-            $car_transmission = $_POST['car_transmission'];
-            $car_fuel = $_POST['car_fuel'];
-            $car_producer_name = $_POST['car_producer_name'];
+            $car_describe = $_POST['car_describe'];
 
             $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
             $car_img_filename = implode('', $data_car_img_filename);
@@ -114,6 +112,7 @@ class StoreController
                 'car_id' => $car_id,
                 'car_name' => $car_name,
                 'car_price' => $car_price,
+                'car_describe' => $car_describe,
                 'car_img_filename' => $car_img_filename,
             );
 
@@ -135,6 +134,154 @@ class StoreController
         $DB['db_car_type']->connect();
         $data_all_car_type = $DB['db_car_type']->getAllData();
         include __DIR__ . "/../views/frontend/store/support.php";
+        $DB['db_car_type']->disconnect();
+    }
+
+    public function testDrive($DB, $vars)
+    {
+        $car_id = $vars['id'];
+        $DB['db_cars']->connect();
+        $DB['db_car_img']->connect();
+        $DB['db_car_type']->connect();
+        $data_car = $DB['db_cars']->getDataByID($car_id);
+        $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+
+        $data_user_fullname = null;
+        $data_user_tel = null;
+        $data_user_email = null;
+
+        if (isset($_SESSION['logged'])) {
+            $data_user_fullname = $_SESSION["user_fullname"];
+            $data_user_tel = $_SESSION["user_tel"];
+            $data_user_email = $_SESSION["user_email"];
+        }
+
+        include __DIR__ . "/../views/frontend/store/testDrive.php";
+
+        if (isset($_POST['btnSignUpTestDrive'])) {
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+            $user_fullname = $_POST['user_fullname'];
+            $user_tel = $_POST['user_tel'];
+            $user_email = empty($_POST['user_email']) ? "NULL" : $_POST['user_email'];
+            $user_test_drive_day = $_POST['user_test_drive_day'];
+            $user_test_drive_time = $_POST['user_test_drive_time'];
+
+            // Validation phía server
+            $errors = []; // Giả sự người dùng chưa vi phạm lỗi nào hết...
+
+            // 1. Kiểm tra ô tên người dùng
+            // Rule: required
+            if (empty($user_fullname)) {
+                $errors['user_fullname'][] = [
+                    'rule' => 'required',
+                    'rule_value' => true,
+                    'value' => $user_fullname,
+                    'msg' => 'Vui lòng nhập tên đầy đủ',
+                ];
+            }
+            // Rule: minlength 3
+            elseif (strlen($user_fullname) < 3) {
+                $errors['user_fullname'][] = [
+                    'rule' => 'minlength',
+                    'rule_value' => 3,
+                    'value' => $user_fullname,
+                    'msg' => 'Tên đầy đủ phải tối thiểu 3 kí tự',
+                ];
+            }
+            // Rule: maxlength 50
+            elseif (strlen($user_fullname) > 50) {
+                $errors['user_fullname'][] = [
+                    'rule' => 'maxlength',
+                    'rule_value' => 50,
+                    'value' => $user_fullname,
+                    'msg' => 'Tên đầy đủ tối đa có 50 ký tự',
+                ];
+            }
+
+            // 2. Kiểm tra số điện thoại
+            // Rule: required
+            if (empty($user_tel)) {
+                $errors['user_tel'][] = [
+                    'rule' => 'required',
+                    'rule_value' => true,
+                    'value' => $user_tel,
+                    'msg' => 'Vui lòng nhập số điện thoại',
+                ];
+            }
+            // Rule: isNumber
+            elseif (!is_numeric($user_tel)) {
+                $errors['user_tel'][] = [
+                    'rule' => 'isNumber',
+                    'rule_value' => true,
+                    'value' => $user_tel,
+                    'msg' => 'Số điện thoại không hợp lệ',
+                ];
+            }
+            // Rule: minlength 10
+            elseif (strlen($user_tel) < 10) {
+                $errors['user_tel'][] = [
+                    'rule' => 'minlength',
+                    'rule_value' => 10,
+                    'value' => $user_tel,
+                    'msg' => 'Số điện thoại không hợp lệ',
+                ];
+            }
+            // Rule: maxlength
+            elseif (strlen($user_tel) > 15) {
+                $errors['user_tel'][] = [
+                    'rule' => 'maxlength',
+                    'rule_value' => 15,
+                    'value' => $user_tel,
+                    'msg' => 'Số điện thoại không hợp lệ',
+                ];
+            }
+
+            // 3. Kiểm tra email
+            // Rule: Định dạng email
+            if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+                $errors['user_email'][] = [
+                    'rule' => 'isEmail',
+                    'rule_value' => true,
+                    'value' => $user_email,
+                    'msg' => 'Vui lòng nhập đúng định dạng email',
+                ];
+            }
+            // Rule: maxlength 100
+            elseif (strlen($user_email) > 100) {
+                $errors['user_email'][] = [
+                    'rule' => 'maxlength',
+                    'rule_value' => 100,
+                    'value' => $user_email,
+                    'msg' => 'Email tối đa có 100 ký tự',
+                ];
+            }
+
+            if (empty($errors)) {
+
+                // Gửi yêu cầu đến database
+
+                var_dump($user_fullname);
+                var_dump($user_test_drive_day);
+                var_dump($user_test_drive_time);
+                echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
+                die();
+            } else {
+                $errorMsg = '';
+                foreach ($errors as $fields) {
+                    foreach ($fields as $field) {
+                        $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
+                    };
+                };
+                echo "<script>
+                        showAlert('" . $errorMsg . "', 'danger');
+                    </script>";
+            }
+        }
+
+        $DB['db_cars']->disconnect();
+        $DB['db_car_img']->disconnect();
         $DB['db_car_type']->disconnect();
     }
 

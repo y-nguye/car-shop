@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/frontend/store/storePageStyle.php' ?>
+    <?php include_once 'app/views/frontend/store/storePagesStyle.php' ?>
     <title><?= $data_car['car_name'] ?></title>
 </head>
 
@@ -67,74 +67,76 @@
 
             <div class="d-flex flex-column col-5 ps-5">
 
+
+                <h1 class="text-dark"><?= $data_car['car_name'] ?></h1>
+                <span class="fs-3"><?= number_format($data_car['car_price'], 0, ',', '.') ?> ₫</span>
+
+                <div class="mt-4 pb-3 border-start border-end">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="text-center d-flex flex-column align-items-center justify-content-center">
+                                <span>Kiểu dáng</span>
+                                <span class="mt-2 p-1 fs-4"><?= $data_car_type['car_type_name'] ?></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center d-flex flex-column align-items-center justify-content-center">
+                                <span>Số chỗ ngồi</span>
+                                <span class="mt-2 p-1 fs-4"><?= $data_car_seat['car_seat'] ?></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center d-flex flex-column align-items-center justify-content-center">
+                                <span>Loại hộp số</span>
+                                <span class="text-center p-1 mt-2 fs-4"><?= $data_car_transmission['car_transmission'] ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-start border-end">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="text-center d-flex flex-column align-items-center justify-content-center">
+                                <span>Hãng sản xuất</span>
+                                <?php if (empty($data_car_producer['car_producer_name'])) : ?>
+                                    <span class="mt-2 p-1 fs-4">---</span>
+                                <?php else : ?>
+                                    <span class="mt-2 p-1 fs-4"><?= $data_car_producer['car_producer_name'] ?></span>
+                                <?php endif ?>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center d-flex flex-column align-items-center justify-content-center">
+                                <span>Nhiên liệu</span>
+                                <?php if (empty($data_car_producer['car_producer_name'])) : ?>
+                                    <span class="mt-2 p-1 fs-4">---</span>
+                                <?php else : ?>
+                                    <span class="mt-2 p-1 fs-4"><?= $data_car_fuel['car_fuel'] ?></span>
+                                <?php endif ?>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center d-flex flex-column align-items-center justify-content-center">
+                                <span>Động cơ</span>
+                                <span class="mt-2 p-1 fs-4"><?= $data_car['car_engine'] ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <form name="formProductCar" class="d-flex flex-column h-100" method="post" action="">
-                    <h1 class="text-dark"><?= $data_car['car_name'] ?></h1>
-                    <span class="fs-3"><?= number_format($data_car['car_price'], 0, ',', '.') ?> ₫</span>
-
-                    <div class="mt-4 pb-3 border-start border-end ">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <span>Kiểu dáng</span>
-                                    <span class="mt-2 p-1 fs-4"><?= $data_car_type['car_type_name'] ?></span>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <span>Số chỗ ngồi</span>
-                                    <span class="mt-2 p-1 fs-4"><?= $data_car_seat['car_seat'] ?></span>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <span>Loại hộp số</span>
-                                    <span class="text-center p-1 mt-2 fs-4"><?= $data_car_transmission['car_transmission'] ?></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 border-start border-end ">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <span>Hãng sản xuất</span>
-                                    <?php if (empty($data_car_producer['car_producer_name'])) : ?>
-                                        <span class="mt-2 p-1 fs-4">---</span>
-                                    <?php else : ?>
-                                        <span class="mt-2 p-1 fs-4"><?= $data_car_producer['car_producer_name'] ?></span>
-                                    <?php endif ?>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <span>Nhiên liệu</span>
-                                    <?php if (empty($data_car_producer['car_producer_name'])) : ?>
-                                        <span class="mt-2 p-1 fs-4">---</span>
-                                    <?php else : ?>
-                                        <span class="mt-2 p-1 fs-4"><?= $data_car_fuel['car_fuel'] ?></span>
-                                    <?php endif ?>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <span>Động cơ</span>
-                                    <span class="mt-2 p-1 fs-4"><?= $data_car['car_engine'] ?></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
 
                     <input type="hidden" name="car_id" value="<?= $data_car['car_id'] ?>" />
                     <input type="hidden" name="car_name" value="<?= $data_car['car_name'] ?>" />
                     <input type="hidden" name="car_price" value="<?= $data_car['car_price'] ?>" />
+                    <input type="hidden" name="car_describe" value="<?= $data_car['car_describe'] ?>" />
 
                     <div class="mt-auto">
                         <button type="submit" name="btnRegistrationFee" class="btn btn-primary mb-2 w-100">Dự toán chi phí</button>
                         <div class="d-flex">
                             <button type="submit" name="btnAddCarToCart" class="btn btn-outline-primary w-50 me-2">Thêm vào giỏ hàng</button>
-                            <button class="btn btn-outline-secondary w-50">Đăng kí lái thử</button>
+                            <a class="btn btn-outline-secondary w-50" href="/car-shop/test-drive/<?= $data_car['car_id'] ?>">Đăng ký lái thử</a>
                         </div>
                     </div>
 

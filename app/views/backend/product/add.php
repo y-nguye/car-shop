@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/backend/product/productPageStyle.php'; ?>
-    <title>Thêm sản phẩm</title>
+    <?php include_once 'app/views/backend/product/productPagesStyle.php'; ?>
+    <title>Thêm xe</title>
 </head>
 
 <body>
@@ -26,11 +26,19 @@
                 <form id="formAdd" name="formAdd" method="post" action="" enctype="multipart/form-data">
 
                     <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
-                        <div class="d-flex justify-content-start">
-                            <button type="button" class="btn btn-sm ms-2 me-2 btn-go-back-header">
+                        <div class="container-fluid ps-2">
+
+                            <button type="button" class="btn btn-sm btn-go-back-header">
                                 <i class="bi bi-chevron-left"></i>
                             </button>
-                            <span class="fs-5"><b>Thêm sản phẩm</b></span>
+
+                            <span class="fs-5 ms-2"><b>Thêm xe</b></span>
+
+                            <button type="button" class="btn btn-sm btn-primary ms-auto btn-add-car-producer">
+                                <i class="bi bi-plus-circle"></i>
+                                Thêm hãng sản xuất
+                            </button>
+
                         </div>
                     </nav>
 
@@ -230,9 +238,9 @@
 
         const formAdd = document.getElementById('formAdd');
         const btnAdd = document.querySelector('.btn-add');
+        const btnAddProducer = document.querySelector('.btn-add-car-producer');
         const btnGoBack = document.querySelector('.btn-go-back');
         const btnGoBackHeader = document.querySelector('.btn-go-back-header');
-        const btnGoBackConfirm = document.querySelector('.btn-go-back__confirm');
         // Tạo một biến để theo dõi trạng thái sự thay đổi
         let formChanged = false;
 
@@ -253,11 +261,16 @@
         });
         // -------------- Nút "Quay lại" ------------------
         btnGoBack.addEventListener("click", () => {
-            window.location.href = "/car-shop/admin/product";
-
+            window.history.back();
         });
         btnGoBackHeader.addEventListener("click", () => {
-            window.location.href = "/car-shop/admin/product";
+            window.history.back();
+        });
+
+        // -------------- Nút "Thêm hãng xe" ------------------
+        btnAddProducer.addEventListener("click", () => {
+            window.location.href = "/car-shop/admin/product/add-producer";
+
         });
 
         // -------------- Nút "Trở về đầu trang" ------------------

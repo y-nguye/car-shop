@@ -70,13 +70,13 @@ class ProductController
                     'msg' => 'Tên sản phẩm phải tối thiểu 3 kí tự',
                 ];
             }
-            // Rule: maxlength 10
-            else if (strlen($car_name) > 50) {
+            // Rule: maxlength 100
+            else if (strlen($car_name) > 100) {
                 $errors['car_name'][] = [
                     'rule' => 'maxlength',
                     'rule_value' => 100,
                     'value' => $car_name,
-                    'msg' => 'Tên sản phẩm tối đa có 50 ký tự',
+                    'msg' => 'Tên sản phẩm tối đa có 100 ký tự',
                 ];
             }
 
@@ -312,6 +312,60 @@ class ProductController
         }
     }
 
+    public function addProducer($DB)
+    {
+        $DB['db_car_producer']->connect();
+        $data_all_car_producer = $DB['db_car_producer']->getAllData();
+        include __DIR__ . "/../views/backend/product/addProducer.php";
+
+        if (isset($_POST['btnAddProducer'])) {
+            // Validation phía server
+            $errors = [];
+            // Rule: maxlength 100
+            if (strlen($car_name) > 100) {
+                $errors['car_name'][] = [
+                    'rule' => 'maxlength',
+                    'rule_value' => 100,
+                    'value' => $car_name,
+                    'msg' => 'Tên quá dài',
+                ];
+            }
+            if (empty($errors)) {
+                $DB['db_car_producer']->setData($_POST['car_producer_name']);
+                echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
+            } else {
+                $errorMsg = '';
+                foreach ($errors as $fields) {
+                    foreach ($fields as $field) {
+                        $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
+                    };
+                };
+                echo "<script>
+                        showAlert('" . $errorMsg . "', 'danger');
+                    </script>";
+            }
+        }
+
+        if (isset($_POST['btnDeleteProducer'])) {
+            $DB['db_car_producer']->deleteData($_POST['car_producer_ids']);
+            echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
+        }
+    }
+
+    public function addProducerCheck($DB)
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $DB['db_car_producer']->connect();
+            $producerExists = $DB['db_car_producer']->checkData($_POST['car_producer_name']);
+            if ($producerExists) {
+                echo 'false';
+            } else {
+                echo 'true';
+            }
+            $DB['db_car_producer']->disconnect();
+        }
+    }
+
     public function edit($DB, $vars)
     {
         $car_id = implode('', $vars);
@@ -372,13 +426,13 @@ class ProductController
                     'msg' => 'Tên sản phẩm phải tối thiểu 3 kí tự',
                 ];
             }
-            // Rule: maxlength 10
+            // Rule: maxlength 100
             else if (strlen($car_name) > 50) {
                 $errors['car_name'][] = [
                     'rule' => 'maxlength',
-                    'rule_value' => 50,
+                    'rule_value' => 100,
                     'value' => $car_name,
-                    'msg' => 'Tên sản phẩm tối đa có 50 ký tự',
+                    'msg' => 'Tên sản phẩm tối đa có 100 ký tự',
                 ];
             }
 

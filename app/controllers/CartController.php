@@ -54,6 +54,7 @@ class CartController
                 'car_id' => $data_car['car_id'],
                 'car_name' => $data_car['car_name'],
                 'car_price' => $data_car['car_price'],
+                'car_describe' => $data_car['car_describe'],
                 'car_img_filename' => $data_car['car_img_filename'],
                 'total_price' => $total_price,
             );

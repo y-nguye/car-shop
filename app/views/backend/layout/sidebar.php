@@ -5,7 +5,7 @@ include_once 'app/views/backend/layout/sideBarStyle.php';
 $sidebar_items = [
     ["admin", "/car-shop/admin", "<i class=' bi bi-house-door me-2'></i> Trang chủ"],
     ["user", "/car-shop/admin/user", "<i class='bi bi-person me-2'></i> Quản lý khách hàng"],
-    ["product", "/car-shop/admin/product", "<i class='bi bi-grid me-2'></i> Quản lý sản phẩm"],
+    ["product", "/car-shop/admin/product", "<i class='bi bi-grid me-2'></i> Quản lý xe"],
     ["product_trash", "/car-shop/admin/product/trash", "<i class='bi bi-trash me-2'></i> Thùng rác"],
 ];
 

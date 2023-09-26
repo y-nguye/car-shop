@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/frontend/cart/cartPageStyle.php' ?>
+    <?php include_once 'app/views/frontend/cart/cartPagesStyle.php' ?>
     <title>Giỏ hàng</title>
 </head>
 
@@ -17,17 +17,14 @@
     <div class="push-footer-down-page">
 
 
-        <div class="container-lg">
-            <div class="pt-3 pb-3">
-                <div class="d-flex align-items-center justify-content-between">
-                    <?php if (empty($cart)) : ?>
-                        <h2 class="mb-0">Giỏ hàng của bạn đang trống</h2>
-                    <?php else : ?>
-                        <h2 class="mb-0">Giỏ hàng</h2>
-                    <?php endif; ?>
-                </div>
-            </div>
+        <div class="container-lg pt-3 ">
+            <?php if (empty($cart)) : ?>
+                <h2 class="mb-0 mb-5">Giỏ hàng của bạn đang trống</h2>
+            <?php else : ?>
+                <h2 class="mb-0">Giỏ hàng</h2>
+            <?php endif; ?>
         </div>
+
 
         <div class="container-lg pb-3">
 
@@ -37,11 +34,9 @@
                 </div>
             <?php endif ?>
 
-
-            <?php $i = 0; ?>
             <?php foreach ($cart as $data) : ?>
                 <div class="mt-3 mb-3">
-                    <?php if ($i != 0) echo "<hr>" ?>
+                    <hr>
                     <div class="d-flex align-items-center">
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
                             <?php if (empty($data_cart['car_img_filename'])) : ?>
@@ -58,7 +53,6 @@
                         <a class="btn-close fs-5 ms-auto me-4" aria-label="Close" href="/car-shop/cart/delete/<?= $data['car_id'] ?>"></a>
                     </div>
                 </div>
-                <?php $i++; ?>
             <?php endforeach ?>
 
         </div>
@@ -66,7 +60,7 @@
         <?php if (empty($cart)) : ?>
             <div class="border-top border-bottom mt-5">
                 <div class="container-lg pt-3 pb-3 fs-5">
-                    Bạn cần hỗ trợ thêm? gọi 0772884452.
+                    Bạn cần hỗ trợ thêm? gọi 0123456789.
                 </div>
             </div>
         <?php endif ?>

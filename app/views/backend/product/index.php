@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/backend/product/productPageStyle.php'; ?>
-    <title>Danh sách sản phẩm</title>
+    <?php include_once 'app/views/backend/product/productPagesStyle.php'; ?>
+    <title>Danh sách xe</title>
 </head>
 
 <body>
@@ -27,11 +27,11 @@
 
                     <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
                         <div class="container-fluid justify-content-start">
-                            <span class="fs-5"><b>Danh sách sản phẩm</b></span>
+                            <span class="fs-5"><b>Danh sách xe</b></span>
 
-                            <button type="button" class="btn btn-sm btn-primary ms-auto me-4 btn-add" href="/car-shop/admin/product/add">
+                            <button type="button" class="btn btn-sm btn-primary ms-auto me-4 btn-add">
                                 <i class="bi bi-plus-circle"></i>
-                                Thêm mới
+                                Thêm xe mới
                             </button>
 
                             <button type="button" class="btn btn-sm btn-outline-secondary me-2 btn-edit disabled">
@@ -115,7 +115,10 @@
                     targets: [0],
                     orderable: false,
                     searchable: false
-                }]
+                }],
+                language: {
+                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
+                },
             });
         });
 
