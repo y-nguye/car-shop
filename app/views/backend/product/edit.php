@@ -212,9 +212,9 @@
                         <hr>
 
                         <div class="d-flex justify-content-start mb-3">
-                            <button type="submit" name="btnEdit" id="liveAlertBtn" class="btn btn-primary disabled btn-update">Cập nhật</button>
-                            <button type="button" id="backToTop" class="btn btn-secondary ms-auto me-3">Lên đầu trang</button>
                             <button type="button" class="btn btn-danger btn-go-back">Quay lại</button>
+                            <button type="button" id="backToTop" class="btn btn-secondary ms-auto me-3">Lên đầu trang</button>
+                            <button type="submit" name="btnEdit" id="liveAlertBtn" class="btn btn-primary disabled btn-update">Cập nhật</button>
                         </div>
                     </div>
                 </form>

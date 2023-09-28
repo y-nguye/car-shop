@@ -75,20 +75,8 @@ class StoreController
             $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
             $car_img_filename = implode('', $data_car_img_filename);
 
-            $cart = [];
-            if (isset($_SESSION['cart'])) {
-                $cart = $_SESSION['cart'];
-            }
+            $this->addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename);
 
-            $cart[$car_id] = array(
-                'car_id' => $car_id,
-                'car_name' => $car_name,
-                'car_price' => $car_price,
-                'car_describe' => $car_describe,
-                'car_img_filename' => $car_img_filename,
-            );
-
-            $_SESSION['cart'] = $cart;
             $_SESSION['from-registration-fee'] = true;
             echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
         }
@@ -103,20 +91,8 @@ class StoreController
             $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
             $car_img_filename = implode('', $data_car_img_filename);
 
-            $cart = [];
-            if (isset($_SESSION['cart'])) {
-                $cart = $_SESSION['cart'];
-            }
+            $this->addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename);
 
-            $cart[$car_id] = array(
-                'car_id' => $car_id,
-                'car_name' => $car_name,
-                'car_price' => $car_price,
-                'car_describe' => $car_describe,
-                'car_img_filename' => $car_img_filename,
-            );
-
-            $_SESSION['cart'] = $cart;
             echo '<script>location.href = "/car-shop/product/' . $car_id . '"</script>';
         }
     }
@@ -283,6 +259,25 @@ class StoreController
         $DB['db_cars']->disconnect();
         $DB['db_car_img']->disconnect();
         $DB['db_car_type']->disconnect();
+    }
+
+
+    private function addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename)
+    {
+        $cart = [];
+        if (isset($_SESSION['cart'])) {
+            $cart = $_SESSION['cart'];
+        }
+
+        $cart[$car_id] = array(
+            'car_id' => $car_id,
+            'car_name' => $car_name,
+            'car_price' => $car_price,
+            'car_describe' => $car_describe,
+            'car_img_filename' => $car_img_filename,
+        );
+
+        $_SESSION['cart'] = $cart;
     }
 
     private function convertToSlug($str, $delimiter = '-')

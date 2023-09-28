@@ -9,6 +9,8 @@ include_once 'app/models/DB_car_producer.php';
 include_once 'app/models/DB_car_img.php';
 include_once 'app/models/DB_user.php';
 include_once 'app/models/DB_user_province.php';
+include_once 'app/models/DB_user_deposit.php';
+include_once 'app/models/DB_pay_method.php';
 
 $db_cars = new CarsData;
 $db_car_seat = new CarSeatData;
@@ -19,6 +21,8 @@ $db_car_producer = new CarProducerData;
 $db_car_img = new CarImgData;
 $db_user = new UserData;
 $db_user_province = new UserProvinceData;
+$db_user_deposit = new UserDepositData;
+$db_pay_method = new PayMethodData;
 
 $DB = array(
     'db_cars' => $db_cars,
@@ -29,5 +33,7 @@ $DB = array(
     'db_car_producer' => $db_car_producer,
     'db_car_img' => $db_car_img,
     'db_user' => $db_user,
-    'db_user_province' => $db_user_province
+    'db_user_province' => $db_user_province,
+    'db_user_deposit' => $db_user_deposit,
+    'db_pay_method' => $db_pay_method,
 );

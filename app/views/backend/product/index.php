@@ -122,7 +122,7 @@
             });
         });
 
-        var carsForm = document.forms['formListCars'];
+        const carsForm = document.forms['formListCars'];
         const btnAdd = document.querySelector('.btn-add');
         const btnEdit = document.querySelector('.btn-edit');
         const btnDelete = document.querySelector('.btn-delete');

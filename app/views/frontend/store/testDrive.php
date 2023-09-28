@@ -41,7 +41,7 @@
                         <label for="user_test_drive_day">Ngày dự kiến</label>
                         <input type="date" name="user_test_drive_day" id="user_test_drive_day" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                     </div>
-                    <div class="pt-2 mt-3">
+                    <div class="pt-2 mt-2">
                         <label for="user_test_drive_time">Thời gian dự kiến</label>
                         <input type="time" name="user_test_drive_time" id="user_test_drive_time" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                     </div>
@@ -57,7 +57,7 @@
                         <?php endif; ?>
                     </div>
 
-                    <div class="pt-2 mt-3">
+                    <div class="pt-2 mt-2">
                         <label for="user_tel">Số điện thoại *</label>
                         <?php if ($data_user_tel) : ?>
                             <input type="text" name="user_tel" id="user_tel" class="form-control mt-2" value="<?= $data_user_tel ?>" readonly />
@@ -66,7 +66,7 @@
                         <?php endif; ?>
                     </div>
 
-                    <div class="pt-2 mt-3">
+                    <div class="pt-2 mt-2">
                         <label for="user_email">Email</label>
                         <?php if ($data_user_tel) : ?>
                             <input type="email" name="user_email" id="user_email" class="form-control mt-2" value="<?= $data_user_email ?>" readonly />

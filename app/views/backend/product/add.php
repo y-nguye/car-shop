@@ -24,24 +24,19 @@
             <div class="col-9">
 
                 <form id="formAdd" name="formAdd" method="post" action="" enctype="multipart/form-data">
-
                     <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
                         <div class="container-fluid ps-2">
-
                             <button type="button" class="btn btn-sm btn-go-back-header">
                                 <i class="bi bi-chevron-left"></i>
                             </button>
-
                             <span class="fs-5 ms-2"><b>Thêm xe</b></span>
 
                             <button type="button" class="btn btn-sm btn-primary ms-auto btn-add-car-producer">
                                 <i class="bi bi-plus-circle"></i>
                                 Thêm hãng sản xuất
                             </button>
-
                         </div>
                     </nav>
-
 
                     <div class="p-2">
 
@@ -169,9 +164,9 @@
                         <hr>
 
                         <div class="d-flex justify-content-start mb-3">
-                            <button type="submit" name="btnAdd" id="liveAlertBtn" class="btn btn-primary disabled btn-add">Thêm</button>
-                            <button type="button" id="backToTop" class="btn btn-secondary ms-auto me-3">Lên đầu trang</button>
                             <button type="button" class="btn btn-danger btn-go-back">Quay lại</button>
+                            <button type="button" id="backToTop" class="btn btn-secondary ms-auto me-3">Lên đầu trang</button>
+                            <button type="submit" name="btnAdd" id="liveAlertBtn" class="btn btn-primary disabled btn-add">Thêm</button>
                         </div>
 
                     </div>
@@ -183,7 +178,6 @@
     <?php
     include_once 'app/views/frontend/layouts/footer.php';
     ?>
-
 
     <?php
     include_once 'app/views/resources/script/script.php';

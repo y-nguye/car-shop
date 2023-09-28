@@ -36,4 +36,19 @@
         border-top-color: red;
         -webkit-border-top-color: red;
     }
+
+    .disabled-btn-back-to-registration-fee__pay-page {
+        color: #6c757d;
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+    }
 </style>

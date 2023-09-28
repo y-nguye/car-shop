@@ -1,7 +1,5 @@
 <?php
 
-require 'vendor/autoload.php';
-
 use FastRoute\RouteCollector;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {

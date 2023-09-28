@@ -10,20 +10,25 @@
 </head>
 
 <body>
+    <div id="overlay" class=""></div>
 
     <?php
     include_once 'app/views/frontend/layouts/header.php';
     ?>
 
     <div class="container-lg pt-3 push-footer-down-page">
-        <h2 class="mb-0">Thanh toán</h2>
-
+        <div class="d-flex align-items-center justify-content-between">
+            <h2 class="mb-0">Thanh toán</h2>
+            <div id="spinner" class="spinner-border visually-hidden" role="status"></div>
+        </div>
         <hr>
 
+
         <div class="row">
+
             <div class="col-8 d-flex flex-column align-items-center">
                 <a href="/car-shop/product/<?= $data_car['car_id'] ?>">
-                    <?php if (empty($data_cart['car_img_filename'])) : ?>
+                    <?php if (empty($data_car['car_img_filename'])) : ?>
                         <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-pay" alt="img-car-on-pay">
                     <?php else : ?>
                         <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-pay" alt="img-car-on-pay">
@@ -35,7 +40,7 @@
 
             <div class="col-4">
 
-                <form name="formPay" id="formPay" method="post" action="">
+                <form name="formPay" id="formPay" method="post" action="/car-shop/cart/pay/deposit-required">
 
                     <div class="pt-2">
                         <label for="user_fullname">Tên khách hàng</label>
@@ -46,7 +51,7 @@
                         <?php endif; ?>
                     </div>
 
-                    <div class="pt-2 mt-3">
+                    <div class="pt-2 mt-2">
                         <label for="user_tel">Số điện thoại</label>
                         <?php if ($data_user_tel) : ?>
                             <input type="text" name="user_tel" id="user_tel" class="form-control mt-2" value="<?= $data_user_tel ?>" readonly />
@@ -55,34 +60,55 @@
                         <?php endif; ?>
                     </div>
 
-                    <div class="pt-2 mt-3">
+                    <div class="pt-2 mt-2">
+                        <label for="user_email">Email</label>
+                        <?php if ($data_user_email) : ?>
+                            <input type="email" name="user_email" id="user_email" class="form-control mt-2" value="<?= $data_user_email ?>" readonly />
+                        <?php else : ?>
+                            <input type="email" name="user_email" id="user_email" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="pt-2 mt-2">
                         <label for="user_province_id">Bàn giao tại cửa hàng</label>
-                        <select class="form-select mt-2" id="user_province_id" name="user_province_id">
-                            <?php foreach ($data_all_user_province as $value) : ?>
-                                <?php if ($value['user_province_id'] == $data_user_province_id) : ?>
-                                    <option selected value="<?= $value['user_province_id'] ?>">Showroom <?= $value['user_province_name'] ?></option>
+                        <select class="form-select mt-2" id="user_province_id" name="user_province_id" readonly>
+                            <?php foreach ($data_all_user_province as $data) : ?>
+                                <?php if ($data['user_province_id'] == $data_user_province_id) : ?>
+                                    <option selected value="<?= $data['user_province_id'] ?>">Showroom <?= $data['user_province_name'] ?></option>
                                 <?php else : ?>
-                                    <option value="<?= $value['user_province_id'] ?>">Showroom <?= $value['user_province_name'] ?></option>
+                                    <option value="<?= $data['user_province_id'] ?>">Showroom <?= $data['user_province_name'] ?></option>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
                     </div>
 
-                    <div class="pt-2 mt-3 pb-2">
+                    <div class="pt-2 mt-2">
                         <label class="">Phương thức thanh toán <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-info-circle"></i></a></label>
 
-                        <div class="form-check mt-2">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                            <label class="form-check-label" for="flexRadioDefault1" style="user-select: none;">
+                        <!-- <div class="form-check mt-2">
+                            <label class="form-check-label" for="straight" style="user-select: none;">
+                                <input class="form-check-input" type="radio" name="methodPay" id="straight" value="straight" checked>
                                 Trả thẳng
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2" style="user-select: none;">
+                            <label class="form-check-label" for="installment" style="user-select: none;">
+                                <input class="form-check-input" type="radio" name="methodPay" value="installment" id="installment">
                                 Trả góp
                             </label>
-                        </div>
+                        </div> -->
+
+                        <?php foreach ($data_all_pay_method as $index => $data) : ?>
+
+                            <div class="form-check mt-2">
+                                <label class="form-check-label" for="<?= $data['pay_method_id'] ?>" style="user-select: none;">
+                                    <input class="form-check-input" type="radio" name="pay_method_id" id="<?= $data['pay_method_id'] ?>" value="<?= $data['pay_method_id'] ?>" <?php if ($index == 0) echo "checked" ?>>
+                                    <?= $data['pay_method_name'] ?>
+                                </label>
+                            </div>
+
+                        <?php endforeach; ?>
+
                     </div>
 
                     <div class="mt-3">
@@ -99,9 +125,14 @@
                         </div>
                     </div>
 
+                    <input type="hidden" name="car_id" value="<?= $data_car['car_id'] ?>" />
+                    <input type="hidden" name="user_deposit_price" value="<?= $depositsPrice ?>" />
+
                     <div class="d-flex flex-column align-items-center justify-content-between">
-                        <button type="submit" name="btnPay" class="btn btn-primary w-100" href="#">Đặt cọc</button>
-                        <a class="mt-3" href="/car-shop/cart/registration-fee/<?= $car_id ?>">Quay về tính toán</a>
+                        <button type="submit" name="btnPay" id="btn-pay" class="btn btn-primary w-100">
+                            Xác nhận đơn đặt cọc
+                        </button>
+                        <a id="btn-back-to-registration-fee" class="mt-3" href="/car-shop/cart/registration-fee/<?= $car_id ?>">Quay về tính toán</a>
                     </div>
                 </form>
             </div>
@@ -147,19 +178,32 @@
     include_once 'app/views/frontend/layouts/footer.php';
     ?>
 
+
     <?php
     include_once 'app/views/resources/script/script.php';
     ?>
 
     <script>
+        const overlay = document.getElementById('overlay');
+        const spinner = document.getElementById('spinner');
+        const userFullname = document.getElementById('user_fullname');
+        const userTel = document.getElementById('user_tel');
+        const btnPay = document.getElementById('btn-pay');
+        const btnBackToRegistrationFee = document.getElementById('btn-back-to-registration-fee');
+        var isValid = false;
+
         $(document).ready(function() {
-            $('#formPay').validate({
+            isValid = $('#formPay').validate({
                 errorClass: "is-invalid",
                 errorPlacement: function(error, element) {
                     element.attr("data-bs-original-title", error.text());
                 },
                 success: function(element) {
                     element.removeAttr("data-bs-original-title");
+                },
+                submitHandler: function(form) {
+                    preventOperation();
+                    form.submit();
                 },
                 rules: {
                     user_fullname: {
@@ -187,6 +231,17 @@
                 }
             });
         });
+
+        function preventOperation() {
+            spinner.classList.remove("visually-hidden");
+            overlay.classList.add("overlay");
+
+            userFullname.setAttribute("readonly", "");
+            userTel.setAttribute("readonly", "");
+
+            btnPay.classList.add("disabled");
+            btnBackToRegistrationFee.classList.add("disabled-btn-back-to-registration-fee__pay-page");
+        }
     </script>
 
 </body>

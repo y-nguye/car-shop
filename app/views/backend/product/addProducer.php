@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
     <?php include_once 'app/views/backend/product/productPagesStyle.php'; ?>
-    <title>Thêm xe</title>
+    <title>Thêm hãng xe</title>
 </head>
 
 <body>

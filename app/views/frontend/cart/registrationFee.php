@@ -45,7 +45,7 @@
                         <hr>
                     </div>
 
-                    <div class="pt-2 mt-3">
+                    <div class="pt-2 mt-2">
                         <label for="user_province_id" class="text-dark m-0">Nơi đăng ký xe</label>
                         <select name="user_province_id" id="user_province_id" class="form-select mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                             <option selected value="">---Chọn---</option>
@@ -55,7 +55,7 @@
                         </select>
                     </div>
 
-                    <div class="pt-2 mt-3">
+                    <div class="pt-2 mt-2">
                         <label for="road_traffic_fees" class="text-dark m-0">Gói phí lưu hành đường bộ</label>
                         <select id="road_traffic_fees" class="form-select mt-2">
                             <option value="130000" selected>1 tháng</option>
@@ -67,7 +67,7 @@
                         </select>
                     </div>
 
-                    <div class="pt-2 mt-3">
+                    <div class="pt-2 mt-2">
                         <label class="text-dark m-0">Phí đăng kiểm:</label>
                         <div class="text-end fs-5"><?= number_format(340000, 0, ',', '.') ?> ₫</div>
                     </div>
