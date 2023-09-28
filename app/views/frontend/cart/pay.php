@@ -84,29 +84,13 @@
 
                     <div class="pt-2 mt-2">
                         <label class="">Phương thức thanh toán <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-info-circle"></i></a></label>
-
-                        <!-- <div class="form-check mt-2">
-                            <label class="form-check-label" for="straight" style="user-select: none;">
-                                <input class="form-check-input" type="radio" name="methodPay" id="straight" value="straight" checked>
-                                Trả thẳng
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label" for="installment" style="user-select: none;">
-                                <input class="form-check-input" type="radio" name="methodPay" value="installment" id="installment">
-                                Trả góp
-                            </label>
-                        </div> -->
-
                         <?php foreach ($data_all_pay_method as $index => $data) : ?>
-
                             <div class="form-check mt-2">
                                 <label class="form-check-label" for="<?= $data['pay_method_id'] ?>" style="user-select: none;">
                                     <input class="form-check-input" type="radio" name="pay_method_id" id="<?= $data['pay_method_id'] ?>" value="<?= $data['pay_method_id'] ?>" <?php if ($index == 0) echo "checked" ?>>
                                     <?= $data['pay_method_name'] ?>
                                 </label>
                             </div>
-
                         <?php endforeach; ?>
 
                     </div>
