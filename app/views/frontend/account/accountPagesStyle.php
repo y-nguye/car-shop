@@ -77,4 +77,16 @@
         position: absolute;
         bottom: 0;
     }
+
+
+
+    .img-car-deposit {
+        width: 150px;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+
+    .min-width-250px {
+        min-width: 250px;
+    }
 </style>

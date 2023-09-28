@@ -13,10 +13,10 @@ include_once 'app/views/frontend/layouts/headerStyles.php';
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-lg-0 navbar-list">
 
-                <?php foreach ($data_all_car_type as $value) { ?>
+                <?php foreach ($data_all_car_type as $data) { ?>
                     <?=
                     '<li class="nav-item ms-4">
-                    <a class="nav-link text-dark" href="/car-shop/type-' . convertToSlug($value['car_type_name']) . '">' . $value['car_type_name'] . '</a>
+                    <a class="nav-link text-dark" href="/car-shop/type-' . convertToSlug($data['car_type_name']) . '">' . $data['car_type_name'] . '</a>
                     </li>'
                     ?>
                 <?php } ?>
@@ -84,7 +84,7 @@ include_once 'app/views/frontend/layouts/headerStyles.php';
 
             <div class="mt-4 text-secondary"><span>Hồ sơ của tôi</span></div>
             <ul>
-                <li class="mt-2 fs-7"><a href=""><i class="bi bi-box align-middle me-2"></i>Đơn hàng</a></li>
+                <li class="mt-2 fs-7"><a href="/car-shop/account/deposit"><i class="bi bi-box align-middle me-2"></i>Đơn hàng</a></li>
                 <li class="mt-2 fs-7"><a href="/car-shop/account"><i class="bi bi-person-circle align-middle me-2"></i>Tài khoản</a></li>
 
                 <?php if (isset($_SESSION['logged'])) : ?>

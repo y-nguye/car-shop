@@ -6,20 +6,17 @@ class StoreController
     public function index($DB)
     {
         $DB['db_cars']->connect();
-        $DB['db_car_type']->connect();
-        $DB['db_car_img']->connect();
 
         $data_all_car_by_car_ids_to_display_carouse = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([51, 49, 54, 64]);
         $data_all_car_by_car_ids_to_display_salling = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([48, 49, 54, 64]);
         $data_all_car_by_car_ids_to_display_four_newest = $DB['db_cars']->getAllDataWithSecondImgByFourNewUpdate();
 
         // Hiển thị header
-        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
 
         include __DIR__ . "/../views/frontend/store/index.php";
 
         $DB['db_cars']->disconnect();
-        $DB['db_car_type']->disconnect();
     }
 
     public function type($DB, $type)
@@ -27,24 +24,43 @@ class StoreController
         // Chuyển mảng thành chuỗi
         $type = implode('', $type);
         $DB['db_cars']->connect();
-        $DB['db_car_type']->connect();
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+        $isExistType = false;
 
-        $data_all_car_type = $DB['db_car_type']->getAllData();
-
-        foreach ($data_all_car_type as $value) {
-            if ($this->convertToSlug($value['car_type_name']) == $type) {
+        foreach ($data_all_car_type as $data) {
+            if ($this->convertToSlug($data['car_type_name']) == $type) {
+                $isExistType = true;
                 // Lấy dữ liệu theo loại 
-                $nameType = $value['car_type_name'];
-                $data_all_with_img = $DB['db_cars']->getAllDataWithFirstImgByCarTypeID($value['car_type_id']);
+                $nameType = $data['car_type_name'];
+                $data_all_with_img = $DB['db_cars']->getAllDataWithFirstImgByCarTypeID($data['car_type_id']);
+                $DB['db_cars']->disconnect();
             }
         }
+
+        if (!$isExistType) {
+            echo "404-error";
+            $DB['db_cars']->disconnect();
+            die();
+        }
+
         include __DIR__ . "/../views/frontend/store/type.php";
+
+        // $DB['db_cars']->disconnect();
     }
 
     public function product($DB, $vars)
     {
         $car_id = $vars['id'];
         $DB['db_cars']->connect();
+        $data_car = $DB['db_cars']->getDataByID($car_id);
+
+        // Authorization
+        if (!$data_car) {
+            echo "404-error";
+            $DB['db_cars']->disconnect();
+            die();
+        }
+
         $DB['db_car_img']->connect();
         $DB['db_car_type']->connect();
         $DB['db_car_seat']->connect();
@@ -52,7 +68,6 @@ class StoreController
         $DB['db_car_fuel']->connect();
         $DB['db_car_producer']->connect();
 
-        $data_car = $DB['db_cars']->getDataByID($car_id);
         $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($car_id);
         $data_car_type = $DB['db_car_type']->getDataByID($data_car['car_type_id']);
         $data_car_seat = $DB['db_car_seat']->getDataByID($data_car['car_seat_id']);
@@ -60,9 +75,14 @@ class StoreController
         $data_car_fuel = $DB['db_car_fuel']->getDataByID($data_car['car_fuel_id']);
         $data_car_producer = $DB['db_car_producer']->getDataByID($data_car['car_producer_id']);
 
-        // Hiển thị header
-        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $DB['db_car_type']->disconnect();
+        $DB['db_car_seat']->disconnect();
+        $DB['db_car_transmission']->disconnect();
+        $DB['db_car_fuel']->disconnect();
+        $DB['db_car_producer']->disconnect();
 
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/store/product.php";
 
         if (isset($_POST['btnRegistrationFee'])) {
@@ -74,6 +94,7 @@ class StoreController
 
             $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
             $car_img_filename = implode('', $data_car_img_filename);
+            $DB['db_car_img']->disconnect();
 
             $this->addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename);
 
@@ -90,6 +111,7 @@ class StoreController
 
             $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
             $car_img_filename = implode('', $data_car_img_filename);
+            $DB['db_car_img']->disconnect();
 
             $this->addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename);
 
@@ -99,29 +121,34 @@ class StoreController
 
     public function service($DB)
     {
-        $DB['db_car_type']->connect();
-        $data_all_car_type = $DB['db_car_type']->getAllData();
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/store/service.php";
-        $DB['db_car_type']->disconnect();
     }
 
     public function support($DB)
     {
-        $DB['db_car_type']->connect();
-        $data_all_car_type = $DB['db_car_type']->getAllData();
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/store/support.php";
-        $DB['db_car_type']->disconnect();
     }
 
     public function testDrive($DB, $vars)
     {
         $car_id = $vars['id'];
+
         $DB['db_cars']->connect();
-        $DB['db_car_img']->connect();
-        $DB['db_car_type']->connect();
         $data_car = $DB['db_cars']->getDataByID($car_id);
+
+        // Authorization
+        if (!$data_car) {
+            echo "404-error";
+            $DB['db_cars']->disconnect();
+            die();
+        }
+
+        $DB['db_car_img']->connect();
         $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
-        $data_all_car_type = $DB['db_car_type']->getAllData();
 
         $data_user_fullname = null;
         $data_user_tel = null;
@@ -133,6 +160,8 @@ class StoreController
             $data_user_email = $_SESSION["user_email"];
         }
 
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/store/testDrive.php";
 
         if (isset($_POST['btnSignUpTestDrive'])) {
@@ -258,9 +287,15 @@ class StoreController
 
         $DB['db_cars']->disconnect();
         $DB['db_car_img']->disconnect();
-        $DB['db_car_type']->disconnect();
     }
 
+    private function getAllCarTypesForHeader($DB)
+    {
+        $DB['db_car_type']->connect();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $DB['db_car_type']->disconnect();
+        return $data_all_car_type;
+    }
 
     private function addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename)
     {

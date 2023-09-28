@@ -704,11 +704,9 @@ class ProductController
         $uploadDir = __DIR__ . '/../../assets/uploads/';
         if (isset($_POST['btnForceDelete'])) {
             $DB['db_cars']->connect();
-            $DB['db_car_img']->connect();
             $DB['db_cars']->forceDelete($_POST['car_ids'], $uploadDir);
             echo '<script>location.href = "./"</script>';
             $DB['db_cars']->disconnect();
-            $DB['db_car_img']->disconnect();
         }
     }
 }

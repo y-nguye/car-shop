@@ -3,19 +3,21 @@
 session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 class CartController
 {
+    private $emailSendName = "nhyd23021@cusc.ctu.edu.vn";
+    private $emailSendPassword = "nguyeny@cu\$c";
+
     public function index($DB)
     {
-        $DB['db_car_type']->connect();
-        $data_all_car_type = $DB['db_car_type']->getAllData();
         $cart = [];
         if (isset($_SESSION['cart'])) {
             $cart = $_SESSION['cart'];
         }
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/cart/index.php";
     }
 
@@ -36,9 +38,7 @@ class CartController
             die();
         }
 
-        $DB['db_car_type']->connect();
         $DB['db_user_province']->connect();
-        $data_all_car_type = $DB['db_car_type']->getAllData();
         $data_all_user_province = $DB['db_user_province']->getAllData();
 
         $data_car = [];
@@ -46,6 +46,8 @@ class CartController
             $data_car = $_SESSION['cart'][$car_id];
         }
 
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/cart/registrationFee.php";
 
         if (isset($_SESSION['from-registration-fee']) && $_SESSION['from-registration-fee']) {
@@ -58,6 +60,7 @@ class CartController
     {
         $car_id = $vars['id'];
 
+        // Authentication
         // Nếu không có thao tác nhấn nút "tiến hành đặt cọc" thì fuckout and die
         if (!isset($_POST['btnDeposits'])) {
             echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
@@ -66,6 +69,7 @@ class CartController
 
         $total_price = floatval($_POST['total_price']);
 
+        $data_car = [];
         if (isset($_SESSION['cart'])) {
             $data_car = $_SESSION['cart'][$car_id];
         }
@@ -94,21 +98,19 @@ class CartController
             $data_user_province_id = $_SESSION["user_province_id"];
         }
 
-        $data_car = [];
-        if (isset($_SESSION['cart'])) {
-            $data_car = $_SESSION['cart'][$car_id];
-        }
-
-        $DB['db_car_type']->connect();
         $DB['db_user_province']->connect();
         $DB['db_pay_method']->connect();
-        $data_all_car_type = $DB['db_car_type']->getAllData();
         $data_all_user_province = $DB['db_user_province']->getAllData();
         $data_all_pay_method = $DB['db_pay_method']->getAllData();
 
         $depositsPrice = $data_car['total_price'] * 0.1;
 
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/cart/pay.php";
+
+        $DB['db_user_province']->disconnect();
+        $DB['db_pay_method']->disconnect();
     }
 
     public function depositRequired($DB)
@@ -125,7 +127,6 @@ class CartController
         $DB['db_user_province']->connect();
         $DB['db_user_deposit']->connect();
         $DB['db_pay_method']->connect();
-
 
         $car_id = $_POST['car_id'];
         $user_deposit_fullname = $_POST['user_fullname'];
@@ -343,11 +344,13 @@ class CartController
 
         $this->sendMailDepositRequired(
             $car_id,
-            $depositRequestHasBeenConfirmed
+            $depositRequestHasBeenConfirmed,
+            $user_deposit_fullname,
+            $user_deposit_email
         );
     }
 
-    private function sendMailDepositRequired($car_id, $depositRequestHasBeenConfirmed)
+    private function sendMailDepositRequired($car_id, $depositRequestHasBeenConfirmed, $user_deposit_fullname, $user_deposit_email)
     {
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
@@ -356,15 +359,15 @@ class CartController
             $mail->isSMTP();                        // Sử dụng giao thức SMTP
             $mail->Host       = 'smtp.gmail.com';   // Đặt máy chủ SMTP
             $mail->SMTPAuth   = true;               // Bật xác thực SMTP
-            $mail->Username   = 'nhyd23021@cusc.ctu.edu.vn'; // Tên đăng nhập SMTP
-            $mail->Password   = 'nguyeny@cu$';           // Mật khẩu SMTP
+            $mail->Username   = $this->emailSendName; // Tên đăng nhập SMTP
+            $mail->Password   = $this->emailSendPassword;           // Mật khẩu SMTP
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Bật mã hóa TLS ẩn danh
             $mail->Port       = 465;                // Cổng SMTP
             $mail->CharSet = "UTF-8";
             $mail->setLanguage('vi');
             //Recipients
-            $mail->setFrom('nhyd23021@cusc.ctu.edu.vn', 'Car-shop Store');           // Thiết lập địa chỉ email nguồn (từ đâu gửi email) và tên người gửi
-            $mail->addAddress('nguyenhoaiy7@gmail.com', 'Khách hàng Ý đẹp trai không kém');       // Thêm địa chỉ email người nhận
+            $mail->setFrom($this->emailSendName, 'Car-shop Store');           // Thiết lập địa chỉ email nguồn (từ đâu gửi email) và tên người gửi
+            $mail->addAddress($user_deposit_email, $user_deposit_fullname);       // Thêm địa chỉ email người nhận
 
             //Content
             $mail->isHTML(true);
@@ -387,11 +390,10 @@ class CartController
     public function mailSendSuccess($DB)
     {
         if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
-            $DB['db_car_type']->connect();
-            $data_all_car_type = $DB['db_car_type']->getAllData();
+            // Hiển thị header
+            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
             include __DIR__ . "/../views/frontend/cart/mail/mailSendSuccess.php";
             unset($_SESSION['mail-send-success']);
-            $DB['db_car_type']->disconnect();
         } else {
             echo "Error 404";
         }
@@ -399,14 +401,21 @@ class CartController
     public function mailSendError($DB)
     {
         if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
-            $DB['db_car_type']->connect();
-            $data_all_car_type = $DB['db_car_type']->getAllData();
             $error = $_GET['error'];
+            // Hiển thị header
+            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
             include __DIR__ . "/../views/frontend/cart/mail/mailSendError.php";
             unset($_SESSION['mail-send-success']);
-            $DB['db_car_type']->disconnect();
         } else {
             echo "Error 404";
         }
+    }
+
+    private function getAllCarTypesForHeader($DB)
+    {
+        $DB['db_car_type']->connect();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $DB['db_car_type']->disconnect();
+        return $data_all_car_type;
     }
 }

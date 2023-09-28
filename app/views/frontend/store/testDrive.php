@@ -31,7 +31,7 @@
                     <?php endif; ?>
                 </a>
                 <h1 class="mt-4"><?= $data_car['car_name'] ?></h1>
-                <span class="fs-4"><?= $data_car['car_describe'] ?></span>
+                <span class="text-center fs-4"><?= $data_car['car_describe'] ?></span>
             </div>
 
             <div class="col-4">
@@ -167,7 +167,7 @@
         });
 
         // -------------- Alert hiển thị khi bị lỗi thêm dữ liệu ------------------
-        var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
         function showAlert(message, type) {
             var wrapper = document.createElement('div');

@@ -16,17 +16,58 @@ class AccountController
             die();
         }
 
-        $DB['db_user']->connect();
-        $DB['db_car_type']->connect();
-        $DB['db_user_province']->connect();
-        $data_user = $DB['db_user']->getData($_SESSION["user_username"]);
-        $data_all_car_type = $DB['db_car_type']->getAllData();
-        $data_all_user_province = $DB['db_user_province']->getAllData();
+
+        $user_username = $_SESSION["user_username"];
+        $user_fullname = $_SESSION['user_fullname'];
+        $user_tel = $_SESSION['user_tel'];
+        $user_email = $_SESSION['user_email'];
+        $user_avt = $_SESSION['user_avt'];
+        $user_province_id = $_SESSION["user_province_id"];
+        $user_is_admin = $_SESSION['user_is_admin'];
 
         $lastName = strrchr($_SESSION['user_fullname'], ' ');
+
+        $DB['db_user_province']->connect();
+        $data_all_user_province = $DB['db_user_province']->getAllData();
+
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/account/index.php";
 
-        $DB['db_car_type']->disconnect();
+        $DB['db_user_province']->disconnect();
+    }
+
+    public function deposit($DB)
+    {
+        if (!isset($_SESSION["logged"])) {
+            echo '<script>location.href = "/car-shop/account/login"</script>';
+            die();
+        }
+
+        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
+            echo '<script>location.href = "/car-shop/account/login"</script>';
+            die();
+        }
+
+        $DB['db_cars']->connect();
+        $DB['db_user_deposit']->connect();
+
+        $user_username = $_SESSION["user_username"];
+        $user_fullname = $_SESSION['user_fullname'];
+        $user_email = $_SESSION['user_email'];
+        $user_avt = $_SESSION['user_avt'];
+        $user_is_admin = $_SESSION['user_is_admin'];
+
+        $lastName = strrchr($_SESSION['user_fullname'], ' ');
+
+        $user_id = $_SESSION["user_id"];
+        $data_all_user_deposit = $DB['db_user_deposit']->getAllDataByUserID($user_id);
+
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+        include_once __DIR__ . "/../views/frontend/account/deposit.php";
+
+        $DB['db_user']->disconnect();
+        $DB['db_user_province']->disconnect();
     }
 
     public function login($DB)
@@ -37,9 +78,9 @@ class AccountController
         }
 
         $DB['db_user']->connect();
-        $DB['db_car_type']->connect();
 
-        $data_all_car_type = $DB['db_car_type']->getAllData();
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/account/login.php";
 
         if (isset($_POST["loginBtn"])) {
@@ -97,12 +138,13 @@ class AccountController
         }
 
         $DB['db_user']->connect();
-        $DB['db_car_type']->connect();
         $DB['db_user_province']->connect();
-        $data_all_car_type = $DB['db_car_type']->getAllData();
         $data_all_user_province = $DB['db_user_province']->getAllData();
 
+        // Hiển thị header
+        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/account/signup.php";
+        $DB['db_user_province']->disconnect();
 
         if (isset($_POST["signupBtn"])) {
 
@@ -362,13 +404,14 @@ class AccountController
             $user_tel = $_POST["user_tel"];
             $user_province_id = $_POST["user_province_id"];
 
+            $DB['db_user']->updateData($_SESSION["user_id"], $user_fullname, $user_tel, $user_province_id);
+            $DB['db_user']->disconnect();
+
             // Cập nhật lại session
             $_SESSION["user_fullname"] = $user_fullname;
             $_SESSION["user_tel"] = $user_tel;
             $_SESSION["user_province_id"] = $user_province_id;
 
-            $DB['db_user']->updateData($_SESSION["user_id"], $user_fullname, $user_tel, $user_province_id);
-            $DB['db_user']->disconnect();
             echo '<script>location.href = "/car-shop/account"</script>';
         }
     }
@@ -378,15 +421,24 @@ class AccountController
         if (isset($_POST["btnOkUpdateAvatar"])) {
             $uploadDir = __DIR__ . '/../../assets/imgs/avt/';
             $DB['db_user']->connect();
+            // Lấy hình cũ
             $data_user = $DB['db_user']->getData($_SESSION["user_username"]);
+            // Cập nhật
             $DB['db_user']->updateAvatar($_SESSION["user_id"], $_FILES['user_avt'], $data_user['user_avt'], $uploadDir);
+            // Lấy hình mới
             $data_user = $DB['db_user']->getData($_SESSION["user_username"]);
-
             // Cập nhật lại session
             $_SESSION["user_avt"] = $data_user['user_avt'];
-
             $DB['db_user']->disconnect();
             echo '<script>location.href = "/car-shop/account"</script>';
         }
+    }
+
+    private function getAllCarTypesForHeader($DB)
+    {
+        $DB['db_car_type']->connect();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $DB['db_car_type']->disconnect();
+        return $data_all_car_type;
     }
 }

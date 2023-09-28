@@ -108,6 +108,18 @@
     ?>
 
     <script>
+        // -------------------- Toast hiển thị đã thêm giỏ hàng --------------------
+        const toastCarAddedToTheCart = document.getElementById('toast-car-added-to-the-cart');
+        const toast = new bootstrap.Toast(toastCarAddedToTheCart);
+
+        toastCarAddedToTheCart.addEventListener('shown.bs.toast', function() {
+            setTimeout(function() {
+                toast.hide();
+            }, 3000);
+        });
+
+
+        // -------------------- Dự toán chi phí cà cập nhật hiển thị --------------------
         const carPrice = document.getElementById('car_price');
         const userRegistrationFee = document.getElementById('user_province_id');
         const roadTrafficFees = document.getElementById('road_traffic_fees');
@@ -155,15 +167,6 @@
                 totalPriceDisplay.textContent = formattedNumber;
                 totalPrice.value = sum;
             }
-        });
-
-        const toastCarAddedToTheCart = document.getElementById('toast-car-added-to-the-cart');
-        const toast = new bootstrap.Toast(toastCarAddedToTheCart);
-
-        toastCarAddedToTheCart.addEventListener('shown.bs.toast', function() {
-            setTimeout(function() {
-                toast.hide();
-            }, 3000);
         });
     </script>
 
