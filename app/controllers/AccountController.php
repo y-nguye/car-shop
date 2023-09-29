@@ -6,16 +6,7 @@ class AccountController
 {
     public function index($DB)
     {
-        if (!isset($_SESSION["logged"])) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-
-        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-
+        $this->authentication();
 
         $user_username = $_SESSION["user_username"];
         $user_fullname = $_SESSION['user_fullname'];
@@ -39,15 +30,7 @@ class AccountController
 
     public function deposit($DB)
     {
-        if (!isset($_SESSION["logged"])) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-
-        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
+        $this->authentication();
 
         $DB['db_cars']->connect();
         $DB['db_user_deposit']->connect();
@@ -72,6 +55,7 @@ class AccountController
 
     public function login($DB)
     {
+        // Nếu đã đăng nhập
         if (isset($_SESSION["logged"]) && $_SESSION["logged"]) {
             echo '<script>location.href = "/car-shop/account"</script>';
             die();
@@ -79,7 +63,6 @@ class AccountController
 
         $DB['db_user']->connect();
 
-        // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/account/login.php";
 
@@ -132,6 +115,7 @@ class AccountController
 
     public function signup($DB)
     {
+        // Nếu đã đăng nhập
         if (isset($_SESSION["logged"]) && $_SESSION["logged"]) {
             echo '<script>location.href = "/car-shop/account"</script>';
             die();
@@ -377,6 +361,8 @@ class AccountController
                 echo 'true';
             }
             $DB['db_user']->disconnect();
+        } else {
+            echo "404-error";
         }
     }
 
@@ -392,6 +378,8 @@ class AccountController
                 echo 'true';
             }
             $DB['db_user']->disconnect();
+        } else {
+            echo "404-error";
         }
     }
 
@@ -413,6 +401,8 @@ class AccountController
             $_SESSION["user_province_id"] = $user_province_id;
 
             echo '<script>location.href = "/car-shop/account"</script>';
+        } else {
+            echo "404-error";
         }
     }
 
@@ -440,5 +430,18 @@ class AccountController
         $data_all_car_type = $DB['db_car_type']->getAllData();
         $DB['db_car_type']->disconnect();
         return $data_all_car_type;
+    }
+
+    private function authentication()
+    {
+        if (!isset($_SESSION["logged"])) {
+            echo '<script>location.href = "/car-shop/account/login"</script>';
+            die();
+        }
+
+        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
+            echo '<script>location.href = "/car-shop/account/login"</script>';
+            die();
+        }
     }
 }

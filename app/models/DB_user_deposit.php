@@ -6,10 +6,41 @@ class UserDepositData extends DatabaseManager
 {
     private $table = "user_deposit";
 
+    public function getDataByID($user_deposit_id)
+    {
+        $sql = "SELECT deposit.user_deposit_id,
+                deposit.user_deposit_fullname,
+                deposit.user_deposit_tel,
+                deposit.user_deposit_email,
+                deposit.user_deposit_total_price,
+                deposit.user_deposit_price,
+                deposit.user_deposit_where,
+                deposit.user_deposit_is_payed, 
+                deposit.user_deposit_is_contacted, 
+                deposit.user_deposit_at,
+                deposit.pay_method_id,
+                deposit.car_id,
+                deposit.user_id,
+                cars.car_name,
+                cars.car_price,
+                pay_method.pay_method_name,
+                MIN(car_img.car_img_filename) AS car_img_filename
+                FROM user_deposit deposit
+                LEFT JOIN cars ON cars.car_id = deposit.car_id
+                LEFT JOIN car_img ON car_img.car_id = deposit.car_id
+                LEFT JOIN pay_method ON pay_method.pay_method_id = deposit.pay_method_id
+                WHERE deposit.user_deposit_id = $user_deposit_id;";
+
+        $this->result = $this->execute($sql);
+
+        if ($this->result->num_rows > 0) {
+            return $this->result->fetch_assoc();
+        }
+        return null;
+    }
+
     public function getAllDataByUserID($user_id)
     {
-        // $sql = "SELECT * FROM $this->table WHERE user_id = $user_id;";
-
         $sql = "SELECT deposit.user_deposit_id, deposit.user_deposit_where, deposit.user_deposit_price,
                 deposit.user_deposit_at, deposit.pay_method_id, deposit.car_id, deposit.user_id,
                 cars.car_name,
@@ -47,7 +78,7 @@ class UserDepositData extends DatabaseManager
     public function getAllData()
     {
         $sql = "SELECT * FROM $this->table;";
-        $this->result = $this->execute($sql);;
+        $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
             return $this->result;
@@ -65,6 +96,7 @@ class UserDepositData extends DatabaseManager
                 user_deposit_price,
                 user_deposit_where,
                 user_deposit_is_pay,
+                user_deposit_is_contacted,
                 user_deposit_at,
                 pay_method_id,
                 user_id,
@@ -77,11 +109,22 @@ class UserDepositData extends DatabaseManager
                 $user_deposit_price,
                 '$user_deposit_where',
                 0,
+                0,
                 NOW(),
                 $pay_method_id,
                 $user_id,
                 $car_id);";
 
         $this->execute($sql);
+    }
+
+    public function updateData($user_deposit_id, $user_deposit_is_contacted, $user_deposit_is_payed)
+    {
+        $sql = "UPDATE $this->table
+            SET user_deposit_is_contacted = $user_deposit_is_contacted,
+            user_deposit_is_payed = $user_deposit_is_payed
+            WHERE user_deposit_id = $user_deposit_id;";
+
+        return $this->execute($sql);
     }
 }

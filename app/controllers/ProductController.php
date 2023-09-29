@@ -6,6 +6,9 @@ class ProductController
 {
     public function index($DB)
     {
+        $this->authentication();
+        $this->authorization();
+
         $DB['db_cars']->connect();
         $data_cars = $DB['db_cars']->getAllData();
         include_once __DIR__ . "/../views/backend/product/index.php";
@@ -14,6 +17,9 @@ class ProductController
 
     public function add($DB)
     {
+        $this->authentication();
+        $this->authorization();
+
         // UPDATES
         // Kết nối và lấy dữ liệu
         $DB['db_cars']->connect();
@@ -314,6 +320,9 @@ class ProductController
 
     public function addProducer($DB)
     {
+        $this->authentication();
+        $this->authorization();
+
         $DB['db_car_producer']->connect();
         $data_all_car_producer = $DB['db_car_producer']->getAllData();
         include __DIR__ . "/../views/backend/product/addProducer.php";
@@ -354,6 +363,9 @@ class ProductController
 
     public function addProducerCheck($DB)
     {
+        $this->authentication();
+        $this->authorization();
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $DB['db_car_producer']->connect();
             $producerExists = $DB['db_car_producer']->checkData($_POST['car_producer_name']);
@@ -368,6 +380,9 @@ class ProductController
 
     public function edit($DB, $vars)
     {
+        $this->authentication();
+        $this->authorization();
+
         $car_id = implode('', $vars);
 
         // Kết nối và lấy dữ liệu
@@ -669,6 +684,9 @@ class ProductController
 
     public function softDelete($DB)
     {
+        $this->authentication();
+        $this->authorization();
+
         if (isset($_POST['btnDelete'])) {
             $DB['db_cars']->connect();
             $DB['db_cars']->softDelete($_POST['car_ids']);
@@ -683,6 +701,9 @@ class ProductController
 
     public function trash($DB)
     {
+        $this->authentication();
+        $this->authorization();
+
         $DB['db_cars']->connect();
         $data_cars = $DB['db_cars']->getAllDataDeleted();
         include __DIR__ . "/../views/backend/product/trash.php";
@@ -691,6 +712,9 @@ class ProductController
 
     public function restore($DB)
     {
+        $this->authentication();
+        $this->authorization();
+
         if (isset($_POST['btnRestore'])) {
             $DB['db_cars']->connect();
             $DB['db_cars']->restore($_POST['car_ids']);
@@ -701,12 +725,37 @@ class ProductController
 
     public function forceDelete($DB)
     {
+        $this->authentication();
+        $this->authorization();
+
         $uploadDir = __DIR__ . '/../../assets/uploads/';
         if (isset($_POST['btnForceDelete'])) {
             $DB['db_cars']->connect();
             $DB['db_cars']->forceDelete($_POST['car_ids'], $uploadDir);
             echo '<script>location.href = "./"</script>';
             $DB['db_cars']->disconnect();
+        }
+    }
+
+    private function authentication()
+    {
+        if (!isset($_SESSION["logged"])) {
+            echo '<script>location.href = "/car-shop/account/login"</script>';
+            die();
+        }
+
+        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
+            echo '<script>location.href = "/car-shop/account/login"</script>';
+            die();
+        }
+    }
+
+    private function authorization()
+    {
+        if (!$_SESSION["user_is_admin"]) {
+            echo '<script>location.href = "/car-shop/account"</script>';
+            die();
+            echo '404-page';
         }
     }
 }

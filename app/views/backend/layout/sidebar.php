@@ -4,8 +4,8 @@ include_once 'app/views/backend/layout/sideBarStyle.php';
 
 $sidebar_items = [
     ["admin", "/car-shop/admin", "<i class=' bi bi-house-door me-2'></i> Trang chủ"],
-    ["user", "/car-shop/admin/user", "<i class='bi bi-person me-2'></i> Quản lý khách hàng"],
-    ["product", "/car-shop/admin/product", "<i class='bi bi-grid me-2'></i> Quản lý xe"],
+    ["deposit", "/car-shop/admin/deposit", "<i class='bi bi-truck me-2'></i> Danh sách đơn hàng"],
+    ["product", "/car-shop/admin/product", "<i class='bi bi-car-front me-2'></i> Quản lý xe"],
     ["product_trash", "/car-shop/admin/product/trash", "<i class='bi bi-trash me-2'></i> Thùng rác"],
 ];
 
@@ -20,7 +20,7 @@ $sidebar_items = [
         </a>
         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
             <li><a class="dropdown-item" href="/car-shop/">Trang chủ cửa hàng</a></li>
-            <li><a class="dropdown-item" href="/car-shop/account">Trang cá nhân</a></li>
+            <li><a class="dropdown-item" href="/car-shop/account">Thông tin cá nhân</a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>

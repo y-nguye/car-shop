@@ -31,7 +31,7 @@ class CartController
     {
         $car_id = $vars['id'];
 
-        // Không có sản phẩm thì không truy cập được
+        // Không có sản phẩm trong giỏ hàng thì không truy cập được
         if (!isset($_SESSION['cart'][$car_id])) {
             // Đưa vào 404-page
             echo '404-error';
@@ -60,7 +60,6 @@ class CartController
     {
         $car_id = $vars['id'];
 
-        // Authentication
         // Nếu không có thao tác nhấn nút "tiến hành đặt cọc" thì fuckout and die
         if (!isset($_POST['btnDeposits'])) {
             echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
@@ -115,7 +114,6 @@ class CartController
 
     public function depositRequired($DB)
     {
-        // Authentication
         // Nếu không nhấn nút xác nhận đặt cọc thì die
         if (!isset($_POST['btnPay'])) {
             echo "404-error";
@@ -390,7 +388,6 @@ class CartController
     public function mailSendSuccess($DB)
     {
         if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
-            // Hiển thị header
             $data_all_car_type = $this->getAllCarTypesForHeader($DB);
             include __DIR__ . "/../views/frontend/cart/mail/mailSendSuccess.php";
             unset($_SESSION['mail-send-success']);
@@ -402,7 +399,6 @@ class CartController
     {
         if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
             $error = $_GET['error'];
-            // Hiển thị header
             $data_all_car_type = $this->getAllCarTypesForHeader($DB);
             include __DIR__ . "/../views/frontend/cart/mail/mailSendError.php";
             unset($_SESSION['mail-send-success']);

@@ -78,8 +78,6 @@
         bottom: 0;
     }
 
-
-
     .img-car-deposit {
         width: 150px;
         aspect-ratio: 16/9;

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
     <?php include_once 'app/views/frontend/account/accountPagesStyle.php' ?>
-    <title>Tài khoản</title>
+    <title>Yêu cầu đặt cọc</title>
 </head>
 
 <body>
@@ -91,7 +91,7 @@
                                         <?php endif; ?>
 
                                         <div class="d-flex flex-column pe-3 border-end min-width-250px">
-                                            <span>Tên xe: <?= $data['car_name'] ?></span>
+                                            <span><b><?= $data['car_name'] ?></b></span>
                                             <span>Mã đơn hàng: <?= $data['user_deposit_id'] ?></span>
                                             <span>Ngày: <?= $data['user_deposit_at'] ?></span>
                                         </div>

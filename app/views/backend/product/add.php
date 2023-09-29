@@ -166,7 +166,7 @@
                         <div class="d-flex justify-content-start mb-3">
                             <button type="button" class="btn btn-danger btn-go-back">Quay lại</button>
                             <button type="button" id="backToTop" class="btn btn-secondary ms-auto me-3">Lên đầu trang</button>
-                            <button type="submit" name="btnAdd" id="liveAlertBtn" class="btn btn-primary disabled btn-add">Thêm</button>
+                            <button type="submit" name="btnAdd" class="btn btn-primary disabled btn-add">Thêm</button>
                         </div>
 
                     </div>
@@ -230,6 +230,7 @@
             alertPlaceholder.appendChild(wrapper);
         }
 
+        // -------------- Theo dõi thay đổi trên form ------------------------
         const formAdd = document.getElementById('formAdd');
         const btnAdd = document.querySelector('.btn-add');
         const btnAddProducer = document.querySelector('.btn-add-car-producer');
@@ -244,7 +245,7 @@
             btnAdd.classList.remove('disabled');
         });
 
-        // Bắt đầu theo dõi sự thay đổi trên trường CKEDITOR
+        //  Bắt đầu theo dõi sự thay đổi trên trường CKEDITOR
         CKEDITOR.instances.car_detail_describe.on('change', function() {
             formChanged = true;
             btnAdd.classList.remove('disabled');
@@ -275,7 +276,7 @@
             });
         });
 
-        // Bắt sự kiện beforeunload để hiển thị thông báo xác nhận
+        // -------------- Bắt sự kiện beforeunload để hiển thị thông báo xác nhận --------------
         window.addEventListener("beforeunload", function(e) {
             if (formChanged) {
                 // Hiển thị thông báo xác nhận
