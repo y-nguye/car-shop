@@ -130,6 +130,7 @@ class CartController
         $user_deposit_fullname = $_POST['user_fullname'];
         $user_deposit_tel = $_POST['user_tel'];
         $user_deposit_email = $_POST['user_email'];
+        $user_deposit_total_price = $_POST['user_deposit_total_price'];
         $user_deposit_price = $_POST['user_deposit_price'];
 
         $pay_method_id = $_POST['pay_method_id'];
@@ -147,6 +148,7 @@ class CartController
             $user_deposit_fullname,
             $user_deposit_tel,
             $user_deposit_email,
+            $user_deposit_total_price,
             $user_deposit_price,
             $user_deposit_where,
             $pay_method_id,
@@ -389,7 +391,7 @@ class CartController
     {
         if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
             $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-            include __DIR__ . "/../views/frontend/cart/mail/mailSendSuccess.php";
+            include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
             unset($_SESSION['mail-send-success']);
         } else {
             echo "Error 404";
@@ -400,7 +402,7 @@ class CartController
         if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
             $error = $_GET['error'];
             $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-            include __DIR__ . "/../views/frontend/cart/mail/mailSendError.php";
+            include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentError.php";
             unset($_SESSION['mail-send-success']);
         } else {
             echo "Error 404";

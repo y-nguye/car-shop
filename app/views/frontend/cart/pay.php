@@ -110,6 +110,7 @@
                     </div>
 
                     <input type="hidden" name="car_id" value="<?= $data_car['car_id'] ?>" />
+                    <input type="hidden" name="user_deposit_total_price" value="<?= $data_car['total_price'] ?>" />
                     <input type="hidden" name="user_deposit_price" value="<?= $depositsPrice ?>" />
 
                     <div class="d-flex flex-column align-items-center justify-content-between">
@@ -174,10 +175,9 @@
         const userTel = document.getElementById('user_tel');
         const btnPay = document.getElementById('btn-pay');
         const btnBackToRegistrationFee = document.getElementById('btn-back-to-registration-fee');
-        var isValid = false;
 
         $(document).ready(function() {
-            isValid = $('#formPay').validate({
+            $('#formPay').validate({
                 errorClass: "is-invalid",
                 errorPlacement: function(error, element) {
                     element.attr("data-bs-original-title", error.text());

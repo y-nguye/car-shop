@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <div id="overlay" class=""></div>
 
     <?php
     include_once 'app/views/frontend/layouts/header.php';
@@ -17,8 +18,10 @@
 
     <div class="container-lg pt-3 push-footer-down-page">
 
-        <h2>Đặt lịch hẹn</h2>
-
+        <div class="d-flex align-items-center justify-content-between">
+            <h2 class="mb-0">Đặt lịch hẹn</h2>
+            <div id="spinner" class="spinner-border visually-hidden" role="status"></div>
+        </div>
         <hr>
 
         <div class="row">
@@ -35,9 +38,18 @@
             </div>
 
             <div class="col-4">
-                <form id="formSignUpTestDrive" method="post" action="">
+                <form id="formSignUpTestDrive" method="post" action="/car-shop/test-drive/signup/<?= $data_car['car_id'] ?>">
                     <div id="liveAlertPlaceholder" class="text-start"></div>
                     <div class="pt-2">
+                        <label for="user_province_id" class="text-dark m-0">Địa điểm lái thử</label>
+                        <select name="user_province_id" id="user_province_id" class="form-select mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
+                            <option selected value="">---Chọn---</option>
+                            <?php foreach ($data_all_user_province as $value) { ?>
+                                <option value="<?= $value['user_province_id'] ?>"> <?= $value['user_province_name'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="pt-2 mt-2">
                         <label for="user_test_drive_day">Ngày dự kiến</label>
                         <input type="date" name="user_test_drive_day" id="user_test_drive_day" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                     </div>
@@ -49,29 +61,29 @@
                     <h3 class="mt-4">Thông tin khách hàng</h3>
 
                     <div class="pt-2">
-                        <label for="user_fullname">Tên đầy đủ *</label>
-                        <?php if ($data_user_fullname) : ?>
-                            <input type="text" name="user_fullname" id="user_fullname" class="form-control mt-2" value="<?= $data_user_fullname ?>" readonly />
+                        <label for="user_test_drive_fullname">Tên đầy đủ *</label>
+                        <?php if ($user_test_drive_fullname) : ?>
+                            <input type="text" name="user_test_drive_fullname" id="user_test_drive_fullname" class="form-control mt-2" value="<?= $user_test_drive_fullname ?>" readonly />
                         <?php else : ?>
-                            <input type="text" name="user_fullname" id="user_fullname" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                            <input type="text" name="user_test_drive_fullname" id="user_test_drive_fullname" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                         <?php endif; ?>
                     </div>
 
                     <div class="pt-2 mt-2">
-                        <label for="user_tel">Số điện thoại *</label>
-                        <?php if ($data_user_tel) : ?>
-                            <input type="text" name="user_tel" id="user_tel" class="form-control mt-2" value="<?= $data_user_tel ?>" readonly />
+                        <label for="user_test_drive_tel">Số điện thoại *</label>
+                        <?php if ($user_test_drive_tel) : ?>
+                            <input type="text" name="user_test_drive_tel" id="user_test_drive_tel" class="form-control mt-2" value="<?= $user_test_drive_tel ?>" readonly />
                         <?php else : ?>
-                            <input type="text" name="user_tel" id="user_tel" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                            <input type="text" name="user_test_drive_tel" id="user_test_drive_tel" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                         <?php endif; ?>
                     </div>
 
                     <div class="pt-2 mt-2">
-                        <label for="user_email">Email</label>
-                        <?php if ($data_user_tel) : ?>
-                            <input type="email" name="user_email" id="user_email" class="form-control mt-2" value="<?= $data_user_email ?>" readonly />
+                        <label for="user_test_drive_email">Email</label>
+                        <?php if ($user_test_drive_email) : ?>
+                            <input type="email" name="user_test_drive_email" id="user_test_drive_email" class="form-control mt-2" value="<?= $user_test_drive_email ?>" readonly />
                         <?php else : ?>
-                            <input type="email" name="user_email" id="user_email" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                            <input type="email" name="user_test_drive_email" id="user_test_drive_email" class="form-control mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                         <?php endif; ?>
                     </div>
 
@@ -94,6 +106,15 @@
     ?>
 
     <script>
+        const overlay = document.getElementById('overlay');
+        const spinner = document.getElementById('spinner');
+        const userFullname = document.getElementById('user_test_drive_fullname');
+        const userTel = document.getElementById('user_test_drive_tel');
+        const userEmail = document.getElementById('user_test_drive_email');
+
+        const checkboxHaveDriverLicense = document.getElementById('checkbox-have-driver-license');
+        const btnSignUpTestDrive = document.querySelector('.btn-sign-up-test-drive');
+
         $(document).ready(function() {
             $('#formSignUpTestDrive').validate({
                 errorClass: "is-invalid",
@@ -103,7 +124,14 @@
                 success: function(element) {
                     element.removeAttr("data-bs-original-title");
                 },
+                submitHandler: function(form) {
+                    preventOperation();
+                    form.submit();
+                },
                 rules: {
+                    user_province_id: {
+                        required: true,
+                    },
                     user_test_drive_day: {
                         required: true,
                     },
@@ -126,6 +154,9 @@
                     },
                 },
                 messages: {
+                    user_province_id: {
+                        required: "Không được để trống",
+                    },
                     user_test_drive_day: {
                         required: "Không được để trống",
                     },
@@ -150,9 +181,18 @@
             });
         });
 
+        function preventOperation() {
+            spinner.classList.remove("visually-hidden");
+            overlay.classList.add("overlay");
+
+            userFullname.setAttribute("readonly", "");
+            userTel.setAttribute("readonly", "");
+            userEmail.setAttribute("readonly", "");
+
+            btnSignupTestDrive.classList.add("disabled");
+        }
+
         // -------------- Kích hoạt nút Đăng ký khi đã chọn có bằng lái --------------
-        const checkboxHaveDriverLicense = document.getElementById('checkbox-have-driver-license');
-        const btnSignUpTestDrive = document.querySelector('.btn-sign-up-test-drive');
         checkboxHaveDriverLicense.addEventListener('change', function() {
             if (this.checked) btnSignUpTestDrive.classList.remove('disabled');
             else btnSignUpTestDrive.classList.add('disabled');

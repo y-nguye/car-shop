@@ -40,7 +40,7 @@
                                 <th>Phí đặt cọc</th>
                                 <th>Liên hệ</th>
                                 <th>Thanh toán</th>
-                                <th>Xem</th>
+                                <th class="text-center">Xem</th>
                             </tr>
                         </thead>
 
@@ -88,6 +88,11 @@
         $(function() {
             $('#danhsach').DataTable({
                 searching: true,
+                columnDefs: [{
+                    targets: [6],
+                    orderable: false,
+                    searchable: false
+                }],
                 language: {
                     url: '/car-shop/assets/plugin/datatables-language/vi.json',
                 },

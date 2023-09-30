@@ -92,7 +92,7 @@
 
                                         <div class="d-flex flex-column pe-3 border-end min-width-250px">
                                             <span><b><?= $data['car_name'] ?></b></span>
-                                            <span>Mã đơn hàng: <?= $data['user_deposit_id'] ?></span>
+                                            <span>Mã đơn hàng: #<?= $data['user_deposit_id'] ?></span>
                                             <span>Ngày: <?= $data['user_deposit_at'] ?></span>
                                         </div>
 

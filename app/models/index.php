@@ -10,6 +10,7 @@ include_once 'app/models/DB_car_img.php';
 include_once 'app/models/DB_user.php';
 include_once 'app/models/DB_user_province.php';
 include_once 'app/models/DB_user_deposit.php';
+include_once 'app/models/DB_user_test_drive.php';
 include_once 'app/models/DB_pay_method.php';
 
 $db_cars = new CarsData;
@@ -22,6 +23,7 @@ $db_car_img = new CarImgData;
 $db_user = new UserData;
 $db_user_province = new UserProvinceData;
 $db_user_deposit = new UserDepositData;
+$db_user_test_drive = new TestDriveData;
 $db_pay_method = new PayMethodData;
 
 $DB = array(
@@ -35,5 +37,6 @@ $DB = array(
     'db_user' => $db_user,
     'db_user_province' => $db_user_province,
     'db_user_deposit' => $db_user_deposit,
+    'db_user_test_drive' => $db_user_test_drive,
     'db_pay_method' => $db_pay_method,
 );

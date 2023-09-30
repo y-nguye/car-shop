@@ -19,7 +19,7 @@ class PayMethodData extends DatabaseManager
     public function getAllData()
     {
         $sql = "SELECT * FROM $this->table;";
-        $this->result = $this->execute($sql);;
+        $this->result = $this->execute($sql);
 
         $data = [];
         if ($this->result->num_rows > 0) {

@@ -86,16 +86,17 @@ class UserDepositData extends DatabaseManager
         return null;
     }
 
-    public function setData($user_deposit_fullname, $user_deposit_tel, $user_deposit_email, $user_deposit_price, $user_deposit_where, $pay_method_id, $user_id, $car_id)
+    public function setData($user_deposit_fullname, $user_deposit_tel, $user_deposit_email, $user_deposit_total_price, $user_deposit_price, $user_deposit_where, $pay_method_id, $user_id, $car_id)
     {
         $sql = "INSERT INTO $this->table
                 (user_deposit_id,
                 user_deposit_fullname,
                 user_deposit_tel,
                 user_deposit_email,
+                user_deposit_total_price,
                 user_deposit_price,
                 user_deposit_where,
-                user_deposit_is_pay,
+                user_deposit_is_payed,
                 user_deposit_is_contacted,
                 user_deposit_at,
                 pay_method_id,
@@ -106,6 +107,7 @@ class UserDepositData extends DatabaseManager
                 '$user_deposit_fullname',
                 '$user_deposit_tel',
                 '$user_deposit_email',
+                $user_deposit_total_price,
                 $user_deposit_price,
                 '$user_deposit_where',
                 0,
