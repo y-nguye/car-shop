@@ -41,6 +41,7 @@
             <div class="col-4">
 
                 <form name="formPay" id="formPay" method="post" action="/car-shop/cart/pay/deposit-required">
+                    <div id="liveAlertPlaceholder" class="text-start"></div>
 
                     <div class="pt-2">
                         <label for="user_fullname">Tên khách hàng</label>
@@ -105,13 +106,13 @@
                     <div class="pb-2">
                         <div class="pt-3 pb-3 d-flex align-items-center justify-content-between">
                             <h6 class="m-0">Chi phí cọc trước 10%:</h6>
-                            <div class="text-end fs-3"><?= number_format($depositsPrice, 0, ',', '.') ?> ₫</div>
+                            <div class="text-end fs-3"><?= number_format($depositPrice, 0, ',', '.') ?> ₫</div>
                         </div>
                     </div>
 
                     <input type="hidden" name="car_id" value="<?= $data_car['car_id'] ?>" />
                     <input type="hidden" name="user_deposit_total_price" value="<?= $data_car['total_price'] ?>" />
-                    <input type="hidden" name="user_deposit_price" value="<?= $depositsPrice ?>" />
+                    <input type="hidden" name="user_deposit_price" value="<?= $depositPrice ?>" />
 
                     <div class="d-flex flex-column align-items-center justify-content-between">
                         <button type="submit" name="btnPay" id="btn-pay" class="btn btn-primary w-100">
@@ -200,6 +201,11 @@
                         minlength: 10,
                         maxlength: 15,
                     },
+                    user_email: {
+                        required: true,
+                        email: true,
+                        maxlength: 100,
+                    },
                 },
                 messages: {
                     user_fullname: {
@@ -211,6 +217,11 @@
                         required: "Không được để trống",
                         minlength: "Số điện thoại không hợp lệ",
                         maxlength: "Số điện thoại không hợp lệ",
+                    },
+                    user_email: {
+                        required: "Không được để trống",
+                        email: "Vui lòng nhập đúng định dạng email",
+                        maxlength: "Email quá dài",
                     },
                 }
             });
@@ -225,6 +236,15 @@
 
             btnPay.classList.add("disabled");
             btnBackToRegistrationFee.classList.add("disabled-btn-back-to-registration-fee__pay-page");
+        }
+
+        // -------------- Alert hiển thị khi bị lỗi thêm dữ liệu ------------------
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+
+        function showAlert(message, type) {
+            var wrapper = document.createElement('div');
+            wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+            alertPlaceholder.appendChild(wrapper);
         }
     </script>
 

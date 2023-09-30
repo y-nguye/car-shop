@@ -50,6 +50,7 @@ class CartController
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/cart/registrationFee.php";
 
+        // Hiển thị toast
         if (isset($_SESSION['from-registration-fee']) && $_SESSION['from-registration-fee']) {
             echo '<script>toast.show();</script>';
             unset($_SESSION['from-registration-fee']);
@@ -60,30 +61,34 @@ class CartController
     {
         $car_id = $vars['id'];
 
-        // Nếu không có thao tác nhấn nút "tiến hành đặt cọc" thì fuckout and die
-        if (!isset($_POST['btnDeposits'])) {
+        // Nếu không có thao tác nhấn nút "tiến hành đặt cọc" và validate không có lỗi thì fuckout and die
+        if (!isset($_POST['btnDeposits']) && !isset($_SESSION['errors'])) {
             echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
             die();
         }
-
-        $total_price = floatval($_POST['total_price']);
 
         $data_car = [];
         if (isset($_SESSION['cart'])) {
             $data_car = $_SESSION['cart'][$car_id];
         }
 
-        // Thêm tổng giá vào SESSION
-        $data_car = array(
-            'car_id' => $data_car['car_id'],
-            'car_name' => $data_car['car_name'],
-            'car_price' => $data_car['car_price'],
-            'car_describe' => $data_car['car_describe'],
-            'car_img_filename' => $data_car['car_img_filename'],
-            'total_price' => $total_price,
-        );
+        // Nếu có sự thay đổi về tổng chi phí dự toán thì cập nhật lại session
+        // Điều này tránh xung đột do validate có lỗi sẽ quay trở lại trang, khi đó sẽ không có biến $_POST['total_price'] từ form tính tổng dự toán
+        if (isset($_POST['total_price'])) {
+            $total_price = floatval($_POST['total_price']);
 
-        $_SESSION['cart'][$car_id] = $data_car;
+            // Thêm tổng giá vào SESSION
+            $data_car = array(
+                'car_id' => $data_car['car_id'],
+                'car_name' => $data_car['car_name'],
+                'car_price' => $data_car['car_price'],
+                'car_describe' => $data_car['car_describe'],
+                'car_img_filename' => $data_car['car_img_filename'],
+                'total_price' => $total_price,
+            );
+
+            $_SESSION['cart'][$car_id] = $data_car;
+        }
 
         $data_user_fullname = null;
         $data_user_tel = null;
@@ -102,11 +107,17 @@ class CartController
         $data_all_user_province = $DB['db_user_province']->getAllData();
         $data_all_pay_method = $DB['db_pay_method']->getAllData();
 
-        $depositsPrice = $data_car['total_price'] * 0.1;
+        $depositPrice = $data_car['total_price'] * 0.1;
 
         // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/cart/pay.php";
+
+        // Validate: báo lỗi
+        if (isset($_SESSION['errors'])) {
+            echo "<script>showAlert('" . $_SESSION['errors'] . "', 'danger');</script>";
+            unset($_SESSION['errors']);
+        }
 
         $DB['db_user_province']->disconnect();
         $DB['db_pay_method']->disconnect();
@@ -114,6 +125,7 @@ class CartController
 
     public function depositRequired($DB)
     {
+        // Tránh truy cập trái phép
         // Nếu không nhấn nút xác nhận đặt cọc thì die
         if (!isset($_POST['btnPay'])) {
             echo "404-error";
@@ -134,58 +146,260 @@ class CartController
         $user_deposit_price = $_POST['user_deposit_price'];
 
         $pay_method_id = $_POST['pay_method_id'];
-        $pay_method = $DB['db_pay_method']->getDataByID($pay_method_id);
-        $pay_method_name = $pay_method['pay_method_name'];
+        $data_pay_method = $DB['db_pay_method']->getDataByID($pay_method_id);
+        $pay_method_name = $data_pay_method['pay_method_name'];
 
+        // Validation phía server
+        $errors = []; // Giả sự người dùng chưa vi phạm lỗi nào hết...
 
-        $user_deposit_where = $DB['db_user_province']->getDataByID($_POST['user_province_id']);
-        $user_deposit_where = 'Showroom ' . $user_deposit_where["user_province_name"];
-
-        if (isset($_SESSION['user_id'])) $user_id = $_SESSION["user_id"];
-        else $user_id = "NULL";
-
-        $DB['db_user_deposit']->setData(
-            $user_deposit_fullname,
-            $user_deposit_tel,
-            $user_deposit_email,
-            $user_deposit_total_price,
-            $user_deposit_price,
-            $user_deposit_where,
-            $pay_method_id,
-            $user_id,
-            $car_id
-        );
-
-        // Lấy dữ liệu xe từ SESSION
-        $data_car = [];
-        if (isset($_SESSION['cart'])) {
-            $data_car = $_SESSION['cart'][$car_id];
+        // 1. Kiểm tra ô tên người dùng
+        // Rule: required
+        if (empty($user_deposit_fullname)) {
+            $errors['user_deposit_fullname'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_deposit_fullname,
+                'msg' => 'Vui lòng nhập tên đầy đủ',
+            ];
         }
+        // Rule: minlength 3
+        elseif (strlen($user_deposit_fullname) < 3) {
+            $errors['user_deposit_fullname'][] = [
+                'rule' => 'minlength',
+                'rule_value' => 3,
+                'value' => $user_deposit_fullname,
+                'msg' => 'Tên đầy đủ phải tối thiểu 3 kí tự',
+            ];
+        }
+        // Rule: maxlength 50
+        elseif (strlen($user_deposit_fullname) > 50) {
+            $errors['user_deposit_fullname'][] = [
+                'rule' => 'maxlength',
+                'rule_value' => 50,
+                'value' => $user_deposit_fullname,
+                'msg' => 'Tên đầy đủ tối đa có 50 ký tự',
+            ];
+        }
+
+        // 2. Kiểm tra số điện thoại
+        // Rule: required
+        if (empty($user_deposit_tel)) {
+            $errors['user_deposit_tel'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_deposit_tel,
+                'msg' => 'Vui lòng nhập số điện thoại',
+            ];
+        }
+        // Rule: isNumber
+        elseif (!is_numeric($user_deposit_tel)) {
+            $errors['user_deposit_tel'][] = [
+                'rule' => 'isNumber',
+                'rule_value' => true,
+                'value' => $user_deposit_tel,
+                'msg' => 'Số điện thoại không hợp lệ',
+            ];
+        }
+        // Rule: minlength 10
+        elseif (strlen($user_deposit_tel) < 10) {
+            $errors['user_deposit_tel'][] = [
+                'rule' => 'minlength',
+                'rule_value' => 10,
+                'value' => $user_deposit_tel,
+                'msg' => 'Số điện thoại không hợp lệ',
+            ];
+        }
+        // Rule: maxlength
+        elseif (strlen($user_deposit_tel) > 15) {
+            $errors['user_deposit_tel'][] = [
+                'rule' => 'maxlength',
+                'rule_value' => 15,
+                'value' => $user_deposit_tel,
+                'msg' => 'Số điện thoại không hợp lệ',
+            ];
+        }
+
+        // 3. Kiểm tra email
+        // Rule: required
+        if (empty($user_deposit_email)) {
+            $errors['user_deposit_email'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_deposit_email,
+                'msg' => 'Vui lòng nhập email',
+            ];
+        }
+        // Rule: Định dạng email
+        elseif (!filter_var($user_deposit_email, FILTER_VALIDATE_EMAIL)) {
+            $errors['user_deposit_email'][] = [
+                'rule' => 'is_email',
+                'rule_value' => true,
+                'value' => $user_deposit_email,
+                'msg' => 'Vui lòng nhập đúng định dạng email',
+            ];
+        }
+        // Rule: maxlength 100
+        elseif (strlen($user_deposit_email) > 100) {
+            $errors['user_deposit_email'][] = [
+                'rule' => 'maxlength',
+                'rule_value' => 100,
+                'value' => $user_deposit_email,
+                'msg' => 'Email tối đa có 100 ký tự',
+            ];
+        }
+
+        if (empty($errors)) {
+            $user_deposit_where = $DB['db_user_province']->getDataByID($_POST['user_province_id']);
+            $user_deposit_where = 'Showroom ' . $user_deposit_where["user_province_name"];
+
+            isset($_SESSION['user_id']) ? $user_id = $_SESSION["user_id"] : $user_id = "NULL";
+
+            $DB['db_user_deposit']->setData(
+                $user_deposit_fullname,
+                $user_deposit_tel,
+                $user_deposit_email,
+                $user_deposit_total_price,
+                $user_deposit_price,
+                $user_deposit_where,
+                $pay_method_id,
+                $user_id,
+                $car_id
+            );
+
+            // Lấy dữ liệu xe từ SESSION
+            $data_car = [];
+            if (isset($_SESSION['cart'])) $data_car = $_SESSION['cart'][$car_id];
+
+            // Lấy id của đơn đăt cọc vừa thêm
+            $user_deposit_id = $DB['db_user_deposit']->id;
+            // Thời gian yêu cầu đặt cọc
+            $user_deposit_at = date('d/m/Y');
+            // Cộng thêm 5 ngày
+            $deposit_at_timestamp = strtotime(str_replace('/', '-', $user_deposit_at)); // Chuyển đổi định dạng ngày tháng
+            $deposit_adding_5_day_timestamp = strtotime('+5 days', $deposit_at_timestamp); // Cộng thêm 5 ngày
+            $user_deposit_adding_5_day = date('d/m/Y', $deposit_adding_5_day_timestamp); // Chuyển timestamp thành ngày tháng năm
+
+            $DB['db_cars']->disconnect();
+            $DB['db_car_img']->disconnect();
+            $DB['db_user_province']->disconnect();
+            $DB['db_user_deposit']->disconnect();
+            $DB['db_pay_method']->disconnect();
+
+            $depositInfo = [
+                'user_deposit_id' => $user_deposit_id,
+                'user_deposit_fullname' => $user_deposit_fullname,
+                'user_deposit_tel' => $user_deposit_tel,
+                'user_deposit_email' => $user_deposit_email,
+                'user_deposit_total_price' => $user_deposit_total_price,
+                'user_deposit_price' => $user_deposit_price,
+                'user_deposit_where' => $user_deposit_where,
+                'user_deposit_at' => $user_deposit_at,
+                'user_deposit_adding_5_day' => $user_deposit_adding_5_day,
+                'pay_method_name' => $pay_method_name,
+                'data_car' => $data_car,
+            ];
+
+            $this->sendMailDepositRequired($depositInfo);
+        } else {
+            $errorMsg = '';
+            foreach ($errors as $fields) {
+                foreach ($fields as $field) {
+                    $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
+                };
+            };
+
+            $_SESSION['errors'] = $errorMsg;
+            // Quay về báo lỗi
+            echo '<script>location.href = "/car-shop/cart/pay/' . $car_id . '"</script>';
+        }
+    }
+
+    private function sendMailDepositRequired($depositInfo)
+    {
+        $user_deposit_fullname = $depositInfo['user_deposit_fullname'];
+        $user_deposit_email = $depositInfo['user_deposit_email'];
+        $data_car = $depositInfo['data_car'];
+        $car_id = $data_car['car_id'];
+
+        //Create an instance; passing `true` enables exceptions
+        $mail = new PHPMailer(true);
+        try {
+            //Server settings
+            $mail->isSMTP();                        // Sử dụng giao thức SMTP
+            $mail->Host       = 'smtp.gmail.com';   // Đặt máy chủ SMTP
+            $mail->SMTPAuth   = true;               // Bật xác thực SMTP
+            $mail->Username   = $this->emailSendName; // Tên đăng nhập SMTP
+            $mail->Password   = $this->emailSendPassword;           // Mật khẩu SMTP
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Bật mã hóa TLS ẩn danh
+            $mail->Port       = 465;                // Cổng SMTP
+            $mail->CharSet = "UTF-8";
+            $mail->setLanguage('vi');
+            //Recipients
+            $mail->setFrom($this->emailSendName, 'Car-shop Store');           // Thiết lập địa chỉ email nguồn (từ đâu gửi email) và tên người gửi
+            $mail->addAddress($user_deposit_email, $user_deposit_fullname);       // Thêm địa chỉ email người nhận
+
+            //Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Yêu cầu đặt cọc thành công';
+            $mail->Body    = $this->contentMailDepost($depositInfo);
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->send();
+
+            // Kiểm soát truy cập 
+            $_SESSION['mail-send-success'] = true;
+            echo '<script>location.href = "/car-shop/cart/pay/mail-send-success"</script>';
+        } catch (Exception $e) {
+            // Kiểm soát truy cập 
+            $_SESSION['mail-send-success'] = false;
+            echo '<script>location.href = "/car-shop/cart/pay/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
+        }
+    }
+
+    public function mailSendSuccess($DB)
+    {
+        if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
+            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+            include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
+            unset($_SESSION['mail-send-success']);
+            unset($_SESSION['cart'][$car_id]);
+        } else {
+            echo "Error 404";
+        }
+    }
+    public function mailSendError($DB)
+    {
+        if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
+            $error = $_GET['error'];
+            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+            include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentError.php";
+            unset($_SESSION['mail-send-success']);
+        } else {
+            echo "Error 404";
+        }
+    }
+
+
+    private function contentMailDepost($depositInfo)
+    {
+        $user_deposit_id = $depositInfo['user_deposit_id'];
+        $user_deposit_fullname = $depositInfo['user_deposit_fullname'];
+        $user_deposit_total_price = $depositInfo['user_deposit_total_price'];
+        $user_deposit_price = $depositInfo['user_deposit_price'];
+        $user_deposit_where = $depositInfo['user_deposit_where'];
+        $user_deposit_at = $depositInfo['user_deposit_at'];
+        $user_deposit_adding_5_day = $depositInfo['user_deposit_adding_5_day'];
+        $pay_method_name = $depositInfo['pay_method_name'];
+        $data_car = $depositInfo['data_car'];
+
         $car_name = $data_car['car_name'];
         $car_price = $data_car['car_price'];
-        $total_price = $data_car['total_price'];
 
-        $car_price = number_format($car_price, 0, ',', '.') . ' ₫';
-        $total_price = number_format($total_price, 0, ',', '.') . ' ₫';
+        $user_deposit_total_price = number_format($user_deposit_total_price, 0, ',', '.') . ' ₫';
         $user_deposit_price = number_format($user_deposit_price, 0, ',', '.') . ' ₫';
-
-        // Lấy id của đơn đăt cọc vừa thêm
-        $deposit_id = $DB['db_user_deposit']->id;
-        // Thời gian yêu cầu đặt cọc
-        $deposit_at = date('d/m/Y');
-        // Cộng thêm 5 ngày
-        $deposit_at_timestamp = strtotime(str_replace('/', '-', $deposit_at)); // Chuyển đổi định dạng ngày tháng
-        $deposit_adding_5_day_timestamp = strtotime('+5 days', $deposit_at_timestamp); // Cộng thêm 5 ngày
-        $deposit_adding_5_day = date('d/m/Y', $deposit_adding_5_day_timestamp); // Chuyển timestamp thành ngày tháng năm
-
-        $DB['db_cars']->disconnect();
-        $DB['db_car_img']->disconnect();
-        $DB['db_user_province']->disconnect();
-        $DB['db_user_deposit']->disconnect();
-        $DB['db_pay_method']->disconnect();
+        $car_price = number_format($car_price, 0, ',', '.') . ' ₫';
 
         // ----------------------- Viết hoá đơn -----------------------
-        $stylesDepositRequest = <<<EOT
+        $styleMail = <<<EOT
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
                 .container-general{
@@ -242,8 +456,8 @@ class CartController
             </style>
         EOT;
 
-        $depositRequestHasBeenConfirmed = <<<EOT
-            $stylesDepositRequest
+        $contentMailDepositRequestHasBeenConfirmed = <<<EOT
+            $styleMail
             <div class="container-general">
                 <div class="container-header">
                     <div class="container-logo-header">
@@ -269,12 +483,12 @@ class CartController
                     <tbody>
                         <tr>
                             <td>Mã đơn hàng: </td>
-                            <td>$deposit_id</td>
+                            <td>$user_deposit_id</td>
                         </tr>
 
                         <tr>
                             <td>Ngày đặt: </td>
-                            <td>$deposit_at</td>
+                            <td>$user_deposit_at</td>
                         </tr>
 
                         <tr>
@@ -289,7 +503,7 @@ class CartController
 
                         <tr>
                             <td class="pe-3">Tổng chi phí đã dự toán: </td>
-                            <td>$total_price</td>
+                            <td>$user_deposit_total_price</td>
                         </tr>
                         <tr>
                             <td>Phương thức thanh toán: </td>
@@ -310,7 +524,7 @@ class CartController
                         Trong vòng 24h tiếp theo, nhân viên của chúng tôi sẽ gọi điện và xác nhận đơn đặt cọc, xin quý khách vui lòng chờ đợi.
                     </div>
                     <div class="mb-1 mt-2">
-                        Quý khách vui lòng đến trực tiếp tại <b>$user_deposit_where</b> để thanh toán tiền đặt cọc tại phòng thu ngân và tiến hành ký hợp đồng mua xe trước ngày <b>$deposit_adding_5_day</b>.
+                        Quý khách vui lòng đến trực tiếp tại <b>$user_deposit_where</b> để thanh toán tiền đặt cọc tại phòng thu ngân và tiến hành ký hợp đồng mua xe trước ngày <b>$user_deposit_adding_5_day</b>.
                     </div>
                     <div class="mb-1 mt-2">
                         Trong vòng 5 ngày kế tiếp kể từ ngày hoàn tất hợp đồng đặt cọc, chúng tôi sẽ cố gắng bàn giao xe đến quý khách.
@@ -342,71 +556,7 @@ class CartController
             </div>
         EOT;
 
-        $this->sendMailDepositRequired(
-            $car_id,
-            $depositRequestHasBeenConfirmed,
-            $user_deposit_fullname,
-            $user_deposit_email
-        );
-    }
-
-    private function sendMailDepositRequired($car_id, $depositRequestHasBeenConfirmed, $user_deposit_fullname, $user_deposit_email)
-    {
-        //Create an instance; passing `true` enables exceptions
-        $mail = new PHPMailer(true);
-        try {
-            //Server settings
-            $mail->isSMTP();                        // Sử dụng giao thức SMTP
-            $mail->Host       = 'smtp.gmail.com';   // Đặt máy chủ SMTP
-            $mail->SMTPAuth   = true;               // Bật xác thực SMTP
-            $mail->Username   = $this->emailSendName; // Tên đăng nhập SMTP
-            $mail->Password   = $this->emailSendPassword;           // Mật khẩu SMTP
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Bật mã hóa TLS ẩn danh
-            $mail->Port       = 465;                // Cổng SMTP
-            $mail->CharSet = "UTF-8";
-            $mail->setLanguage('vi');
-            //Recipients
-            $mail->setFrom($this->emailSendName, 'Car-shop Store');           // Thiết lập địa chỉ email nguồn (từ đâu gửi email) và tên người gửi
-            $mail->addAddress($user_deposit_email, $user_deposit_fullname);       // Thêm địa chỉ email người nhận
-
-            //Content
-            $mail->isHTML(true);
-            $mail->Subject = 'Yêu cầu đặt cọc thành công';
-            $mail->Body    = $depositRequestHasBeenConfirmed;
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-            $mail->send();
-
-            // Kiểm soát truy cập 
-            $_SESSION['mail-send-success'] = true;
-            echo '<script>location.href = "/car-shop/cart/pay/mail-send-success"</script>';
-            unset($_SESSION['cart'][$car_id]);
-        } catch (Exception $e) {
-            // Kiểm soát truy cập 
-            $_SESSION['mail-send-success'] = false;
-            echo '<script>location.href = "/car-shop/cart/pay/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
-        }
-    }
-
-    public function mailSendSuccess($DB)
-    {
-        if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
-            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-            include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
-            unset($_SESSION['mail-send-success']);
-        } else {
-            echo "Error 404";
-        }
-    }
-    public function mailSendError($DB)
-    {
-        if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
-            $error = $_GET['error'];
-            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-            include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentError.php";
-            unset($_SESSION['mail-send-success']);
-        } else {
-            echo "Error 404";
-        }
+        return $contentMailDepositRequestHasBeenConfirmed;
     }
 
     private function getAllCarTypesForHeader($DB)

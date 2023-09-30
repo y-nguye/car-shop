@@ -58,7 +58,7 @@ class StoreController
         $DB['db_cars']->connect();
         $data_car = $DB['db_cars']->getDataByID($car_id);
 
-        // Authorization
+        // Kiểm soát truy cập
         if (!$data_car) {
             echo "404-error";
             $DB['db_cars']->disconnect();
@@ -125,14 +125,12 @@ class StoreController
 
     public function service($DB)
     {
-        // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/store/service.php";
     }
 
     public function support($DB)
     {
-        // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/store/support.php";
     }
@@ -167,7 +165,6 @@ class StoreController
             $user_test_drive_email = $_SESSION["user_email"];
         }
 
-        // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/store/testDrive.php";
 
@@ -291,8 +288,17 @@ class StoreController
 
                 // Gửi yêu cầu đến database
                 $DB['db_user_test_drive']->connect();
-                $DB['db_user_test_drive']->setData($user_test_drive_day, $user_test_drive_time, $user_test_drive_where, $user_test_drive_fullname, $user_test_drive_tel, $user_test_drive_email, $car_id);
+                $DB['db_user_test_drive']->setData(
+                    $user_test_drive_day,
+                    $user_test_drive_time,
+                    $user_test_drive_where,
+                    $user_test_drive_fullname,
+                    $user_test_drive_tel,
+                    $user_test_drive_email,
+                    $car_id
+                );
                 $user_test_drive_id = $DB['db_user_test_drive']->id;
+                $DB['db_user_test_drive']->disconnect();
 
                 $userTestDriveInfo = [
                     'user_test_drive_id' => $user_test_drive_id,
@@ -314,11 +320,8 @@ class StoreController
                         $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
                     };
                 };
-                var_dump("Hello");
+                echo "<script>showAlert('" . $errorMsg . "', 'danger');</script>";
                 echo '<script>location.href = "/car-shop/test-drive/' . $car_id . '"</>';
-                echo "<script>
-                        showAlert('" . $errorMsg . "', 'danger');
-                    </script>";
             }
         }
     }
@@ -399,7 +402,7 @@ class StoreController
         $car_name = $data_car['car_name'];
 
         // ----------------------- Viết nội dung Mail -----------------------
-        $stylesMail = <<<EOT
+        $styleMail = <<<EOT
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
                 .container-general{
@@ -451,7 +454,7 @@ class StoreController
         EOT;
 
         $contentMailTestDriveRequestHasBeenConfirmed = <<<EOT
-            $stylesMail
+            $styleMail
             <div class="container-general">
                 <div class="container-header">
                     <div class="container-logo-header">
