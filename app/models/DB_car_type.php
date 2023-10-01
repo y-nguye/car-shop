@@ -7,7 +7,7 @@ class CarTypeData extends DatabaseManager
 
     public function getDataByID($car_type_id)
     {
-        if (!$car_type_id) $car_type_id = 'NULL';
+        if (!$car_type_id) return null;
         $sql = "SELECT * FROM $this->table WHERE car_type_id = $car_type_id;";
         $this->result = $this->execute($sql);
 

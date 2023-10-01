@@ -36,34 +36,20 @@
                             <tr>
                                 <th>Mã</th>
                                 <th>Tên khách hàng</th>
-                                <th>Mã xe</th>
-                                <th>Phí đặt cọc</th>
-                                <th>Liên hệ</th>
-                                <th>Thanh toán</th>
-                                <th class="text-center">Xem</th>
+                                <th>Tên xe</th>
+                                <th>Ngày dự kiến</th>
+                                <th>Thời gian dự kiến</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <?php foreach ($data_user_deposit as $value) { ?>
+                            <?php foreach ($data_user_test_drive as $value) { ?>
                                 <tr class="car_item_row">
-                                    <td class="text-center">
-                                        <?= $value['user_deposit_id'] ?>
-                                        <input type="hidden" name="user_deposit_id" value="<?= $value['user_deposit_id'] ?>" data-user_deposit_id="<?= $value['user_deposit_id'] ?>">
-                                    </td>
-                                    <td><?= $value['user_deposit_fullname'] ?></td>
-                                    <td class="text-center"><?= $value['car_id'] ?></td>
-                                    <td class="text-end"><?= number_format($value['user_deposit_price'], 0, '.', '.') . ' đ<br/>' ?></td>
-                                    <td class="text-center"><?php if ($value['user_deposit_is_contacted']) echo "✅";
-                                                            else echo "❌"; ?>
-                                    </td>
-                                    <td class="text-center"><?php if ($value['user_deposit_is_payed']) echo "✅";
-                                                            else echo "❌"; ?></td>
-                                    <td class="text-center">
-
-                                        <a href="/car-shop/admin/deposit/see-more/<?= $value['user_deposit_id'] ?>" class="p-2"><i class="bi bi-eye"></i></a>
-
-                                    </td>
+                                    <td><?= $value['user_test_drive_id'] ?></td>
+                                    <td><?= $value['user_test_drive_fullname'] ?></td>
+                                    <td><?= $value['car_name'] ?></td>
+                                    <td><?= $value['user_test_drive_day'] ?></td>
+                                    <td><?= $value['user_test_drive_time'] ?></td>
 
                                 </tr>
                             <?php } ?>
@@ -88,11 +74,9 @@
         $(function() {
             $('#danhsach').DataTable({
                 searching: true,
-                columnDefs: [{
-                    targets: [6],
-                    orderable: false,
-                    searchable: false
-                }],
+                order: [
+                    [3, "desc"]
+                ],
                 language: {
                     url: '/car-shop/assets/plugin/datatables-language/vi.json',
                 },

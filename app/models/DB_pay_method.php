@@ -8,6 +8,7 @@ class PayMethodData extends DatabaseManager
 
     public function getDataByID($pay_method_id)
     {
+        if (!$pay_method_id) return null;
         $sql = "SELECT * FROM $this->table WHERE pay_method_id = $pay_method_id;";
         $this->result = $this->execute($sql);
 

@@ -8,6 +8,7 @@ class UserDepositData extends DatabaseManager
 
     public function getDataByID($user_deposit_id)
     {
+        if (!$user_deposit_id) return null;
         $sql = "SELECT deposit.user_deposit_id,
                 deposit.user_deposit_fullname,
                 deposit.user_deposit_tel,
@@ -25,7 +26,7 @@ class UserDepositData extends DatabaseManager
                 cars.car_price,
                 pay_method.pay_method_name,
                 MIN(car_img.car_img_filename) AS car_img_filename
-                FROM user_deposit deposit
+                FROM $this->table deposit
                 LEFT JOIN cars ON cars.car_id = deposit.car_id
                 LEFT JOIN car_img ON car_img.car_id = deposit.car_id
                 LEFT JOIN pay_method ON pay_method.pay_method_id = deposit.pay_method_id
@@ -46,7 +47,7 @@ class UserDepositData extends DatabaseManager
                 cars.car_name,
                 pay_method.pay_method_name,
                 MIN(car_img.car_img_filename) AS car_img_filename
-                FROM user_deposit deposit
+                FROM $this->table deposit
                 LEFT JOIN cars ON cars.car_id = deposit.car_id
                 LEFT JOIN car_img ON car_img.car_id = deposit.car_id
                 LEFT JOIN pay_method ON pay_method.pay_method_id = deposit.pay_method_id

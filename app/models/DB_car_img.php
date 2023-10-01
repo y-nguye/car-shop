@@ -7,7 +7,7 @@ class CarImgData extends DatabaseManager
 
     public function getFirstDataByCarID($car_id)
     {
-        if (!$car_id) $car_id = 'NULL';
+        if (!$car_id) return null;
         $sql = "SELECT MIN(car_img_filename) AS car_img_filename FROM $this->table WHERE car_id = $car_id;";
         $this->result = $this->execute($sql);
 

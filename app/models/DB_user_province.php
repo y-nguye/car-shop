@@ -8,7 +8,7 @@ class UserProvinceData extends DatabaseManager
 
     public function getDataByID($user_province_id)
     {
-        if ($user_province_id == '') return null;
+        if (!$user_province_id) return null;
         $sql = "SELECT * FROM $this->table WHERE user_province_id = $user_province_id;";
         $this->result = $this->execute($sql);
 

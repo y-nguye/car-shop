@@ -8,6 +8,7 @@ class CarsData extends DatabaseManager
 
     public function getDataByID($car_id)
     {
+        if (!$car_id) return null;
         $sql = "SELECT * FROM $this->table WHERE car_id = $car_id AND car_deleted = 0;";
         $this->result = $this->execute($sql);
 
@@ -52,7 +53,7 @@ class CarsData extends DatabaseManager
                 car_type.car_type_id,
                 car_type.car_type_name,
                 MIN(car_img.car_img_filename) AS car_img_filename
-                FROM cars car 
+                FROM $this->table car 
                 LEFT JOIN car_type ON car_type.car_type_id = car.car_type_id 
                 LEFT JOIN car_img ON car_img.car_id = car.car_id
                 WHERE car.car_deleted = 0 AND car.car_type_id = $car_type_id
@@ -91,7 +92,7 @@ class CarsData extends DatabaseManager
                     WHERE car_img.car_id = car.car_id
                     LIMIT 1 OFFSET 1
                 ) AS car_img_filename
-            FROM cars car
+            FROM $this->table car
             WHERE car.car_deleted = 0 AND car.car_id IN ($car_ids);";
 
         $this->result = $this->execute($sql);
@@ -124,7 +125,7 @@ class CarsData extends DatabaseManager
                     WHERE car_img.car_id = car.car_id
                     LIMIT 1 OFFSET 1
                 ) AS car_img_filename
-            FROM cars car
+            FROM $this->table car
             WHERE car.car_deleted = 0
             ORDER BY car.car_update_at DESC LIMIT 4;";
 

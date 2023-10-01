@@ -61,7 +61,7 @@
                                 <?php foreach ($data_cars as $value) { ?>
                                     <tr class="car_item_row">
                                         <td name="checkbox-td" class="text-center"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $value['car_id'] ?>" data-car_id="<?= $value['car_id'] ?>"></td>
-                                        <td><?= $value['car_id'] ?></td>
+                                        <td class="text-end"><?= $value['car_id'] ?></td>
                                         <td><?= $value['car_name'] ?></td>
                                         <td class="text-end"><?= number_format($value['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
                                         <td class="text-end"><?= $value['car_quantity'] ?></td>

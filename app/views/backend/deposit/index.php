@@ -47,12 +47,12 @@
                         <tbody>
                             <?php foreach ($data_user_deposit as $value) { ?>
                                 <tr class="car_item_row">
-                                    <td class="text-center">
+                                    <td class="text-end">
                                         <?= $value['user_deposit_id'] ?>
                                         <input type="hidden" name="user_deposit_id" value="<?= $value['user_deposit_id'] ?>" data-user_deposit_id="<?= $value['user_deposit_id'] ?>">
                                     </td>
                                     <td><?= $value['user_deposit_fullname'] ?></td>
-                                    <td class="text-center"><?= $value['car_id'] ?></td>
+                                    <td class="text-end"><?= $value['car_id'] ?></td>
                                     <td class="text-end"><?= number_format($value['user_deposit_price'], 0, '.', '.') . ' đ<br/>' ?></td>
                                     <td class="text-center"><?php if ($value['user_deposit_is_contacted']) echo "✅";
                                                             else echo "❌"; ?>
