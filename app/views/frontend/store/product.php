@@ -160,6 +160,14 @@
 
     </div>
 
+    <!-- HTML cho một toast -->
+    <div id="toast-result-test-drive" class="toast align-items-center text-white bg-primary fixed-top toast-custom" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+
     <?php
     include_once 'app/views/frontend/layouts/footer.php';
     ?>
@@ -167,6 +175,19 @@
     <?php
     include_once 'app/views/resources/script/script.php';
     ?>
+
+    <script>
+        // -------------------- Toast hiển thị kết quả đăng ký lái thử --------------------
+        const toastBody = document.querySelector('.toast-body');
+        const toastResultTestDrive = document.getElementById('toast-result-test-drive');
+        const toast = new bootstrap.Toast(toastResultTestDrive);
+
+        toastResultTestDrive.addEventListener('shown.bs.toast', function() {
+            setTimeout(function() {
+                toast.hide();
+            }, 3000);
+        });
+    </script>
 
 </body>
 

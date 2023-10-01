@@ -18,7 +18,7 @@
 
         <form name="formSignup" id="formSignup" method="post" action="">
             <div class="container d-flex flex-column justify-content-center" style="width: 25rem;">
-                <h3 class="mb-4">Đăng kí</h3>
+                <h3 class="mb-4">Đăng ký</h3>
                 <div id="liveAlertPlaceholder" class="text-start"></div>
 
                 <div class="form-floating mb-3">

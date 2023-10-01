@@ -150,7 +150,7 @@ class CartController
         $pay_method_name = $data_pay_method['pay_method_name'];
 
         // Validation phía server
-        $errors = []; // Giả sự người dùng chưa vi phạm lỗi nào hết...
+        $errors = [];
 
         // 1. Kiểm tra ô tên người dùng
         // Rule: required
@@ -266,12 +266,13 @@ class CartController
                 $car_id
             );
 
+            // Lấy id của đơn đăt cọc vừa thêm
+            $user_deposit_id = $DB['db_user_deposit']->id;
+
             // Lấy dữ liệu xe từ SESSION
             $data_car = [];
             if (isset($_SESSION['cart'])) $data_car = $_SESSION['cart'][$car_id];
 
-            // Lấy id của đơn đăt cọc vừa thêm
-            $user_deposit_id = $DB['db_user_deposit']->id;
             // Thời gian yêu cầu đặt cọc
             $user_deposit_at = date('d/m/Y');
             // Cộng thêm 5 ngày
@@ -347,6 +348,8 @@ class CartController
 
             // Kiểm soát truy cập 
             $_SESSION['mail-send-success'] = true;
+            // Xoá khỏi giỏ hàng
+            unset($_SESSION['cart'][$car_id]);
             echo '<script>location.href = "/car-shop/cart/pay/mail-send-success"</script>';
         } catch (Exception $e) {
             // Kiểm soát truy cập 
@@ -361,7 +364,6 @@ class CartController
             $data_all_car_type = $this->getAllCarTypesForHeader($DB);
             include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
             unset($_SESSION['mail-send-success']);
-            unset($_SESSION['cart'][$car_id]);
         } else {
             echo "Error 404";
         }

@@ -132,6 +132,12 @@
         color: white;
     }
 
+    .toast-custom {
+        top: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
     .bs-tooltip-end .tooltip-arrow::before {
         border-right-color: red;
         -webkit-border-right-color: red;

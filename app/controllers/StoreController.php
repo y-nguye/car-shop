@@ -89,6 +89,14 @@ class StoreController
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/store/product.php";
 
+        // Hiển thị toast
+        if (isset($_SESSION['test-drive-success'])) {
+            if ($_SESSION['test-drive-success'] == true) echo '<script>toastBody.textContent = "Đăng ký lái thử thành công";</script>';
+            if ($_SESSION['test-drive-success'] == false) echo '<script>toastBody.textContent = "Đăng ký lái thử thất bại";</script>';
+            echo '<script>toast.show();</script>';
+            unset($_SESSION['test-drive-success']);
+        }
+
         if (isset($_POST['btnRegistrationFee'])) {
 
             $car_id = $_POST['car_id'];
@@ -168,161 +176,207 @@ class StoreController
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include __DIR__ . "/../views/frontend/store/testDrive.php";
 
+        // Validate: báo lỗi
+        if (isset($_SESSION['errors'])) {
+            echo "<script>showAlert('" . $_SESSION['errors'] . "', 'danger');</script>";
+            unset($_SESSION['errors']);
+        }
 
         $DB['db_cars']->disconnect();
         $DB['db_car_img']->disconnect();
     }
 
-    public function testDriveSignupRequired($DB, $vars)
+    public function testDriveRegisterpRequired($DB, $vars)
     {
         $car_id = $vars['id'];
 
         $DB['db_cars']->connect();
         $data_car = $DB['db_cars']->getDataByID($car_id);
+        $DB['db_cars']->disconnect();
 
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-        if (isset($_POST['btnSignUpTestDrive'])) {
-            date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $DB['db_user_province']->connect();
+        $data_user_province_name = $DB['db_user_province']->getDataByID($_POST['user_province_id']);
+        $DB['db_user_province']->disconnect();
+        $user_test_drive_where = 'Showroom ';
+        $data_user_province_name != null && $user_test_drive_where .= $data_user_province_name["user_province_name"];
 
-            $DB['db_user_province']->connect();
-            $data_user_province_name = $DB['db_user_province']->getDataByID($_POST['user_province_id']);
+        $user_test_drive_day = $_POST['user_test_drive_day'];
+        $user_test_drive_time = $_POST['user_test_drive_time'];
+        $user_test_drive_fullname = $_POST['user_test_drive_fullname'];
+        $user_test_drive_tel = $_POST['user_test_drive_tel'];
+        $user_test_drive_email = $_POST['user_test_drive_email'];
 
-            $user_test_drive_where = 'Showroom ' . $data_user_province_name["user_province_name"];
-            $user_test_drive_day = $_POST['user_test_drive_day'];
-            $user_test_drive_time = $_POST['user_test_drive_time'];
-            $user_test_drive_fullname = $_POST['user_test_drive_fullname'];
-            $user_test_drive_tel = $_POST['user_test_drive_tel'];
-            $user_test_drive_email = empty($_POST['user_test_drive_email']) ? "NULL" : $_POST['user_test_drive_email'];
+        // Validation phía server
+        $errors = [];
 
-            // Validation phía server
-            $errors = []; // Giả sự người dùng chưa vi phạm lỗi nào hết...
+        // 1. Kiểm tra địa điểm
+        // Rule: required
+        if (empty($user_test_drive_where)) {
+            $errors['user_test_drive_where'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_test_drive_where,
+                'msg' => 'Vui lòng chọn địa điểm',
+            ];
+        }
 
-            // 1. Kiểm tra ô tên người dùng
-            // Rule: required
-            if (empty($user_test_drive_fullname)) {
-                $errors['user_test_drive_fullname'][] = [
-                    'rule' => 'required',
-                    'rule_value' => true,
-                    'value' => $user_test_drive_fullname,
-                    'msg' => 'Vui lòng nhập tên đầy đủ',
-                ];
-            }
-            // Rule: minlength 3
-            elseif (strlen($user_test_drive_fullname) < 3) {
-                $errors['user_test_drive_fullname'][] = [
-                    'rule' => 'minlength',
-                    'rule_value' => 3,
-                    'value' => $user_test_drive_fullname,
-                    'msg' => 'Tên đầy đủ phải tối thiểu 3 kí tự',
-                ];
-            }
-            // Rule: maxlength 50
-            elseif (strlen($user_test_drive_fullname) > 50) {
-                $errors['user_test_drive_fullname'][] = [
-                    'rule' => 'maxlength',
-                    'rule_value' => 50,
-                    'value' => $user_test_drive_fullname,
-                    'msg' => 'Tên đầy đủ tối đa có 50 ký tự',
-                ];
-            }
+        // 2. Kiểm tra ngày dự kiến
+        // Rule: required
+        if (empty($user_test_drive_day)) {
+            $errors['user_test_drive_day'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_test_drive_day,
+                'msg' => 'Vui lòng chọn ngày dự kiến',
+            ];
+        }
 
-            // 2. Kiểm tra số điện thoại
-            // Rule: required
-            if (empty($user_test_drive_tel)) {
-                $errors['user_test_drive_tel'][] = [
-                    'rule' => 'required',
-                    'rule_value' => true,
-                    'value' => $user_test_drive_tel,
-                    'msg' => 'Vui lòng nhập số điện thoại',
-                ];
-            }
-            // Rule: isNumber
-            elseif (!is_numeric($user_test_drive_tel)) {
-                $errors['user_test_drive_tel'][] = [
-                    'rule' => 'isNumber',
-                    'rule_value' => true,
-                    'value' => $user_test_drive_tel,
-                    'msg' => 'Số điện thoại không hợp lệ',
-                ];
-            }
-            // Rule: minlength 10
-            elseif (strlen($user_test_drive_tel) < 10) {
-                $errors['user_test_drive_tel'][] = [
-                    'rule' => 'minlength',
-                    'rule_value' => 10,
-                    'value' => $user_test_drive_tel,
-                    'msg' => 'Số điện thoại không hợp lệ',
-                ];
-            }
-            // Rule: maxlength
-            elseif (strlen($user_test_drive_tel) > 15) {
-                $errors['user_test_drive_tel'][] = [
-                    'rule' => 'maxlength',
-                    'rule_value' => 15,
-                    'value' => $user_test_drive_tel,
-                    'msg' => 'Số điện thoại không hợp lệ',
-                ];
-            }
+        // 3. Kiểm tra thời gian dự kiến
+        // Rule: required
+        if (empty($user_test_drive_time)) {
+            $errors['user_test_drive_time'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_test_drive_time,
+                'msg' => 'Vui lòng chọn thời gian dự kiến',
+            ];
+        }
 
-            // 3. Kiểm tra email
-            // Rule: Định dạng email
-            if (!filter_var($user_test_drive_email, FILTER_VALIDATE_EMAIL)) {
-                $errors['user_test_drive_email'][] = [
-                    'rule' => 'isEmail',
-                    'rule_value' => true,
-                    'value' => $user_test_drive_email,
-                    'msg' => 'Vui lòng nhập đúng định dạng email',
-                ];
-            }
-            // Rule: maxlength 100
-            elseif (strlen($user_test_drive_email) > 100) {
-                $errors['user_test_drive_email'][] = [
-                    'rule' => 'maxlength',
-                    'rule_value' => 100,
-                    'value' => $user_test_drive_email,
-                    'msg' => 'Email tối đa có 100 ký tự',
-                ];
-            }
+        // 4. Kiểm tra ô tên người dùng
+        // Rule: required
+        if (empty($user_test_drive_fullname)) {
+            $errors['user_test_drive_fullname'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_test_drive_fullname,
+                'msg' => 'Vui lòng nhập tên đầy đủ',
+            ];
+        }
+        // Rule: minlength 3
+        elseif (strlen($user_test_drive_fullname) < 3) {
+            $errors['user_test_drive_fullname'][] = [
+                'rule' => 'minlength',
+                'rule_value' => 3,
+                'value' => $user_test_drive_fullname,
+                'msg' => 'Tên đầy đủ phải tối thiểu 3 kí tự',
+            ];
+        }
+        // Rule: maxlength 50
+        elseif (strlen($user_test_drive_fullname) > 50) {
+            $errors['user_test_drive_fullname'][] = [
+                'rule' => 'maxlength',
+                'rule_value' => 50,
+                'value' => $user_test_drive_fullname,
+                'msg' => 'Tên đầy đủ tối đa có 50 ký tự',
+            ];
+        }
 
-            if (empty($errors)) {
+        // 5. Kiểm tra số điện thoại
+        // Rule: required
+        if (empty($user_test_drive_tel)) {
+            $errors['user_test_drive_tel'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_test_drive_tel,
+                'msg' => 'Vui lòng nhập số điện thoại',
+            ];
+        }
+        // Rule: isNumber
+        elseif (!is_numeric($user_test_drive_tel)) {
+            $errors['user_test_drive_tel'][] = [
+                'rule' => 'isNumber',
+                'rule_value' => true,
+                'value' => $user_test_drive_tel,
+                'msg' => 'Số điện thoại không hợp lệ',
+            ];
+        }
+        // Rule: minlength 10
+        elseif (strlen($user_test_drive_tel) < 10) {
+            $errors['user_test_drive_tel'][] = [
+                'rule' => 'minlength',
+                'rule_value' => 10,
+                'value' => $user_test_drive_tel,
+                'msg' => 'Số điện thoại không hợp lệ',
+            ];
+        }
+        // Rule: maxlength
+        elseif (strlen($user_test_drive_tel) > 15) {
+            $errors['user_test_drive_tel'][] = [
+                'rule' => 'maxlength',
+                'rule_value' => 15,
+                'value' => $user_test_drive_tel,
+                'msg' => 'Số điện thoại không hợp lệ',
+            ];
+        }
 
-                // Gửi yêu cầu đến database
-                $DB['db_user_test_drive']->connect();
-                $DB['db_user_test_drive']->setData(
-                    $user_test_drive_day,
-                    $user_test_drive_time,
-                    $user_test_drive_where,
-                    $user_test_drive_fullname,
-                    $user_test_drive_tel,
-                    $user_test_drive_email,
-                    $car_id
-                );
-                $user_test_drive_id = $DB['db_user_test_drive']->id;
-                $DB['db_user_test_drive']->disconnect();
+        // 6. Kiểm tra email
+        // Rule: required
+        if (empty($user_test_drive_email)) {
+            $errors['user_test_drive_email'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_test_drive_email,
+                'msg' => 'Vui lòng nhập email',
+            ];
+        }
+        // Rule: Định dạng email
+        elseif (!filter_var($user_test_drive_email, FILTER_VALIDATE_EMAIL)) {
+            $errors['user_test_drive_email'][] = [
+                'rule' => 'is_email',
+                'rule_value' => true,
+                'value' => $user_test_drive_email,
+                'msg' => 'Vui lòng nhập đúng định dạng email',
+            ];
+        }
+        // Rule: maxlength 100
+        elseif (strlen($user_test_drive_email) > 100) {
+            $errors['user_test_drive_email'][] = [
+                'rule' => 'maxlength',
+                'rule_value' => 100,
+                'value' => $user_test_drive_email,
+                'msg' => 'Email tối đa có 100 ký tự',
+            ];
+        }
 
-                $userTestDriveInfo = [
-                    'user_test_drive_id' => $user_test_drive_id,
-                    'user_test_drive_day' => $user_test_drive_day,
-                    'user_test_drive_time' => $user_test_drive_time,
-                    'user_test_drive_where' => $user_test_drive_where,
-                    'user_test_drive_fullname' => $user_test_drive_fullname,
-                    'user_test_drive_email' => $user_test_drive_email,
-                    'data_car' => $data_car,
-                ];
+        if (empty($errors)) {
 
-                $this->sendMailTestDriveRequired($userTestDriveInfo);
+            // Gửi yêu cầu đến database
+            $DB['db_user_test_drive']->connect();
+            $DB['db_user_test_drive']->setData(
+                $user_test_drive_day,
+                $user_test_drive_time,
+                $user_test_drive_where,
+                $user_test_drive_fullname,
+                $user_test_drive_tel,
+                $user_test_drive_email,
+                $car_id
+            );
+            $user_test_drive_id = $DB['db_user_test_drive']->id;
+            $DB['db_user_test_drive']->disconnect();
 
-                // echo '<script>location.href = "/car-shop/product/' . $car_id . '"</>';
-            } else {
-                $errorMsg = '';
-                foreach ($errors as $fields) {
-                    foreach ($fields as $field) {
-                        $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
-                    };
+            $userTestDriveInfo = [
+                'user_test_drive_id' => $user_test_drive_id,
+                'user_test_drive_day' => $user_test_drive_day,
+                'user_test_drive_time' => $user_test_drive_time,
+                'user_test_drive_where' => $user_test_drive_where,
+                'user_test_drive_fullname' => $user_test_drive_fullname,
+                'user_test_drive_email' => $user_test_drive_email,
+                'data_car' => $data_car,
+            ];
+
+            $this->sendMailTestDriveRequired($userTestDriveInfo);
+            echo '<script>location.href = "/car-shop/product/' . $car_id . '"</script>';
+        } else {
+            $errorMsg = '';
+            foreach ($errors as $fields) {
+                foreach ($fields as $field) {
+                    $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
                 };
-                echo "<script>showAlert('" . $errorMsg . "', 'danger');</script>";
-                echo '<script>location.href = "/car-shop/test-drive/' . $car_id . '"</>';
-            }
+            };
+            $_SESSION['errors'] = $errorMsg;
+            echo '<script>location.href = "/car-shop/test-drive/' . $car_id . '"</script>';
         }
     }
 
@@ -381,13 +435,11 @@ class StoreController
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
             $mail->send();
 
-            // Kiểm soát truy cập 
-            // $_SESSION['mail-send-success'] = true;
+            $_SESSION['test-drive-success'] = true;
             // echo '<script>location.href = "/car-shop/cart/pay/mail-send-success"</script>';
         } catch (Exception $e) {
-            // Kiểm soát truy cập 
-            // $_SESSION['mail-send-success'] = false;
-            echo '<script>location.href = "/car-shop/cart/pay/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
+            $_SESSION['test-drive-success'] = false;
+            // echo '<script>location.href = "/car-shop/cart/pay/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
         }
     }
 

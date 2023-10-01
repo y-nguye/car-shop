@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once 'app/views/resources/styles/styles.php' ?>
     <?php include_once 'app/views/backend/deposit/depositPagesStyle.php'; ?>
-    <title>Quản lý đơn đặt cọc</title>
+    <title>Danh sách lái thử</title>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-3">
                 <?php
-                $item_select = "deposit";
+                $item_select = "test-drive";
                 include_once 'app/views/backend/layout/sidebar.php';
                 ?>
             </div>
@@ -22,7 +22,7 @@
             <div class="col-9">
                 <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
                     <div class="container-fluid justify-content-start">
-                        <span class="fs-5"><b>Các đơn yêu cầu</b></span>
+                        <span class="fs-5"><b>Danh sách lái thử</b></span>
                         <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
                             <i class="bi bi-telephone"></i>
                             Liên hệ

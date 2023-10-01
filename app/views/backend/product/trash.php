@@ -15,7 +15,7 @@
             <div class="col-3">
 
                 <?php
-                $item_select = "product_trash";
+                $item_select = "product-trash";
                 include_once 'app/views/backend/layout/sidebar.php';
                 ?>
 

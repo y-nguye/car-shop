@@ -41,10 +41,10 @@ class AccountController
         $user_avt = $_SESSION['user_avt'];
         $user_is_admin = $_SESSION['user_is_admin'];
 
-        $lastName = strrchr($_SESSION['user_fullname'], ' ');
-
         $user_id = $_SESSION["user_id"];
         $data_all_user_deposit = $DB['db_user_deposit']->getAllDataByUserID($user_id);
+
+        $lastName = strrchr($_SESSION['user_fullname'], ' ');
 
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/account/deposit.php";
@@ -92,9 +92,7 @@ class AccountController
                 }
             } else {
                 // Đăng nhập thất bại
-                echo    "<script>
-                            showAlert('Tên đăng nhập hoặc mật khẩu không đúng', 'danger');
-                        </script>";
+                echo "<script>showAlert('Tên đăng nhập hoặc mật khẩu không đúng', 'danger');</script>";
             }
         }
     }
@@ -186,7 +184,7 @@ class AccountController
             // Rule: isNumber
             elseif (!is_numeric($user_tel)) {
                 $errors['user_tel'][] = [
-                    'rule' => 'isNumber',
+                    'rule' => 'is_number',
                     'rule_value' => true,
                     'value' => $user_tel,
                     'msg' => 'Số điện thoại không hợp lệ',
@@ -235,7 +233,7 @@ class AccountController
             // Rule: Định dạng email
             elseif (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
                 $errors['user_email'][] = [
-                    'rule' => 'isEmail',
+                    'rule' => 'is_email',
                     'rule_value' => true,
                     'value' => $user_email,
                     'msg' => 'Vui lòng nhập đúng định dạng email',
@@ -321,7 +319,7 @@ class AccountController
             // 7. Kiểm tra mật khẩu nhập lại
             if ($user_password !== $user_password_confirm) {
                 $errors['user_password'][] = [
-                    'rule' => 'checkMatch',
+                    'rule' => 'check_match',
                     'rule_value' => true,
                     'value' => $user_password_confirm,
                     'msg' => 'Mật khẩu nhập lại không khớp',
@@ -342,9 +340,7 @@ class AccountController
                         $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
                     };
                 };
-                echo "<script>
-                        showAlert('" . $errorMsg . "', 'danger');
-                    </script>";
+                echo "<script>showAlert('" . $errorMsg . "', 'danger');</script>";
             }
         }
     }
@@ -382,7 +378,6 @@ class AccountController
             echo "404-error";
         }
     }
-
 
     public function editPersonInfo($DB)
     {

@@ -67,9 +67,9 @@
                     </div>
                     <div class="col-7 body-content-info">
 
-                        <h3 class="ms-3">Đơn yêu cầu đặt cọc</h3>
+                        <h3 class="ms-3">Các đơn yêu cầu đặt cọc</h3>
                         <div class="ms-3 mb-3">
-                            <span>Trạng thái và thông tin đơn hàng của bạn, nếu có sai sót hãy liên hệ với chúng tôi</span>
+                            <span>Danh sách các đơn yêu cầu đặt cọc của bạn, nếu có sai sót hãy liên hệ với chúng tôi</span>
                         </div>
                         <div class="d-flex flex-wrap">
 

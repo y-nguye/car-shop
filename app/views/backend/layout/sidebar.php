@@ -4,9 +4,10 @@ include_once 'app/views/backend/layout/sideBarStyle.php';
 
 $sidebar_items = [
     ["admin", "/car-shop/admin", "<i class=' bi bi-house-door me-2'></i> Trang chủ"],
-    ["deposit", "/car-shop/admin/deposit", "<i class='bi bi-truck me-2'></i> Danh sách đơn hàng"],
+    ["test-drive", "/car-shop/admin/test-drive", "<i class='bi bi-p-circle me-2'></i>Danh sách lái thử"],
+    ["deposit", "/car-shop/admin/deposit", "<i class='bi bi-truck me-2'></i>Quản lý đơn đặt cọc"],
     ["product", "/car-shop/admin/product", "<i class='bi bi-car-front me-2'></i> Quản lý xe"],
-    ["product_trash", "/car-shop/admin/product/trash", "<i class='bi bi-trash me-2'></i> Thùng rác"],
+    ["product-trash", "/car-shop/admin/product/trash", "<i class='bi bi-trash me-2'></i> Thùng rác"],
 ];
 
 ?>

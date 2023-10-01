@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <!-- HTML cho một toast -->
+    <!-- Toast -->
     <div id="toast-car-added-to-the-cart" class="toast align-items-center text-white bg-primary fixed-top toast-custom" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body">

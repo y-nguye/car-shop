@@ -38,8 +38,8 @@
             </div>
 
             <div class="col-4">
-                <form id="formSignUpTestDrive" method="post" action="/car-shop/test-drive/signup/<?= $data_car['car_id'] ?>">
-                    <div id="liveAlertPlaceholder" class="text-start"></div>
+                <div id="liveAlertPlaceholder" class="text-start"></div>
+                <form id="formSignUpTestDrive" method="post" action="/car-shop/test-drive/register/<?= $data_car['car_id'] ?>">
                     <div class="pt-2">
                         <label for="user_province_id" class="text-dark m-0">Địa điểm lái thử</label>
                         <select name="user_province_id" id="user_province_id" class="form-select mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
@@ -61,7 +61,7 @@
                     <h3 class="mt-4">Thông tin khách hàng</h3>
 
                     <div class="pt-2">
-                        <label for="user_test_drive_fullname">Tên đầy đủ *</label>
+                        <label for="user_test_drive_fullname">Tên đầy đủ</label>
                         <?php if ($user_test_drive_fullname) : ?>
                             <input type="text" name="user_test_drive_fullname" id="user_test_drive_fullname" class="form-control mt-2" value="<?= $user_test_drive_fullname ?>" readonly />
                         <?php else : ?>
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="pt-2 mt-2">
-                        <label for="user_test_drive_tel">Số điện thoại *</label>
+                        <label for="user_test_drive_tel">Số điện thoại</label>
                         <?php if ($user_test_drive_tel) : ?>
                             <input type="text" name="user_test_drive_tel" id="user_test_drive_tel" class="form-control mt-2" value="<?= $user_test_drive_tel ?>" readonly />
                         <?php else : ?>
@@ -94,7 +94,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 
     <?php
@@ -138,17 +137,18 @@
                     user_test_drive_time: {
                         required: true,
                     },
-                    user_fullname: {
+                    user_test_drive_fullname: {
                         required: true,
                         minlength: 3,
                         maxlength: 50,
                     },
-                    user_tel: {
+                    user_test_drive_tel: {
                         required: true,
                         minlength: 10,
                         maxlength: 15,
                     },
-                    user_email: {
+                    user_test_drive_email: {
+                        required: true,
                         email: true,
                         maxlength: 100,
                     },
@@ -163,17 +163,18 @@
                     user_test_drive_time: {
                         required: "Không được để trống",
                     },
-                    user_fullname: {
+                    user_test_drive_fullname: {
                         required: "Không được để trống",
                         minlength: "Tên quá ngắn",
                         maxlength: "Tên quá dài",
                     },
-                    user_tel: {
+                    user_test_drive_tel: {
                         required: "Không được để trống",
                         minlength: "Số điện thoại không hợp lệ",
                         maxlength: "Số điện thoại không hợp lệ",
                     },
-                    user_email: {
+                    user_test_drive_email: {
+                        required: "Không được để trống",
                         email: "Vui lòng nhập đúng định dạng email",
                         maxlength: "Email tối đa 100 kí tự",
                     },
@@ -199,7 +200,7 @@
         });
 
         // -------------- Ngăn chặn nhập kí tự chữ cái vào ô điện thoại --------------
-        document.getElementById("user_tel").addEventListener("keypress", function(e) {
+        document.getElementById("user_test_drive_tel").addEventListener("keypress", function(e) {
             var charCode = (e.which) ? e.which : event.keyCode;
             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
                 e.preventDefault();
