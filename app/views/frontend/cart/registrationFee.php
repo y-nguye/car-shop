@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/frontend/cart/cartPagesStyle.php' ?>
+    <?php include_once __DIR__ . '/../../resources/styles/styles.php'; ?>
+    <?php include_once __DIR__ . '/cartPagesStyles.php'; ?>
     <title>Tính toán chi phí</title>
 </head>
 
 <body>
 
     <?php
-    include_once 'app/views/resources/layouts/header.php';
+    include_once __DIR__ . '/../../resources/layouts/header.php'
     ?>
 
     <div class="container-lg pt-3 push-footer-down-page">
 
-        <h2 class="">Tính toán chi phí</h2>
+        <h2>Tính toán chi phí</h2>
 
         <hr>
 
@@ -100,11 +100,11 @@
 
 
     <?php
-    include_once 'app/views/resources/layouts/footer.php';
+    include_once __DIR__ . '/../../resources/layouts/footer.php';
     ?>
 
     <?php
-    include_once 'app/views/resources/script/script.php';
+    include_once __DIR__ . '/../../resources/script/script.php';
     ?>
 
     <script>

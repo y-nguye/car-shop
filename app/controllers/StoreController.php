@@ -18,7 +18,6 @@ class StoreController extends AccessController
         $data_all_car_by_car_ids_to_display_salling = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([48, 49, 54, 64]);
         $data_all_car_by_car_ids_to_display_four_newest = $DB['db_cars']->getAllDataWithSecondImgByFourNewUpdate();
 
-        // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
 
         include __DIR__ . "/../views/frontend/store/index.php";
@@ -28,8 +27,7 @@ class StoreController extends AccessController
 
     public function type($DB, $type)
     {
-        // Chuyển mảng thành chuỗi
-        $type = implode('', $type);
+        $type = $type['name'];
         $DB['db_cars']->connect();
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         $isExistType = false;
@@ -71,7 +69,6 @@ class StoreController extends AccessController
         $DB['db_car_fuel']->disconnect();
         $DB['db_car_producer']->disconnect();
 
-        // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/store/product.php";
 
@@ -96,7 +93,6 @@ class StoreController extends AccessController
                 'car_img_filename' => implode('', $data_car_img_filename),
             ];
 
-            // $this->addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename);
             $this->addToCart($carInfo);
 
             $_SESSION['from-registration-fee'] = true;
@@ -375,7 +371,7 @@ class StoreController extends AccessController
         }
     }
 
-    // ----------------------- Những phương thức private -----------------------
+    // ----------------------- Các phương thức private -----------------------
 
     private function getAllCarTypesForHeader($DB)
     {
@@ -397,7 +393,7 @@ class StoreController extends AccessController
             'car_name' => $carInfo['car_name'],
             'car_price' => $carInfo['car_price'],
             'car_describe' => $carInfo['car_describe'],
-            'car_img_filename' => $carInfo['car_imf_filename'],
+            'car_img_filename' => $carInfo['car_img_filename'],
         );
 
         $_SESSION['cart'] = $cart;

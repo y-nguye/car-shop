@@ -1,6 +1,5 @@
 <?php
 
 require 'vendor/autoload.php';
-
-include_once __DIR__ . '/app/models/index.php';
-include_once __DIR__ . '/routes/index.php';
+require __DIR__ . '/app/models/index.php';
+require __DIR__ . '/routes/index.php';

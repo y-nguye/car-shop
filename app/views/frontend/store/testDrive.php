@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/frontend/store/storePagesStyle.php' ?>
+    <?php include_once __DIR__ . '/../../resources/styles/styles.php'; ?>
+    <?php include_once __DIR__ . '/storePagesStyles.php'; ?>
     <title>Đăng ký lái thử</title>
 </head>
 
@@ -13,7 +13,7 @@
     <div id="overlay" class=""></div>
 
     <?php
-    include_once 'app/views/resources/layouts/header.php';
+    include_once __DIR__ . '/../../resources/layouts/header.php'
     ?>
 
     <div class="container-lg pt-3 push-footer-down-page">
@@ -99,11 +99,11 @@
     </div>
 
     <?php
-    include_once 'app/views/resources/layouts/footer.php';
+    include_once __DIR__ . '/../../resources/layouts/footer.php';
     ?>
 
     <?php
-    include_once 'app/views/resources/script/script.php';
+    include_once __DIR__ . '/../../resources/script/script.php';
     ?>
 
     <script>

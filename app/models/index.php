@@ -1,17 +1,17 @@
 <?php
 
-include_once 'app/models/DB_cars.php';
-include_once 'app/models/DB_car_seat.php';
-include_once 'app/models/DB_car_fuel.php';
-include_once 'app/models/DB_car_type.php';
-include_once 'app/models/DB_car_transmission.php';
-include_once 'app/models/DB_car_producer.php';
-include_once 'app/models/DB_car_img.php';
-include_once 'app/models/DB_user.php';
-include_once 'app/models/DB_user_province.php';
-include_once 'app/models/DB_user_deposit.php';
-include_once 'app/models/DB_user_test_drive.php';
-include_once 'app/models/DB_pay_method.php';
+include_once __DIR__ . '/DB_cars.php';
+include_once __DIR__ . '/DB_car_seat.php';
+include_once __DIR__ . '/DB_car_fuel.php';
+include_once __DIR__ . '/DB_car_type.php';
+include_once __DIR__ . '/DB_car_transmission.php';
+include_once __DIR__ . '/DB_car_producer.php';
+include_once __DIR__ . '/DB_car_img.php';
+include_once __DIR__ . '/DB_user.php';
+include_once __DIR__ . '/DB_user_province.php';
+include_once __DIR__ . '/DB_user_deposit.php';
+include_once __DIR__ . '/DB_user_test_drive.php';
+include_once __DIR__ . '/DB_pay_method.php';
 
 $db_cars = new CarsData;
 $db_car_seat = new CarSeatData;

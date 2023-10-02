@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/backend/deposit/depositPagesStyle.php'; ?>
+    <?php include_once __DIR__ . '/../../resources/styles/styles.php'; ?>
+    <?php include_once __DIR__ . '/testDrivePageStyle.php'; ?>
     <title>Danh sách lái thử</title>
 </head>
 
@@ -15,7 +15,7 @@
             <div class="col-3">
                 <?php
                 $item_select = "test-drive";
-                include_once 'app/views/backend/layout/sidebar.php';
+                include_once __DIR__ . '/../../resources/layouts/sidebar.php';
                 ?>
             </div>
 
@@ -43,16 +43,15 @@
                         </thead>
 
                         <tbody>
-                            <?php foreach ($data_user_test_drive as $value) { ?>
-                                <tr class="car_item_row">
+                            <?php foreach ($data_user_test_drive as $value) : ?>
+                                <tr>
                                     <td><?= $value['user_test_drive_id'] ?></td>
                                     <td><?= $value['user_test_drive_fullname'] ?></td>
                                     <td><?= $value['car_name'] ?></td>
                                     <td><?= $value['user_test_drive_day'] ?></td>
                                     <td><?= $value['user_test_drive_time'] ?></td>
-
                                 </tr>
-                            <?php } ?>
+                            <?php endforeach; ?>
                         </tbody>
 
                     </table>
@@ -63,11 +62,11 @@
     </div>
 
     <?php
-    include_once 'app/views/resources/layouts/footer.php';
+    include_once __DIR__ . '/../../resources/layouts/footer.php';
     ?>
 
     <?php
-    include_once 'app/views/resources/script/script.php';
+    include_once __DIR__ . '/../../resources/script/script.php';
     ?>
 
     <script>

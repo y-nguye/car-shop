@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/backend/product/productPagesStyle.php'; ?>
+    <?php include_once __DIR__ . '/../../resources/styles/styles.php'; ?>
+    <?php include_once __DIR__ . '/productPagesStyles.php'; ?>
     <title>Danh sách xe</title>
 </head>
 
@@ -16,7 +16,7 @@
 
                 <?php
                 $item_select = "product";
-                include_once 'app/views/backend/layout/sidebar.php';
+                include_once __DIR__ . '/../../resources/layouts/sidebar.php';
                 ?>
 
             </div>
@@ -97,11 +97,11 @@
     </div>
 
     <?php
-    include_once 'app/views/resources/layouts/footer.php';
+    include_once __DIR__ . '/../../resources/layouts/footer.php';
     ?>
 
     <?php
-    include_once 'app/views/resources/script/script.php';
+    include_once __DIR__ . '/../../resources/script/script.php';
     ?>
 
     <script>

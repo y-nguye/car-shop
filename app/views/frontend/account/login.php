@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once 'app/views/resources/styles/styles.php' ?>
-    <?php include_once 'app/views/frontend/account/accountPagesStyle.php' ?>
+    <?php include_once __DIR__ . '/../../resources/styles/styles.php'; ?>
+    <?php include_once __DIR__ . '/accountPagesStyles.php'; ?>
     <title>Đăng nhập</title>
 </head>
 
 <body>
     <?php
-    include_once 'app/views/resources/layouts/header.php';
+    include_once __DIR__ . '/../../resources/layouts/header.php'
     ?>
 
     <div class="container-lg text-center d-flex flex-column justify-content-center push-footer-down-page">
@@ -36,10 +36,11 @@
     </div>
 
     <?php
-    include_once 'app/views/resources/layouts/footer.php';
+    include_once __DIR__ . '/../../resources/layouts/footer.php';
     ?>
+
     <?php
-    include_once 'app/views/resources/script/script.php';
+    include_once __DIR__ . '/../../resources/script/script.php';
     ?>
 
     <script>
