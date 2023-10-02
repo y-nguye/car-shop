@@ -11,8 +11,7 @@ $sidebar_items = [
 ];
 
 ?>
-
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light sticky-top sidebar-custom">
+<div class="d-flex flex-column flex-shrink-0 p-3 sticky-top rounded-3 sidebar-custom">
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="/car-shop/assets/imgs/avt/<?php if (isset($_SESSION["user_avt"]) && $_SESSION["user_avt"]) echo $_SESSION["user_avt"];
@@ -40,5 +39,4 @@ $sidebar_items = [
         <?php endforeach ?>
 
     </ul>
-
 </div>

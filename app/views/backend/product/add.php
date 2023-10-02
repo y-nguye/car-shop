@@ -24,7 +24,7 @@
             <div class="col-9">
 
                 <form id="formAdd" name="formAdd" method="post" action="" enctype="multipart/form-data">
-                    <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
+                    <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
                         <div class="container-fluid ps-2">
                             <button type="button" class="btn btn-sm btn-go-back-header">
                                 <i class="bi bi-chevron-left"></i>
@@ -154,9 +154,9 @@
                         </div>
 
                         <div class="container text-center">
-                            <div id="image-preview-container" class="form-group mt-3">
-                                <div class="preview-img-container-item">
-                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="no-img" id="preview-img" class="preview-img" />
+                            <div id="preview-image-container" class="form-group mt-3">
+                                <div class="preview-image-container-item">
+                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="no-img" id="preview-img" class="preview-img preview-no-img" />
                                 </div>
                             </div>
                         </div>
@@ -189,7 +189,8 @@
 
         // -------------- Hiển thị hình ảnh ngay sau khi chọn ------------------
         const fileInput = document.getElementById('car_img_filename');
-        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const imagePreviewContainer = document.getElementById('preview-image-container');
+        const previewImg = document.querySelector('.preview-img');
 
         // Thêm sự kiện change cho thẻ input
         fileInput.addEventListener('change', function() {
@@ -208,7 +209,7 @@
 
                     image.src = e.target.result;
 
-                    imageContainerItem.classList.add('preview-img-container-item');
+                    imageContainerItem.classList.add('preview-image-container-item');
                     image.classList.add('preview-img');
 
                     if (i == 0) imageTitle.textContent = 'Hình đại diện';
@@ -221,6 +222,11 @@
                 reader.readAsDataURL(file);
             }
         });
+
+        // Sự kiện click vào ảnh preview
+        previewImg.addEventListener('click', function() {
+            fileInput.click();
+        })
 
         // -------------- Alert hiển thị khi bị lỗi thêm dữ liệu ------------------
         var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
@@ -255,6 +261,7 @@
         btnAdd.addEventListener("click", () => {
             formChanged = false;
         });
+
         // -------------- Nút "Quay lại" ------------------
         btnGoBack.addEventListener("click", () => {
             window.history.back();

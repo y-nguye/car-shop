@@ -25,7 +25,7 @@
         background-color: #dddddd !important;
     }
 
-    .preview-img-container-item {
+    .preview-image-container-item {
         width: 30%;
         display: inline-block;
         padding: 4px;
@@ -37,6 +37,10 @@
         border-radius: 10px;
         aspect-ratio: 16/9;
         object-fit: cover;
+    }
+
+    .preview-no-img {
+        cursor: pointer;
     }
 
     .container-validate {

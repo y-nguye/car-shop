@@ -23,7 +23,7 @@
 
             <div class="col-9">
 
-                <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
+                <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
                     <div class="container-fluid d-flex justify-content-start ps-2">
                         <button type="button" class="btn btn-sm btn-go-back-header">
                             <i class="bi bi-chevron-left"></i>

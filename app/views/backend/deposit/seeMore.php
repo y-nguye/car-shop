@@ -20,7 +20,7 @@
             </div>
 
             <div class="col-9">
-                <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
+                <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
                     <div class="container-fluid ps-2">
                         <button type="button" class="btn btn-sm btn-go-back-header">
                             <i class="bi bi-chevron-left"></i>
@@ -205,7 +205,7 @@
         const btnGoBackHeader = document.querySelector('.btn-go-back-header');
 
         btnGoBackHeader.addEventListener("click", () => {
-            window.history.back();
+            window.location = '/car-shop/admin/deposit';
         });
     </script>
 

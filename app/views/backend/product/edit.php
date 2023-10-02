@@ -25,7 +25,7 @@
 
                 <form id="formEdit" name="formEdit" method="post" action="" enctype="multipart/form-data">
 
-                    <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
+                    <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
 
                         <div class="container-fluid ps-2">
 

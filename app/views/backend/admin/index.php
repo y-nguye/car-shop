@@ -20,7 +20,7 @@
             </div>
 
             <div class="col-9">
-                <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
+                <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
                     <div class="container-fluid justify-content-start">
                         <span class="fs-5"><b>Trang chủ Admin</b></span>
                         <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
@@ -55,7 +55,6 @@
                         </a>
 
                     </div>
-
                 </div>
             </div>
         </div>
