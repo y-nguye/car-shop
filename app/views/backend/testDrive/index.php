@@ -59,7 +59,6 @@
             </div>
         </div>
     </div>
-    </div>
 
     <?php
     include_once __DIR__ . '/../../resources/layouts/footer.php';
@@ -76,6 +75,7 @@
                 order: [
                     [3, "desc"]
                 ],
+                pageLength: 50,
                 language: {
                     url: '/car-shop/assets/plugin/datatables-language/vi.json',
                 },

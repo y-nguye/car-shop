@@ -31,4 +31,17 @@
         aspect-ratio: 16/9;
         object-fit: cover;
     }
+
+    .col-w-50px {
+        max-width: 50px;
+    }
+
+    .col-w-70px {
+        max-width: 70px;
+    }
+
+    .green-check {
+        font-weight: 700;
+        color: #00d26a;
+    }
 </style>

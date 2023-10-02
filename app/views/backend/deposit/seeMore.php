@@ -21,8 +21,11 @@
 
             <div class="col-9">
                 <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
-                    <div class="container-fluid justify-content-start">
-                        <span class="fs-5"><b>Thông tin đơn yêu cầu</b></span>
+                    <div class="container-fluid ps-2">
+                        <button type="button" class="btn btn-sm btn-go-back-header">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <span class="fs-5 ms-2"><b>Thông tin đơn yêu cầu</b></span>
                         <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
                             <i class="bi bi-telephone"></i>
                             Liên hệ
@@ -189,7 +192,6 @@
             </div>
         </div>
     </div>
-    </div>
 
     <?php
     include_once __DIR__ . '/../../resources/layouts/footer.php';
@@ -200,7 +202,11 @@
     ?>
 
     <script>
+        const btnGoBackHeader = document.querySelector('.btn-go-back-header');
 
+        btnGoBackHeader.addEventListener("click", () => {
+            window.history.back();
+        });
     </script>
 
 </body>

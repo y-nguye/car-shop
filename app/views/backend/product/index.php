@@ -116,6 +116,7 @@
                     orderable: false,
                     searchable: false
                 }],
+                pageLength: 50,
                 language: {
                     url: '/car-shop/assets/plugin/datatables-language/vi.json',
                 },

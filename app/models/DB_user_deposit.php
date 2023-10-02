@@ -37,7 +37,6 @@ class UserDepositData extends DatabaseManager
         if ($this->result->num_rows > 0) {
             return $this->result->fetch_assoc();
         }
-        return null;
     }
 
     public function getAllDataByUserID($user_id)

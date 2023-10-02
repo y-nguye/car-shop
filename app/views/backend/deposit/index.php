@@ -22,7 +22,7 @@
             <div class="col-9">
                 <nav class="navbar mb-4 shadow-sm sticky-top rounded-3 toolbar-custom">
                     <div class="container-fluid justify-content-start">
-                        <span class="fs-5"><b>Các đơn yêu cầu</b></span>
+                        <span class="fs-5"><b>Danh sách các đơn yêu cầu đặt cọc</b></span>
                         <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
                             <i class="bi bi-telephone"></i>
                             Liên hệ
@@ -34,13 +34,13 @@
                     <table id="danhsach" class="table table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th>Mã</th>
+                                <th class="col-w-50px">Mã</th>
                                 <th>Tên khách hàng</th>
-                                <th>Mã xe</th>
+                                <th class="col-w-50px">Mã xe</th>
                                 <th>Phí đặt cọc</th>
-                                <th>Liên hệ</th>
-                                <th>Thanh toán</th>
-                                <th class="text-center">Xem</th>
+                                <th class="col-w-50px">Liên hệ</th>
+                                <th class="col-w-70px">Thanh toán</th>
+                                <th class="text-center col-w-50px">Xem</th>
                             </tr>
                         </thead>
 
@@ -54,26 +54,24 @@
                                     <td><?= $value['user_deposit_fullname'] ?></td>
                                     <td class="text-end"><?= $value['car_id'] ?></td>
                                     <td class="text-end"><?= number_format($value['user_deposit_price'], 0, '.', '.') . ' đ<br/>' ?></td>
-                                    <td class="text-center"><?php if ($value['user_deposit_is_contacted']) echo "✅";
-                                                            else echo "❌"; ?>
+                                    <td class="text-center"><?php if ($value['user_deposit_is_contacted']) echo '<i class="bi bi-check-circle-fill green-check"></i>';
+                                                            else echo ''; ?>
                                     </td>
-                                    <td class="text-center"><?php if ($value['user_deposit_is_payed']) echo "✅";
-                                                            else echo "❌"; ?></td>
+                                    <td class="text-center"><?php if ($value['user_deposit_is_payed']) echo '<i class="bi bi-check-circle-fill green-check"></i>';
+                                                            else echo ''; ?></td>
                                     <td class="text-center">
-
-                                        <a href="/car-shop/admin/deposit/see-more/<?= $value['user_deposit_id'] ?>" class="p-2"><i class="bi bi-eye"></i></a>
-
+                                        <a href="/car-shop/admin/deposit/see-more/<?= $value['user_deposit_id'] ?>" class="p-2">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
                                     </td>
 
                                 </tr>
                             <?php } ?>
                         </tbody>
-
                     </table>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <?php
@@ -86,13 +84,14 @@
 
     <script>
         $(function() {
-            $('#danhsach').DataTable({
+            var table = $('#danhsach').DataTable({
                 searching: true,
                 columnDefs: [{
                     targets: [6],
                     orderable: false,
                     searchable: false
                 }],
+                pageLength: 50,
                 language: {
                     url: '/car-shop/assets/plugin/datatables-language/vi.json',
                 },
