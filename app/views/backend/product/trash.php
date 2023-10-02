@@ -92,7 +92,7 @@
     </div>
 
     <?php
-    include_once 'app/views/frontend/layouts/footer.php';
+    include_once 'app/views/resources/layouts/footer.php';
     ?>
 
     <?php

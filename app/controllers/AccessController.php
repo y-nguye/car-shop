@@ -31,6 +31,7 @@ class AccessController
 
     public function notFound()
     {
+        http_response_code(404);
         include_once __DIR__ . "/../views/resources/notFound/index.php";
         die();
     }

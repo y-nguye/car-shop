@@ -12,7 +12,7 @@
 <body>
 
     <?php
-    include_once 'app/views/frontend/layouts/header.php';
+    include_once 'app/views/resources/layouts/header.php';
     ?>
     <div class="push-footer-down-page">
 
@@ -68,7 +68,7 @@
     </div>
 
     <?php
-    include_once 'app/views/frontend/layouts/footer.php';
+    include_once 'app/views/resources/layouts/footer.php';
     ?>
 
     <?php

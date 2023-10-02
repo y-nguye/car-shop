@@ -1,5 +1,5 @@
 <?php
-include_once 'app/views/frontend/layouts/footerStyles.php';
+include_once 'app/views/resources/layouts/footerStyles.php';
 ?>
 <div class="bg-light">
     <div class="container-lg footer-custom">

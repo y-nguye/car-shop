@@ -1,6 +1,6 @@
 <?php
 
-include_once 'app/views/backend/layout/sideBarStyle.php';
+include_once 'app/views/resources/layouts/sideBarStyle.php';
 
 $sidebar_items = [
     ["admin", "/car-shop/admin", "<i class=' bi bi-house-door me-2'></i> Trang chủ"],
@@ -31,13 +31,13 @@ $sidebar_items = [
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
 
-        <?php foreach ($sidebar_items as $item) { ?>
+        <?php foreach ($sidebar_items as $item) : ?>
             <li class="nav-item">
                 <a href="<?= $item[1] ?>" class="nav-link sidebar-item <?php if ($item[0] == $item_select) echo "active" ?>">
                     <?= $item[2] ?>
                 </a>
             </li>
-        <?php } ?>
+        <?php endforeach ?>
 
     </ul>
 

@@ -1,5 +1,5 @@
 <?php
-include_once 'app/views/frontend/layouts/headerStyles.php';
+include_once 'app/views/resources/layouts/headerStyles.php';
 ?>
 
 <div class="fixed-top blur-below-navbar"></div>
@@ -13,13 +13,13 @@ include_once 'app/views/frontend/layouts/headerStyles.php';
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-lg-0 navbar-list">
 
-                <?php foreach ($data_all_car_type as $data) { ?>
+                <?php foreach ($data_all_car_type as $data) : ?>
                     <?=
                     '<li class="nav-item ms-4">
                     <a class="nav-link text-dark" href="/car-shop/type-' . convertToSlug($data['car_type_name']) . '">' . $data['car_type_name'] . '</a>
                     </li>'
                     ?>
-                <?php } ?>
+                <?php endforeach; ?>
 
                 <li class="nav-item ms-auto me-4">
                     <a class="nav-link text-dark" href="/car-shop/service">Dịch vụ</a>

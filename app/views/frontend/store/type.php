@@ -11,7 +11,7 @@
 
 <body>
     <?php
-    include_once 'app/views/frontend/layouts/header.php';
+    include_once 'app/views/resources/layouts/header.php';
     ?>
 
     <div class="container-lg pt-3 pb-3 push-footer-down-page">
@@ -41,7 +41,7 @@
     </div>
 
     <?php
-    include_once 'app/views/frontend/layouts/footer.php';
+    include_once 'app/views/resources/layouts/footer.php';
     ?>
 
     <?php
