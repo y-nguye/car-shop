@@ -70,15 +70,13 @@
                                     <label for="" class="form-label">Dòng xe *</label>
                                     <select class="form-select" name="car_type_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                                         <option value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_type as $value) { ?>
-                                            <?php if ($value['car_type_id'] == $data_car['car_type_id']) { ?>
+                                        <?php foreach ($data_all_car_type as $value) : ?>
+                                            <?php if ($value['car_type_id'] == $data_car['car_type_id']) : ?>
                                                 <option selected value="<?= $value['car_type_id'] ?>"> <?= $value['car_type_name'] ?></option>
-                                            <?php } else { ?>
+                                            <?php else : ?>
                                                 <option value="<?= $value['car_type_id'] ?>"> <?= $value['car_type_name'] ?></option>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
+                                            <?php endif ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
 
@@ -89,15 +87,13 @@
                                     <label for="" class="form-label">Số chỗ ngồi *</label>
                                     <select class="form-select" name="car_seat_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                                         <option value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_seat as $value) { ?>
-                                            <?php if ($value['car_seat_id'] == $data_car['car_seat_id']) { ?>
+                                        <?php foreach ($data_all_car_seat as $value) : ?>
+                                            <?php if ($value['car_seat_id'] == $data_car['car_seat_id']) : ?>
                                                 <option selected value="<?= $value['car_seat_id'] ?>"> <?= $value['car_seat'] ?></option>
-                                            <?php } else { ?>
+                                            <?php else : ?>
                                                 <option value="<?= $value['car_seat_id'] ?>"> <?= $value['car_seat'] ?></option>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
+                                            <?php endif ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -107,15 +103,13 @@
                                     <label for="" class="form-label">Nhiên liệu</label>
                                     <select class="form-select" name="car_fuel_id">
                                         <option value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_fuel as $value) { ?>
-                                            <?php if ($value['car_fuel_id'] == $data_car['car_fuel_id']) { ?>
+                                        <?php foreach ($data_all_car_fuel as $value) : ?>
+                                            <?php if ($value['car_fuel_id'] == $data_car['car_fuel_id']) : ?>
                                                 <option selected value="<?= $value['car_fuel_id'] ?>"> <?= $value['car_fuel'] ?></option>
-                                            <?php } else { ?>
+                                            <?php else : ?>
                                                 <option value="<?= $value['car_fuel_id'] ?>"> <?= $value['car_fuel'] ?></option>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
+                                            <?php endif ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -145,15 +139,13 @@
                                     <label for="" class="form-label">Hãng sản xuất</label>
                                     <select class="form-select" name="car_producer_id">
                                         <option value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_producer as $value) { ?>
-                                            <?php if ($value['car_producer_id'] == $data_car['car_producer_id']) { ?>
+                                        <?php foreach ($data_all_car_producer as $value) : ?>
+                                            <?php if ($value['car_producer_id'] == $data_car['car_producer_id']) : ?>
                                                 <option selected value="<?= $value['car_producer_id'] ?>"> <?= $value['car_producer_name'] ?></option>
-                                            <?php } else { ?>
+                                            <?php else : ?>
                                                 <option value="<?= $value['car_producer_id'] ?>"> <?= $value['car_producer_name'] ?></option>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
+                                            <?php endif ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -163,15 +155,13 @@
                                     <label for="" class="form-label">Loại hộp số *</label>
                                     <select class="form-select" name="car_transmission_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                                         <option value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_transmission as $value) { ?>
-                                            <?php if ($value['car_transmission_id'] == $data_car['car_transmission_id']) { ?>
+                                        <?php foreach ($data_all_car_transmission as $value) : ?>
+                                            <?php if ($value['car_transmission_id'] == $data_car['car_transmission_id']) : ?>
                                                 <option selected value="<?= $value['car_transmission_id'] ?>"> <?= $value['car_transmission'] ?></option>
-                                            <?php } else { ?>
+                                            <?php else : ?>
                                                 <option value="<?= $value['car_transmission_id'] ?>"> <?= $value['car_transmission'] ?></option>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
+                                            <?php endif ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>

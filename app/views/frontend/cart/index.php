@@ -30,7 +30,7 @@
 
             <?php if (empty($cart)) : ?>
                 <div class="mt-3 mb-3">
-                    <a class="btn text-dark rounded-pill fs-5 ps-5 pe-5 bg-custom" href="/car-shop">Tiếp tục mua sắm</a>
+                    <a class="btn text-dark rounded-pill fs-5 ps-5 pe-5 bg-gray-light" href="/car-shop">Tiếp tục mua sắm</a>
                 </div>
             <?php endif ?>
 

@@ -20,10 +20,6 @@
         width: 8%;
     }
 
-    .shadow-text {
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
     .carousel-shadow-container {
         width: 100%;
         height: 100%;
@@ -107,7 +103,6 @@
 
     .support-img__support-page {
         width: 100%;
-        /* aspect-ratio: 16/9; */
         object-fit: cover;
     }
 
@@ -127,25 +122,10 @@
         object-fit: cover;
     }
 
-    .tooltip-inner {
-        background-color: red;
-        color: white;
-    }
-
     .toast-custom {
         top: 70px;
         left: 50%;
         transform: translateX(-50%);
-    }
-
-    .bs-tooltip-end .tooltip-arrow::before {
-        border-right-color: red;
-        -webkit-border-right-color: red;
-    }
-
-    .bs-tooltip-top .tooltip-arrow::before {
-        border-top-color: red;
-        -webkit-border-top-color: red;
     }
 
     .overlay {

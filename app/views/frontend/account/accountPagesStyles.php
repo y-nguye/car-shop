@@ -11,21 +11,6 @@
         cursor: pointer;
     }
 
-    .tooltip-inner {
-        background-color: red;
-        color: white;
-    }
-
-    .bs-tooltip-end .tooltip-arrow::before {
-        border-right-color: red;
-        -webkit-border-right-color: red;
-    }
-
-    .bs-tooltip-top .tooltip-arrow::before {
-        border-top-color: red;
-        -webkit-border-top-color: red;
-    }
-
     .avatar-container {
         width: 150px;
         position: relative;
@@ -80,7 +65,8 @@
 
     .btn-ok-update-avatar:hover,
     .btn-cancer-update-avatar:hover {
-        background-color: #e8e9ec;
+        /* background-color: #e8e9ec; */
+        background-color: var(--color-gray-light);
     }
 
     .img-car-deposit {

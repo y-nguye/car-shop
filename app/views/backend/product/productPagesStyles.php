@@ -22,7 +22,7 @@
     }
 
     .table-active {
-        background-color: #dddddd !important;
+        background-color: var(--color-gray-light) !important;
     }
 
     .preview-image-container-item {
@@ -45,26 +45,6 @@
 
     .container-validate {
         border: 1px solid red !important;
-    }
-
-    .tooltip-inner {
-        background-color: red;
-        color: white;
-    }
-
-    .bs-tooltip-end .tooltip-arrow::before {
-        border-right-color: red;
-        -webkit-border-right-color: red;
-    }
-
-    .bs-tooltip-top .tooltip-arrow::before {
-        border-top-color: red;
-        -webkit-border-top-color: red;
-    }
-
-    .bs-tooltip-bottom .tooltip-arrow::before {
-        border-bottom-color: red;
-        -webkit-border-bottom-color: red;
     }
 
     .ckeditor-invalidate {
