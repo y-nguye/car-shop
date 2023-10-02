@@ -1,10 +1,11 @@
 <?php
 session_start();
+include_once 'app/controllers/AccessController.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class StoreController
+class StoreController extends AccessController
 {
     private $emailSendName = "nhyd23021@cusc.ctu.edu.vn";
     private $emailSendPassword = "nguyeny@cu\$c";
@@ -44,9 +45,8 @@ class StoreController
         }
 
         if (!$isExistType) {
-            echo "404-error";
             $DB['db_cars']->disconnect();
-            die();
+            $this->notFound();
         }
 
         include __DIR__ . "/../views/frontend/store/type.php";
@@ -57,27 +57,13 @@ class StoreController
         $car_id = $vars['id'];
         $DB['db_cars']->connect();
         $data_car = $DB['db_cars']->getDataByID($car_id);
+        $DB['db_cars']->disconnect();
 
         // Kiểm soát truy cập
-        if (!$data_car) {
-            echo "404-error";
-            $DB['db_cars']->disconnect();
-            die();
-        }
+        $this->checkNull($data_car['car_id']);
 
         $DB['db_car_img']->connect();
-        $DB['db_car_type']->connect();
-        $DB['db_car_seat']->connect();
-        $DB['db_car_transmission']->connect();
-        $DB['db_car_fuel']->connect();
-        $DB['db_car_producer']->connect();
-
         $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($car_id);
-        $data_car_type = $DB['db_car_type']->getDataByID($data_car['car_type_id']);
-        $data_car_seat = $DB['db_car_seat']->getDataByID($data_car['car_seat_id']);
-        $data_car_transmission = $DB['db_car_transmission']->getDataByID($data_car['car_transmission_id']);
-        $data_car_fuel = $DB['db_car_fuel']->getDataByID($data_car['car_fuel_id']);
-        $data_car_producer = $DB['db_car_producer']->getDataByID($data_car['car_producer_id']);
 
         $DB['db_car_type']->disconnect();
         $DB['db_car_seat']->disconnect();
@@ -152,7 +138,7 @@ class StoreController
 
         // Nếu không có dữ liệu xe này
         if (!$data_car) {
-            echo "404-error";
+            $this->notFound();
             $DB['db_cars']->disconnect();
             die();
         }
@@ -436,10 +422,8 @@ class StoreController
             $mail->send();
 
             $_SESSION['test-drive-success'] = true;
-            // echo '<script>location.href = "/car-shop/cart/pay/mail-send-success"</script>';
         } catch (Exception $e) {
             $_SESSION['test-drive-success'] = false;
-            // echo '<script>location.href = "/car-shop/cart/pay/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
         }
     }
 

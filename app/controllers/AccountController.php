@@ -1,8 +1,8 @@
 <?php
-
 session_start();
+include_once 'app/controllers/AccessController.php';
 
-class AccountController
+class AccountController extends AccessController
 {
     public function index($DB)
     {
@@ -88,7 +88,7 @@ class AccountController
                     $DB['db_user']->disconnect();
                     echo '<script>location.href = "/car-shop/admin"</script>';
                 } else {
-                    echo '<script>location.href = "/car-shop/"</script>';
+                    echo '<script>window.history.back();</script>';
                 }
             } else {
                 // Đăng nhập thất bại
@@ -108,7 +108,7 @@ class AccountController
         unset($_SESSION["user_username"]);
         unset($_SESSION["user_avt"]);
         unset($_SESSION["user_is_admin"]);
-        echo '<script>location.href = "/car-shop"</script>';
+        echo '<script>window.history.back();</script>';
     }
 
     public function signup($DB)
@@ -358,7 +358,7 @@ class AccountController
             }
             $DB['db_user']->disconnect();
         } else {
-            echo "404-error";
+            $this->notFound();
         }
     }
 
@@ -375,7 +375,7 @@ class AccountController
             }
             $DB['db_user']->disconnect();
         } else {
-            echo "404-error";
+            $this->notFound();
         }
     }
 
@@ -397,7 +397,7 @@ class AccountController
 
             echo '<script>location.href = "/car-shop/account"</script>';
         } else {
-            echo "404-error";
+            $this->notFound();
         }
     }
 
@@ -415,7 +415,10 @@ class AccountController
             // Cập nhật lại session
             $_SESSION["user_avt"] = $data_user['user_avt'];
             $DB['db_user']->disconnect();
+
             echo '<script>location.href = "/car-shop/account"</script>';
+        } else {
+            $this->notFound();
         }
     }
 
@@ -425,18 +428,5 @@ class AccountController
         $data_all_car_type = $DB['db_car_type']->getAllData();
         $DB['db_car_type']->disconnect();
         return $data_all_car_type;
-    }
-
-    private function authentication()
-    {
-        if (!isset($_SESSION["logged"])) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-
-        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
     }
 }

@@ -76,19 +76,19 @@
                         <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Kiểu dáng</span>
-                                <span class="mt-2 p-1 fs-4"><?= $data_car_type['car_type_name'] ?></span>
+                                <span class="mt-2 p-1 fs-4"><?= $data_car['car_type_name'] ?></span>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Số chỗ ngồi</span>
-                                <span class="mt-2 p-1 fs-4"><?= $data_car_seat['car_seat'] ?></span>
+                                <span class="mt-2 p-1 fs-4"><?= $data_car['car_seat'] ?></span>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Loại hộp số</span>
-                                <span class="text-center p-1 mt-2 fs-4"><?= $data_car_transmission['car_transmission'] ?></span>
+                                <span class="text-center p-1 mt-2 fs-4"><?= $data_car['car_transmission'] ?></span>
                             </div>
                         </div>
                     </div>
@@ -99,20 +99,20 @@
                         <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Hãng sản xuất</span>
-                                <?php if (empty($data_car_producer['car_producer_name'])) : ?>
+                                <?php if (empty($data_car['car_producer_name'])) : ?>
                                     <span class="mt-2 p-1 fs-4">---</span>
                                 <?php else : ?>
-                                    <span class="mt-2 p-1 fs-4"><?= $data_car_producer['car_producer_name'] ?></span>
+                                    <span class="mt-2 p-1 fs-4"><?= $data_car['car_producer_name'] ?></span>
                                 <?php endif ?>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Nhiên liệu</span>
-                                <?php if (empty($data_car_producer['car_producer_name'])) : ?>
+                                <?php if (empty($data_car['car_producer_name'])) : ?>
                                     <span class="mt-2 p-1 fs-4">---</span>
                                 <?php else : ?>
-                                    <span class="mt-2 p-1 fs-4"><?= $data_car_fuel['car_fuel'] ?></span>
+                                    <span class="mt-2 p-1 fs-4"><?= $data_car['car_fuel'] ?></span>
                                 <?php endif ?>
                             </div>
                         </div>

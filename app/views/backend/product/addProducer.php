@@ -246,6 +246,8 @@
             checkboxItemsChecked.forEach(x => x.closest("tr").classList.add("table-active"));
         }
 
+
+        // ----------------------------- Validate -----------------------------------
         $(document).ready(function() {
             $('#formAddProducer').validate({
                 errorClass: "is-invalid",

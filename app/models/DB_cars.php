@@ -9,7 +9,30 @@ class CarsData extends DatabaseManager
     public function getDataByID($car_id)
     {
         if (!$car_id) return null;
-        $sql = "SELECT * FROM $this->table WHERE car_id = $car_id AND car_deleted = 0;";
+        $sql = "SELECT car.car_id,
+                car.car_name, 
+                car.car_price,
+                car.car_quantity,
+                car.car_engine,
+                car.car_describe,
+                car.car_detail_describe,
+                car.car_update_at,
+                car.car_deleted_at,
+                car_type.car_type_name,
+                car_producer.car_producer_name,
+                car_fuel.car_fuel,
+                car_transmission.car_transmission,
+                car_seat.car_seat,
+                MIN(car_img.car_img_filename) AS car_img_filename
+                FROM $this->table car
+                LEFT JOIN car_type ON car_type.car_type_id = car.car_type_id
+                LEFT JOIN car_seat ON car_seat.car_seat_id = car.car_seat_id
+                LEFT JOIN car_fuel ON car_fuel.car_fuel_id = car.car_fuel_id
+                LEFT JOIN car_producer ON car_producer.car_producer_id = car.car_producer_id
+                LEFT JOIN car_transmission ON car_transmission.car_transmission_id = car.car_transmission_id
+                LEFT JOIN car_img ON car_img.car_id = car.car_id
+                WHERE car.car_id = $car_id AND car.car_deleted = 0;";
+
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {

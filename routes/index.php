@@ -26,7 +26,9 @@ $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         http_response_code(404);
-        echo '404 - Not Found';
+        require 'app/controllers/AccessController.php';
+        $controller = new AccessController();
+        call_user_func([$controller, 'notFound']);
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];

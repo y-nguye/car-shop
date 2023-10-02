@@ -1,8 +1,8 @@
 <?php
-
 session_start();
+include_once 'app/controllers/AccessController.php';
 
-class DepositController
+class DepositController extends AccessController
 {
     public function index($DB)
     {
@@ -24,6 +24,8 @@ class DepositController
         $DB['db_user_deposit']->connect();
         $user_deposit = $DB['db_user_deposit']->getDataByID($user_deposit_id);
 
+        $this->checkNull($user_deposit['user_deposit_id']);
+
         include_once __DIR__ . "/../views/backend/deposit/seeMore.php";
 
         if (isset($_POST['btnUpdate'])) {
@@ -34,28 +36,6 @@ class DepositController
             $DB['db_user_deposit']->disconnect();
 
             echo '<script>location.href = "/car-shop/admin/deposit/see-more/' . $user_deposit_id . '"</script>';
-        }
-    }
-
-    private function authentication()
-    {
-        if (!isset($_SESSION["logged"])) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-
-        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-    }
-
-    private function authorization()
-    {
-        if (!$_SESSION["user_is_admin"]) {
-            echo '<script>location.href = "/car-shop/account"</script>';
-            die();
-            echo '404-page';
         }
     }
 }

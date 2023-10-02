@@ -1,11 +1,11 @@
 <?php
-
 session_start();
+include_once 'app/controllers/AccessController.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class CartController
+class CartController extends AccessController
 {
     private $emailSendName = "nhyd23021@cusc.ctu.edu.vn";
     private $emailSendPassword = "nguyeny@cu\$c";
@@ -23,7 +23,9 @@ class CartController
 
     public function delete($DB, $vars)
     {
-        unset($_SESSION['cart'][$vars['id']]);
+        $car_id = $vars['id'];
+        if (!isset($_SESSION['cart'][$car_id])) $this->notFound();
+        unset($_SESSION['cart'][$car_id]);
         echo '<script>location.href = "/car-shop/cart"</script>';
     }
 
@@ -33,10 +35,10 @@ class CartController
 
         // Không có sản phẩm trong giỏ hàng thì không truy cập được
         if (!isset($_SESSION['cart'][$car_id])) {
-            // Đưa vào 404-page
-            echo '404-error';
-            die();
+            $this->notFound();
         }
+
+        // $this->checkNull($user_deposit['user_deposit_id']);
 
         $DB['db_user_province']->connect();
         $data_all_user_province = $DB['db_user_province']->getAllData();
@@ -61,7 +63,7 @@ class CartController
     {
         $car_id = $vars['id'];
 
-        // Nếu không có thao tác nhấn nút "tiến hành đặt cọc" và validate không có lỗi thì fuckout and die
+        // Nếu không có thao tác nhấn nút "tiến hành đặt cọc" và validate không có lỗi thì trở về trang tính toán
         if (!isset($_POST['btnDeposits']) && !isset($_SESSION['errors'])) {
             echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
             die();
@@ -126,11 +128,8 @@ class CartController
     public function depositRequired($DB)
     {
         // Tránh truy cập trái phép
-        // Nếu không nhấn nút xác nhận đặt cọc thì die
-        if (!isset($_POST['btnPay'])) {
-            echo "404-error";
-            die();
-        }
+        // Nếu không nhấn nút xác nhận đặt cọc thì không vào được
+        if (!isset($_POST['btnPay'])) $this->notFound();
 
         $DB['db_cars']->connect();
         $DB['db_car_img']->connect();
@@ -365,7 +364,7 @@ class CartController
             include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
             unset($_SESSION['mail-send-success']);
         } else {
-            echo "Error 404";
+            $this->notFound();
         }
     }
     public function mailSendError($DB)
@@ -376,10 +375,9 @@ class CartController
             include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentError.php";
             unset($_SESSION['mail-send-success']);
         } else {
-            echo "Error 404";
+            $this->notFound();
         }
     }
-
 
     private function contentMailDepost($depositInfo)
     {

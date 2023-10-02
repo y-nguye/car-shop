@@ -1,8 +1,8 @@
 <?php
-
 session_start();
+include_once 'app/controllers/AccessController.php';
 
-class AdminController
+class AdminController extends AccessController
 {
     public function index($DB)
     {
@@ -11,27 +11,5 @@ class AdminController
 
         $lastName = strrchr($_SESSION['user_fullname'], ' ');
         include_once __DIR__ . "/../views/backend/admin/index.php";
-    }
-
-    private function authentication()
-    {
-        if (!isset($_SESSION["logged"])) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-
-        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-    }
-
-    private function authorization()
-    {
-        if (!$_SESSION["user_is_admin"]) {
-            echo '<script>location.href = "/car-shop/account"</script>';
-            die();
-            echo '404-page';
-        }
     }
 }

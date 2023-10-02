@@ -1,8 +1,8 @@
 <?php
-
 session_start();
+include_once 'app/controllers/AccessController.php';
 
-class ProductController
+class ProductController extends AccessController
 {
     public function index($DB)
     {
@@ -310,10 +310,7 @@ class ProductController
                         $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
                     };
                 };
-
-                echo "<script>
-                        showAlert('" . $errorMsg . "', 'danger');
-                    </script>";
+                echo "<script>showAlert('" . $errorMsg . "', 'danger');</script>";
             }
         }
     }
@@ -349,9 +346,7 @@ class ProductController
                         $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
                     };
                 };
-                echo "<script>
-                        showAlert('" . $errorMsg . "', 'danger');
-                    </script>";
+                echo "<script>showAlert('" . $errorMsg . "', 'danger');</script>";
             }
         }
 
@@ -378,15 +373,18 @@ class ProductController
         }
     }
 
-    public function edit($DB, $vars)
+    public function edit($DB, $var)
     {
         $this->authentication();
         $this->authorization();
 
-        $car_id = implode('', $vars);
+        $car_id = $var['id'];
 
         // Kết nối và lấy dữ liệu
         $DB['db_cars']->connect();
+        $data_car = $DB['db_cars']->getDataByID($car_id);
+        $this->checkNull($data_car);
+
         $DB['db_car_seat']->connect();
         $DB['db_car_fuel']->connect();
         $DB['db_car_type']->connect();
@@ -395,7 +393,6 @@ class ProductController
         $DB['db_car_img']->connect();
 
         // getData thì trả về mảng 1 chiều, getAllData thì trả về mảng 2 chiều
-        $data_car = $DB['db_cars']->getDataByID($car_id);
         $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($car_id);
         $data_all_car_seat = $DB['db_car_seat']->getAllData();
         $data_all_car_type = $DB['db_car_type']->getAllData();
@@ -667,17 +664,13 @@ class ProductController
 
                 echo '<script>location.href = "../"</script>';
             } else {
-
                 $errorMsg = '';
                 foreach ($errors as $fields) {
                     foreach ($fields as $field) {
                         $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
                     };
                 };
-
-                echo    "<script>
-                            showAlert('" . $errorMsg . "', 'danger');
-                        </script>";
+                echo "<script>showAlert('" . $errorMsg . "', 'danger');</script>";
             }
         }
     }
@@ -687,16 +680,18 @@ class ProductController
         $this->authentication();
         $this->authorization();
 
-        if (isset($_POST['btnDelete'])) {
-            $DB['db_cars']->connect();
-            $DB['db_cars']->softDelete($_POST['car_ids']);
+        // Kiểm soát truy cập
+        if (!isset($_POST['btnDelete'])) $this->notFound();
 
-            foreach ($_POST['car_ids'] as $car_id) {
-                if (isset($_SESSION['cart'][$car_id])) unset($_SESSION['cart'][$car_id]);
-            }
-            echo '<script>location.href = "./"</script>';
-            $DB['db_cars']->disconnect();
+        $DB['db_cars']->connect();
+        $DB['db_cars']->softDelete($_POST['car_ids']);
+
+        // Xoá sản phẩm trong giỏ hàng
+        foreach ($_POST['car_ids'] as $car_id) {
+            if (isset($_SESSION['cart'][$car_id])) unset($_SESSION['cart'][$car_id]);
         }
+        echo '<script>location.href = "./"</script>';
+        $DB['db_cars']->disconnect();
     }
 
     public function trash($DB)
@@ -712,50 +707,22 @@ class ProductController
 
     public function restore($DB)
     {
-        $this->authentication();
-        $this->authorization();
+        if (!isset($_POST['btnRestore'])) $this->notFound();
 
-        if (isset($_POST['btnRestore'])) {
-            $DB['db_cars']->connect();
-            $DB['db_cars']->restore($_POST['car_ids']);
-            echo '<script>location.href = "./"</script>';
-            $DB['db_cars']->disconnect();
-        }
+        $DB['db_cars']->connect();
+        $DB['db_cars']->restore($_POST['car_ids']);
+        echo '<script>location.href = "./"</script>';
+        $DB['db_cars']->disconnect();
     }
 
     public function forceDelete($DB)
     {
-        $this->authentication();
-        $this->authorization();
+        if (!isset($_POST['btnForceDelete'])) $this->notFound();
 
         $uploadDir = __DIR__ . '/../../assets/uploads/';
-        if (isset($_POST['btnForceDelete'])) {
-            $DB['db_cars']->connect();
-            $DB['db_cars']->forceDelete($_POST['car_ids'], $uploadDir);
-            echo '<script>location.href = "./"</script>';
-            $DB['db_cars']->disconnect();
-        }
-    }
-
-    private function authentication()
-    {
-        if (!isset($_SESSION["logged"])) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-
-        if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
-            die();
-        }
-    }
-
-    private function authorization()
-    {
-        if (!$_SESSION["user_is_admin"]) {
-            echo '<script>location.href = "/car-shop/account"</script>';
-            die();
-            echo '404-page';
-        }
+        $DB['db_cars']->connect();
+        $DB['db_cars']->forceDelete($_POST['car_ids'], $uploadDir);
+        echo '<script>location.href = "./"</script>';
+        $DB['db_cars']->disconnect();
     }
 }
