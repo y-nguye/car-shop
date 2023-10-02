@@ -50,4 +50,35 @@ class TestDriveData extends DatabaseManager
         }
         return $data;
     }
+
+    public function setData(
+        $user_test_drive_day,
+        $user_test_drive_time,
+        $user_test_drive_where,
+        $user_test_drive_fullname,
+        $user_test_drive_tel,
+        $user_test_drive_email,
+        $car_id
+    ) {
+        $sql = "INSERT INTO $this->table
+                (user_test_drive_id,
+                user_test_drive_day,
+                user_test_drive_time,
+                user_test_drive_where,
+                user_test_drive_fullname,
+                user_test_drive_tel,
+                user_test_drive_email,
+                car_id)
+            VALUES (
+                null,
+                '$user_test_drive_day',
+                '$user_test_drive_time',
+                '$user_test_drive_where',
+                '$user_test_drive_fullname',
+                '$user_test_drive_tel',
+                '$user_test_drive_email',
+                $car_id);";
+
+        $this->execute($sql);
+    }
 }

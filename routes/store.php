@@ -9,5 +9,5 @@ return function (RouteCollector $r) {
     $r->addRoute('GET', '/service', 'StoreController@service');
     $r->addRoute('GET', '/support', 'StoreController@support');
     $r->addRoute(['GET', 'POST'], '/test-drive/{id:\d+}', 'StoreController@testDrive');
-    $r->addRoute(['GET', 'POST'], '/test-drive/register/{id:\d+}', 'StoreController@testDriveRegisterpRequired');
+    $r->addRoute(['GET', 'POST'], '/test-drive/register', 'StoreController@testDriveRegisterpRequired');
 };

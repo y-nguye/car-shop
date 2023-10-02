@@ -39,7 +39,7 @@
 
             <div class="col-4">
                 <div id="liveAlertPlaceholder" class="text-start"></div>
-                <form id="formSignUpTestDrive" method="post" action="/car-shop/test-drive/register/<?= $data_car['car_id'] ?>">
+                <form id="formSignUpTestDrive" method="post" action="/car-shop/test-drive/register">
                     <div class="pt-2">
                         <label for="user_province_id" class="text-dark m-0">Địa điểm lái thử</label>
                         <select name="user_province_id" id="user_province_id" class="form-select mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
@@ -87,9 +87,11 @@
                         <?php endif; ?>
                     </div>
 
+                    <input type="hidden" name="car_id" value="<?= $data_car['car_id'] ?>" />
+
                     <div class="mt-4 d-flex  align-items-center justify-content-between">
                         <label for="checkbox-have-driver-license" style="user-select: none;"><input type="checkbox" id="checkbox-have-driver-license" class="form-check-input me-1" /> Tôi đã có giấy phép lái xe ô tô </label>
-                        <button type="submit" name="btnSignUpTestDrive" class="btn btn-primary btn-sign-up-test-drive disabled">Đăng ký</button>
+                        <button type="submit" name="btnTestDriveRegister" class="btn btn-primary btn-test-drive-register disabled">Đăng ký</button>
                     </div>
                 </form>
             </div>
@@ -112,7 +114,7 @@
         const userEmail = document.getElementById('user_test_drive_email');
 
         const checkboxHaveDriverLicense = document.getElementById('checkbox-have-driver-license');
-        const btnSignUpTestDrive = document.querySelector('.btn-sign-up-test-drive');
+        const btnTestDriveRegister = document.querySelector('.btn-test-drive-register');
 
         $(document).ready(function() {
             $('#formSignUpTestDrive').validate({
@@ -129,7 +131,7 @@
                 },
                 rules: {
                     user_province_id: {
-                        required: true,
+                        // required: true,
                     },
                     user_test_drive_day: {
                         required: true,
@@ -190,13 +192,13 @@
             userTel.setAttribute("readonly", "");
             userEmail.setAttribute("readonly", "");
 
-            btnSignupTestDrive.classList.add("disabled");
+            btnTestDriveRegister.classList.add("disabled");
         }
 
         // -------------- Kích hoạt nút Đăng ký khi đã chọn có bằng lái --------------
         checkboxHaveDriverLicense.addEventListener('change', function() {
-            if (this.checked) btnSignUpTestDrive.classList.remove('disabled');
-            else btnSignUpTestDrive.classList.add('disabled');
+            if (this.checked) btnTestDriveRegister.classList.remove('disabled');
+            else btnTestDriveRegister.classList.add('disabled');
         });
 
         // -------------- Ngăn chặn nhập kí tự chữ cái vào ô điện thoại --------------

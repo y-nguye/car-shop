@@ -85,16 +85,19 @@ class StoreController extends AccessController
 
         if (isset($_POST['btnRegistrationFee'])) {
 
-            $car_id = $_POST['car_id'];
-            $car_name = $_POST['car_name'];
-            $car_price = $_POST['car_price'];
-            $car_describe = $_POST['car_describe'];
-
             $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
-            $car_img_filename = implode('', $data_car_img_filename);
             $DB['db_car_img']->disconnect();
 
-            $this->addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename);
+            $carInfo = [
+                'car_id' => $_POST['car_id'],
+                'car_name' => $_POST['car_name'],
+                'car_price' => $_POST['car_price'],
+                'car_describe' => $_POST['car_describe'],
+                'car_img_filename' => implode('', $data_car_img_filename),
+            ];
+
+            // $this->addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename);
+            $this->addToCart($carInfo);
 
             $_SESSION['from-registration-fee'] = true;
             echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
@@ -102,16 +105,18 @@ class StoreController extends AccessController
 
         if (isset($_POST['btnAddCarToCart'])) {
 
-            $car_id = $_POST['car_id'];
-            $car_name = $_POST['car_name'];
-            $car_price = $_POST['car_price'];
-            $car_describe = $_POST['car_describe'];
-
             $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
-            $car_img_filename = implode('', $data_car_img_filename);
             $DB['db_car_img']->disconnect();
 
-            $this->addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename);
+            $carInfo = [
+                'car_id' => $_POST['car_id'],
+                'car_name' => $_POST['car_name'],
+                'car_price' => $_POST['car_price'],
+                'car_describe' => $_POST['car_describe'],
+                'car_img_filename' => implode('', $data_car_img_filename),
+            ];
+
+            $this->addToCart($carInfo);
 
             echo '<script>location.href = "/car-shop/product/' . $car_id . '"</script>';
         }
@@ -135,19 +140,16 @@ class StoreController extends AccessController
 
         $DB['db_cars']->connect();
         $data_car = $DB['db_cars']->getDataByID($car_id);
+        $DB['db_cars']->disconnect();
 
         // Nếu không có dữ liệu xe này
-        if (!$data_car) {
-            $this->notFound();
-            $DB['db_cars']->disconnect();
-            die();
-        }
+        $this->checkNull($data_car['car_id']);
 
-        $DB['db_user_province']->connect();
         $DB['db_car_img']->connect();
+        $DB['db_user_province']->connect();
 
-        $data_all_user_province = $DB['db_user_province']->getAllData();
         $data_car_img_filename = $DB['db_car_img']->getFirstDataByCarID($car_id);
+        $data_all_user_province = $DB['db_user_province']->getAllData();
 
         $user_test_drive_fullname = null;
         $user_test_drive_tel = null;
@@ -168,26 +170,27 @@ class StoreController extends AccessController
             unset($_SESSION['errors']);
         }
 
-        $DB['db_cars']->disconnect();
         $DB['db_car_img']->disconnect();
+        $DB['db_user_province']->disconnect();
     }
 
-    public function testDriveRegisterpRequired($DB, $vars)
+    public function testDriveRegisterpRequired($DB)
     {
-        $car_id = $vars['id'];
-
-        $DB['db_cars']->connect();
-        $data_car = $DB['db_cars']->getDataByID($car_id);
-        $DB['db_cars']->disconnect();
+        if (!isset($_POST['btnTestDriveRegister'])) $this->notFound();
 
         date_default_timezone_set('Asia/Ho_Chi_Minh');
 
+        $DB['db_cars']->connect();
         $DB['db_user_province']->connect();
-        $data_user_province_name = $DB['db_user_province']->getDataByID($_POST['user_province_id']);
-        $DB['db_user_province']->disconnect();
-        $user_test_drive_where = 'Showroom ';
-        $data_user_province_name != null && $user_test_drive_where .= $data_user_province_name["user_province_name"];
 
+        $car_id = $_POST['car_id'];
+        $data_car = $DB['db_cars']->getDataByID($car_id);
+        $data_user_province_where = $DB['db_user_province']->getDataByID($_POST['user_province_id']);
+
+        $DB['db_cars']->disconnect();
+        $DB['db_user_province']->disconnect();
+
+        $user_test_drive_where = $data_user_province_where['user_province_name'];
         $user_test_drive_day = $_POST['user_test_drive_day'];
         $user_test_drive_time = $_POST['user_test_drive_time'];
         $user_test_drive_fullname = $_POST['user_test_drive_fullname'];
@@ -328,6 +331,8 @@ class StoreController extends AccessController
 
         if (empty($errors)) {
 
+            $user_test_drive_where = 'Showroom ' . $user_test_drive_where;
+
             // Gửi yêu cầu đến database
             $DB['db_user_test_drive']->connect();
             $DB['db_user_test_drive']->setData(
@@ -339,8 +344,8 @@ class StoreController extends AccessController
                 $user_test_drive_email,
                 $car_id
             );
+
             $user_test_drive_id = $DB['db_user_test_drive']->id;
-            $DB['db_user_test_drive']->disconnect();
 
             $userTestDriveInfo = [
                 'user_test_drive_id' => $user_test_drive_id,
@@ -353,6 +358,9 @@ class StoreController extends AccessController
             ];
 
             $this->sendMailTestDriveRequired($userTestDriveInfo);
+
+            $DB['db_user_test_drive']->disconnect();
+
             echo '<script>location.href = "/car-shop/product/' . $car_id . '"</script>';
         } else {
             $errorMsg = '';
@@ -362,9 +370,12 @@ class StoreController extends AccessController
                 };
             };
             $_SESSION['errors'] = $errorMsg;
+
             echo '<script>location.href = "/car-shop/test-drive/' . $car_id . '"</script>';
         }
     }
+
+    // ----------------------- Những phương thức private -----------------------
 
     private function getAllCarTypesForHeader($DB)
     {
@@ -374,19 +385,19 @@ class StoreController extends AccessController
         return $data_all_car_type;
     }
 
-    private function addToCart($car_id, $car_name, $car_price, $car_describe, $car_img_filename)
+    private function addToCart($carInfo)
     {
         $cart = [];
         if (isset($_SESSION['cart'])) {
             $cart = $_SESSION['cart'];
         }
 
-        $cart[$car_id] = array(
-            'car_id' => $car_id,
-            'car_name' => $car_name,
-            'car_price' => $car_price,
-            'car_describe' => $car_describe,
-            'car_img_filename' => $car_img_filename,
+        $cart[$carInfo['car_id']] = array(
+            'car_id' => $carInfo['car_id'],
+            'car_name' => $carInfo['car_name'],
+            'car_price' => $carInfo['car_price'],
+            'car_describe' => $carInfo['car_describe'],
+            'car_img_filename' => $carInfo['car_imf_filename'],
         );
 
         $_SESSION['cart'] = $cart;
