@@ -108,7 +108,7 @@ class ProductController extends AccessController
                     'msg' => 'Vui lòng nhập giá sản phẩm',
                 ];
             }
-            // Rule: isNumber
+            // Rule: is_number
             elseif (!is_numeric($car_price)) {
                 $errors['car_price'][] = [
                     'rule' => 'is_number',
@@ -126,7 +126,7 @@ class ProductController extends AccessController
                     'msg' => 'Giá sản phẩm phải tối thiểu 7 số nguyên',
                 ];
             }
-            // Rule: maxlength 10 - lấy phần nguyên
+            // Rule: maxlength 12 - lấy phần nguyên
             elseif (strlen(((int)$car_price)) > 12) {
                 $errors['car_price'][] = [
                     'rule' => 'maxlength',
@@ -147,7 +147,7 @@ class ProductController extends AccessController
                     'msg' => 'Vui lòng nhập số lượng',
                 ];
             }
-            // Rule: isNumber
+            // Rule: is_number
             elseif (!is_numeric($car_quantity)) {
                 $errors['car_quantity'][] = [
                     'rule' => 'is_number',
@@ -156,7 +156,7 @@ class ProductController extends AccessController
                     'msg' => 'Số lượng phải là dạng số nguyên',
                 ];
             }
-            // Rule: isNumber integer
+            // Rule: is_number integer
             elseif (($car_quantity - intval($car_quantity) != 0)) {
                 $errors['car_quantity'][] = [
                     'rule' => 'is_number',
@@ -228,7 +228,7 @@ class ProductController extends AccessController
                     'msg' => 'Mô tả ngắn sản phẩm phải tối thiểu 10 kí tự',
                 ];
             }
-            // Rule: maxlength 10
+            // Rule: maxlength 200
             else if (strlen($car_describe) > 200) {
                 $errors['car_describe'][] = [
                     'rule' => 'maxlength',
@@ -248,7 +248,7 @@ class ProductController extends AccessController
                     'msg' => 'Vui lòng nhập mô tả chi tiết',
                 ];
             }
-            // Rule: minlength 10
+            // Rule: minlength 100
             else if (strlen($car_detail_describe) < 100) {
                 $errors['car_detail_describe'][] = [
                     'rule' => 'minlength',
@@ -257,7 +257,7 @@ class ProductController extends AccessController
                     'msg' => 'Mô tả chi tiết sản phẩm phải tối thiểu 100 kí tự',
                 ];
             }
-            // Rule: maxlength 10
+            // Rule: maxlength 5000
             else if (strlen($car_detail_describe) > 5000) {
                 $errors['car_detail_describe'][] = [
                     'rule' => 'maxlength',
@@ -325,19 +325,20 @@ class ProductController extends AccessController
         include __DIR__ . "/../views/backend/product/addProducer.php";
 
         if (isset($_POST['btnAddProducer'])) {
+            $car_producer_name = $_POST['car_producer_name'];
             // Validation phía server
             $errors = [];
-            // Rule: maxlength 100
-            if (strlen($car_name) > 100) {
-                $errors['car_name'][] = [
+            // Rule: maxlength 50
+            if (strlen($car_producer_name) > 50) {
+                $errors['car_producer_name'][] = [
                     'rule' => 'maxlength',
-                    'rule_value' => 100,
-                    'value' => $car_name,
+                    'rule_value' => 50,
+                    'value' => $car_producer_name,
                     'msg' => 'Tên quá dài',
                 ];
             }
             if (empty($errors)) {
-                $DB['db_car_producer']->setData($_POST['car_producer_name']);
+                $DB['db_car_producer']->setData($car_producer_name);
                 echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
             } else {
                 $errorMsg = '';
@@ -429,7 +430,7 @@ class ProductController extends AccessController
                     'msg' => 'Vui lòng nhập tên sản phẩm',
                 ];
             }
-            // Rule: minlength 2
+            // Rule: minlength 3
             else if (strlen($car_name) < 3) {
                 $errors['car_name'][] = [
                     'rule' => 'minlength',
@@ -439,7 +440,7 @@ class ProductController extends AccessController
                 ];
             }
             // Rule: maxlength 100
-            else if (strlen($car_name) > 50) {
+            else if (strlen($car_name) > 100) {
                 $errors['car_name'][] = [
                     'rule' => 'maxlength',
                     'rule_value' => 100,
@@ -471,7 +472,7 @@ class ProductController extends AccessController
                     'msg' => 'Vui lòng nhập giá sản phẩm',
                 ];
             }
-            // Rule: isNumber
+            // Rule: is_number
             elseif (!is_numeric($car_price)) {
                 $errors['car_price'][] = [
                     'rule' => 'is_number',
@@ -489,7 +490,7 @@ class ProductController extends AccessController
                     'msg' => 'Giá sản phẩm phải tối thiểu 7 số nguyên',
                 ];
             }
-            // Rule: maxlength 10 - lấy phần nguyên
+            // Rule: maxlength 12 - lấy phần nguyên
             elseif (strlen(((int)$car_price)) > 12) {
                 $errors['car_price'][] = [
                     'rule' => 'maxlength',
@@ -498,7 +499,6 @@ class ProductController extends AccessController
                     'msg' => 'Giá sản phẩm chỉ tối đa 12 số nguyên',
                 ];
             }
-
 
             // 4. Kiểm tra ô số lượng
             // Rule: required
@@ -510,7 +510,7 @@ class ProductController extends AccessController
                     'msg' => 'Vui lòng nhập số lượng',
                 ];
             }
-            // Rule: isNumber
+            // Rule: is_number
             elseif (!is_numeric($car_quantity)) {
                 $errors['car_quantity'][] = [
                     'rule' => 'is_number',
@@ -519,7 +519,7 @@ class ProductController extends AccessController
                     'msg' => 'Số lượng phải là dạng số nguyên',
                 ];
             }
-            // Rule: isNumber integer
+            // Rule: is_number integer
             elseif (($car_quantity - intval($car_quantity) != 0)) {
                 $errors['car_quantity'][] = [
                     'rule' => 'is_number',
@@ -591,7 +591,7 @@ class ProductController extends AccessController
                     'msg' => 'Mô tả ngắn sản phẩm phải tối thiểu 10 kí tự',
                 ];
             }
-            // Rule: maxlength 10
+            // Rule: maxlength 200
             else if (strlen($car_describe) > 200) {
                 $errors['car_describe'][] = [
                     'rule' => 'maxlength',
@@ -611,7 +611,7 @@ class ProductController extends AccessController
                     'msg' => 'Vui lòng nhập mô tả chi tiết',
                 ];
             }
-            // Rule: minlength 10
+            // Rule: minlength 100
             else if (strlen($car_detail_describe) < 100) {
                 $errors['car_detail_describe'][] = [
                     'rule' => 'minlength',

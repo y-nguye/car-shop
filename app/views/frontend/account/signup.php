@@ -22,11 +22,11 @@
                 <div id="liveAlertPlaceholder" class="text-start"></div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" name="user_fullname" class="form-control" id="user_fullname" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
+                    <input type="text" name="user_fullname" class="form-control remove-space-first" id="user_fullname" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                     <label for="user_fullname">Tên đầy đủ</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" name="user_tel" class="form-control" id="user_tel" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
+                    <input type="number" name="user_tel" class="form-control remove-space-first" id="user_tel" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                     <label for="user_tel">Số điện thoại</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -39,19 +39,19 @@
                     <label for="" class="form-label">Nơi đăng kí xe</label>
                 </div>
                 <div class="form-floating mb-3 text-start">
-                    <input type="email" name="user_email" class="form-control" id="user_email" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
+                    <input type="email" name="user_email" class="form-control remove-space-first" id="user_email" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                     <label for="user_email">Email</label>
                 </div>
                 <div class="form-floating mb-3 text-start">
-                    <input type="text" name="user_username" class="form-control" id="user_username" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
+                    <input type="text" name="user_username" class="form-control remove-space-first" id="user_username" placeholder="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                     <label for="user_username">Tên đăng nhập</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" name="user_password" class="form-control" id="user_password" placeholder="Password" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
+                    <input type="password" name="user_password" class="form-control remove-space-first" id="user_password" placeholder="Password" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                     <label for="user_password">Mật khẩu</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" name="user_password_confirm" class="form-control" id="user_password_confirm" placeholder="Password" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
+                    <input type="password" name="user_password_confirm" class="form-control remove-space-first" id="user_password_confirm" placeholder="Password" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                     <label for="user_password_confirm">Nhập lại mật khẩu</label>
                 </div>
                 <button type="submit" name="signupBtn" class="btn btn-secondary p-3">Đăng kí</button>
@@ -69,6 +69,28 @@
     ?>
 
     <script>
+        // -------------- Alert hiển thị khi bị lỗi thêm dữ liệu ------------------
+        var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+
+        function showAlert(message, type) {
+            var wrapper = document.createElement('div');
+            wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+            alertPlaceholder.appendChild(wrapper);
+        }
+
+        //-------------- Loại bỏ dấu cách đầu tiên khi nhập liệu --------------
+        const inputRemoveSpaceFirstNodelist = document.querySelectorAll('.remove-space-first');
+
+        inputRemoveSpaceFirstNodelist.forEach(x => {
+            x.addEventListener('input', function() {
+                let inputValue = this.value;
+                // Loại bỏ dấu cách ở đầu chuỗi
+                inputValue = inputValue.trimStart();
+                // Đặt lại giá trị của input thành chuỗi đã được xử lý
+                this.value = inputValue;
+            });
+        })
+
         $(document).ready(function() {
             $('#formSignup').validate({
                 errorClass: "is-invalid",
@@ -166,23 +188,6 @@
                 }
             });
         });
-
-        // -------------- Ngăn chặn nhập kí tự chữ cái vào ô điện thoại --------------
-        document.getElementById("user_tel").addEventListener("keypress", function(e) {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                e.preventDefault();
-            }
-        });
-
-        // -------------- Alert hiển thị khi bị lỗi thêm dữ liệu ------------------
-        var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
-
-        function showAlert(message, type) {
-            var wrapper = document.createElement('div');
-            wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-            alertPlaceholder.appendChild(wrapper);
-        }
     </script>
 
 </body>

@@ -36,6 +36,12 @@
         text-decoration: underline;
     } */
 
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
     .fs-7 {
         font-size: 14px;
     }

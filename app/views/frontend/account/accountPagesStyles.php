@@ -78,6 +78,11 @@
         bottom: 0;
     }
 
+    .btn-ok-update-avatar:hover,
+    .btn-cancer-update-avatar:hover {
+        background-color: #e8e9ec;
+    }
+
     .img-car-deposit {
         width: 150px;
         aspect-ratio: 16/9;
@@ -86,5 +91,37 @@
 
     .min-width-250px {
         min-width: 250px;
+    }
+
+    .container-deposit-list {
+        /* border: 1px solid #cbcccd; */
+        height: 560px;
+        overflow-y: auto;
+    }
+
+    /* Hiển thị thanh cuộn mặc định */
+    ::-webkit-scrollbar {
+        width: 10px;
+        /* Đặt chiều rộng thanh cuộn */
+    }
+
+    /* Tùy chỉnh màu nền và đường viền cho thanh cuộn */
+    ::-webkit-scrollbar-thumb {
+        background-color: #cbcccd;
+        /* Màu nền của thanh cuộn */
+        border-radius: 5px;
+        /* Đường viền cong */
+    }
+
+    /* Ẩn thanh cuộn khi không sử dụng */
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+        /* Màu nền của thanh cuộn khi đưa chuột lên */
+    }
+
+    /* Ẩn thanh cuộn khi không sử dụng */
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+        /* Màu nền của vùng chứa thanh cuộn */
     }
 </style>

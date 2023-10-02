@@ -34,7 +34,7 @@
                     <table id="danhsach" class="table table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th class="col-w-50px">Mã</th>
+                                <th>Mã</th>
                                 <th>Tên khách hàng</th>
                                 <th class="col-w-50px">Mã xe</th>
                                 <th>Phí đặt cọc</th>

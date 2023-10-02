@@ -127,17 +127,16 @@
                                 <div class="form-group">
                                     <label for="car_price" class="form-label">Giá xe *</label>
                                     <div class="input-group">
-                                        <input type="text" name="car_price" id="car_price" class="form-control remove-space-first" value="<?= $data_car['car_price']  ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                                        <input type="number" name="car_price" id="car_price" class="form-control remove-space-first" value="<?= $data_car['car_price'] ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                         <span class="input-group-text">VNĐ</span>
                                     </div>
                                 </div>
                             </div>
 
-
                             <div class="col-2">
                                 <div class="form-group">
                                     <label for="car_quantity" class="form-label">Số lượng *</label>
-                                    <input type="text" name="car_quantity" id="car_quantity" class="form-control remove-space-first" value="<?= $data_car['car_quantity'] ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                                    <input type="number" name="car_quantity" id="car_quantity" class="form-control remove-space-first" value="<?= $data_car['car_quantity'] ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                 </div>
                             </div>
 
@@ -193,10 +192,10 @@
                         </div>
 
                         <div class="container text-center">
-                            <div id="image-preview-container" class="form-group mt-3">
+                            <div id="preview-image-containe" class="form-group mt-3">
                                 <?php foreach ($data_all_car_img as $index => $img) : ?>
                                     <?php if ($img['car_img_filename'] != NULL) : ?>
-                                        <div class="preview-img-container-item">
+                                        <div class="preview-image-container-item">
                                             <img src="/car-shop/assets/uploads/<?= $img['car_img_filename'] ?>" alt="preview-img" class="preview-img" />
                                             <?php if ($index == 0) : ?>
                                                 <span>Hình đại diện</span>
@@ -236,7 +235,7 @@
 
         // -------------- Hiển thị hình ảnh ngay sau khi chọn ------------------
         const fileInput = document.getElementById('car_img_filename');
-        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const imagePreviewContainer = document.getElementById('preview-image-containe');
 
         // Thêm sự kiện change cho thẻ input
         fileInput.addEventListener('change', function() {
@@ -255,7 +254,7 @@
 
                     image.src = e.target.result;
 
-                    imageContainerItem.classList.add('preview-img-container-item');
+                    imageContainerItem.classList.add('preview-image-container-item');
                     image.classList.add('preview-img');
 
                     if (i == 0) imageTitle.textContent = 'Ảnh đại diện';
@@ -315,7 +314,7 @@
         });
 
         // -------------- Nút "Trở về đầu trang" ------------------
-        document.getElementById("backToTop").addEventListener("click", function(event) {
+        document.getElementById("backToTop").addEventListener("click", () => {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth" // Cuộn mượt
@@ -334,11 +333,10 @@
             }
         });
 
-
         //-------------- Loại bỏ dấu cách đầu tiên khi nhập liệu --------------
-        const inputElementNodelist = document.querySelectorAll('.remove-space-first');
+        const inputRemoveSpaceFirstNodelist = document.querySelectorAll('.remove-space-first');
 
-        inputElementNodelist.forEach(x => {
+        inputRemoveSpaceFirstNodelist.forEach(x => {
             x.addEventListener('input', function() {
                 let inputValue = this.value;
                 // Loại bỏ dấu cách ở đầu chuỗi
@@ -362,9 +360,9 @@
                         $('#cke_car_detail_describe').attr("data-bs-original-title", error.text());
                         var tooltip = new bootstrap.Tooltip($('#cke_car_detail_describe'));
                     };
+                    formChanged = true;
                 },
                 success: function(element) {
-                    console.log(element);
                     element.removeAttr("data-bs-original-title");
                     if (element.attr("id") == "car_detail_describe-error") {
                         $('#cke_car_detail_describe').removeClass('ckeditor-invalidate');
@@ -388,7 +386,7 @@
                     car_price: {
                         required: true,
                         minlength: 7,
-                        maxlength: 15,
+                        maxlength: 12,
                     },
                     car_quantity: {
                         required: true,
@@ -428,7 +426,7 @@
                     car_price: {
                         required: 'Không được để trống',
                         minlength: 'Tối thiểu 7 kí tự',
-                        maxlength: 'Tối đa 15 kí tự',
+                        maxlength: 'Tối đa 12 kí tự',
                     },
                     car_quantity: {
                         required: 'Không được để trống',

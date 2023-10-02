@@ -62,9 +62,9 @@
                                     <label for="" class="form-label">Dòng xe *</label>
                                     <select class="form-select" name="car_type_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                                         <option selected value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_type as $value) { ?>
+                                        <?php foreach ($data_all_car_type as $value) : ?>
                                             <option value="<?= $value['car_type_id'] ?>"> <?= $value['car_type_name'] ?></option>
-                                        <?php } ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -74,9 +74,9 @@
                                     <label for="" class="form-label">Số chỗ ngồi *</label>
                                     <select class="form-select" name="car_seat_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                                         <option selected value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_seat as $value) { ?>
+                                        <?php foreach ($data_all_car_seat as $value) : ?>
                                             <option value="<?= $value['car_seat_id'] ?>"> <?= $value['car_seat'] ?></option>
-                                        <?php } ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -86,9 +86,9 @@
                                     <label for="" class="form-label">Nhiên liệu</label>
                                     <select class="form-select" name="car_fuel_id">
                                         <option selected value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_fuel as $value) { ?>
+                                        <?php foreach ($data_all_car_fuel as $value) : ?>
                                             <option value="<?= $value['car_fuel_id'] ?>"> <?= $value['car_fuel'] ?></option>
-                                        <?php } ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                                 <div class="form-group">
                                     <label for="car_price" class="form-label">Giá xe *</label>
                                     <div class="input-group">
-                                        <input type="text" name="car_price" id="car_price" class="form-control remove-space-first" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                                        <input type="number" name="car_price" id="car_price" class="form-control remove-space-first" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                         <span class="input-group-text">VNĐ</span>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                             <div class="col-2">
                                 <div class="form-group">
                                     <label for="car_quantity" class="form-label">Số lượng *</label>
-                                    <input type="text" name="car_quantity" id="car_quantity" class="form-control remove-space-first" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
+                                    <input type="number" name="car_quantity" id="car_quantity" class="form-control remove-space-first" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                 </div>
                             </div>
 
@@ -118,9 +118,9 @@
                                     <label for="" class="form-label">Hãng sản xuất</label>
                                     <select class="form-select" name="car_producer_id">
                                         <option selected value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_producer as $value) { ?>
+                                        <?php foreach ($data_all_car_producer as $value) : ?>
                                             <option value="<?= $value['car_producer_id'] ?>"> <?= $value['car_producer_name'] ?></option>
-                                        <?php } ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -130,9 +130,9 @@
                                     <label for="" class="form-label">Loại hộp số *</label>
                                     <select class="form-select" name="car_transmission_id" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                                         <option selected value="">---Chọn---</option>
-                                        <?php foreach ($data_all_car_transmission as $value) { ?>
+                                        <?php foreach ($data_all_car_transmission as $value) : ?>
                                             <option value="<?= $value['car_transmission_id'] ?>"> <?= $value['car_transmission'] ?></option>
-                                        <?php } ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -324,6 +324,7 @@
                         $('#cke_car_detail_describe').attr("data-bs-original-title", error.text());
                         var tooltip = new bootstrap.Tooltip($('#cke_car_detail_describe'));
                     };
+                    formChanged = true;
                 },
                 success: function(element) {
                     console.log(element);
@@ -390,7 +391,7 @@
                     car_price: {
                         required: 'Không được để trống',
                         minlength: 'Tối thiểu 7 kí tự',
-                        maxlength: 'Tối đa 15 kí tự',
+                        maxlength: 'Tối đa 12 kí tự',
                     },
                     car_quantity: {
                         required: 'Không được để trống',

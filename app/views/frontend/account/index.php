@@ -51,8 +51,8 @@
                                                                                                                                 else echo "no-avt.jpg" ?>" alt="">
                                 <div class="rounded-circle d-flex align-items-center justify-content-center avatar-edit"><i class="bi bi-camera fs-1 text-white"></i></div>
                                 <div class="update-button-group">
-                                    <button type="submit" name="btnOkUpdateAvatar" class="btn btn-outline-secondary btn-ok-update-avatar"><i class="bi bi-check2"></i></i></button>
-                                    <button type="button" class="btn btn-outline-secondary btn-cancer-update-avatar"><i class="bi bi-x-lg"></i></button>
+                                    <button type="submit" name="btnOkUpdateAvatar" class="btn btn-ok-update-avatar"><i class="bi bi-check2"></i></i></button>
+                                    <button type="button" class="btn btn-cancer-update-avatar"><i class="bi bi-x-lg"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -160,7 +160,6 @@
             const selectedFile = avatarInput.files[0];
             console.log(selectedFile);
             if (selectedFile) {
-                console.log('Hello');
                 // Kiểm tra xem người dùng đã chọn ảnh chưa
                 const reader = new FileReader();
 

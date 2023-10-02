@@ -38,7 +38,6 @@
 
                 <div class="p-2">
 
-                    <div id="liveAlertPlaceholder"></div>
 
                     <form id="formAddProducer" name="formAddProducer" method="post" action="">
                         <div class="row">
@@ -70,7 +69,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div id="liveAlertPlaceholder"></div>
                             </div>
 
                             <div class="col-7">
@@ -154,7 +153,7 @@
 
         // -------------- Nút "Quay lại" ------------------
         btnGoBackHeader.addEventListener("click", () => {
-            window.history.back();
+            window.location = '/car-shop/admin/product/add';
         });
 
         //-------------- Loại bỏ dấu cách đầu tiên khi nhập liệu --------------
@@ -169,6 +168,7 @@
                 this.value = inputValue;
             });
         })
+
         // ---------------------------------------------------------------------
 
         const btnDelete = document.querySelector('.btn-delete');
