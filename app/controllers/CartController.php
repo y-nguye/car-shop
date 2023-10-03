@@ -38,8 +38,6 @@ class CartController extends AccessController
             $this->notFound();
         }
 
-        // $this->checkNull($user_deposit['user_deposit_id']);
-
         $DB['db_user_province']->connect();
         $data_all_user_province = $DB['db_user_province']->getAllData();
 
@@ -59,7 +57,7 @@ class CartController extends AccessController
         }
     }
 
-    public function pay($DB, $vars)
+    public function deposit($DB, $vars)
     {
         $car_id = $vars['id'];
 
@@ -113,7 +111,7 @@ class CartController extends AccessController
 
         // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-        include __DIR__ . "/../views/frontend/cart/pay.php";
+        include __DIR__ . "/../views/frontend/cart/deposit.php";
 
         // Validate: báo lỗi
         if (isset($_SESSION['errors'])) {
@@ -310,7 +308,7 @@ class CartController extends AccessController
 
             $_SESSION['errors'] = $errorMsg;
             // Quay về báo lỗi
-            echo '<script>location.href = "/car-shop/cart/pay/' . $car_id . '"</script>';
+            echo '<script>location.href = "/car-shop/cart/deposit/' . $car_id . '"</script>';
         }
     }
 
@@ -349,11 +347,11 @@ class CartController extends AccessController
             $_SESSION['mail-send-success'] = true;
             // Xoá khỏi giỏ hàng
             unset($_SESSION['cart'][$car_id]);
-            echo '<script>location.href = "/car-shop/cart/pay/mail-send-success"</script>';
+            echo '<script>location.href = "/car-shop/cart/deposit/mail-send-success"</script>';
         } catch (Exception $e) {
             // Kiểm soát truy cập 
             $_SESSION['mail-send-success'] = false;
-            echo '<script>location.href = "/car-shop/cart/pay/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
+            echo '<script>location.href = "/car-shop/cart/deposit/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
         }
     }
 

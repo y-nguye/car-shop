@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once __DIR__ . '/../../resources/styles/styles.php'; ?>
     <?php include_once __DIR__ . '/cartPagesStyles.php'; ?>
-    <title>Thanh toán</title>
+    <title>Yêu cầu đặt cọc</title>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
 
     <div class="container-lg pt-3 push-footer-down-page">
         <div class="d-flex align-items-center justify-content-between">
-            <h2 class="mb-0">Thanh toán</h2>
+            <h2 class="mb-0">Yêu cầu đặt cọc</h2>
             <div id="spinner" class="spinner-border visually-hidden" role="status"></div>
         </div>
         <hr>
@@ -40,7 +40,7 @@
 
             <div class="col-4">
 
-                <form name="formPay" id="formPay" method="post" action="/car-shop/cart/pay/deposit-required">
+                <form name="formPay" id="formPay" method="post" action="/car-shop/cart/deposit/deposit-required">
                     <div id="liveAlertPlaceholder" class="text-start"></div>
 
                     <div class="pt-2">

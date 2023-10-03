@@ -36,7 +36,7 @@
             </div>
 
             <div class="col-4">
-                <form method="post" action="/car-shop/cart/pay/<?= $car_id ?>">
+                <form method="post" action="/car-shop/cart/deposit/<?= $car_id ?>">
                     <div class="pt-2">
                         <div class="mb-4 d-flex align-items-center justify-content-between text-secondary">
                             <h6 class="m-0">Giá tính phí trước bạ</h6>
