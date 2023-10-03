@@ -50,4 +50,9 @@
     .ckeditor-invalidate {
         border-color: red !important;
     }
+
+    .spinner-custom {
+        top: 50vh;
+        left: 50%;
+    }
 </style>

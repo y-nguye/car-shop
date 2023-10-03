@@ -6,4 +6,9 @@
         background-color: rgba(255, 255, 255, 0.75);
         top: 5px;
     }
+
+    .spinner-custom {
+        top: 50vh;
+        left: 50%;
+    }
 </style>

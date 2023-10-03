@@ -21,7 +21,7 @@
 
             </div>
 
-            <div class="col-9">
+            <div class="col-9 position-relative">
 
                 <form name="formCarTrash" method="post" action="">
                     <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
@@ -40,7 +40,9 @@
                         </div>
                     </nav>
 
-                    <div class="p-2">
+                    <div id="spinner" class="spinner-border position-absolute spinner-custom" role="status"></div>
+
+                    <div id="container-danhsach" class="p-2 invisible">
                         <table id="danhsach" class="table table-hover table-bordered">
                             <thead>
                                 <tr>
@@ -138,6 +140,15 @@
             trashCarsForm.action = '/car-shop/admin/product/trash/force-delete';
             trashCarsForm.submit();
         });
+
+        // ----------------------- Loadings ------------------------------
+        const danhSach = document.getElementById('container-danhsach');
+        const spinner = document.getElementById('spinner');
+
+        setTimeout(function() {
+            danhSach.classList.remove('invisible');
+            spinner.classList.add('invisible');
+        }, 200)
 
         // ----------------------------- Xử lý các sự kiện checkbox -----------------------------------
 

@@ -44,4 +44,9 @@
         font-weight: 700;
         color: #00d26a;
     }
+
+    .spinner-custom {
+        top: 50vh;
+        left: 50%;
+    }
 </style>

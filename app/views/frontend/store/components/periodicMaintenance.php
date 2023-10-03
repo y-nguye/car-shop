@@ -19,12 +19,12 @@
             trong khi quy trình bảo dưỡng thông thường phải mất đến 150 phút.
         </p>
         <div class="d-flex align-items-center justify-content-between">
-            <img src="assets/imgs/repair-services/auto-repair.jpg" alt="repair-services-1" class="rounded-3 periodic-maintenance-img-1__service-page">
-            <img src="assets/imgs/repair-services/auto-repair-2.jpg" alt="repair-services-1" class="rounded-3 periodic-maintenance-img-1__service-page">
+            <img src="/car-shop/assets/imgs/repair-services/auto-repair.jpg" alt="repair-services-1" class="rounded-3 periodic-maintenance-img-1__service-page">
+            <img src="/car-shop/assets/imgs/repair-services/auto-repair-2.jpg" alt="repair-services-1" class="rounded-3 periodic-maintenance-img-1__service-page">
         </div>
     </div>
     <div class="col-4">
-        <img src="assets/imgs/repair-services/frame-maintenance.png" alt="repair-services-1" class="rounded-3 periodic-maintenance-services-img-2__service-page">
+        <img src="/car-shop/assets/imgs/repair-services/frame-maintenance.png" alt="repair-services-1" class="rounded-3 periodic-maintenance-services-img-2__service-page">
 
     </div>
 </div>

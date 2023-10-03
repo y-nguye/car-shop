@@ -1,6 +1,6 @@
 <?php
 
-include_once 'app/views/resources/layouts/sideBarStyle.php';
+include_once __DIR__ . '/sideBarStyle.php';
 
 $sidebar_items = [
     ["admin", "/car-shop/admin", "<i class=' bi bi-house-door me-2'></i> Trang chủ"],

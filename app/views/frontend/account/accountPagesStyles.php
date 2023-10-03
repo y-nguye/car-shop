@@ -81,7 +81,7 @@
 
     .container-deposit-list {
         /* border: 1px solid #cbcccd; */
-        height: 560px;
+        height: 56vh;
         overflow-y: auto;
     }
 

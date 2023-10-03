@@ -21,7 +21,7 @@
 
             </div>
 
-            <div class="col-9">
+            <div class="col-9 position-relative">
 
                 <form name="formListCars" method="post" action="">
 
@@ -44,7 +44,10 @@
                         </div>
                     </nav>
 
-                    <div class="p-2">
+                    <div id="spinner" class="spinner-border position-absolute spinner-custom" role="status"></div>
+
+                    <div id="container-danhsach" class="p-2 invisible">
+
                         <table id="danhsach" class="table table-hover table-bordered">
                             <thead>
                                 <tr>
@@ -154,8 +157,16 @@
             carsForm.submit();
         });
 
-        // ----------------------------- Xử lý các sự kiện checkbox -----------------------------------
+        // ----------------------- Loadings ------------------------------
+        const danhSach = document.getElementById('container-danhsach');
+        const spinner = document.getElementById('spinner');
 
+        setTimeout(function() {
+            danhSach.classList.remove('invisible');
+            spinner.classList.add('invisible');
+        }, 200)
+
+        // ----------------------------- Xử lý các sự kiện checkbox -----------------------------------
         checkboxAll.addEventListener('change', function() {
             var isCheckedAll = this.checked;
             checkboxItems.forEach((x) => {
