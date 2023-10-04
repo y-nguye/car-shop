@@ -39,7 +39,7 @@
                     <div class="col-3">
                         <form name="formAvatar" method="post" action="/car-shop/account/edit-avatar" enctype="multipart/form-data">
                             <input type="file" name="user_avt" id="avatarInput" style="display: none;" accept="image/*" />
-                            <div class="avatar-container rounded-circle ms-3">
+                            <div class="avatar-container rounded-circle">
                                 <?php if ($user_avt && $user_avt && file_exists(__DIR__ . '/../../../../assets/imgs/avt/' . $user_avt)) : ?>
                                     <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/<?= $user_avt ?>" alt="avt">
                                 <?php else : ?>
@@ -53,33 +53,38 @@
                             </div>
                         </form>
 
-                        <h5 class="mt-3 ms-3"><?= $user_fullname ?></h5>
-                        <div class="mt-3 ms-3">
+                        <h5 class="mt-3"><?= $user_fullname ?></h5>
+                        <div class="mt-3">
                             <span><?= $user_email ?></span>
                         </div>
-                        <div class="ms-3 text-secondary">
+                        <div class="text-secondary">
                             <span>@<?= $user_username ?></span>
                         </div>
-                        <a class="mt-1 nav-link" href="/car-shop/account">
-                            Thông tin cá nhân
-                        </a>
-                        <?php if ($user_is_admin) : ?>
-                            <a class="nav-link" href="/car-shop/admin">
-                                Truy cập hệ thống quản trị
+                        <div class="mt-3">
+                            <a class="mt-1" href="/car-shop/account">
+                                Thông tin cá nhân
                             </a>
+                        </div>
+                        <?php if ($user_is_admin) : ?>
+                            <div class="mt-2">
+                                <a href="/car-shop/admin">
+                                    Truy cập hệ thống quản trị
+                                </a>
+                            </div>
                         <?php endif; ?>
+                        </a>
                     </div>
                     <div class="col-7">
 
-                        <h3 class="ms-3">Các đơn yêu cầu đặt cọc</h3>
-                        <div class="ms-3 mb-3">
+                        <h3>Các đơn yêu cầu đặt cọc</h3>
+                        <div class="mb-3">
                             <span>Danh sách các đơn yêu cầu đặt cọc của bạn, nếu có sai sót hãy liên hệ với chúng tôi</span>
                         </div>
                         <div class="rounded-3 container-deposit-list">
                             <div class="d-flex flex-wrap">
 
                                 <?php if (empty($data_all_user_deposit)) : ?>
-                                    <div class="m-3 w-100">
+                                    <div class="w-100">
                                         <div class="p-2 d-flex justify-content-center bg-light">
                                             <span class="fs-3">Hiện bạn chưa có đơn yêu cầu nào...</span>
                                         </div>
@@ -87,7 +92,7 @@
                                 <?php endif; ?>
 
                                 <?php foreach ($data_all_user_deposit as $index => $data) : ?>
-                                    <div class="ms-3 me-3 bg-light shadow-sm rounded w-100 <?php if (count($data_all_user_deposit) - 1 != $index) echo "mb-3" ?>">
+                                    <div class="me-2 bg-light shadow-sm rounded w-100 <?php if (count($data_all_user_deposit) - 1 != $index) echo "mb-3" ?>">
                                         <div class="p-2 d-flex align-items-center">
                                             <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                                                 <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">

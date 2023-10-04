@@ -20,7 +20,7 @@
             <div class="col-7">
                 <div class="d-flex">
 
-                    <div id="carouselIndicators" class="carousel slide rounded-3" data-bs-ride="true">
+                    <div id="carouselIndicators" class="carousel slide rounded-3 slide__product-page" data-bs-ride="true">
                         <div class="carousel-indicators">
                             <?php foreach ($data_all_car_img as $index => $data) : ?>
                                 <?php if (($index == 0)) continue ?>

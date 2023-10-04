@@ -24,7 +24,8 @@
         z-index: 9999;
     }
 
-    .slide__home-page {
+    .slide__home-page,
+    .slide__product-page {
         width: var(--width-standard);
         overflow: hidden;
     }
@@ -96,7 +97,7 @@
 
     .carousel-item-custom__product-page img {
         width: 100%;
-        aspect-ratio: 16/9;
+        aspect-ratio: 5/3;
         object-fit: cover;
     }
 

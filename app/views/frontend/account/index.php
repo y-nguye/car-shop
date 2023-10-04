@@ -35,8 +35,8 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-1"></div>
                 </div>
-                <div class="col-1"></div>
             </div>
         </div>
         <div class="container-lg">
@@ -46,7 +46,7 @@
                     <div class="col-3">
                         <form name="formAvatar" method="post" action="/car-shop/account/edit-avatar" enctype="multipart/form-data">
                             <input type="file" name="user_avt" id="avatarInput" style="display: none;" accept="image/*" />
-                            <div class="avatar-container rounded-circle ms-3">
+                            <div class="avatar-container rounded-circle">
                                 <?php if ($user_avt && file_exists(__DIR__ . '/../../../../assets/imgs/avt/' . $user_avt)) : ?>
                                     <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/<?= $user_avt ?>" alt="avt">
                                 <?php else : ?>
@@ -59,46 +59,60 @@
                                 </div>
                             </div>
                         </form>
-                        <h5 class="mt-3 ms-3"><?= $user_fullname ?></h5>
-                        <div class="mt-3 ms-3">
+                        <h5 class="mt-3"><?= $user_fullname ?></h5>
+                        <div class="mt-3">
                             <span><?= $user_email ?></span>
                         </div>
-                        <div class="ms-3 text-secondary">
+                        <div class="text-secondary">
                             <span>@<?= $user_username ?></span>
                         </div>
-                        <a class="mt-1 nav-link" href="/car-shop/account/deposit">
-                            Xem đơn hàng
-                        </a>
-                        <?php if ($user_is_admin) : ?>
-                            <a class="nav-link" href="/car-shop/admin">
-                                Truy cập hệ thống quản trị
+                        <div class="mt-3">
+                            <a href="/car-shop/account/deposit">
+                                Xem đơn hàng
                             </a>
+                        </div>
+                        <?php if ($user_is_admin) : ?>
+                            <div class="mt-2">
+                                <a href="/car-shop/admin">
+                                    Truy cập hệ thống quản trị
+                                </a>
+                            </div>
                         <?php endif; ?>
                     </div>
                     <div class="col-7 body-content-info">
 
-                        <h3 class="ms-3">Thông tin cá nhân</h3>
-                        <div class="ms-3 mb-3">
+                        <h3>Thông tin cá nhân</h3>
+                        <div class="mb-3 text-justify">
                             <span>Quản lý thông tin cá nhân của bạn, bao gồm số điện thoại và địa chỉ email mà chúng tôi có thể sử dụng để liên hệ với bạn.</span>
                         </div>
                         <form name="editForm" class="edit-form" method="post" action="/car-shop/account/edit-person-info">
                             <div class="d-flex flex-wrap">
-                                <?php foreach ($user_info as $i => $data) : ?>
-                                    <div class="col-6">
-                                        <div class="m-3 bg-light shadow-sm rounded card-custom" style="aspect-ratio: 4/1;">
-                                            <div class="rounded-3 p-3 pt-2 text-dark">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <h5 class="text-dark m-0"><?= $user_info[$i][0] ?></h5>
-                                                    <?= $user_info[$i][1] ?>
-                                                </div>
-                                                <input type="text" name="<?= $user_info[$i][2] ?>" class="form-control mt-3" value="<?= $user_info[$i][3] ?>" />
+                                <div class="col-6">
+                                    <div class="me-2 mb-2 bg-light shadow-sm rounded card-custom">
+                                        <div class=" rounded-3 p-3 pt-2 text-dark">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <h5 class="text-dark m-0">Tên đầy đủ</h5>
+                                                <i class="bi bi-person text-primary fs-4"></i>
                                             </div>
+                                            <input type="text" name="user_fullname" class="form-control mt-3" value="<?= $user_fullname ?>" />
                                         </div>
                                     </div>
-                                <?php endforeach; ?>
+                                </div>
 
                                 <div class="col-6">
-                                    <div class="m-3 bg-light shadow-sm rounded card-custom" style="aspect-ratio: 4/1;">
+                                    <div class="ms-2 mb-2 bg-light shadow-sm rounded card-custom">
+                                        <div class="rounded-3 p-3 pt-2 text-dark">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <h5 class="text-dark m-0">Số điện thoại</h5>
+                                                <i class="bi bi-telephone text-primary fs-4"></i>
+                                            </div>
+                                            <input type="text" name="user_tel" class="form-control mt-3" value="<?= $user_tel ?>" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="me-2 mt-2 bg-light shadow-sm rounded card-custom">
                                         <div class="rounded-3 p-3 pt-2 text-dark">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <h5 class="text-dark m-0">Nơi đăng kí xe</h5>

@@ -18,11 +18,10 @@
 
     <div class="container-lg pt-3 push-footer-down-page">
         <div class="d-flex align-items-center justify-content-between">
-            <h2 class="mb-0">Yêu cầu đặt cọc</h2>
+            <h2 class="mb-0">Thông tin khách hàng đặt cọc</h2>
             <div id="spinner" class="spinner-border visually-hidden" role="status"></div>
         </div>
         <hr>
-
 
         <div class="row">
 

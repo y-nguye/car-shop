@@ -3,7 +3,7 @@ include_once 'app/views/resources/layouts/footerStyles.php';
 ?>
 <div class="bg-light">
     <div class="container-lg footer-custom">
-        <div class="pt-4 fs-7 text-secondary">
+        <div class="pt-3 fs-7 text-secondary">
             <span>Hotline: 0772884452</span>
             <span> - </span>
             <span>Email: nguyenhoaiy7@gmail.com</span>

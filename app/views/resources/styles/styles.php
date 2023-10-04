@@ -69,9 +69,10 @@
         --font-family: 'Saira Semi Condensed', sans-serif;
         --width-standard: 1320px;
         --navbar-height: 60px;
-        --footer-height: 150px;
+        --footer-height: 130px;
         --footer-margin-top: 20px;
 
+        --color-light: #f5f5f7;
         --color-gray-light: #ededed;
     }
 
@@ -110,6 +111,10 @@
 
     .text-justify {
         text-align: justify;
+    }
+
+    .bg-light {
+        background-color: var(--color-light) !important;
     }
 
     .bg-gray-light {

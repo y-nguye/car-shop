@@ -46,18 +46,19 @@
                     </div>
 
                     <div class="pt-2 mt-2">
-                        <label for="user_province_id" class="text-dark m-0">Nơi đăng ký xe</label>
+                        <label for="user_province_id" class="text-dark m-0">Nơi đăng ký xe - Thuế trước bạ</label>
                         <select name="user_province_id" id="user_province_id" class="form-select mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                             <option selected value="">---Chọn---</option>
-                            <?php foreach ($data_all_user_province as $value) { ?>
-                                <option value="<?= $value['user_registration_fee'] ?>"> <?= $value['user_province_name'] ?></option>
-                            <?php } ?>
+                            <?php foreach ($data_all_user_province as $data) : ?>
+                                <option value="<?= $data['user_registration_fee'] ?>"> <?= $data['user_province_name'] ?></option>
+                            <?php endforeach; ?>
                         </select>
+                        <div id="user_registration_fee_display" class="text-end pb-3 fs-5">---</div>
                     </div>
 
-                    <div class="pt-2 mt-2">
-                        <label for="road_traffic_fees" class="text-dark m-0">Gói phí lưu hành đường bộ</label>
-                        <select id="road_traffic_fees" class="form-select mt-2">
+                    <div>
+                        <label for="road_traffic_fee" class="text-dark m-0">Gói phí lưu hành đường bộ</label>
+                        <select id="road_traffic_fee" class="form-select mt-2">
                             <option value="130000" selected>1 tháng</option>
                             <option value="780000">6 tháng</option>
                             <option value="1560000">12 tháng</option>
@@ -65,10 +66,11 @@
                             <option value="3000000">24 tháng</option>
                             <option value="3660000">30 tháng</option>
                         </select>
+                        <div id="road_traffic_fee_display" class="text-end pb-3 fs-5">---</div>
                     </div>
 
-                    <div class="pt-2 mt-2">
-                        <label class="text-dark m-0">Phí đăng kiểm:</label>
+                    <div>
+                        <label class="text-dark m-0">Bảo hiểm trách nhiệm DS (01 năm):</label>
                         <div class="text-end fs-5"><?= number_format(340000, 0, ',', '.') ?> ₫</div>
                     </div>
 
@@ -80,7 +82,7 @@
                     </div>
 
                     <div class="d-flex flex-column align-items-center justify-content-between">
-                        <button type="submit" name="btnDeposits" class="btn btn-primary w-100 btn-deposits disabled">Tiến hành đặt cọc</button>
+                        <button type="submit" name="btnDeposits" id="btn-deposits" class="btn btn-primary w-100 disabled">Tiến hành đặt cọc</button>
                         <a class="mt-3" href="/car-shop/cart">Quay về giỏ hàng</a>
                     </div>
                 </form>
@@ -121,43 +123,79 @@
 
         // -------------------- Dự toán chi phí cà cập nhật hiển thị --------------------
         const carPrice = document.getElementById('car_price');
-        const userRegistrationFee = document.getElementById('user_province_id');
-        const roadTrafficFees = document.getElementById('road_traffic_fees');
-        const totalPriceDisplay = document.getElementById('total_price_display');
+        const registrationFee = document.getElementById('user_province_id');
+        const registrationFeeDisplay = document.getElementById('user_registration_fee_display');
+        const roadTrafficFee = document.getElementById('road_traffic_fee');
+        const roadTrafficFeeDisplay = document.getElementById('road_traffic_fee_display');
         const totalPrice = document.getElementById('total_price');
-        const btnDeposits = document.querySelector('.btn-deposits');
+        const totalPriceDisplay = document.getElementById('total_price_display');
+        const btnDeposits = document.getElementById('btn-deposits');
 
         var numberCarPrice = 0;
         var numberRegistrationFee = 0;
-        var numberRoadTrafficFees = 0;
+        var numberRoadTrafficFee = 0;
         var sum = 0;
 
-        userRegistrationFee.addEventListener('change', function() {
+        registrationFee.addEventListener('change', function() {
+            numberRegistrationFeeValue = parseFloat(this.value);
+
+            if (!numberRegistrationFeeValue) {
+                registrationFeeDisplay.textContent = "---";
+                totalPriceDisplay.textContent = "---";
+                totalPrice.value = null;
+                btnDeposits.classList.add('disabled');
+                return;
+            }
+
+            btnDeposits.classList.remove('disabled');
+
             numberCarPrice = parseInt(carPrice.textContent.replace(/\./g, '').replace(' ₫', ''));
-            numberRegistrationFee = parseFloat(this.value);
-            numberRoadTrafficFees = parseInt(roadTrafficFees.value);
+            numberRoadTrafficFee = parseInt(roadTrafficFee.value);
 
-            sum = numberCarPrice * numberRegistrationFee + numberRoadTrafficFees + 340000;
-
-            if (numberRegistrationFee) btnDeposits.classList.remove('disabled');
-            else btnDeposits.classList.add('disabled');
+            sum = numberCarPrice * numberRegistrationFeeValue + numberRoadTrafficFee + 340000;
+            numberRegistrationFee = numberCarPrice * (numberRegistrationFeeValue - 1);
 
             let formattedNumber = sum.toLocaleString('vi-VN', {
                 style: 'currency',
                 currency: 'VND'
             });
 
+            let formattedRegistrationFee = numberRegistrationFee.toLocaleString('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            });
+
+            let formattedRoadTrafficFee = numberRoadTrafficFee.toLocaleString('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            });
+
+            registrationFeeDisplay.textContent = formattedRegistrationFee;
+            roadTrafficFeeDisplay.textContent = formattedRoadTrafficFee;
             totalPriceDisplay.textContent = formattedNumber;
             totalPrice.value = sum;
         });
 
-        roadTrafficFees.addEventListener('change', function() {
-            if (numberRegistrationFee) {
-                numberCarPrice = parseInt(carPrice.textContent.replace(/\./g, '').replace(' ₫', ''));
-                numberRegistrationFee = parseFloat(userRegistrationFee.value);
-                numberRoadTrafficFees = parseInt(this.value);
+        roadTrafficFee.addEventListener('change', function() {
+            numberRoadTrafficFee = parseInt(this.value);
+            let formattedRoadTrafficFee = numberRoadTrafficFee.toLocaleString('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            });
+            roadTrafficFeeDisplay.textContent = formattedRoadTrafficFee;
 
-                sum = numberCarPrice * numberRegistrationFee + numberRoadTrafficFees + 340000;
+            if (numberRegistrationFee) {
+                numberRegistrationFeeValue = parseFloat(registrationFee.value);
+
+                if (!numberRegistrationFeeValue) {
+                    totalPrice.value = null;
+                    btnDeposits.classList.add('disabled');
+                    return;
+                }
+
+                btnDeposits.classList.remove('disabled');
+                numberCarPrice = parseInt(carPrice.textContent.replace(/\./g, '').replace(' ₫', ''));
+                sum = numberCarPrice * numberRegistrationFeeValue + numberRoadTrafficFee + 340000;
 
                 let formattedNumber = sum.toLocaleString('vi-VN', {
                     style: 'currency',
@@ -167,6 +205,15 @@
                 totalPriceDisplay.textContent = formattedNumber;
                 totalPrice.value = sum;
             }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            numberRoadTrafficFee = parseInt(roadTrafficFee.value);
+            let formattedRoadTrafficFee = numberRoadTrafficFee.toLocaleString('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            });
+            roadTrafficFeeDisplay.textContent = formattedRoadTrafficFee;
         });
     </script>
 
