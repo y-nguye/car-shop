@@ -293,9 +293,7 @@
             window.location.href = "/car-shop/admin/product/add-producer";
 
         });
-        btnUpdate.addEventListener("click", () => {
-            formChanged = false;
-        });
+
         btnGoBack.addEventListener("click", () => {
             window.location.href = "/car-shop/admin/product";
         });
@@ -338,7 +336,7 @@
 
         // Validation
         $(function() {
-            $('#formEdit').validate({
+            result = $('#formEdit').validate({
                 errorClass: "is-invalid",
                 errorPlacement: function(error, element) {
                     element.attr("data-bs-original-title", error.text());
@@ -350,7 +348,7 @@
                         $('#cke_car_detail_describe').attr("data-bs-original-title", error.text());
                         var tooltip = new bootstrap.Tooltip($('#cke_car_detail_describe'));
                     };
-                    formChanged = true;
+                    // formChanged = true;
                 },
                 success: function(element) {
                     element.removeAttr("data-bs-original-title");
@@ -362,6 +360,10 @@
                         $('#cke_car_detail_describe').removeAttr("data-bs-original-title");
                         var tooltip = new bootstrap.Tooltip($('#cke_car_detail_describe'));
                     }
+                },
+                submitHandler: function(form) {
+                    formChanged = false;
+                    form.submit();
                 },
                 ignore: [],
                 rules: {

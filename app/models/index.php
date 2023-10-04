@@ -8,6 +8,7 @@ include_once __DIR__ . '/DB_car_transmission.php';
 include_once __DIR__ . '/DB_car_producer.php';
 include_once __DIR__ . '/DB_car_img.php';
 include_once __DIR__ . '/DB_user.php';
+include_once __DIR__ . '/DB_user_cart_item.php';
 include_once __DIR__ . '/DB_user_province.php';
 include_once __DIR__ . '/DB_user_deposit.php';
 include_once __DIR__ . '/DB_user_test_drive.php';
@@ -21,6 +22,7 @@ $db_car_transmission = new CarTransmissionData;
 $db_car_producer = new CarProducerData;
 $db_car_img = new CarImgData;
 $db_user = new UserData;
+$db_user_cart_item = new UserCartItem;
 $db_user_province = new UserProvinceData;
 $db_user_deposit = new UserDepositData;
 $db_user_test_drive = new TestDriveData;
@@ -35,6 +37,7 @@ $DB = array(
     'db_car_producer' => $db_car_producer,
     'db_car_img' => $db_car_img,
     'db_user' => $db_user,
+    'db_user_cart_item' => $db_user_cart_item,
     'db_user_province' => $db_user_province,
     'db_user_deposit' => $db_user_deposit,
     'db_user_test_drive' => $db_user_test_drive,

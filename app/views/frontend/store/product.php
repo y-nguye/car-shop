@@ -109,7 +109,7 @@
                         <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Nhiên liệu</span>
-                                <?php if (empty($data_car['car_producer_name'])) : ?>
+                                <?php if (empty($data_car['car_fuel'])) : ?>
                                     <span class="mt-2 p-1 fs-4">---</span>
                                 <?php else : ?>
                                     <span class="mt-2 p-1 fs-4"><?= $data_car['car_fuel'] ?></span>

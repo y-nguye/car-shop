@@ -22,7 +22,7 @@ class UserData extends DatabaseManager
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
-            return $this->result->fetch_assoc();
+            return true;
         }
         return false;
     }
@@ -33,7 +33,7 @@ class UserData extends DatabaseManager
         $this->result = $this->execute($sql);
 
         if ($this->result->num_rows > 0) {
-            return $this->result->fetch_assoc();
+            return true;
         }
         return false;
     }

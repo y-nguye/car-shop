@@ -25,6 +25,10 @@ class CartController extends AccessController
     {
         $car_id = $vars['id'];
         if (!isset($_SESSION['cart'][$car_id])) $this->notFound();
+
+        $DB['db_user_cart_item']->connect();
+        $DB['db_user_cart_item']->deleteData($car_id);
+
         unset($_SESSION['cart'][$car_id]);
         echo '<script>location.href = "/car-shop/cart"</script>';
     }
@@ -481,7 +485,7 @@ class CartController extends AccessController
                     <tbody>
                         <tr>
                             <td>Mã đơn hàng: </td>
-                            <td>$user_deposit_id</td>
+                            <td>#$user_deposit_id</td>
                         </tr>
 
                         <tr>
@@ -555,6 +559,24 @@ class CartController extends AccessController
         EOT;
 
         return $contentMailDepositRequestHasBeenConfirmed;
+    }
+
+    private function addToCart($carInfo)
+    {
+        $cart = [];
+        if (isset($_SESSION['cart'])) {
+            $cart = $_SESSION['cart'];
+        }
+
+        $cart[$carInfo['car_id']] = array(
+            'car_id' => $carInfo['car_id'],
+            'car_name' => $carInfo['car_name'],
+            'car_price' => $carInfo['car_price'],
+            'car_describe' => $carInfo['car_describe'],
+            'car_img_filename' => $carInfo['car_img_filename'],
+        );
+
+        $_SESSION['cart'] = $cart;
     }
 
     private function getAllCarTypesForHeader($DB)

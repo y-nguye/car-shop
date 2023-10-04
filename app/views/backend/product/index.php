@@ -61,14 +61,15 @@
                             </thead>
 
                             <tbody>
-                                <?php foreach ($data_cars as $value) { ?>
+                                <?php foreach ($data_cars as $data) { ?>
                                     <tr class="car_item_row">
-                                        <td name="checkbox-td" class="text-center"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $value['car_id'] ?>" data-car_id="<?= $value['car_id'] ?>"></td>
-                                        <td class="text-end"><?= $value['car_id'] ?></td>
-                                        <td><?= $value['car_name'] ?></td>
-                                        <td class="text-end"><?= number_format($value['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
-                                        <td class="text-end"><?= $value['car_quantity'] ?></td>
-                                        <td><?= $value['car_update_at'] ?></td>
+                                        <td name="checkbox-td" class="text-center"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $data['car_id'] ?>" data-car_id="<?= $data['car_id'] ?>"></td>
+                                        <td class="text-end"><?= $data['car_id'] ?></td>
+                                        <td><?= $data['car_name'] ?></td>
+                                        <td class="text-end"><?= number_format($data['car_price'], 0, '.', '.') . ' đ<br/>' ?></td>
+                                        <td class="text-end"><?= $data['car_quantity'] ?></td>
+                                        <?php $timestamp = strtotime($data['car_update_at']); ?>
+                                        <td><?= date("d/m/Y - H:i:s", $timestamp); ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

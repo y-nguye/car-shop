@@ -20,12 +20,12 @@
             <h1>Oh no! Cửa hàng đang bảo trì, quay lại sau nhé...</h1>
         <?php else : ?>
             <div class="d-flex justify-content-center">
-                <div id="carouselCaptions" class="carousel card slide rounded-3" data-bs-ride="carousel">
+                <div id="carouselCaptions" class="carousel card slide rounded-3 slide__home-page" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <?php foreach ($data_all_car_by_car_ids_to_display_carouse as $index => $data) : ?>
                             <a href="/car-shop/product/<?= $data['car_id'] ?>">
                                 <div class="carousel-item carousel-item-custom__home-page <?php if ($index == 0) echo "active" ?>">
-                                    <div class="carousel-shadow"></div>
+                                    <div class="carousel-shadow__home-page"></div>
                                     <?php if (empty($data['car_img_filename'])) : ?>
                                         <img src="/car-shop/assets/imgs/no-img.jpg" class="card-img carousel-no-img-custom__home-page" alt="carousel-img">
                                     <?php else : ?>
@@ -50,14 +50,19 @@
                 </div>
             </div>
 
-            <h2 class="mt-4">Top xe bán chạy trong mỗi dòng xe</h2>
+            <div class="mt-5">
+                <b>
+                    <span class="mt-5 fs-2">Top bán chạy.</span>
+                    <span class="mt-5 fs-2 text-secondary">Trong mỗi dòng xe.</span>
+                </b>
+            </div>
 
             <div class="row row-cols-2">
                 <?php foreach ($data_all_car_by_car_ids_to_display_salling as $data) : ?>
                     <div class="col mt-4">
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
                             <div class="card card-custom__home-page text-white">
-                                <div class="card-shadow"></div>
+                                <div class="card-shadow__home-page"></div>
                                 <?php if (empty($data['car_img_filename'])) : ?>
                                     <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="card-img">
                                 <?php else : ?>
@@ -73,14 +78,19 @@
                 <?php endforeach; ?>
             </div>
 
-            <h2 class="mt-4">Xe mới nhập</h2>
+            <div class="mt-5">
+                <b>
+                    <span class="mt-5 fs-2">Xe mới nhập.</span>
+                    <span class="mt-5 fs-2 text-secondary">Khám phá những điều mới mẻ ngay.</span>
+                </b>
+            </div>
 
             <div class="row row-cols-2">
                 <?php foreach ($data_all_car_by_car_ids_to_display_four_newest as $data) : ?>
                     <div class="col mt-4">
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
                             <div class="card card-custom__home-page text-white">
-                                <div class="card-shadow"></div>
+                                <div class="card-shadow__home-page"></div>
                                 <?php if (empty($data['car_img_filename'])) : ?>
                                     <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="card-img">
                                 <?php else : ?>

@@ -94,13 +94,14 @@
                                             <div class="d-flex flex-column pe-3 border-end min-width-250px">
                                                 <span><b><?= $data['car_name'] ?></b></span>
                                                 <span>Mã đơn hàng: #<?= $data['user_deposit_id'] ?></span>
-                                                <span>Ngày: <?= $data['user_deposit_at'] ?></span>
+                                                <?php $timestamp = strtotime($data['user_deposit_at']); ?>
+                                                <span>Ngày: <?= date("d/m/Y", $timestamp);  ?></span>
                                             </div>
 
                                             <div class="ms-3 d-flex flex-column">
                                                 <span><?= $data['user_deposit_where'] ?></span>
                                                 <span>Phương thức: <?= $data['pay_method_name'] ?></span>
-                                                <span>Phí đặt cọc: <?= number_format($data['user_deposit_price'], 0, ',', '.') ?></span>
+                                                <span>Phí đặt cọc: <?= number_format($data['user_deposit_price'], 0, ',', '.')  ?> ₫</span>
                                             </div>
 
                                         </div>

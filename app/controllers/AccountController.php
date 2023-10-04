@@ -84,6 +84,10 @@ class AccountController extends AccessController
                 $_SESSION["user_avt"] = $data_user["user_avt"];
                 $_SESSION["user_is_admin"] = $data_user["user_is_admin"];
 
+
+                $this->getDataCart($DB);
+
+
                 if ($_SESSION["user_is_admin"]) {
                     $DB['db_user']->disconnect();
                     echo '<script>location.href = "/car-shop/admin"</script>';
@@ -108,6 +112,7 @@ class AccountController extends AccessController
         unset($_SESSION["user_username"]);
         unset($_SESSION["user_avt"]);
         unset($_SESSION["user_is_admin"]);
+        unset($_SESSION['cart']);
         echo '<script>window.history.back();</script>';
     }
 
@@ -428,5 +433,50 @@ class AccountController extends AccessController
         $data_all_car_type = $DB['db_car_type']->getAllData();
         $DB['db_car_type']->disconnect();
         return $data_all_car_type;
+    }
+
+    private function getDataCart($DB)
+    {
+        if (isset($_SESSION['logged']) && $_SESSION['logged']) {
+            $user_id = $_SESSION['user_id'];
+
+            $cart = [];
+            if (isset($_SESSION['cart'])) {
+                $cart = $_SESSION['cart'];
+            }
+
+            // Nếu trước khi đăng nhập có những sản phẩm trong giỏ thì thêm các sản phẩm đó vào database
+            $this->addToCartDataBase($DB, $cart);
+
+            $DB['db_user_cart_item']->connect();
+            $data_user_cart_item = $DB['db_user_cart_item']->getAllDataByUserID($user_id);
+            // Đồng bộ dữ liệu database giỏ hàng của người dùng đã lưu
+            foreach ($data_user_cart_item as $data) {
+                $cart[$data['car_id']] = array(
+                    'car_id' => $data['car_id'],
+                    'car_name' => $data['car_name'],
+                    'car_price' => $data['car_price'],
+                    'car_describe' => $data['car_describe'],
+                    'car_img_filename' => $data['car_img_filename'],
+                );
+            }
+            $_SESSION['cart'] = $cart;
+            $DB['db_user_cart_item']->disconnect();
+        }
+    }
+
+    private function addToCartDataBase($DB, $cart)
+    {
+        if (isset($_SESSION['logged']) && $_SESSION['logged']) {
+            $user_id = $_SESSION['user_id'];
+            $DB['db_user_cart_item']->connect();
+            // Thêm sản phẩm vào database giỏ người dùng (thêm những sản phẩm không có trong database)
+            foreach ($cart as $data) {
+                $resultCheck = $DB['db_user_cart_item']->checkDataByUserIDAndCarID($user_id, $data['car_id']);
+                if ($resultCheck) continue;
+                $DB['db_user_cart_item']->setData($user_id, $data['car_id']);
+            }
+            $DB['db_user_cart_item']->disconnect();
+        }
     }
 }

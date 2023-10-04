@@ -24,8 +24,8 @@ class CarsData extends DatabaseManager
                 car.car_update_at,
                 car.car_deleted_at,
                 car_type.car_type_name,
-                car_producer.car_producer_name,
                 car_fuel.car_fuel,
+                car_producer.car_producer_name,
                 car_transmission.car_transmission,
                 car_seat.car_seat,
                 MIN(car_img.car_img_filename) AS car_img_filename

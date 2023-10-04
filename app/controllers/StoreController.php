@@ -14,12 +14,11 @@ class StoreController extends AccessController
     {
         $DB['db_cars']->connect();
 
-        $data_all_car_by_car_ids_to_display_carouse = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([51, 49, 54, 64]);
+        $data_all_car_by_car_ids_to_display_carouse = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([57, 49, 54, 55]);
         $data_all_car_by_car_ids_to_display_salling = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([48, 49, 54, 64]);
         $data_all_car_by_car_ids_to_display_four_newest = $DB['db_cars']->getAllDataWithSecondImgByFourNewUpdate();
 
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-
         include __DIR__ . "/../views/frontend/store/index.php";
 
         $DB['db_cars']->disconnect();
@@ -93,7 +92,7 @@ class StoreController extends AccessController
                 'car_img_filename' => implode('', $data_car_img_filename),
             ];
 
-            $this->addToCart($carInfo);
+            $this->addToCart($DB, $carInfo);
 
             $_SESSION['from-registration-fee'] = true;
             echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
@@ -112,7 +111,7 @@ class StoreController extends AccessController
                 'car_img_filename' => implode('', $data_car_img_filename),
             ];
 
-            $this->addToCart($carInfo);
+            $this->addToCart($DB, $carInfo);
 
             echo '<script>location.href = "/car-shop/product/' . $car_id . '"</script>';
         }
@@ -381,7 +380,7 @@ class StoreController extends AccessController
         return $data_all_car_type;
     }
 
-    private function addToCart($carInfo)
+    private function addToCart($DB, $carInfo)
     {
         $cart = [];
         if (isset($_SESSION['cart'])) {
@@ -397,6 +396,23 @@ class StoreController extends AccessController
         );
 
         $_SESSION['cart'] = $cart;
+        $this->addToCartDataBase($DB, $cart);
+    }
+
+    private function addToCartDataBase($DB, $cart)
+    {
+        if (isset($_SESSION['logged']) && $_SESSION['logged']) {
+            $user_id = $_SESSION['user_id'];
+            $DB['db_user_cart_item']->connect();
+            // Thêm sản phẩm vào database giỏ người dùng
+            foreach ($cart as $data) {
+                // thêm những sản phẩm không có trong database
+                $resultCheck = $DB['db_user_cart_item']->checkDataByUserIDAndCarID($user_id, $data['car_id']);
+                if ($resultCheck) continue;
+                $DB['db_user_cart_item']->setData($user_id, $data['car_id']);
+            }
+            $DB['db_user_cart_item']->disconnect();
+        }
     }
 
     private function sendMailTestDriveRequired($userTestDriveInfo)

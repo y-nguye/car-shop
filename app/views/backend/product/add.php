@@ -258,10 +258,6 @@
             btnAdd.classList.remove('disabled');
         });
 
-        btnAdd.addEventListener("click", () => {
-            formChanged = false;
-        });
-
         // -------------- Nút "Quay lại" ------------------
         btnGoBack.addEventListener("click", () => {
             window.history.back();
@@ -324,10 +320,8 @@
                         $('#cke_car_detail_describe').attr("data-bs-original-title", error.text());
                         var tooltip = new bootstrap.Tooltip($('#cke_car_detail_describe'));
                     };
-                    formChanged = true;
                 },
                 success: function(element) {
-                    console.log(element);
                     element.removeAttr("data-bs-original-title");
                     if (element.attr("id") == "car_detail_describe-error") {
                         $('#cke_car_detail_describe').removeClass('ckeditor-invalidate');
@@ -337,6 +331,10 @@
                         $('#cke_car_detail_describe').removeAttr("data-bs-original-title");
                         var tooltip = new bootstrap.Tooltip($('#cke_car_detail_describe'));
                     }
+                },
+                submitHandler: function(form) {
+                    formChanged = false;
+                    form.submit();
                 },
                 ignore: [],
                 rules: {

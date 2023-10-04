@@ -13,6 +13,7 @@ class ProductController extends AccessController
         $data_cars = $DB['db_cars']->getAllData();
         include_once __DIR__ . "/../views/backend/product/index.php";
         $DB['db_cars']->disconnect();
+        unset($_SESSION['pathname']);
     }
 
     public function add($DB)
@@ -38,6 +39,8 @@ class ProductController extends AccessController
 
         // USES
         include_once __DIR__ . "/../views/backend/product/add.php";
+
+        $_SESSION['pathname'] = '/car-shop/admin/product';
 
         // MANIPULATES
         if (isset($_POST['btnAdd'])) {
@@ -324,6 +327,8 @@ class ProductController extends AccessController
         $data_all_car_producer = $DB['db_car_producer']->getAllData();
         include __DIR__ . "/../views/backend/product/addProducer.php";
 
+        echo '<script> const pathname = "' . $_SESSION['pathname'] . '";</script>';
+
         if (isset($_POST['btnAddProducer'])) {
             $car_producer_name = $_POST['car_producer_name'];
             // Validation phía server
@@ -402,6 +407,8 @@ class ProductController extends AccessController
         $data_all_car_producer = $DB['db_car_producer']->getAllData();
 
         include __DIR__ . "/../views/backend/product/edit.php";
+
+        $_SESSION['pathname'] = '/car-shop/admin/product/edit/' . $car_id . '';
 
         if (isset($_POST['btnEdit'])) {
 

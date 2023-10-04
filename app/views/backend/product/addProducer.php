@@ -153,7 +153,8 @@
 
         // -------------- Nút "Quay lại" ------------------
         btnGoBackHeader.addEventListener("click", () => {
-            window.location = '/car-shop/admin/product/add';
+            // window.history.back();
+            window.location.href = pathname;
         });
 
         //-------------- Loại bỏ dấu cách đầu tiên khi nhập liệu --------------
@@ -178,11 +179,11 @@
         const checkboxItemsNodelist = document.querySelectorAll('.car_producer_item_row');
         const checkboxItems = [...checkboxItemsNodelist]; // Spread operator
 
-        // -------------- Nút "Xác nhận xoá" ------------------
-        btnDeleteConfrim.addEventListener('click', () => {
-            carsForm.action = '/car-shop/admin/product/delete';
-            carsForm.submit();
-        });
+        // // -------------- Nút "Xác nhận xoá" ------------------
+        // btnDeleteConfrim.addEventListener('click', () => {
+        //     carsForm.action = '/car-shop/admin/product/delete';
+        //     carsForm.submit();
+        // });
 
         // ----------------------------- Xử lý các sự kiện checkbox -----------------------------------
         checkboxAll.addEventListener('change', function() {
