@@ -95,7 +95,7 @@ class UserData extends DatabaseManager
         }
 
         // Xoá hình cũ để tránh rác
-        unlink($uploadDir . $user_avt_old);
+        if ($user_avt_old && file_exists($uploadDir . $user_avt_old)) unlink($uploadDir . $user_avt_old);
 
         $sql = "UPDATE $this->table SET user_avt = '$name' WHERE user_id = $user_id;";
         return $this->execute($sql);

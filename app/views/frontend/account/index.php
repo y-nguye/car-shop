@@ -47,8 +47,11 @@
                         <form name="formAvatar" method="post" action="/car-shop/account/edit-avatar" enctype="multipart/form-data">
                             <input type="file" name="user_avt" id="avatarInput" style="display: none;" accept="image/*" />
                             <div class="avatar-container rounded-circle ms-3">
-                                <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/<?php if ($user_avt) echo $user_avt;
-                                                                                                                                else echo "no-avt.jpg" ?>" alt="">
+                                <?php if ($user_avt && file_exists(__DIR__ . '/../../../../assets/imgs/avt/' . $user_avt)) : ?>
+                                    <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/<?= $user_avt ?>" alt="avt">
+                                <?php else : ?>
+                                    <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/no-avt.jpg" alt="no-avt">
+                                <?php endif ?>
                                 <div class="rounded-circle d-flex align-items-center justify-content-center avatar-edit"><i class="bi bi-camera fs-1 text-white"></i></div>
                                 <div class="update-button-group">
                                     <button type="submit" name="btnOkUpdateAvatar" class="btn btn-ok-update-avatar"><i class="bi bi-check2"></i></i></button>
@@ -102,11 +105,11 @@
                                                 <i class="bi bi-geo-alt text-primary fs-4"></i>
                                             </div>
                                             <select class="form-select mt-3" name="user_province_id">
-                                                <?php foreach ($data_all_user_province as $value) : ?>
-                                                    <?php if ($value['user_province_id'] == $user_province_id) : ?>
-                                                        <option selected value="<?= $value['user_province_id'] ?>"> <?= $value['user_province_name'] ?></option>
+                                                <?php foreach ($data_all_user_province as $data) : ?>
+                                                    <?php if ($data['user_province_id'] == $user_province_id) : ?>
+                                                        <option selected value="<?= $data['user_province_id'] ?>"> <?= $data['user_province_name'] ?></option>
                                                     <?php else : ?>
-                                                        <option value="<?= $value['user_province_id'] ?>"> <?= $value['user_province_name'] ?></option>
+                                                        <option value="<?= $data['user_province_id'] ?>"> <?= $data['user_province_name'] ?></option>
                                                     <?php endif; ?>
                                                 <?php endforeach ?>
                                             </select>

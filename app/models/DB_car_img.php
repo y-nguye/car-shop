@@ -67,8 +67,11 @@ class CarImgData extends DatabaseManager
 
                 $this->moveUploadedFile($carImgFilesFromInput, $index, $name, $uploadDir);
 
-                // Xoá hình cũ để tránh rác
-                unlink($uploadDir . $data_all_car_img[$index]['car_img_filename']);
+                // Kiểm tra xem tên tệp khác null và tệp có tồn tại trong đường dẫn hay không
+                if ($data_all_car_img[$index]['car_img_filename'] && file_exists($uploadDir . $data_all_car_img[$index]['car_img_filename'])) {
+                    // Xoá hình cũ để tránh rác
+                    unlink($uploadDir . $data_all_car_img[$index]['car_img_filename']);
+                }
 
                 $sql = "UPDATE $this->table SET car_img_filename = '$name', car_img_update_at = NOW(), car_id = $car_id
                         WHERE car_img_id = " . $data_all_car_img[$index]['car_img_id'] . ";";
@@ -104,7 +107,9 @@ class CarImgData extends DatabaseManager
             $indexContinue = $index + 1;
             // Bắt đầu vòng lặp xoá cột thừa
             for ($i = $indexContinue; $i <= count($data_all_car_img) - 1; $i++) {
-                unlink($uploadDir . $data_all_car_img[$i]['car_img_filename']);
+                if ($data_all_car_img[$i]['car_img_filename'] && file_exists($uploadDir . $data_all_car_img[$i]['car_img_filename'])) {
+                    unlink($uploadDir . $data_all_car_img[$i]['car_img_filename']);
+                }
                 $sql = "DELETE FROM $this->table WHERE car_img_id = " . $data_all_car_img[$i]['car_img_id'] . ";";
                 $this->execute($sql);
             }

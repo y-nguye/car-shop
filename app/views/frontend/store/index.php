@@ -26,10 +26,10 @@
                             <a href="/car-shop/product/<?= $data['car_id'] ?>">
                                 <div class="carousel-item carousel-item-custom__home-page <?php if ($index == 0) echo "active" ?>">
                                     <div class="carousel-shadow__home-page"></div>
-                                    <?php if (empty($data['car_img_filename'])) : ?>
-                                        <img src="/car-shop/assets/imgs/no-img.jpg" class="card-img carousel-no-img-custom__home-page" alt="carousel-img">
-                                    <?php else : ?>
+                                    <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                                         <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="card-img" alt="carousel-img">
+                                    <?php else : ?>
+                                        <img src="/car-shop/assets/imgs/no-img.jpg" class="card-img carousel-no-img-custom__home-page" alt="carousel-img">
                                     <?php endif; ?>
                                     <div class="carousel-caption d-none d-md-block">
                                         <h1><a class="text-white" href="#"><?= $data['car_name'] ?></a></h1>
@@ -63,10 +63,10 @@
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
                             <div class="card card-custom__home-page text-white">
                                 <div class="card-shadow__home-page"></div>
-                                <?php if (empty($data['car_img_filename'])) : ?>
-                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="card-img">
-                                <?php else : ?>
+                                <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                                     <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="card-img" alt="mb">
+                                <?php else : ?>
+                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="card-img">
                                 <?php endif; ?>
                                 <div class="card-img-overlay">
                                     <h2 class="card-title"><?= $data['car_name'] ?></h2>
@@ -91,10 +91,10 @@
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
                             <div class="card card-custom__home-page text-white">
                                 <div class="card-shadow__home-page"></div>
-                                <?php if (empty($data['car_img_filename'])) : ?>
-                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="card-img">
-                                <?php else : ?>
+                                <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                                     <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="card-img" alt="mb">
+                                <?php else : ?>
+                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="card-img">
                                 <?php endif; ?>
                                 <div class="card-img-overlay">
                                     <h2 class="card-title"><?= $data['car_name'] ?></h2>

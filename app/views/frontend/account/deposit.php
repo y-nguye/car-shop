@@ -40,8 +40,11 @@
                         <form name="formAvatar" method="post" action="/car-shop/account/edit-avatar" enctype="multipart/form-data">
                             <input type="file" name="user_avt" id="avatarInput" style="display: none;" accept="image/*" />
                             <div class="avatar-container rounded-circle ms-3">
-                                <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/<?php if ($user_avt) echo $user_avt;
-                                                                                                                                else echo "no-avt.jpg" ?>" alt="">
+                                <?php if ($user_avt && $user_avt && file_exists(__DIR__ . '/../../../../assets/imgs/avt/' . $user_avt)) : ?>
+                                    <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/<?= $user_avt ?>" alt="avt">
+                                <?php else : ?>
+                                    <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/no-avt.jpg" alt="no-avt">
+                                <?php endif ?>
                                 <div class="rounded-circle d-flex align-items-center justify-content-center avatar-edit"><i class="bi bi-camera fs-1 text-white"></i></div>
                                 <div class="update-button-group">
                                     <button type="submit" name="btnOkUpdateAvatar" class="btn btn-ok-update-avatar"><i class="bi bi-check2"></i></button>
@@ -49,6 +52,7 @@
                                 </div>
                             </div>
                         </form>
+
                         <h5 class="mt-3 ms-3"><?= $user_fullname ?></h5>
                         <div class="mt-3 ms-3">
                             <span><?= $user_email ?></span>
@@ -85,11 +89,12 @@
                                 <?php foreach ($data_all_user_deposit as $index => $data) : ?>
                                     <div class="ms-3 me-3 bg-light shadow-sm rounded w-100 <?php if (count($data_all_user_deposit) - 1 != $index) echo "mb-3" ?>">
                                         <div class="p-2 d-flex align-items-center">
-                                            <?php if (empty($data['car_img_filename'])) : ?>
-                                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
-                                            <?php else : ?>
+                                            <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                                                 <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
+                                            <?php else : ?>
+                                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
                                             <?php endif; ?>
+
 
                                             <div class="d-flex flex-column pe-3 border-end min-width-250px">
                                                 <span><b><?= $data['car_name'] ?></b></span>
@@ -103,7 +108,6 @@
                                                 <span>Phương thức: <?= $data['pay_method_name'] ?></span>
                                                 <span>Phí đặt cọc: <?= number_format($data['user_deposit_price'], 0, ',', '.')  ?> ₫</span>
                                             </div>
-
                                         </div>
                                     </div>
                                 <?php endforeach; ?>

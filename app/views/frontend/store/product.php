@@ -24,7 +24,7 @@
                         <div class="carousel-indicators">
                             <?php foreach ($data_all_car_img as $index => $data) : ?>
                                 <?php if (($index == 0)) continue ?>
-                                <?php if ($data['car_img_filename']) : ?>
+                                <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                                     <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="<?= $index - 1 ?>" aria-label="Slide <?= $index ?>" <?php if ($index - 1 == 0) : ?> class="active" aria-current="true" <?php endif; ?>></button>
                                 <?php endif; ?>
                             <?php endforeach; ?>
@@ -40,7 +40,7 @@
                             <?php foreach ($data_all_car_img as $index => $data) : ?>
                                 <!-- Loại bỏ hình đại diện -->
                                 <?php if ($index == 0) continue; ?>
-                                <?php if ($data['car_img_filename']) : ?>
+                                <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                                     <div class="carousel-item carousel-item-custom__product-page <?php if ($index == 1) echo 'active'; ?> " data-bs-interval="5000">
                                         <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="d-block w-100">
                                     </div>
@@ -152,7 +152,9 @@
 
         <div class="row mt-3">
             <div class="d-flex align-items-center justify-content-center mb-5">
-                <img src="/car-shop/assets/uploads/<?= $data_all_car_img[0]['car_img_filename'] ?>" alt="" class=" w-50">
+                <?php if ($data_all_car_img[0]['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_all_car_img[0]['car_img_filename'])) : ?>
+                    <img src="/car-shop/assets/uploads/<?= $data_all_car_img[0]['car_img_filename'] ?>" alt="" class=" w-50">
+                <?php endif ?>
             </div>
             <h4 class="">Thông tin sản phẩm</h4>
             <p class="text-justify mt-2"><?= $data_car['car_detail_describe'] ?></p>

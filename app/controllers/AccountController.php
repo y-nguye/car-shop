@@ -48,7 +48,6 @@ class AccountController extends AccessController
 
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/account/deposit.php";
-
         $DB['db_user']->disconnect();
         $DB['db_user_province']->disconnect();
     }
@@ -420,7 +419,6 @@ class AccountController extends AccessController
             // Cập nhật lại session
             $_SESSION["user_avt"] = $data_user['user_avt'];
             $DB['db_user']->disconnect();
-
             echo '<script>location.href = "/car-shop/account"</script>';
         } else {
             $this->notFound();

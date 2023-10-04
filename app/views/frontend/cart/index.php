@@ -39,10 +39,10 @@
                     <hr>
                     <div class="d-flex align-items-center">
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
-                            <?php if (empty($data_cart['car_img_filename'])) : ?>
-                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-cart" alt="img-car-on-cart">
-                            <?php else : ?>
+                            <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                                 <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="img-car-on-cart" alt="img-car-on-cart">
+                            <?php else : ?>
+                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-cart" alt="img-car-on-cart">
                             <?php endif; ?>
                         </a>
                         <div class="d-flex flex-column ms-5">

@@ -27,10 +27,10 @@
         <div class="row">
             <div class="col-8 d-flex flex-column align-items-center">
                 <a href="/car-shop/product/<?= $data_car['car_id'] ?>">
-                    <?php if (empty($data_car_img_filename['car_img_filename'])) : ?>
-                        <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-test-drive__test-drive-page" alt="img-car-on-test-drive__test-drive-page">
-                    <?php else : ?>
+                    <?php if ($data_car_img_filename['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_car_img_filename['car_img_filename'])) : ?>
                         <img src="/car-shop/assets/uploads/<?= $data_car_img_filename['car_img_filename'] ?>" class="img-car-on-test-drive__test-drive-page" alt="img-car-on-test-drive__test-drive-page">
+                    <?php else : ?>
+                        <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-test-drive__test-drive-page" alt="img-car-on-test-drive__test-drive-page">
                     <?php endif; ?>
                 </a>
                 <h1 class="mt-4"><?= $data_car['car_name'] ?></h1>
@@ -44,9 +44,9 @@
                         <label for="user_province_id" class="text-dark m-0">Địa điểm lái thử</label>
                         <select name="user_province_id" id="user_province_id" class="form-select mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
                             <option selected value="">---Chọn---</option>
-                            <?php foreach ($data_all_user_province as $value) { ?>
+                            <?php foreach ($data_all_user_province as $value) : ?>
                                 <option value="<?= $value['user_province_id'] ?>"> <?= $value['user_province_name'] ?></option>
-                            <?php } ?>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="pt-2 mt-2">
