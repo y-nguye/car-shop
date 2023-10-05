@@ -13,9 +13,47 @@
     <?php
     include_once __DIR__ . '/../../resources/layouts/header.php'
     ?>
+    <!-- d-flex align-items-center justify-content-center -->
+
+    <div class="overlay overlay-custom__product-page">
+        <button class="btn-close fs-5 p-3 m-4 bg-gray-light rounded-circle position-absolute btn-close__product-page" aria-label="Close"></button>
+        <div class="w-100 h-100 d-flex align-items-center justify-content-center">
+            <div id="carouselIndicators__overlay" class="carousel slide slide__product-page--overlay" data-bs-ride="true">
+                <div class="carousel-inner">
+                    <?php if (empty($data_all_car_img[1])) : ?>
+                        <div class="carousel-item carousel-item-custom__product-page--overlay active">
+                            <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
+                        </div>
+                    <?php endif ?>
+
+                    <?php foreach ($data_all_car_img as $index => $data) : ?>
+                        <!-- Loại bỏ hình đại diện -->
+                        <?php if ($index == 0) continue; ?>
+                        <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
+                            <div class="carousel-item carousel-item-custom__product-page--overlay" data-index="<?= $index ?>">
+                                <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="d-block w-100">
+                            </div>
+                        <?php else : ?>
+                            <div class="carousel-item carousel-item-custom__product-page--overlay">
+                                <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators__overlay" data-bs-slide="prev">
+                    <span class="carosel-controll-icon__overlay" aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators__overlay" data-bs-slide="next">
+                    <span class="carosel-controll-icon__overlay" aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div class="container-lg mt-3">
-
         <div class="row">
             <div class="col-7">
                 <div class="d-flex">
@@ -41,7 +79,7 @@
                                 <!-- Loại bỏ hình đại diện -->
                                 <?php if ($index == 0) continue; ?>
                                 <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
-                                    <div class="carousel-item carousel-item-custom__product-page <?php if ($index == 1) echo 'active'; ?> " data-bs-interval="5000">
+                                    <div class="carousel-item carousel-item-custom__product-page <?php if ($index == 1) echo 'active'; ?> " data-index="<?= $index ?>" data-bs-interval="5000">
                                         <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="d-block w-100">
                                     </div>
                                 <?php else : ?>
@@ -66,8 +104,6 @@
             </div>
 
             <div class="d-flex flex-column col-5 ps-5">
-
-
                 <h1 class="text-dark"><?= $data_car['car_name'] ?></h1>
                 <span class="fs-3"><?= number_format($data_car['car_price'], 0, ',', '.') ?> ₫</span>
 
@@ -143,7 +179,6 @@
                 </form>
             </div>
         </div>
-
         <div class="text-center">
             <p class="mt-5 mb-5 fs-4"> <?= $data_car['car_describe'] ?> </p>
         </div>
@@ -159,7 +194,6 @@
             <h4 class="">Thông tin sản phẩm</h4>
             <p class="text-justify mt-2"><?= $data_car['car_detail_describe'] ?></p>
         </div>
-
     </div>
 
     <!-- HTML cho một toast -->
@@ -189,6 +223,51 @@
                 toast.hide();
             }, 3000);
         });
+
+
+        // -------------------- Hiển thị hình ảnh toàn màn hình ---------------------------
+        const body = document.body;
+        const overlay = document.querySelector('.overlay');
+        const btnClose = document.querySelector('.btn-close');
+        const carouselInner = document.querySelectorAll('.carousel-item-custom__product-page');
+        const carouselInnerOverlay = document.querySelectorAll('.carousel-item-custom__product-page--overlay');
+
+        carouselInner.forEach(x => {
+            x.addEventListener('click', function() {
+                carouselInnerOverlay.forEach(y => {
+                    if (y.classList.contains('active')) y.classList.remove('active');
+                });
+                const indexImg = x.dataset.index;
+                enableViewProduct(indexImg);
+            })
+        })
+
+        btnClose.addEventListener('click', function() {
+            disableViewProduct();
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' || event.key === 'Esc') {
+                disableViewProduct();
+            }
+        });
+
+        function disableViewProduct() {
+            overlay.style.opacity = '0';
+            body.style.overflow = 'auto';
+            // Cho delay thời gian để opacity có hiệu ứng, điều này không tốt cho việc bảo trì code
+            setTimeout(function() {
+                overlay.style.visibility = 'hidden';
+            }, 320)
+        }
+
+        function enableViewProduct(indexImg) {
+            const imgDisplay = overlay.querySelector(`div[data-index="${indexImg}"]`);
+            imgDisplay.classList.add('active');
+            overlay.style.opacity = '1';
+            body.style.overflow = 'hidden';
+            overlay.style.visibility = 'visible';
+        }
     </script>
 
 </body>

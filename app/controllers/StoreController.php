@@ -463,9 +463,7 @@ class StoreController extends AccessController
         // ----------------------- Viết nội dung Mail -----------------------
         $styleMail = <<<EOT
             <style>
-                @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
                 .container-general{
-                    font-family: 'IBM Plex Sans', sans-serif;
                     max-width: 600px;
                     margin: auto;
                 }

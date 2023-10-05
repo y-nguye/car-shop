@@ -295,11 +295,12 @@ class CarsData extends DatabaseManager
         // Xoá hình trong thư mục uploads
         foreach ($ids as $id) {
             $sql = "SELECT car_img_filename FROM car_img WHERE car_id = $id;";
-
             $this->result = $this->execute($sql);
             if ($this->result->num_rows > 0) {
                 while ($row = $this->result->fetch_assoc()) {
-                    unlink($uploadDir . $row['car_img_filename']);
+                    if ($row['car_img_filename'] && file_exists($uploadDir . $row['car_img_filename'])) {
+                        unlink($uploadDir . $row['car_img_filename']);
+                    }
                 }
             }
         }

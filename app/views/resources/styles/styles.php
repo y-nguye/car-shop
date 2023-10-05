@@ -73,7 +73,7 @@
         --footer-margin-top: 20px;
 
         --color-light: #f5f5f7;
-        --color-gray-light: #ededed;
+        --color-gray-light: #e8e8ed;
     }
 
     body {
@@ -143,6 +143,15 @@
     }
 
     /* ---------------------------------------------------------------- */
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+    }
 
     .push-footer-down-page {
         min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - var(--footer-margin-top));

@@ -137,9 +137,9 @@
         var sum = 0;
 
         registrationFee.addEventListener('change', function() {
-            numberRegistrationFeeValue = parseFloat(this.value);
+            registrationFeeValue = parseFloat(this.value);
 
-            if (!numberRegistrationFeeValue) {
+            if (!registrationFeeValue) {
                 registrationFeeDisplay.textContent = "---";
                 totalPriceDisplay.textContent = "---";
                 totalPrice.value = null;
@@ -152,8 +152,8 @@
             numberCarPrice = parseInt(carPrice.textContent.replace(/\./g, '').replace(' ₫', ''));
             numberRoadTrafficFee = parseInt(roadTrafficFee.value);
 
-            sum = numberCarPrice * numberRegistrationFeeValue + numberRoadTrafficFee + 340000;
-            numberRegistrationFee = numberCarPrice * (numberRegistrationFeeValue - 1);
+            sum = numberCarPrice * registrationFeeValue + numberRoadTrafficFee + 340000;
+            numberRegistrationFee = numberCarPrice * (registrationFeeValue - 1);
 
             let formattedNumber = sum.toLocaleString('vi-VN', {
                 style: 'currency',
@@ -185,9 +185,9 @@
             roadTrafficFeeDisplay.textContent = formattedRoadTrafficFee;
 
             if (numberRegistrationFee) {
-                numberRegistrationFeeValue = parseFloat(registrationFee.value);
+                registrationFeeValue = parseFloat(registrationFee.value);
 
-                if (!numberRegistrationFeeValue) {
+                if (!registrationFeeValue) {
                     totalPrice.value = null;
                     btnDeposits.classList.add('disabled');
                     return;
@@ -195,7 +195,7 @@
 
                 btnDeposits.classList.remove('disabled');
                 numberCarPrice = parseInt(carPrice.textContent.replace(/\./g, '').replace(' ₫', ''));
-                sum = numberCarPrice * numberRegistrationFeeValue + numberRoadTrafficFee + 340000;
+                sum = numberCarPrice * registrationFeeValue + numberRoadTrafficFee + 340000;
 
                 let formattedNumber = sum.toLocaleString('vi-VN', {
                     style: 'currency',
