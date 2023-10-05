@@ -107,9 +107,8 @@
     }
 
     .carousel-item-custom__product-page--overlay img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 16/10;
+        width: 100vw;
+        aspect-ratio: 16/9;
         object-fit: cover;
     }
 
