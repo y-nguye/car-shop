@@ -39,7 +39,7 @@
 
             <div class="col-4">
 
-                <form name="formPay" id="formPay" method="post" action="/car-shop/cart/deposit/deposit-required">
+                <form name="formDeposit" id="formDeposit" method="post" action="/car-shop/cart/deposit/deposit-required">
                     <div id="liveAlertPlaceholder" class="text-start"></div>
 
                     <div class="pt-2">
@@ -114,7 +114,7 @@
                     <input type="hidden" name="user_deposit_price" value="<?= $depositPrice ?>" />
 
                     <div class="d-flex flex-column align-items-center justify-content-between">
-                        <button type="submit" name="btnPay" id="btn-pay" class="btn btn-primary w-100">
+                        <button type="submit" name="btnDeposit" id="btn-deposit" class="btn btn-primary w-100">
                             Xác nhận đơn đặt cọc
                         </button>
                         <a id="btn-back-to-registration-fee" class="mt-3" href="/car-shop/cart/registration-fee/<?= $car_id ?>">Quay về tính toán</a>
@@ -172,11 +172,11 @@
         const spinner = document.getElementById('spinner');
         const userFullname = document.getElementById('user_fullname');
         const userTel = document.getElementById('user_tel');
-        const btnPay = document.getElementById('btn-pay');
+        const btnDeposit = document.getElementById('btn-deposit');
         const btnBackToRegistrationFee = document.getElementById('btn-back-to-registration-fee');
 
         $(document).ready(function() {
-            $('#formPay').validate({
+            $('#formDeposit').validate({
                 errorClass: "is-invalid",
                 errorPlacement: function(error, element) {
                     element.attr("data-bs-original-title", error.text());
@@ -232,7 +232,7 @@
             userFullname.setAttribute("readonly", "");
             userTel.setAttribute("readonly", "");
 
-            btnPay.classList.add("disabled");
+            btnDeposit.classList.add("disabled");
             btnBackToRegistrationFee.classList.add("disabled-btn-back-to-registration-fee__pay-page");
         }
 

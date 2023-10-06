@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'app/controllers/AccessController.php';
+require_once __DIR__ . '/AccessController.php';
 
 class DepositController extends AccessController
 {
@@ -29,8 +29,8 @@ class DepositController extends AccessController
         include_once __DIR__ . "/../views/backend/deposit/seeMore.php";
 
         if (isset($_POST['btnUpdate'])) {
-            $user_deposit_is_contacted = $_POST['user_deposit_is_contacted'];
-            $user_deposit_is_payed = $_POST['user_deposit_is_payed'];
+            $user_deposit_is_contacted  = $_POST['user_deposit_is_contacted'];
+            $user_deposit_is_payed      = $_POST['user_deposit_is_payed'];
 
             $DB['db_user_deposit']->updateData($user_deposit_id, $user_deposit_is_contacted, $user_deposit_is_payed);
             $DB['db_user_deposit']->disconnect();

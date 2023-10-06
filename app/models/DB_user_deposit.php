@@ -41,8 +41,13 @@ class UserDepositData extends DatabaseManager
 
     public function getAllDataByUserID($user_id)
     {
-        $sql = "SELECT deposit.user_deposit_id, deposit.user_deposit_where, deposit.user_deposit_price,
-                deposit.user_deposit_at, deposit.pay_method_id, deposit.car_id, deposit.user_id,
+        $sql = "SELECT deposit.user_deposit_id, 
+                deposit.user_deposit_where,
+                deposit.user_deposit_price,
+                deposit.user_deposit_at,
+                deposit.pay_method_id,
+                deposit.car_id,
+                deposit.user_id,
                 cars.car_name,
                 pay_method.pay_method_name,
                 MIN(car_img.car_img_filename) AS car_img_filename
@@ -86,8 +91,17 @@ class UserDepositData extends DatabaseManager
         return null;
     }
 
-    public function setData($user_deposit_fullname, $user_deposit_tel, $user_deposit_email, $user_deposit_total_price, $user_deposit_price, $user_deposit_where, $pay_method_id, $user_id, $car_id)
-    {
+    public function setData(
+        $user_deposit_fullname,
+        $user_deposit_tel,
+        $user_deposit_email,
+        $user_deposit_total_price,
+        $user_deposit_price,
+        $user_deposit_where,
+        $pay_method_id,
+        $user_id,
+        $car_id
+    ) {
         $sql = "INSERT INTO $this->table
                 (user_deposit_id,
                 user_deposit_fullname,
@@ -123,9 +137,9 @@ class UserDepositData extends DatabaseManager
     public function updateData($user_deposit_id, $user_deposit_is_contacted, $user_deposit_is_payed)
     {
         $sql = "UPDATE $this->table
-            SET user_deposit_is_contacted = $user_deposit_is_contacted,
-            user_deposit_is_payed = $user_deposit_is_payed
-            WHERE user_deposit_id = $user_deposit_id;";
+                SET user_deposit_is_contacted = $user_deposit_is_contacted,
+                user_deposit_is_payed = $user_deposit_is_payed
+                WHERE user_deposit_id = $user_deposit_id;";
 
         return $this->execute($sql);
     }

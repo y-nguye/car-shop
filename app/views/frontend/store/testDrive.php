@@ -131,7 +131,7 @@
                 },
                 rules: {
                     user_province_id: {
-                        // required: true,
+                        required: true,
                     },
                     user_test_drive_day: {
                         required: true,

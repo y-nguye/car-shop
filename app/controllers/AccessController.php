@@ -17,19 +17,19 @@ class AccessController
 
     public function authorization()
     {
-        if (!$_SESSION["user_is_admin"]) {
-            $this->notFound();
+        if (isset($_SESSION["user_is_admin"]) && !$_SESSION["user_is_admin"]) {
+            $this->pageNotFound();
         }
     }
 
     public function checkNull($var)
     {
         if (!$var) {
-            $this->notFound();
+            $this->pageNotFound();
         }
     }
 
-    public function notFound()
+    public function pageNotFound()
     {
         http_response_code(404);
         include_once __DIR__ . "/../views/resources/notFound/index.php";

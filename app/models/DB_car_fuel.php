@@ -6,17 +6,6 @@ class CarFuelData extends DatabaseManager
 {
     private $table = "car_fuel";
 
-    public function getDataByID($car_fuel_id)
-    {
-        if (!$car_fuel_id) return null;
-        $sql = "SELECT * FROM $this->table WHERE car_fuel_id = $car_fuel_id;";
-        $this->result = $this->execute($sql);
-
-        if ($this->result->num_rows > 0) {
-            return $this->result->fetch_assoc();
-        }
-    }
-
     public function getAllData()
     {
         $sql = "SELECT * FROM $this->table;";

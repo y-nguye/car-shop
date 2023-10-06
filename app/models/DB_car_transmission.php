@@ -6,17 +6,6 @@ class CarTransmissionData extends DatabaseManager
 {
     private $table = "car_transmission";
 
-    public function getDataByID($car_transmission_id)
-    {
-        if (!$car_transmission_id) return null;
-        $sql = "SELECT * FROM $this->table WHERE car_transmission_id = $car_transmission_id;";
-        $this->result = $this->execute($sql);
-
-        if ($this->result->num_rows > 0) {
-            return $this->result->fetch_assoc();
-        }
-    }
-
     public function getAllData()
     {
         $sql = "SELECT * FROM $this->table;";

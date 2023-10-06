@@ -6,17 +6,6 @@ class TestDriveData extends DatabaseManager
 {
     private $table = "user_test_drive";
 
-    public function getDataByID($user_test_drive_id)
-    {
-        if ($user_test_drive_id == null) return null;
-        $sql = "SELECT * FROM $this->table WHERE user_test_drive_id = $user_test_drive_id;";
-        $this->result = $this->execute($sql);
-
-        if ($this->result->num_rows > 0) {
-            return $this->result->fetch_assoc();
-        }
-    }
-
     public function getAllData()
     {
         $sql = "SELECT td.user_test_drive_id,

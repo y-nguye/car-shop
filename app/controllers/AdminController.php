@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'app/controllers/AccessController.php';
+require_once __DIR__ . '/AccessController.php';
 
 class AdminController extends AccessController
 {

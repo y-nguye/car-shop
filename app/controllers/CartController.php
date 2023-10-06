@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'app/controllers/AccessController.php';
+require_once __DIR__ . '/AccessController.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -18,16 +18,19 @@ class CartController extends AccessController
         }
         // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-        include __DIR__ . "/../views/frontend/cart/index.php";
+        include_once __DIR__ . "/../views/frontend/cart/index.php";
     }
 
     public function delete($DB, $vars)
     {
         $car_id = $vars['id'];
-        if (!isset($_SESSION['cart'][$car_id])) $this->notFound();
+
+        // Không có sản phẩm trong giỏ hàng thì không truy cập được
+        if (!isset($_SESSION['cart'][$car_id])) $this->pageNotFound();
 
         $DB['db_user_cart_item']->connect();
         $DB['db_user_cart_item']->deleteData($car_id);
+        $DB['db_user_cart_item']->disconnect();
 
         unset($_SESSION['cart'][$car_id]);
         echo '<script>location.href = "/car-shop/cart"</script>';
@@ -38,21 +41,17 @@ class CartController extends AccessController
         $car_id = $vars['id'];
 
         // Không có sản phẩm trong giỏ hàng thì không truy cập được
-        if (!isset($_SESSION['cart'][$car_id])) {
-            $this->notFound();
-        }
+        if (!isset($_SESSION['cart'][$car_id])) $this->pageNotFound();
 
         $DB['db_user_province']->connect();
         $data_all_user_province = $DB['db_user_province']->getAllData();
 
-        $data_car = [];
-        if (isset($_SESSION['cart'])) {
-            $data_car = $_SESSION['cart'][$car_id];
-        }
+        // Lấy dữ liệu xe từ SESSION
+        $data_car = $this->getDataCarFromSessionByCarID($car_id);
 
         // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-        include __DIR__ . "/../views/frontend/cart/registrationFee.php";
+        include_once __DIR__ . "/../views/frontend/cart/registrationFee.php";
 
         // Hiển thị toast
         if (isset($_SESSION['from-registration-fee']) && $_SESSION['from-registration-fee']) {
@@ -71,13 +70,11 @@ class CartController extends AccessController
             die();
         }
 
-        $data_car = [];
-        if (isset($_SESSION['cart'])) {
-            $data_car = $_SESSION['cart'][$car_id];
-        }
+        // Lấy dữ liệu xe từ SESSION
+        $data_car = $this->getDataCarFromSessionByCarID($car_id);
 
         // Nếu có sự thay đổi về tổng chi phí dự toán thì cập nhật lại session
-        // Điều này tránh xung đột do validate có lỗi sẽ quay trở lại trang, khi đó sẽ không có biến $_POST['total_price'] từ form tính tổng dự toán
+        // Điều này tránh lỗi khi validate có lỗi sẽ quay trở lại trang, khi đó sẽ không có biến $_POST['total_price'] từ form tính tổng dự toán
         if (isset($_POST['total_price'])) {
             $total_price = floatval($_POST['total_price']);
 
@@ -115,13 +112,10 @@ class CartController extends AccessController
 
         // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-        include __DIR__ . "/../views/frontend/cart/deposit.php";
+        include_once __DIR__ . "/../views/frontend/cart/deposit.php";
 
-        // Validate: báo lỗi
-        if (isset($_SESSION['errors'])) {
-            echo "<script>showAlert('" . $_SESSION['errors'] . "', 'danger');</script>";
-            unset($_SESSION['errors']);
-        }
+        // Validate: báo lỗi (Nếu có)
+        $this->getErrorsFromSessionAndShowAlert();
 
         $DB['db_user_province']->disconnect();
         $DB['db_pay_method']->disconnect();
@@ -131,10 +125,9 @@ class CartController extends AccessController
     {
         // Tránh truy cập trái phép
         // Nếu không nhấn nút xác nhận đặt cọc thì không vào được
-        if (!isset($_POST['btnPay'])) $this->notFound();
+        if (!isset($_POST['btnDeposit'])) $this->pageNotFound();
 
         $DB['db_cars']->connect();
-        $DB['db_car_img']->connect();
         $DB['db_user_province']->connect();
         $DB['db_user_deposit']->connect();
         $DB['db_pay_method']->connect();
@@ -149,6 +142,139 @@ class CartController extends AccessController
         $pay_method_id = $_POST['pay_method_id'];
         $data_pay_method = $DB['db_pay_method']->getDataByID($pay_method_id);
         $pay_method_name = $data_pay_method['pay_method_name'];
+
+        $depositInfo = [
+            'user_deposit_fullname' => $user_deposit_fullname,
+            'user_deposit_tel' => $user_deposit_tel,
+            'user_deposit_email' => $user_deposit_email,
+            'user_deposit_total_price' => $user_deposit_total_price,
+            'user_deposit_price' => $user_deposit_price,
+        ];
+
+        $errors = $this->validationSeverSide($depositInfo);
+
+        if (empty($errors)) {
+            $user_deposit_where = $DB['db_user_province']->getDataByID($_POST['user_province_id']);
+            $user_deposit_where = 'Showroom ' . $user_deposit_where["user_province_name"];
+
+            isset($_SESSION['user_id']) ? $user_id = $_SESSION["user_id"] : $user_id = "NULL";
+
+            $DB['db_user_deposit']->setData(
+                $user_deposit_fullname,
+                $user_deposit_tel,
+                $user_deposit_email,
+                $user_deposit_total_price,
+                $user_deposit_price,
+                $user_deposit_where,
+                $pay_method_id,
+                $user_id,
+                $car_id
+            );
+
+            // Lấy id của đơn đăt cọc vừa thêm
+            $user_deposit_id = $DB['db_user_deposit']->id;
+
+            // Lấy dữ liệu xe từ SESSION
+            $data_car = $this->getDataCarFromSessionByCarID($car_id);
+
+            // Thời gian yêu cầu đặt cọc
+            $user_deposit_at = date('d/m/Y');
+            // Cộng thêm 5 ngày
+            $user_deposit_adding_5_day = $this->addFiveDays($user_deposit_at);
+
+            // Thêm các thông tin mới
+            $depositInfo['user_deposit_id'] = $user_deposit_id;
+            $depositInfo['user_deposit_where'] = $user_deposit_where;
+            $depositInfo['user_deposit_at'] = $user_deposit_at;
+            $depositInfo['user_deposit_adding_5_day'] = $user_deposit_adding_5_day;
+            $depositInfo['pay_method_name'] = $pay_method_name;
+            $depositInfo['data_car'] = $data_car;
+
+            $this->sendMailDepositRequired($depositInfo);
+
+            $DB['db_cars']->disconnect();
+            $DB['db_user_province']->disconnect();
+            $DB['db_user_deposit']->disconnect();
+            $DB['db_pay_method']->disconnect();
+        } else {
+            $this->addErrorsToSession($errors);
+            echo '<script>location.href = "/car-shop/cart/deposit/' . $car_id . '"</script>';
+        }
+    }
+
+    public function mailSendSuccess($DB)
+    {
+        if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
+            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+            include_once __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
+            unset($_SESSION['mail-send-success']);
+        } else {
+            $this->pageNotFound();
+        }
+    }
+    public function mailSendError($DB)
+    {
+        if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
+            $error = $_GET['error'];
+            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+            include_once __DIR__ . "/../views/frontend/cart/mailResponse/mailSentError.php";
+            unset($_SESSION['mail-send-success']);
+        } else {
+            $this->pageNotFound();
+        }
+    }
+
+    // ---------------- Các phương thức private ----------------
+
+    private function getAllCarTypesForHeader($DB)
+    {
+        $DB['db_car_type']->connect();
+        $data_all_car_type = $DB['db_car_type']->getAllData();
+        $DB['db_car_type']->disconnect();
+        return $data_all_car_type;
+    }
+
+    private function getDataCarFromSessionByCarID($car_id)
+    {
+        $data_car = [];
+        if (isset($_SESSION['cart'])) {
+            $data_car = $_SESSION['cart'][$car_id];
+        }
+        return $data_car;
+    }
+
+    private function addErrorsToSession($errors)
+    {
+        $errorMsg = '';
+        foreach ($errors as $fields) {
+            foreach ($fields as $field) {
+                $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
+            };
+        };
+        $_SESSION['errors'] = $errorMsg;
+    }
+
+    private function getErrorsFromSessionAndShowAlert()
+    {
+        if (isset($_SESSION['errors'])) {
+            echo "<script>showAlert('" . $_SESSION['errors'] . "', 'danger');</script>";
+            unset($_SESSION['errors']);
+        }
+    }
+
+    private function addFiveDays($user_deposit_at)
+    {
+        $deposit_at_timestamp = strtotime(str_replace('/', '-', $user_deposit_at)); // Chuyển đổi định dạng ngày tháng
+        $deposit_adding_5_day_timestamp = strtotime('+5 days', $deposit_at_timestamp); // Cộng thêm 5 ngày
+        $user_deposit_adding_5_day = date('d/m/Y', $deposit_adding_5_day_timestamp); // Chuyển timestamp thành ngày tháng năm
+        return $user_deposit_adding_5_day;
+    }
+
+    private function validationSeverSide($depositInfo)
+    {
+        $user_deposit_fullname = $depositInfo['user_deposit_fullname'];
+        $user_deposit_tel = $depositInfo['user_deposit_tel'];
+        $user_deposit_email = $depositInfo['user_deposit_email'];
 
         // Validation phía server
         $errors = [];
@@ -248,72 +374,7 @@ class CartController extends AccessController
                 'msg' => 'Email tối đa có 100 ký tự',
             ];
         }
-
-        if (empty($errors)) {
-            $user_deposit_where = $DB['db_user_province']->getDataByID($_POST['user_province_id']);
-            $user_deposit_where = 'Showroom ' . $user_deposit_where["user_province_name"];
-
-            isset($_SESSION['user_id']) ? $user_id = $_SESSION["user_id"] : $user_id = "NULL";
-
-            $DB['db_user_deposit']->setData(
-                $user_deposit_fullname,
-                $user_deposit_tel,
-                $user_deposit_email,
-                $user_deposit_total_price,
-                $user_deposit_price,
-                $user_deposit_where,
-                $pay_method_id,
-                $user_id,
-                $car_id
-            );
-
-            // Lấy id của đơn đăt cọc vừa thêm
-            $user_deposit_id = $DB['db_user_deposit']->id;
-
-            // Lấy dữ liệu xe từ SESSION
-            $data_car = [];
-            if (isset($_SESSION['cart'])) $data_car = $_SESSION['cart'][$car_id];
-
-            // Thời gian yêu cầu đặt cọc
-            $user_deposit_at = date('d/m/Y');
-            // Cộng thêm 5 ngày
-            $deposit_at_timestamp = strtotime(str_replace('/', '-', $user_deposit_at)); // Chuyển đổi định dạng ngày tháng
-            $deposit_adding_5_day_timestamp = strtotime('+5 days', $deposit_at_timestamp); // Cộng thêm 5 ngày
-            $user_deposit_adding_5_day = date('d/m/Y', $deposit_adding_5_day_timestamp); // Chuyển timestamp thành ngày tháng năm
-
-            $DB['db_cars']->disconnect();
-            $DB['db_car_img']->disconnect();
-            $DB['db_user_province']->disconnect();
-            $DB['db_user_deposit']->disconnect();
-            $DB['db_pay_method']->disconnect();
-
-            $depositInfo = [
-                'user_deposit_id' => $user_deposit_id,
-                'user_deposit_fullname' => $user_deposit_fullname,
-                'user_deposit_tel' => $user_deposit_tel,
-                'user_deposit_email' => $user_deposit_email,
-                'user_deposit_total_price' => $user_deposit_total_price,
-                'user_deposit_price' => $user_deposit_price,
-                'user_deposit_where' => $user_deposit_where,
-                'user_deposit_at' => $user_deposit_at,
-                'user_deposit_adding_5_day' => $user_deposit_adding_5_day,
-                'pay_method_name' => $pay_method_name,
-                'data_car' => $data_car,
-            ];
-
-            $this->sendMailDepositRequired($depositInfo);
-        } else {
-            $errorMsg = '';
-            foreach ($errors as $fields) {
-                foreach ($fields as $field) {
-                    $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
-                };
-            };
-
-            $_SESSION['errors'] = $errorMsg;
-            // Quay về báo lỗi
-            echo '<script>location.href = "/car-shop/cart/deposit/' . $car_id . '"</script>';
-        }
+        return $errors;
     }
 
     private function sendMailDepositRequired($depositInfo)
@@ -356,28 +417,6 @@ class CartController extends AccessController
             // Kiểm soát truy cập 
             $_SESSION['mail-send-success'] = false;
             echo '<script>location.href = "/car-shop/cart/deposit/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
-        }
-    }
-
-    public function mailSendSuccess($DB)
-    {
-        if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
-            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-            include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
-            unset($_SESSION['mail-send-success']);
-        } else {
-            $this->notFound();
-        }
-    }
-    public function mailSendError($DB)
-    {
-        if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
-            $error = $_GET['error'];
-            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
-            include __DIR__ . "/../views/frontend/cart/mailResponse/mailSentError.php";
-            unset($_SESSION['mail-send-success']);
-        } else {
-            $this->notFound();
         }
     }
 
@@ -557,31 +596,5 @@ class CartController extends AccessController
         EOT;
 
         return $contentMailDepositRequestHasBeenConfirmed;
-    }
-
-    private function addToCart($carInfo)
-    {
-        $cart = [];
-        if (isset($_SESSION['cart'])) {
-            $cart = $_SESSION['cart'];
-        }
-
-        $cart[$carInfo['car_id']] = array(
-            'car_id' => $carInfo['car_id'],
-            'car_name' => $carInfo['car_name'],
-            'car_price' => $carInfo['car_price'],
-            'car_describe' => $carInfo['car_describe'],
-            'car_img_filename' => $carInfo['car_img_filename'],
-        );
-
-        $_SESSION['cart'] = $cart;
-    }
-
-    private function getAllCarTypesForHeader($DB)
-    {
-        $DB['db_car_type']->connect();
-        $data_all_car_type = $DB['db_car_type']->getAllData();
-        $DB['db_car_type']->disconnect();
-        return $data_all_car_type;
     }
 }
