@@ -165,7 +165,7 @@
 
                         <div class="d-flex justify-content-start mb-3">
                             <button type="button" class="btn btn-danger btn-go-back">Quay lại</button>
-                            <button type="button" id="backToTop" class="btn btn-secondary ms-auto me-3">Lên đầu trang</button>
+                            <button type="button" class="btn btn-secondary ms-auto me-3 btn-back-to-top">Lên đầu trang</button>
                             <button type="submit" name="btnAdd" class="btn btn-primary disabled btn-add">Thêm</button>
                         </div>
 
@@ -187,11 +187,24 @@
         // Phiên bản 4.22
         CKEDITOR.replace('car_detail_describe');
 
-        // -------------- Hiển thị hình ảnh ngay sau khi chọn ------------------
+        const formAdd = document.getElementById('formAdd');
+        const btnAdd = document.querySelector('.btn-add');
+        const btnAddProducer = document.querySelector('.btn-add-car-producer');
+        const btnGoBack = document.querySelector('.btn-go-back');
+        const btnGoBackHeader = document.querySelector('.btn-go-back-header');
+        const btnBackToTop = document.querySelector('.btn-back-to-top');
+
         const fileInput = document.getElementById('car_img_filename');
         const imagePreviewContainer = document.getElementById('preview-image-container');
         const previewImg = document.querySelector('.preview-img');
 
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+        const inputElementNodelist = document.querySelectorAll('.remove-space-first');
+
+        // Tạo một biến để theo dõi trạng thái sự thay đổi
+        let formChanged = false;
+
+        // -------------- Hiển thị hình ảnh ngay sau khi chọn ------------------
         // Thêm sự kiện change cho thẻ input
         fileInput.addEventListener('change', function() {
             // Xóa tất cả hình ảnh hiện có trong container
@@ -229,7 +242,6 @@
         })
 
         // -------------- Alert hiển thị khi bị lỗi thêm dữ liệu ------------------
-        var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
         function showAlert(message, type) {
             var wrapper = document.createElement('div');
@@ -238,13 +250,7 @@
         }
 
         // -------------- Theo dõi thay đổi trên form ------------------------
-        const formAdd = document.getElementById('formAdd');
-        const btnAdd = document.querySelector('.btn-add');
-        const btnAddProducer = document.querySelector('.btn-add-car-producer');
-        const btnGoBack = document.querySelector('.btn-go-back');
-        const btnGoBackHeader = document.querySelector('.btn-go-back-header');
-        // Tạo một biến để theo dõi trạng thái sự thay đổi
-        let formChanged = false;
+
 
         // Bắt đầu theo dõi sự thay đổi trên các trường input
         formAdd.addEventListener('change', () => {
@@ -258,22 +264,18 @@
             btnAdd.classList.remove('disabled');
         });
 
-        // -------------- Nút "Quay lại" ------------------
+        // -------------- Các nút ---------------
         btnGoBack.addEventListener("click", () => {
             window.history.back();
         });
         btnGoBackHeader.addEventListener("click", () => {
             window.history.back();
         });
-
-        // -------------- Nút "Thêm hãng xe" ------------------
         btnAddProducer.addEventListener("click", () => {
             window.location.href = "/car-shop/admin/product/add-producer";
 
         });
-
-        // -------------- Nút "Trở về đầu trang" ------------------
-        document.getElementById("backToTop").addEventListener("click", function(event) {
+        btnBackToTop.addEventListener("click", function(event) {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth" // Cuộn mượt
@@ -294,8 +296,6 @@
         });
 
         //-------------- Loại bỏ dấu cách đầu tiên khi nhập liệu --------------
-        const inputElementNodelist = document.querySelectorAll('.remove-space-first');
-
         inputElementNodelist.forEach(x => {
             x.addEventListener('input', function() {
                 let inputValue = this.value;

@@ -186,12 +186,20 @@
                                 <?php foreach ($data_all_car_img as $index => $img) : ?>
                                     <?php if ($img['car_img_filename'] != NULL) : ?>
                                         <div class="preview-image-container-item">
-                                            <img src="/car-shop/assets/uploads/<?= $img['car_img_filename'] ?>" alt="preview-img" class="preview-img" />
+
+                                            <!-- Xử lý trường hợp bị mất hình ảnh trong thư mục uploads -->
+                                            <?php if ($img['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $img['car_img_filename'])) : ?>
+                                                <img src="/car-shop/assets/uploads/<?= $img['car_img_filename'] ?>" alt="preview-img" class="preview-img" />
+                                            <?php else : ?>
+                                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 preview-img" alt="preview-img">
+                                            <?php endif; ?>
+
                                             <?php if ($index == 0) : ?>
                                                 <span>Hình đại diện</span>
                                             <?php else : ?>
                                                 <span><?= $index ?></span>
                                             <?php endif; ?>
+
                                         </div>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
@@ -202,7 +210,7 @@
 
                         <div class="d-flex justify-content-start mb-3">
                             <button type="button" class="btn btn-danger btn-go-back">Quay lại</button>
-                            <button type="button" id="backToTop" class="btn btn-secondary ms-auto me-3">Lên đầu trang</button>
+                            <button type="button" class="btn btn-secondary ms-auto me-3 btn-back-to-top">Lên đầu trang</button>
                             <button type="submit" name="btnEdit" class="btn btn-primary disabled btn-update">Cập nhật</button>
                         </div>
                     </div>
@@ -224,8 +232,16 @@
         CKEDITOR.replace('car_detail_describe');
 
         // -------------- Hiển thị hình ảnh ngay sau khi chọn ------------------
+        const formEdit = document.getElementById('formEdit');
+        const btnAddProducer = document.querySelector('.btn-add-car-producer');
+        const btnUpdate = document.querySelector('.btn-update');
+        const btnGoBack = document.querySelector('.btn-go-back');
+        const btnGoBackHeader = document.querySelector('.btn-go-back-header');
+        const btnBackToTop = document.querySelector('.btn-back-to-top');
+        const inputRemoveSpaceFirstNodelist = document.querySelectorAll('.remove-space-first');
         const fileInput = document.getElementById('car_img_filename');
         const imagePreviewContainer = document.getElementById('preview-image-containe');
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
         // Thêm sự kiện change cho thẻ input
         fileInput.addEventListener('change', function() {
@@ -259,21 +275,13 @@
         });
 
         // -------------- Alert hiển thị khi bị lỗi thêm dữ liệu ------------------
-        var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
-
         function showAlert(message, type) {
             var wrapper = document.createElement('div');
             wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
             alertPlaceholder.appendChild(wrapper);
         }
 
-        // ----------------------------------------------------------------
-        const formEdit = document.getElementById('formEdit');
-        const btnAddProducer = document.querySelector('.btn-add-car-producer');
-        const btnUpdate = document.querySelector('.btn-update');
-        const btnGoBack = document.querySelector('.btn-go-back');
-        const btnGoBackHeader = document.querySelector('.btn-go-back-header');
-
+        // ----------------------------------------------------------------        
         // Tạo một biến để theo dõi trạng thái sự thay đổi
         let formChanged = false;
 
@@ -289,27 +297,25 @@
             btnUpdate.classList.remove('disabled');
         });
 
+        // -------------- Các nút ---------------
         btnAddProducer.addEventListener("click", () => {
             window.location.href = "/car-shop/admin/product/add-producer";
-
         });
-
         btnGoBack.addEventListener("click", () => {
             window.location.href = "/car-shop/admin/product";
         });
         btnGoBackHeader.addEventListener("click", () => {
             window.location.href = "/car-shop/admin/product";
         });
-
-        // -------------- Nút "Trở về đầu trang" ------------------
-        document.getElementById("backToTop").addEventListener("click", () => {
+        btnBackToTop.addEventListener("click", () => {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth" // Cuộn mượt
             });
         });
 
-        // Bắt sự kiện beforeunload để hiển thị thông báo xác nhận
+
+        //-------------- Bắt sự kiện beforeunload để hiển thị thông báo xác nhận --------------
         window.addEventListener("beforeunload", function(e) {
             if (formChanged) {
                 // Hiển thị thông báo xác nhận
@@ -322,7 +328,6 @@
         });
 
         //-------------- Loại bỏ dấu cách đầu tiên khi nhập liệu --------------
-        const inputRemoveSpaceFirstNodelist = document.querySelectorAll('.remove-space-first');
 
         inputRemoveSpaceFirstNodelist.forEach(x => {
             x.addEventListener('input', function() {

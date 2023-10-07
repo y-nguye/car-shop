@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . '/AccessController.php';
 
 class ProductController extends AccessController
@@ -164,11 +163,10 @@ class ProductController extends AccessController
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $DB['db_car_producer']->connect();
             $producerExists = $DB['db_car_producer']->checkData($_POST['car_producer_name']);
-            if ($producerExists) {
-                echo 'false';
-            } else {
-                echo 'true';
-            }
+
+            if ($producerExists) echo 'false';
+            else echo 'true';
+
             $DB['db_car_producer']->disconnect();
         }
     }
@@ -391,11 +389,11 @@ class ProductController extends AccessController
                 'msg' => 'Tên sản phẩm phải tối thiểu 3 kí tự',
             ];
         }
-        // Rule: maxlength 100
-        else if (strlen($car_name) > 100) {
+        // Rule: maxlength 50
+        else if (strlen($car_name) > 50) {
             $errors['car_name'][] = [
                 'rule' => 'maxlength',
-                'rule_value' => 100,
+                'rule_value' => 50,
                 'value' => $car_name,
                 'msg' => 'Tên sản phẩm tối đa có 100 ký tự',
             ];

@@ -183,7 +183,11 @@
 
                         <div class="container text-center mt-5">
                             <div id="image-preview-container" class="form-group">
-                                <img src="/car-shop/assets/uploads/<?= $user_deposit['car_img_filename'] ?>" alt="no-img" id="preview-img" class="preview-img" />
+                                <?php if ($user_deposit['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $user_deposit['car_img_filename'])) : ?>
+                                    <img src="/car-shop/assets/uploads/<?= $user_deposit['car_img_filename'] ?>" alt="no-img" id="preview-img" class="preview-img" />
+                                <?php else : ?>
+                                    <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 preview-img" alt="preview-img">
+                                <?php endif; ?>
                             </div>
                         </div>
 

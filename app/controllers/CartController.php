@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . '/AccessController.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -197,7 +196,7 @@ class CartController extends AccessController
             $DB['db_user_deposit']->disconnect();
             $DB['db_pay_method']->disconnect();
         } else {
-            $this->addErrorsToSession($errors);
+            $this->setErrorsToSession($errors);
             echo '<script>location.href = "/car-shop/cart/deposit/' . $car_id . '"</script>';
         }
     }
@@ -243,7 +242,7 @@ class CartController extends AccessController
         return $data_car;
     }
 
-    private function addErrorsToSession($errors)
+    private function setErrorsToSession($errors)
     {
         $errorMsg = '';
         foreach ($errors as $fields) {

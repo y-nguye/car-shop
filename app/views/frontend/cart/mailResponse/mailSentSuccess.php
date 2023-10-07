@@ -35,11 +35,6 @@
     <?php
     include_once __DIR__ . '/../../../resources/script/script.php';
     ?>
-
-    <script>
-
-    </script>
-
 </body>
 
 </html>

@@ -21,6 +21,7 @@
             <h2 class="mb-0">Thông tin khách hàng đặt cọc</h2>
             <div id="spinner" class="spinner-border visually-hidden" role="status"></div>
         </div>
+
         <hr>
 
         <div class="row">

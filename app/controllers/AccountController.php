@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . '/AccessController.php';
 
 class AccountController extends AccessController
@@ -24,6 +23,7 @@ class AccountController extends AccessController
         // Hiển thị header
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/account/index.php";
+        $this->getErrorsFromSessionAndShowAlert();
 
         $DB['db_user_province']->disconnect();
     }
@@ -160,7 +160,6 @@ class AccountController extends AccessController
                 $DB['db_user']->setData($user_username, $hashedPassword, $user_fullname, $user_tel, $user_email, $user_address);
                 $DB['db_user']->disconnect();
                 echo '<script>location.href = "/car-shop/account/login"</script>';
-                die();
             } else {
                 $this->showErrorsAlert($errors);
             }
@@ -175,15 +174,28 @@ class AccountController extends AccessController
             $user_tel           = $_POST["user_tel"];
             $user_province_id   = $_POST["user_province_id"];
 
-            $DB['db_user']->updateData($_SESSION["user_id"], $user_fullname, $user_tel, $user_province_id);
-            $DB['db_user']->disconnect();
+            $updateInfo = [
+                'user_fullname' => $user_fullname,
+                'user_tel' => $user_tel,
+            ];
 
-            // Cập nhật lại session
-            $_SESSION["user_fullname"] = $user_fullname;
-            $_SESSION["user_tel"] = $user_tel;
-            $_SESSION["user_province_id"] = $user_province_id;
+            // Validation khi người dùng cập nhật thông tin cá nhân
+            $errors = $this->validationEditPersonServerSide($updateInfo);
 
-            echo '<script>location.href = "/car-shop/account"</script>';
+            if (empty($errors)) {
+                $DB['db_user']->updateData($_SESSION["user_id"], $user_fullname, $user_tel, $user_province_id);
+                $DB['db_user']->disconnect();
+
+                // Cập nhật lại session
+                $_SESSION["user_fullname"] = $user_fullname;
+                $_SESSION["user_tel"] = $user_tel;
+                $_SESSION["user_province_id"] = $user_province_id;
+
+                echo '<script>location.href = "/car-shop/account"</script>';
+            } else {
+                $this->setErrorsToSession($errors);
+                echo '<script>location.href = "/car-shop/account"</script>';
+            }
         } else {
             $this->pageNotFound();
         }
@@ -257,17 +269,6 @@ class AccountController extends AccessController
         return $data_all_car_type;
     }
 
-    private function showErrorsAlert($errors)
-    {
-        $errorMsg = '';
-        foreach ($errors as $fields) {
-            foreach ($fields as $field) {
-                $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
-            };
-        };
-        echo "<script>showAlert('" . $errorMsg . "', 'danger');</script>";
-    }
-
     private function syncDataCart($DB)
     {
         if (isset($_SESSION['logged']) && $_SESSION['logged']) {
@@ -312,16 +313,122 @@ class AccountController extends AccessController
         }
     }
 
-    private function validationServerSide($DB, $signUpInfo)
+    private function showErrorsAlert($errors)
+    {
+        $errorMsg = $this->createErrorsList($errors);
+        echo "<script>showAlert('" . $errorMsg . "', 'danger');</script>";
+    }
+
+    private function setErrorsToSession($errors)
+    {
+        $errorMsg = $this->createErrorsList($errors);
+        $_SESSION['errors'] = $errorMsg;
+    }
+
+    private function getErrorsFromSessionAndShowAlert()
+    {
+        if (isset($_SESSION['errors'])) {
+            echo "<script>showAlert('" . $_SESSION['errors'] . "', 'danger');</script>";
+            unset($_SESSION['errors']);
+        }
+    }
+
+    private function createErrorsList($errors)
+    {
+        $errorMsg = '';
+        foreach ($errors as $fields) {
+            foreach ($fields as $field) {
+                $errorMsg = $errorMsg . "<li>" . $field['msg'] . "</li>";
+            };
+        };
+        return $errorMsg;
+    }
+
+    private function validationEditPersonServerSide($validateInfo)
+    {
+        $user_fullname = $validateInfo['user_fullname'];
+        $user_tel = $validateInfo['user_tel'];
+
+        $errors = []; // Giả sự người dùng chưa vi phạm lỗi nào hết...
+        // 1. Kiểm tra ô tên người dùng
+        // Rule: required
+        if (empty($user_fullname)) {
+            $errors['user_fullname'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_fullname,
+                'msg' => 'Vui lòng nhập tên đầy đủ',
+            ];
+        }
+        // Rule: minlength 3
+        elseif (strlen($user_fullname) < 3) {
+            $errors['user_fullname'][] = [
+                'rule' => 'minlength',
+                'rule_value' => 3,
+                'value' => $user_fullname,
+                'msg' => 'Tên đầy đủ phải tối thiểu 3 kí tự',
+            ];
+        }
+        // Rule: maxlength 50
+        elseif (strlen($user_fullname) > 50) {
+            $errors['user_fullname'][] = [
+                'rule' => 'maxlength',
+                'rule_value' => 50,
+                'value' => $user_fullname,
+                'msg' => 'Tên đầy đủ tối đa có 50 ký tự',
+            ];
+        }
+
+
+        // 2. Kiểm tra số điện thoại
+        // Rule: required
+        if (empty($user_tel)) {
+            $errors['user_tel'][] = [
+                'rule' => 'required',
+                'rule_value' => true,
+                'value' => $user_tel,
+                'msg' => 'Vui lòng nhập số điện thoại',
+            ];
+        }
+        // Rule: isNumber
+        elseif (!is_numeric($user_tel)) {
+            $errors['user_tel'][] = [
+                'rule' => 'is_number',
+                'rule_value' => true,
+                'value' => $user_tel,
+                'msg' => 'Số điện thoại không hợp lệ',
+            ];
+        }
+        // Rule: minlength 10
+        elseif (strlen($user_tel) < 10) {
+            $errors['user_tel'][] = [
+                'rule' => 'minlength',
+                'rule_value' => 10,
+                'value' => $user_tel,
+                'msg' => 'Số điện thoại không hợp lệ',
+            ];
+        }
+        // Rule: maxlength
+        elseif (strlen($user_tel) > 15) {
+            $errors['user_tel'][] = [
+                'rule' => 'maxlength',
+                'rule_value' => 15,
+                'value' => $user_tel,
+                'msg' => 'Số điện thoại không hợp lệ',
+            ];
+        }
+        return $errors;
+    }
+    private function validationServerSide($DB, $validateInfo)
     {
 
-        $user_fullname = $signUpInfo['user_fullname'];
-        $user_tel = $signUpInfo['user_tel'];
-        $user_province_id = $signUpInfo['user_province_id'];
-        $user_email = $signUpInfo['user_email'];
-        $user_username = $signUpInfo['user_username'];
-        $user_password = $signUpInfo['user_password'];
-        $user_password_confirm = $signUpInfo['user_password_confirm'];
+        $user_fullname = $validateInfo['user_fullname'];
+        $user_tel = $validateInfo['user_tel'];
+        $user_province_id = $validateInfo['user_province_id'];
+        $user_email = $validateInfo['user_email'];
+        $user_username = $validateInfo['user_username'];
+        $user_password = $validateInfo['user_password'];
+        $user_password_confirm = $validateInfo['user_password_confirm'];
 
         $errors = []; // Giả sự người dùng chưa vi phạm lỗi nào hết...
         // 1. Kiểm tra ô tên người dùng

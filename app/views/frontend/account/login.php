@@ -61,7 +61,7 @@
         });
 
         // -------------- Alert hiển thị khi bị lỗi thêm dữ liệu ------------------
-        var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
         function showAlert(message, type) {
             var wrapper = document.createElement('div');

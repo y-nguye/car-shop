@@ -1,10 +1,9 @@
 <?php
-session_start();
 require_once __DIR__ . '/AccessController.php';
 
 class AdminController extends AccessController
 {
-    public function index($DB)
+    public function index()
     {
         $this->authentication();
         $this->authorization();

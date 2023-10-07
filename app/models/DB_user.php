@@ -51,25 +51,27 @@ class UserData extends DatabaseManager
 
     public function setData($user_username, $user_password, $user_fullname, $user_tel, $user_email, $user_province_id)
     {
-        $sql = "INSERT INTO $this->table (user_id,
-                                        user_username,
-                                        user_password,
-                                        user_fullname,
-                                        user_tel,
-                                        user_email,
-                                        user_province_id,
-                                        user_avt,
-                                        user_is_admin)
-                                    VALUES (
-                                        null,
-                                        '$user_username',
-                                        '$user_password',
-                                        '$user_fullname',
-                                        '$user_tel',
-                                        '$user_email',
-                                        '$user_province_id',
-                                        NULL,
-                                        0);";
+        $sql = "INSERT INTO $this->table
+                (user_id,
+                user_username,
+                user_password,
+                user_fullname,
+                user_tel,
+                user_email,
+                user_province_id,
+                user_avt,
+                user_is_admin)
+                VALUES (
+                null,
+                '$user_username',
+                '$user_password',
+                '$user_fullname',
+                '$user_tel',
+                '$user_email',
+                '$user_province_id',
+                NULL,
+                0);";
+
         $this->execute($sql);
     }
 

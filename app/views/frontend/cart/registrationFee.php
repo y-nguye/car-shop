@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="d-flex flex-column align-items-center justify-content-between">
-                        <button type="submit" name="btnDeposits" id="btn-deposits" class="btn btn-primary w-100 disabled">Tiến hành đặt cọc</button>
+                        <button type="submit" name="btnDeposits" id="btn-deposits" class="btn btn-primary w-100 disabled">Yêu cầu đặt cọc</button>
                         <a class="mt-3" href="/car-shop/cart">Quay về giỏ hàng</a>
                     </div>
                 </form>

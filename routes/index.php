@@ -28,7 +28,7 @@ switch ($routeInfo[0]) {
         http_response_code(404);
         require __DIR__ . '/../app/controllers/AccessController.php';
         $controller = new AccessController();
-        call_user_func([$controller, 'notFound']);
+        call_user_func([$controller, 'pageNotFound']);
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];

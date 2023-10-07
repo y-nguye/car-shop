@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . '/AccessController.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -216,7 +215,7 @@ class StoreController extends AccessController
 
             echo '<script>location.href = "/car-shop/product/' . $car_id . '"</script>';
         } else {
-            $this->addErrorsToSession($errors);
+            $this->setErrorsToSession($errors);
             echo '<script>location.href = "/car-shop/test-drive/' . $car_id . '"</script>';
         }
     }
@@ -245,7 +244,7 @@ class StoreController extends AccessController
         }
     }
 
-    private function addErrorsToSession($errors)
+    private function setErrorsToSession($errors)
     {
         $errorMsg = '';
         foreach ($errors as $fields) {

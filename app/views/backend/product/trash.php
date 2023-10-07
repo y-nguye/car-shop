@@ -121,7 +121,9 @@
             });
         });
 
-        var trashCarsForm = document.forms['formCarTrash'];
+        const trashCarsForm = document.forms['formCarTrash'];
+        const danhSach = document.getElementById('container-danhsach');
+        const spinner = document.getElementById('spinner');
         const btnRestore = document.querySelector('.btn-restore');
         const btnDelete = document.querySelector('.btn-delete');
         const btnForceDelete = document.querySelector('.btn-force-delete__confirm');
@@ -142,9 +144,7 @@
             trashCarsForm.submit();
         });
 
-        // ----------------------- Loadings ------------------------------
-        const danhSach = document.getElementById('container-danhsach');
-        const spinner = document.getElementById('spinner');
+        // ----------------------- Loading ------------------------------
 
         setTimeout(function() {
             danhSach.classList.remove('invisible');

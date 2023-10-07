@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . '/AccessController.php';
 
 class TestDriveController extends AccessController

@@ -85,7 +85,9 @@
                         <div class="mb-3 text-justify">
                             <span>Quản lý thông tin cá nhân của bạn, bao gồm số điện thoại và địa chỉ email mà chúng tôi có thể sử dụng để liên hệ với bạn.</span>
                         </div>
-                        <form name="editForm" class="edit-form" method="post" action="/car-shop/account/edit-person-info">
+                        <div id="liveAlertPlaceholder" class="text-start"></div>
+
+                        <form name="editForm" id="editForm" class="edit-form" method="post" action="/car-shop/account/edit-person-info">
                             <div class="d-flex flex-wrap">
                                 <div class="col-6">
                                     <div class="me-2 mb-2 bg-light shadow-sm rounded card-custom">
@@ -94,7 +96,7 @@
                                                 <h5 class="text-dark m-0">Tên đầy đủ</h5>
                                                 <i class="bi bi-person text-primary fs-4"></i>
                                             </div>
-                                            <input type="text" name="user_fullname" class="form-control mt-3" value="<?= $user_fullname ?>" />
+                                            <input type="text" name="user_fullname" class="form-control mt-3" value="<?= $user_fullname ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +108,7 @@
                                                 <h5 class="text-dark m-0">Số điện thoại</h5>
                                                 <i class="bi bi-telephone text-primary fs-4"></i>
                                             </div>
-                                            <input type="text" name="user_tel" class="form-control mt-3" value="<?= $user_tel ?>" />
+                                            <input type="text" name="user_tel" class="form-control mt-3" value="<?= $user_tel ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" />
                                         </div>
                                     </div>
                                 </div>
@@ -195,6 +197,55 @@
                 updateButtonGroup.classList.remove("update-button-group-active");
             });
         });
+
+        $(document).ready(function() {
+            $('#editForm').validate({
+                errorClass: "is-invalid",
+                errorPlacement: function(error, element) {
+                    element.attr("data-bs-original-title", error.text());
+                },
+                success: function(element) {
+                    element.removeAttr("data-bs-original-title");
+                },
+                submitHandler: function(form) {
+                    preventOperation();
+                    form.submit();
+                },
+                rules: {
+                    user_fullname: {
+                        // required: true,
+                        minlength: 3,
+                        maxlength: 50,
+                    },
+                    user_tel: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 15,
+                    },
+                },
+                messages: {
+                    user_fullname: {
+                        required: "Không được để trống",
+                        minlength: "Tên quá ngắn",
+                        maxlength: "Tên quá dài",
+                    },
+                    user_tel: {
+                        required: "Không được để trống",
+                        minlength: "Số điện thoại không hợp lệ",
+                        maxlength: "Số điện thoại không hợp lệ",
+                    },
+                }
+            });
+        });
+
+        // -------------- Alert hiển thị khi bị lỗi thêm dữ liệu ------------------
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+
+        function showAlert(message, type) {
+            var wrapper = document.createElement('div');
+            wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+            alertPlaceholder.appendChild(wrapper);
+        }
     </script>
 
 </body>

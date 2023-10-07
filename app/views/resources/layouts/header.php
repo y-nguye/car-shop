@@ -1,5 +1,5 @@
 <?php
-include_once 'app/views/resources/layouts/headerStyles.php';
+include_once __DIR__ . '/headerStyles.php';
 ?>
 
 <div class="fixed-top blur-below-navbar"></div>
@@ -46,23 +46,30 @@ include_once 'app/views/resources/layouts/headerStyles.php';
 
             <?php if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) : ?>
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="m-0">Giỏ hàng</h4>
+                    <h3 class="m-0"><b>Giỏ hàng</b></h3>
                     <button type="button" class="btn btn-primary rounded-pill cart-btn">Xem giỏ hàng</button>
                 </div>
                 <ul class="list-car-on-bag">
+                    <?php $index = 0 ?>
                     <?php foreach ($_SESSION['cart'] as $data_cart) : ?>
-                        <li class="mt-4">
-                            <a class="text-dark" href="/car-shop/product/<?= $data_cart['car_id'] ?>">
-                                <div>
-                                    <?php if ($data_cart['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_cart['car_img_filename'])) : ?>
-                                        <img src="/car-shop/assets/uploads/<?= $data_cart['car_img_filename'] ?>" class="rounded-3 me-3 img-item-on-bag" alt="mb">
-                                    <?php else : ?>
-                                        <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="rounded-3 me-3 img-item-on-bag">
-                                    <?php endif; ?>
-                                    <span><?= $data_cart['car_name'] ?></span>
-                                </div>
-                            </a>
-                        </li>
+                        <?php if ($index < 3) : ?>
+                            <li class="mt-4">
+                                <a class="text-dark" href="/car-shop/product/<?= $data_cart['car_id'] ?>">
+                                    <div>
+                                        <?php if ($data_cart['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_cart['car_img_filename'])) : ?>
+                                            <img src="/car-shop/assets/uploads/<?= $data_cart['car_img_filename'] ?>" class="rounded-3 me-3 img-item-on-bag" alt="mb">
+                                        <?php else : ?>
+                                            <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="rounded-3 me-3 img-item-on-bag">
+                                        <?php endif; ?>
+                                        <span><?= $data_cart['car_name'] ?></span>
+                                    </div>
+                                </a>
+                            </li>
+                        <?php else : ?>
+                            <div class="mt-3"><?= "Còn " . count($_SESSION['cart']) - $index . " sản phẩm khác trong giỏ hàng của bạn" ?></div>
+                            <?php break; ?>
+                        <?php endif; ?>
+                        <?php $index++; ?>
                     <?php endforeach; ?>
                 </ul>
 
@@ -80,7 +87,6 @@ include_once 'app/views/resources/layouts/headerStyles.php';
                     <div class="mt-4"><a class="text-dark text-decoration-underline" href="/car-shop/account/login">Đăng nhập</a> để xem bạn có món hàng nào được lưu hay không</div>
                 <?php endif; ?>
             <?php endif ?>
-
 
             <div class="mt-4 text-secondary"><span>Hồ sơ của tôi</span></div>
             <ul>

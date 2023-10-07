@@ -16,7 +16,6 @@
     ?>
     <div class="push-footer-down-page">
 
-
         <div class="container-lg pt-3 ">
             <?php if (empty($cart)) : ?>
                 <h2 class="mb-0 mb-5">Giỏ hàng của bạn đang trống</h2>
@@ -24,7 +23,6 @@
                 <h2 class="mb-0">Giỏ hàng</h2>
             <?php endif; ?>
         </div>
-
 
         <div class="container-lg pb-3">
 
@@ -50,7 +48,7 @@
                             <p class="fs-3 m-0"><?= number_format($data['car_price'], 0, ',', '.') ?> ₫</p>
                             <a class="fs-5 icon-link icon-link-hover" href="/car-shop/cart/registration-fee/<?= $data['car_id'] ?>">Dự toán chi phí <i class="bi bi-arrow-right align-middle "></i></a>
                         </div>
-                        <a class="btn-close fs-5 ms-auto me-4" aria-label="Close" href="/car-shop/cart/delete/<?= $data['car_id'] ?>"></a>
+                        <a class="btn-close fs-5 ms-auto me-1" aria-label="Close" href="/car-shop/cart/delete/<?= $data['car_id'] ?>"></a>
                     </div>
                 </div>
             <?php endforeach ?>
