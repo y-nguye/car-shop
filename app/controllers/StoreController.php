@@ -14,9 +14,9 @@ class StoreController extends AccessController
         $DB['db_cars']->connect();
 
         // Lựa chọn để hiển thị HomePage
-        $data_all_car_by_car_ids_to_display_carouse = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([57, 49, 54, 55]);
-        $data_all_car_by_car_ids_to_display_salling = $DB['db_cars']->getAllDataWithSecondImgByCarIDs([48, 49, 54, 64]);
-        $data_all_car_by_car_ids_to_display_four_newest = $DB['db_cars']->getAllDataWithSecondImgByFourNewUpdate();
+        $data_all_car_by_car_ids_to_display_carouse = $DB['db_cars']->getAllDataWithSecondImg([57, 49, 54, 55]);
+        $data_all_car_by_car_ids_to_display_salling = $DB['db_cars']->getAllDataWithSecondImg([48, 49, 54, 57]);
+        $data_all_car_by_car_ids_to_display_four_newest = $DB['db_cars']->getAllDataWithSecondImg(null, 4);
 
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/store/index.php";
@@ -36,7 +36,7 @@ class StoreController extends AccessController
                 $isExistType = true;
                 // Lấy dữ liệu theo loại 
                 $nameType = $data['car_type_name'];
-                $data_all_with_img = $DB['db_cars']->getAllDataWithFirstImgByCarTypeID($data['car_type_id']);
+                $data_all_with_img = $DB['db_cars']->getAllDataWithFirstImg($data['car_type_id']);
             }
         }
 
@@ -53,16 +53,17 @@ class StoreController extends AccessController
         $car_id = $vars['id'];
         $DB['db_cars']->connect();
         $data_car = $DB['db_cars']->getDataByID($car_id);
-        $DB['db_cars']->disconnect();
 
         // Kiểm soát truy cập
         $this->checkNull($data_car['car_id']);
 
         $DB['db_car_img']->connect();
         $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($car_id);
+        $data_all_with_img = $DB['db_cars']->getAllDataWithFirstImg($data_car['car_type_id'], $car_id, 3);
 
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/store/product.php";
+        $DB['db_cars']->disconnect();
 
         $this->showToastTestDriveResult();
 

@@ -53,7 +53,7 @@
             <div class="mt-5">
                 <b>
                     <span class="mt-5 fs-2">Top bán chạy.</span>
-                    <span class="mt-5 fs-2 text-secondary">Trong mỗi dòng xe.</span>
+                    <span class="mt-5 fs-2 text-secondary">Đẳng cấp của mỗi dòng xe.</span>
                 </b>
             </div>
 

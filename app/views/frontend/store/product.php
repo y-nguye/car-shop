@@ -184,13 +184,41 @@
 
         <div class="row mt-3">
             <div class="d-flex align-items-center justify-content-center mb-5">
-                <?php if ($data_all_car_img[0]['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_all_car_img[0]['car_img_filename'])) : ?>
+                <?php if (isset($data_all_car_img[0]['car_img_filename']) && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_all_car_img[0]['car_img_filename'])) : ?>
                     <img src="/car-shop/assets/uploads/<?= $data_all_car_img[0]['car_img_filename'] ?>" alt="" class=" w-50">
+                <?php else : ?>
+                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="w-50">
                 <?php endif ?>
             </div>
             <h4 class="">Thông tin sản phẩm</h4>
             <p class="text-justify mt-2"><?= $data_car['car_detail_describe'] ?></p>
         </div>
+
+        <hr>
+
+        <div class="row">
+            <h4 class="text-secondary">Xem thêm xe cùng dòng</h4>
+
+            <?php foreach ($data_all_with_img as $data) : ?>
+                <div class="col-md-4 mb-4">
+                    <a href="/car-shop/product/<?= $data['car_id'] ?>">
+                        <div class="d-flex flex-column align-items-center justify-content-center text-dark rounded-3 p-2 card-custom__type-page">
+                            <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
+                                <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="card-img-top img-on-card__type-page rounded-3" alt="img-card">
+                            <?php else : ?>
+                                <img src="/car-shop/assets/imgs/no-img.jpg" class="card-img-top img-on-card__type-page rounded-3" alt="img-card">
+                            <?php endif; ?>
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><?= $data['car_name'] ?></h5>
+                                <p class="card-text">Giá từ <?= number_format($data['car_price'], 0, ',', '.') ?> ₫</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+
+        </div>
+
     </div>
 
     <!-- HTML cho một toast -->

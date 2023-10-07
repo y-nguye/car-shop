@@ -75,8 +75,14 @@ class CarsData extends DatabaseManager
         return $data;
     }
 
-    public function getAllDataWithFirstImgByCarTypeID($car_type_id)
+    public function getAllDataWithFirstImg($car_type_id = null, $car_id = null, $car_update_order_by_desc_limit = null)
     {
+        $conditionWhere = '';
+        $orderByQuery = '';
+        if ($car_type_id) $conditionWhere .= " AND car.car_type_id = " . $car_type_id;
+        if ($car_id) $conditionWhere .= " AND NOT car.car_id = " . $car_id;
+        if ($car_update_order_by_desc_limit == true) $orderByQuery = ' ORDER BY car.car_update_at DESC LIMIT ' . $car_update_order_by_desc_limit;
+
         $sql = "SELECT car.car_id, car.car_name, car.car_price, car.car_describe,
                 car_type.car_type_id,
                 car_type.car_type_name,
@@ -84,8 +90,10 @@ class CarsData extends DatabaseManager
                 FROM $this->table car 
                 LEFT JOIN car_type ON car_type.car_type_id = car.car_type_id 
                 LEFT JOIN car_img ON car_img.car_id = car.car_id
-                WHERE car.car_deleted = 0 AND car.car_type_id = $car_type_id
-                GROUP BY car.car_id;";
+                WHERE car.car_deleted = 0 
+                $conditionWhere
+                GROUP BY car.car_id
+                $orderByQuery;";
 
         $this->result = $this->execute($sql);
 
@@ -106,9 +114,15 @@ class CarsData extends DatabaseManager
         return $data;
     }
 
-    public function getAllDataWithSecondImgByCarIDs($car_ids)
+    public function getAllDataWithSecondImg($car_ids = null, $car_update_order_by_desc_limit = null)
     {
-        $car_ids = implode(' ,', $car_ids);
+        $orderByQuery = '';
+        $conditionWhere = '';
+        if ($car_ids) {
+            $car_ids = implode(' ,', $car_ids);
+            $conditionWhere = " AND car.car_id IN ($car_ids)";
+        }
+        if ($car_update_order_by_desc_limit == true) $orderByQuery = ' ORDER BY car.car_update_at DESC LIMIT ' . $car_update_order_by_desc_limit;
         $sql = "SELECT
                 car.car_id,
                 car.car_name,
@@ -119,9 +133,12 @@ class CarsData extends DatabaseManager
                     FROM car_img
                     WHERE car_img.car_id = car.car_id
                     LIMIT 1 OFFSET 1
-                ) AS car_img_filename
+                ) 
+                AS car_img_filename
             FROM $this->table car
-            WHERE car.car_deleted = 0 AND car.car_id IN ($car_ids);";
+            WHERE car.car_deleted = 0 
+            $conditionWhere
+            $orderByQuery;";
 
         $this->result = $this->execute($sql);
 
@@ -139,41 +156,6 @@ class CarsData extends DatabaseManager
         }
         return $data;
     }
-
-    public function getAllDataWithSecondImgByFourNewUpdate()
-    {
-        $sql = "SELECT
-                car.car_id,
-                car.car_name,
-                car.car_price,
-                car.car_describe,
-                (
-                    SELECT car_img.car_img_filename
-                    FROM car_img
-                    WHERE car_img.car_id = car.car_id
-                    LIMIT 1 OFFSET 1
-                ) AS car_img_filename
-            FROM $this->table car
-            WHERE car.car_deleted = 0
-            ORDER BY car.car_update_at DESC LIMIT 4;";
-
-        $this->result = $this->execute($sql);
-
-        $data = [];
-        if ($this->result->num_rows > 0) {
-            while ($row = $this->result->fetch_assoc()) {
-                $data[] = array(
-                    'car_id' => $row['car_id'],
-                    'car_name' => $row['car_name'],
-                    'car_price' => $row['car_price'],
-                    'car_describe' => $row['car_describe'],
-                    'car_img_filename' => $row['car_img_filename'],
-                );
-            }
-        }
-        return $data;
-    }
-
 
     public function getAllDataDeleted()
     {
