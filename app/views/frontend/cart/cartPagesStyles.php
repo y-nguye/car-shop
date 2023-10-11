@@ -7,7 +7,7 @@
 
     .img-car-on-registration-fee,
     .img-car-on-pay {
-        width: 600px;
+        width: 80%;
         aspect-ratio: 16/9;
         object-fit: cover;
     }

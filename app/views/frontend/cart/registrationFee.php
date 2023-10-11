@@ -23,8 +23,8 @@
 
         <div class="row">
 
-            <div class="col-8 d-flex flex-column align-items-center">
-                <a href="/car-shop/product/<?= $data_car['car_id'] ?>">
+            <div class="col-md-8 d-flex flex-column align-items-center">
+                <a href="/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center">
                     <?php if ($data_car['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_car['car_img_filename'])) : ?>
                         <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-registration-fee" alt="img-car-on-cart">
                     <?php else : ?>
@@ -35,7 +35,7 @@
                 <span class="text-center fs-4"><?= $data_car['car_describe'] ?></span>
             </div>
 
-            <div class="col-4">
+            <div class="col-md-4">
                 <form method="post" action="/car-shop/cart/deposit/<?= $car_id ?>">
                     <div class="pt-2">
                         <div class="mb-4 d-flex align-items-center justify-content-between text-secondary">

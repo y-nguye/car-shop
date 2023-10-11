@@ -53,13 +53,13 @@
             <div class="mt-5">
                 <b>
                     <span class="mt-5 fs-2">Top bán chạy.</span>
-                    <span class="mt-5 fs-2 text-secondary">Đẳng cấp của mỗi dòng xe.</span>
+                    <span class="mt-5 fs-2 text-secondary">Mức giá dễ tiếp cận của mỗi dòng xe.</span>
                 </b>
             </div>
 
-            <div class="row row-cols-2">
+            <div class="row">
                 <?php foreach ($data_all_car_by_car_ids_to_display_salling as $data) : ?>
-                    <div class="col mt-4">
+                    <div class="col-md-6 mt-4">
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
                             <div class="card card-custom__home-page text-white">
                                 <div class="card-shadow__home-page"></div>
@@ -80,14 +80,14 @@
 
             <div class="mt-5">
                 <b>
-                    <span class="mt-5 fs-2">Xe mới nhập.</span>
+                    <span class="mt-5 fs-2">Mới nhập.</span>
                     <span class="mt-5 fs-2 text-secondary">Khám phá những điều mới mẻ ngay.</span>
                 </b>
             </div>
 
-            <div class="row row-cols-2">
+            <div class="row">
                 <?php foreach ($data_all_car_by_car_ids_to_display_four_newest as $data) : ?>
-                    <div class="col mt-4">
+                    <div class="col-md-6 mt-4">
                         <a href="/car-shop/product/<?= $data['car_id'] ?>">
                             <div class="card card-custom__home-page text-white">
                                 <div class="card-shadow__home-page"></div>
@@ -105,6 +105,35 @@
                     </div>
                 <?php endforeach; ?>
             </div>
+
+            <div class="mt-5">
+                <b>
+                    <span class="mt-5 fs-2">Hạng sang.</span>
+                    <span class="mt-5 fs-2 text-secondary">Đẳng cấp của công nghệ và thiết kế.</span>
+                </b>
+            </div>
+
+            <div class="row">
+                <?php foreach ($data_all_car_by_car_ids_to_display_luxury as $data) : ?>
+                    <div class="col-md-6 mt-4">
+                        <a href="/car-shop/product/<?= $data['car_id'] ?>">
+                            <div class="card card-custom__home-page text-white">
+                                <div class="card-shadow__home-page"></div>
+                                <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
+                                    <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="card-img" alt="mb">
+                                <?php else : ?>
+                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="card-img">
+                                <?php endif; ?>
+                                <div class="card-img-overlay">
+                                    <h2 class="card-title"><?= $data['car_name'] ?></h2>
+                                    <p class="card-text"><?= $data['car_describe'] ?></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
         <?php endif; ?>
 
     </div>

@@ -17,6 +17,7 @@ class StoreController extends AccessController
         $data_all_car_by_car_ids_to_display_carouse = $DB['db_cars']->getAllDataWithSecondImg([57, 49, 54, 55]);
         $data_all_car_by_car_ids_to_display_salling = $DB['db_cars']->getAllDataWithSecondImg([48, 49, 54, 57]);
         $data_all_car_by_car_ids_to_display_four_newest = $DB['db_cars']->getAllDataWithSecondImg(null, 4);
+        $data_all_car_by_car_ids_to_display_luxury = $DB['db_cars']->getAllDataWithSecondImg(null, 4);
 
         $data_all_car_type = $this->getAllCarTypesForHeader($DB);
         include_once __DIR__ . "/../views/frontend/store/index.php";

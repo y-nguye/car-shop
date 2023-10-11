@@ -1,4 +1,10 @@
 <style>
+    @media (max-width: 1024px) {
+        .column-info-car {
+            padding-left: 10px !important;
+        }
+    }
+
     .carousel-control-prev,
     .carousel-control-next {
         width: 8%;
@@ -155,7 +161,7 @@
     }
 
     .img-car-on-test-drive__test-drive-page {
-        width: 600px;
+        width: 80%;
         aspect-ratio: 16/9;
         object-fit: cover;
     }

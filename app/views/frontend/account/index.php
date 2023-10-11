@@ -43,7 +43,7 @@
             <div class="pt-4">
                 <div class="row">
                     <div class="col-1"></div>
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <form name="formAvatar" method="post" action="/car-shop/account/edit-avatar" enctype="multipart/form-data">
                             <input type="file" name="user_avt" id="avatarInput" style="display: none;" accept="image/*" />
                             <div class="avatar-container rounded-circle">
@@ -72,14 +72,14 @@
                             </a>
                         </div>
                         <?php if ($user_is_admin) : ?>
-                            <div class="mt-2">
+                            <div class="mt-2 mb-3">
                                 <a href="/car-shop/admin">
                                     Truy cập hệ thống quản trị
                                 </a>
                             </div>
                         <?php endif; ?>
                     </div>
-                    <div class="col-7 body-content-info">
+                    <div class="col-md-7 body-content-info">
 
                         <h3>Thông tin cá nhân</h3>
                         <div class="mb-3 text-justify">
