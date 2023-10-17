@@ -49,9 +49,8 @@
 
                             <tbody>
                                 <?php foreach ($data_user as $data) : ?>
-                                    <!-- Tài khoản đang thao tác luôn được chọn -->
+                                    <!-- Không in tài khoản đang đăng nhập vào danh sách -->
                                     <?php if ($data['user_username'] == $_SESSION['user_username']) : ?>
-                                        <input type="hidden" name="user_ids[]" value="<?= $data['user_id'] ?>">
                                         <?php continue; ?>
                                     <?php endif; ?>
                                     <tr>
@@ -68,6 +67,8 @@
                             </tbody>
                         </table>
                     </div>
+                    <!-- Tài khoản đang thao tác luôn được chọn và có dữ liệu-->
+                    <input type="hidden" name="user_ids[]" value="<?= $_SESSION['user_id'] ?>">
                 </form>
             </div>
         </div>
@@ -84,14 +85,6 @@
     <script>
         $(function() {
             $('#danhsach').DataTable({
-                searching: true,
-                order: [
-                    [0, "asc"]
-                ],
-                columnDefs: [{
-                    orderable: false,
-                    searchable: false
-                }],
                 language: {
                     url: '/car-shop/assets/plugin/datatables-language/vi.json',
                 },
