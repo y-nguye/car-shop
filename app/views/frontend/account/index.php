@@ -72,12 +72,43 @@
                             </a>
                         </div>
                         <?php if ($user_is_admin) : ?>
-                            <div class="mt-2 mb-3">
+                            <div class="mt-2">
                                 <a href="/car-shop/admin">
                                     Truy cập hệ thống quản trị
                                 </a>
                             </div>
                         <?php endif; ?>
+
+                        <form id="deleteForm" method="post" action="">
+                            <div class="mt-2 mb-3">
+                                <a class="text-danger" href="" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    Xoá tài khoản
+                                </a>
+                            </div>
+
+                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Xoá tài khoản</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="user_password" class="col-form-label">Vui lòng nhập mật khẩu:</label>
+                                                <input type="password" name="user_password" class="form-control" id="user_password" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                            <button type="submit" name="btnDelete" class="btn btn-danger btn-delete__confirm">Xoá</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
                     </div>
                     <div class="col-md-7 body-content-info">
 
@@ -213,7 +244,7 @@
                 },
                 rules: {
                     user_fullname: {
-                        // required: true,
+                        required: true,
                         minlength: 3,
                         maxlength: 50,
                     },
@@ -222,6 +253,9 @@
                         minlength: 10,
                         maxlength: 15,
                     },
+                    user_password: {
+                        required: true,
+                    }
                 },
                 messages: {
                     user_fullname: {
@@ -233,6 +267,35 @@
                         required: "Không được để trống",
                         minlength: "Số điện thoại không hợp lệ",
                         maxlength: "Số điện thoại không hợp lệ",
+                    },
+                    user_password: {
+                        required: "Không được để trống",
+                    },
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#deleteForm').validate({
+                errorClass: "is-invalid",
+                errorPlacement: function(error, element) {
+                    element.attr("data-bs-original-title", error.text());
+                },
+                success: function(element) {
+                    element.removeAttr("data-bs-original-title");
+                },
+                submitHandler: function(form) {
+                    preventOperation();
+                    form.submit();
+                },
+                rules: {
+                    user_password: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    user_password: {
+                        required: "Không được để trống",
                     },
                 }
             });

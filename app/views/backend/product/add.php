@@ -149,7 +149,7 @@
 
 
                         <div class="form-group mt-3">
-                            <label for="car_img_filename" class="form-label">Hình ảnh sản phẩm</label>
+                            <label for="car_img_filename" class="form-label">Hình ảnh sản phẩm (Tối đa 24 hình ảnh)</label>
                             <input type="file" name="car_img_filename[]" id="car_img_filename" class="form-control" multiple />
                         </div>
 

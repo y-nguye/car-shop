@@ -36,8 +36,8 @@
 
                     <div class="d-flex justify-content-center">
 
-                        <a class="border border-primary rounded-3 me-3" href="/car-shop/admin/product/add">
-                            <div class="card bg-light" style="width: 15rem; aspect-ratio: 1/1;">
+                        <a class="border text-secondary border-secondary rounded-3 me-3 card-custom__admin-page" href="/car-shop/admin/product/add">
+                            <div class="card" style="width: 15rem; aspect-ratio: 1/1;">
                                 <div class="card-body text-center d-flex flex-column justify-content-center">
                                     <i class="bi bi-plus-circle fs-1"></i>
                                     <h5 class="card-title pt-3">Thêm xe</h5>
@@ -45,8 +45,8 @@
                             </div>
                         </a>
 
-                        <a class="border border-primary rounded-3 ms-3" href="/car-shop/admin">
-                            <div class="card bg-light" style="width: 15rem; aspect-ratio: 1/1;">
+                        <a class="border text-secondary border-secondary rounded-3 ms-3 card-custom__admin-page" href="/car-shop/admin">
+                            <div class="card" style="width: 15rem; aspect-ratio: 1/1;">
                                 <div class="card-body text-center d-flex flex-column justify-content-center">
                                     <i class="bi bi-person-fill-gear fs-1"></i>
                                     <h5 class="card-title pt-3">Quản lí admin</h5>

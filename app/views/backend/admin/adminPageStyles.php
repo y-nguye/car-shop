@@ -6,4 +6,14 @@
         background-color: rgba(255, 255, 255, 0.75);
         top: 5px;
     }
+
+    .card-custom__admin-page {
+        transition: all 200ms ease;
+    }
+
+    .card-custom__admin-page:hover {
+        transition: all 200ms ease;
+        border-color: var(--bs-primary) !important;
+        color: var(--bs-primary) !important;
+    }
 </style>

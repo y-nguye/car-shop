@@ -26,6 +26,29 @@ class AccountController extends AccessController
         $this->getErrorsFromSessionAndShowAlert();
 
         $DB['db_user_province']->disconnect();
+
+        // Xoá tài khoản
+        if (isset($_POST['btnDelete'])) {
+            $user_password = $_POST['user_password'];
+
+            $DB['db_user']->connect();
+            $data_user = $DB['db_user']->getData($user_username);
+
+            if ($data_user && password_verify($user_password, $data_user["user_password"])) {
+                $DB['db_user']->deleteData($user_username);
+                $DB['db_user']->disconnect();
+                echo '<script>location.href = "/car-shop/account/logout"</script>';
+            } else {
+                $errors['user_password'][] = [
+                    'rule' => 'is_password_valid',
+                    'rule_value' => true,
+                    'value' => $user_password,
+                    'msg' => 'Sai mật khẩu, xoá tài khoản thất bại',
+                ];
+                $this->setErrorsToSession($errors);
+                echo '<script>location.href = "/car-shop/account"</script>';
+            }
+        }
     }
 
     public function deposit($DB)

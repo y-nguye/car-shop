@@ -103,9 +103,9 @@ class UserData extends DatabaseManager
         return $this->execute($sql);
     }
 
-    public function deleteData($user_id)
+    public function deleteData($user_username)
     {
-        $sql = "DELETE FROM $this->table WHERE user_id = $user_id;";
+        $sql = "DELETE FROM $this->table WHERE user_username = '$user_username';";
         return $this->execute($sql);
     }
 }
