@@ -48,28 +48,28 @@
                         </thead>
 
                         <tbody>
-                            <?php foreach ($data_user_deposit as $value) { ?>
+                            <?php foreach ($data_user_deposit as $data) : ?>
                                 <tr class="car_item_row">
                                     <td class="text-end">
-                                        <?= $value['user_deposit_id'] ?>
-                                        <input type="hidden" name="user_deposit_id" value="<?= $value['user_deposit_id'] ?>" data-user_deposit_id="<?= $value['user_deposit_id'] ?>">
+                                        <?= $data['user_deposit_id'] ?>
+                                        <input type="hidden" name="user_deposit_id" value="<?= $data['user_deposit_id'] ?>" data-user_deposit_id="<?= $data['user_deposit_id'] ?>">
                                     </td>
-                                    <td><?= $value['user_deposit_fullname'] ?></td>
-                                    <td class="text-end"><?= $value['car_id'] ?></td>
-                                    <td class="text-end"><?= number_format($value['user_deposit_price'], 0, '.', '.') . ' đ<br/>' ?></td>
-                                    <td class="text-center"><?php if ($value['user_deposit_is_contacted']) echo '<i class="bi bi-check-circle-fill green-check"></i>';
+                                    <td><?= $data['user_deposit_fullname'] ?></td>
+                                    <td class="text-end"><?= $data['car_id'] ?></td>
+                                    <td class="text-end"><?= number_format($data['user_deposit_price'], 0, '.', '.') . ' đ<br/>' ?></td>
+                                    <td class="text-center"><?php if ($data['user_deposit_is_contacted']) echo '<i class="bi bi-check-circle-fill green-check"></i>';
                                                             else echo ''; ?>
                                     </td>
-                                    <td class="text-center"><?php if ($value['user_deposit_is_payed']) echo '<i class="bi bi-check-circle-fill green-check"></i>';
+                                    <td class="text-center"><?php if ($data['user_deposit_is_payed']) echo '<i class="bi bi-check-circle-fill green-check"></i>';
                                                             else echo ''; ?></td>
                                     <td class="text-center">
-                                        <a href="/car-shop/admin/deposit/see-more/<?= $value['user_deposit_id'] ?>" class="p-2">
+                                        <a href="/car-shop/admin/deposit/see-more/<?= $data['user_deposit_id'] ?>" class="p-2">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </td>
 
                                 </tr>
-                            <?php } ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

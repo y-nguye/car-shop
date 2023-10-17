@@ -65,14 +65,15 @@
                                 Thông tin cá nhân
                             </a>
                         </div>
+
                         <?php if ($user_is_admin) : ?>
-                            <div class="mt-2">
+                            <div class="mt-2 mb-3">
                                 <a href="/car-shop/admin">
                                     Truy cập hệ thống quản trị
                                 </a>
                             </div>
                         <?php endif; ?>
-                        </a>
+
                     </div>
                     <div class="col-7">
 

@@ -23,7 +23,7 @@
                 <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
                     <div class="container-fluid justify-content-start">
                         <span class="fs-5"><b>Trang chủ Admin</b></span>
-                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
+                        <button type="button" class="btn btn-sm btn-primary ms-auto">
                             <i class="bi bi-telephone"></i>
                             Liên hệ
                         </button>
@@ -45,7 +45,7 @@
                             </div>
                         </a>
 
-                        <a class="border text-secondary border-secondary rounded-3 ms-3 card-custom__admin-page" href="/car-shop/admin">
+                        <a class="border text-secondary border-secondary rounded-3 ms-3 card-custom__admin-page" href="/car-shop/admin/manage">
                             <div class="card" style="width: 15rem; aspect-ratio: 1/1;">
                                 <div class="card-body text-center d-flex flex-column justify-content-center">
                                     <i class="bi bi-person-fill-gear fs-1"></i>

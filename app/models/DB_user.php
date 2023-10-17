@@ -103,6 +103,15 @@ class UserData extends DatabaseManager
         return $this->execute($sql);
     }
 
+    public function updateAdmin($user_ids)
+    {
+        if ($user_ids == '') return;
+        $ids = implode(' ,', $user_ids);
+        $sql = "UPDATE $this->table
+                SET user_is_admin = (CASE WHEN user_id IN ($ids) THEN 1 ELSE 0 END);";
+        return $this->execute($sql);
+    }
+
     public function deleteData($user_username)
     {
         $sql = "DELETE FROM $this->table WHERE user_username = '$user_username';";

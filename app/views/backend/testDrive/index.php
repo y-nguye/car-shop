@@ -45,13 +45,13 @@
                         </thead>
 
                         <tbody>
-                            <?php foreach ($data_user_test_drive as $value) : ?>
+                            <?php foreach ($data_user_test_drive as $data) : ?>
                                 <tr>
-                                    <td><?= $value['user_test_drive_id'] ?></td>
-                                    <td><?= $value['user_test_drive_fullname'] ?></td>
-                                    <td><?= $value['car_name'] ?></td>
-                                    <td><?= $value['user_test_drive_day'] ?></td>
-                                    <td><?= $value['user_test_drive_time'] ?></td>
+                                    <td class="text-end"><?= $data['user_test_drive_id'] ?></td>
+                                    <td><?= $data['user_test_drive_fullname'] ?></td>
+                                    <td><?= $data['car_name'] ?></td>
+                                    <td><?= $data['user_test_drive_day'] ?></td>
+                                    <td><?= $data['user_test_drive_time'] ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
