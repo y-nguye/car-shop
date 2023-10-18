@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include_once __DIR__ . '/../../resources/styles/styles.php'; ?>
+    <?php include_once __DIR__ . '/../../resources/globalStyles/globalStyles.php'; ?>
     <?php include_once __DIR__ . '/testDrivePageStyle.php'; ?>
     <title>Danh sách lái thử</title>
 </head>
@@ -67,7 +67,7 @@
     ?>
 
     <?php
-    include_once __DIR__ . '/../../resources/script/script.php';
+    include_once __DIR__ . '/../../resources/globalScript/globalScript.php';
     ?>
 
     <script>
