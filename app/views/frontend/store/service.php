@@ -68,7 +68,7 @@
 
                 // Sử dụng phương thức AJAX để tải nội dung từ tệp PHP
                 $.ajax({
-                    url: "/car-shop/app/views/frontend/store/components/" + uri + ".php",
+                    url: "/project/car-shop/app/views/frontend/store/components/" + uri + ".php",
                     type: "GET",
                     dataType: "html", // Loại dữ liệu muốn nhận lại
                     success: function(response) {

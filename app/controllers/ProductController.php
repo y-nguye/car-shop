@@ -39,7 +39,7 @@ class ProductController extends AccessController
         // USES
         include_once __DIR__ . "/../views/backend/product/add.php";
 
-        $_SESSION['pathname'] = '/car-shop/admin/product';
+        $_SESSION['pathname'] = '/project/car-shop/admin/product';
 
         // MANIPULATES
         if (isset($_POST['btnAdd'])) {
@@ -140,7 +140,7 @@ class ProductController extends AccessController
                 $DB['db_car_producer']->setData($car_producer_name);
                 $DB['db_car_producer']->disconnect();
 
-                echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
+                echo '<script>location.href = "/project/car-shop/admin/product/add-producer"</script>';
             } else {
                 $this->showErrorsAlert($errors);
             }
@@ -151,7 +151,7 @@ class ProductController extends AccessController
             $DB['db_car_producer']->deleteData($_POST['car_producer_ids']);
             $DB['db_car_producer']->disconnect();
 
-            echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
+            echo '<script>location.href = "/project/car-shop/admin/product/add-producer"</script>';
         }
     }
 
@@ -201,7 +201,7 @@ class ProductController extends AccessController
         // Render ra trang
         include_once __DIR__ . "/../views/backend/product/edit.php";
 
-        $_SESSION['pathname'] = '/car-shop/admin/product/edit/' . $car_id . '';
+        $_SESSION['pathname'] = '/project/car-shop/admin/product/edit/' . $car_id . '';
 
         if (isset($_POST['btnEdit'])) {
 

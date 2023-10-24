@@ -36,7 +36,7 @@
 
                     <div class="d-flex justify-content-center">
 
-                        <a class="border text-secondary border-secondary rounded-3 me-3 card-custom__admin-page" href="/car-shop/admin/product/add">
+                        <a class="border text-secondary border-secondary rounded-3 me-3 card-custom__admin-page" href="/project/car-shop/admin/product/add">
                             <div class="card" style="width: 15rem; aspect-ratio: 1/1;">
                                 <div class="card-body text-center d-flex flex-column justify-content-center">
                                     <i class="bi bi-plus-circle fs-1"></i>
@@ -45,7 +45,7 @@
                             </div>
                         </a>
 
-                        <a class="border text-secondary border-secondary rounded-3 ms-3 card-custom__admin-page" href="/car-shop/admin/manage">
+                        <a class="border text-secondary border-secondary rounded-3 ms-3 card-custom__admin-page" href="/project/car-shop/admin/manage">
                             <div class="card" style="width: 15rem; aspect-ratio: 1/1;">
                                 <div class="card-body text-center d-flex flex-column justify-content-center">
                                     <i class="bi bi-person-fill-gear fs-1"></i>

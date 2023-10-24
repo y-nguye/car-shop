@@ -156,7 +156,7 @@
                         <div class="container text-center">
                             <div id="preview-image-container" class="form-group mt-3">
                                 <div class="preview-image-container-item">
-                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="no-img" id="preview-img" class="preview-img preview-no-img" />
+                                    <img src="/project/car-shop/assets/imgs/no-img.jpg" alt="no-img" id="preview-img" class="preview-img preview-no-img" />
                                 </div>
                             </div>
                         </div>
@@ -272,7 +272,7 @@
             window.history.back();
         });
         btnAddProducer.addEventListener("click", () => {
-            window.location.href = "/car-shop/admin/product/add-producer";
+            window.location.href = "/project/car-shop/admin/product/add-producer";
 
         });
         btnBackToTop.addEventListener("click", function(event) {

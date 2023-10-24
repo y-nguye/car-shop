@@ -61,7 +61,7 @@
                             </thead>
 
                             <tbody>
-                                <?php foreach ($data_cars as $data) { ?>
+                                <?php foreach ($data_cars as $data) : ?>
                                     <tr class="car_item_row">
                                         <td name="checkbox-td" class="text-center"><input class="form-check-input" type="checkbox" name="car_ids[]" value="<?= $data['car_id'] ?>" data-car_id="<?= $data['car_id'] ?>"></td>
                                         <td class="text-end"><?= $data['car_id'] ?></td>
@@ -71,7 +71,7 @@
                                         <?php $timestamp = strtotime($data['car_update_at']); ?>
                                         <td><?= date("d/m/Y - H:i:s", $timestamp); ?></td>
                                     </tr>
-                                <?php } ?>
+                                <?php endforeach; ?>
                             </tbody>
 
                         </table>
@@ -122,7 +122,7 @@
                 }],
                 pageLength: 50,
                 language: {
-                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
+                    url: '/project/car-shop/assets/plugin/datatables-language/vi.json',
                 },
             });
         });
@@ -140,7 +140,7 @@
         // ----------------------------- Xử lý các sự kiện Button -----------------------------------
 
         btnAdd.addEventListener("click", () => {
-            window.location.href = "/car-shop/admin/product/add";
+            window.location.href = "/project/car-shop/admin/product/add";
         });
 
         btnEdit.addEventListener("click", () => {
@@ -148,13 +148,13 @@
                 checkbox = x.querySelector("input[name='car_ids[]']");
                 if (checkbox.checked === true) {
                     var car_id = checkbox.dataset.car_id;
-                    window.location.href = "/car-shop/admin/product/edit/" + car_id;
+                    window.location.href = "/project/car-shop/admin/product/edit/" + car_id;
                 }
             })
         });
 
         btnDeleteConfrim.addEventListener('click', () => {
-            carsForm.action = '/car-shop/admin/product/delete';
+            carsForm.action = '/project/car-shop/admin/product/delete';
             carsForm.submit();
         });
 
@@ -204,7 +204,7 @@
                 if (!target.matches("input[name='car_ids[]']") && !target.matches("td[name='checkbox-td']")) {
                     checkbox = this.querySelector("input[name='car_ids[]']");
                     var car_id = checkbox.dataset.car_id;
-                    window.location.href = "/car-shop/admin/product/edit/" + car_id;
+                    window.location.href = "/project/car-shop/admin/product/edit/" + car_id;
                 }
             });
         });

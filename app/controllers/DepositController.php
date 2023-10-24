@@ -34,7 +34,7 @@ class DepositController extends AccessController
             $DB['db_user_deposit']->updateData($user_deposit_id, $user_deposit_is_contacted, $user_deposit_is_payed);
             $DB['db_user_deposit']->disconnect();
 
-            echo '<script>location.href = "/car-shop/admin/deposit/see-more/' . $user_deposit_id . '"</script>';
+            echo '<script>location.href = "/project/car-shop/admin/deposit/see-more/' . $user_deposit_id . '"</script>';
         }
     }
 }

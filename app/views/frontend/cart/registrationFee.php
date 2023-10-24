@@ -24,11 +24,11 @@
         <div class="row">
 
             <div class="col-md-8 d-flex flex-column align-items-center">
-                <a href="/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center w-100">
+                <a href="/project/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center w-100">
                     <?php if ($data_car['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_car['car_img_filename'])) : ?>
-                        <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-registration-fee" alt="img-car-on-cart">
+                        <img src="/project/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-registration-fee" alt="img-car-on-cart">
                     <?php else : ?>
-                        <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-registration-fee" alt="img-car-on-cart">
+                        <img src="/project/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-registration-fee" alt="img-car-on-cart">
                     <?php endif; ?>
                 </a>
                 <h1 class="mt-4"><?= $data_car['car_name'] ?></h1>
@@ -36,7 +36,7 @@
             </div>
 
             <div class="col-md-4">
-                <form method="post" action="/car-shop/cart/deposit/<?= $car_id ?>">
+                <form method="post" action="/project/car-shop/cart/deposit/<?= $car_id ?>">
                     <div class="pt-2">
                         <div class="mb-4 d-flex align-items-center justify-content-between text-secondary">
                             <h6 class="m-0">Giá tính phí trước bạ</h6>
@@ -83,7 +83,7 @@
 
                     <div class="d-flex flex-column align-items-center justify-content-between">
                         <button type="submit" name="btnDeposits" id="btn-deposits" class="btn btn-primary w-100 disabled">Yêu cầu đặt cọc</button>
-                        <a class="mt-3" href="/car-shop/cart">Quay về giỏ hàng</a>
+                        <a class="mt-3" href="/project/car-shop/cart">Quay về giỏ hàng</a>
                     </div>
                 </form>
             </div>

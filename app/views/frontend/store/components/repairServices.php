@@ -8,14 +8,14 @@
     <br /><br />
 </p>
 <div class="text-center mb-5">
-    <img src="/car-shop/assets/imgs/repair-services/engine-repair.jpg" alt="repair-services-1" class="rounded-3 repair-services-img__service-page">
+    <img src="/project/car-shop/assets/imgs/repair-services/engine-repair.jpg" alt="repair-services-1" class="rounded-3 repair-services-img__service-page">
 </div>
 
 <p>
     <b>Sửa chữa gầm bệ</b>
 </p>
 <div class="text-center mb-5">
-    <img src="/car-shop/assets/imgs/repair-services/underbody-repair.jpg" alt="repair-services-1" class="rounded-3 repair-services-img__service-page">
+    <img src="/project/car-shop/assets/imgs/repair-services/underbody-repair.jpg" alt="repair-services-1" class="rounded-3 repair-services-img__service-page">
 </div>
 
 
@@ -23,7 +23,7 @@
     <b>Sửa chữa hệ thống điện</b>
 </p>
 <div class="text-center mb-5">
-    <img src="/car-shop/assets/imgs/repair-services/electrical-system-repair.jpg" alt="repair-services-1" class="rounded-3 repair-services-img__service-page">
+    <img src="/project/car-shop/assets/imgs/repair-services/electrical-system-repair.jpg" alt="repair-services-1" class="rounded-3 repair-services-img__service-page">
 </div>
 
 <h5>2 . DỊCH VỤ SỬA CHỮA VIP</h5>

@@ -6,12 +6,12 @@ class AccessController
     public function authentication()
     {
         if (!isset($_SESSION["logged"])) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
+            echo '<script>location.href = "/project/car-shop/account/login"</script>';
             die();
         }
 
         if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
+            echo '<script>location.href = "/project/car-shop/account/login"</script>';
             die();
         }
     }

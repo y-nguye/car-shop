@@ -24,7 +24,7 @@ class AdminController extends AccessController
         if (isset($_POST['btn-save'])) {
             $user_ids = $_POST['user_ids'];
             $DB['db_user']->updateAdmin($user_ids);
-            echo '<script>location.href = "/car-shop/admin/manage"</script>';
+            echo '<script>location.href = "/project/car-shop/admin/manage"</script>';
         }
         $DB['db_user']->disconnect();
     }

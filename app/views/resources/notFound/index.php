@@ -13,7 +13,7 @@
     <div class="container-lg">
         <div class="d-flex flex-column text-center container-custom__not-found-page">
             <h1 class="mt-5 mb-4">Không thể tìm thấy trang bạn đang tìm kiếm.</h1>
-            <a class="mb-5" href="/car-shop/"><i class="bi bi-chevron-left"></i> Trở về trang chủ</a>
+            <a class="mb-5" href="/project/car-shop/"><i class="bi bi-chevron-left"></i> Trở về trang chủ</a>
         </div>
     </div>
 </body>

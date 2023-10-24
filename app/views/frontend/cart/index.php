@@ -28,7 +28,7 @@
 
             <?php if (empty($cart)) : ?>
                 <div class="mt-3 mb-3">
-                    <a class="btn text-dark rounded-pill fs-5 ps-5 pe-5 bg-gray-light" href="/car-shop">Tiếp tục mua sắm</a>
+                    <a class="btn text-dark rounded-pill fs-5 ps-5 pe-5 bg-gray-light" href="/project/car-shop">Tiếp tục mua sắm</a>
                 </div>
             <?php endif ?>
 
@@ -36,19 +36,19 @@
                 <div class="mt-3 mb-3">
                     <hr>
                     <div class="d-flex align-items-center">
-                        <a href="/car-shop/product/<?= $data['car_id'] ?>">
+                        <a href="/project/car-shop/product/<?= $data['car_id'] ?>">
                             <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
-                                <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="img-car-on-cart" alt="img-car-on-cart">
+                                <img src="/project/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="img-car-on-cart" alt="img-car-on-cart">
                             <?php else : ?>
-                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-cart" alt="img-car-on-cart">
+                                <img src="/project/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-cart" alt="img-car-on-cart">
                             <?php endif; ?>
                         </a>
                         <div class="d-flex flex-column ms-5">
                             <h1 class="m-0"><?= $data['car_name'] ?></h1>
                             <p class="fs-3 m-0"><?= number_format($data['car_price'], 0, ',', '.') ?> ₫</p>
-                            <a class="fs-5 icon-link icon-link-hover" href="/car-shop/cart/registration-fee/<?= $data['car_id'] ?>">Dự toán chi phí <i class="bi bi-arrow-right align-middle "></i></a>
+                            <a class="fs-5 icon-link icon-link-hover" href="/project/car-shop/cart/registration-fee/<?= $data['car_id'] ?>">Dự toán chi phí <i class="bi bi-arrow-right align-middle "></i></a>
                         </div>
-                        <a class="btn-close fs-5 ms-auto me-1" aria-label="Close" href="/car-shop/cart/delete/<?= $data['car_id'] ?>"></a>
+                        <a class="btn-close fs-5 ms-auto me-1" aria-label="Close" href="/project/car-shop/cart/delete/<?= $data['car_id'] ?>"></a>
                     </div>
                 </div>
             <?php endforeach ?>

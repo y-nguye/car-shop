@@ -55,7 +55,7 @@
                     <label for="user_password_confirm">Nhập lại mật khẩu</label>
                 </div>
                 <button type="submit" name="signupBtn" class="btn btn-secondary p-3">Đăng kí</button>
-                <span class="mt-3">Đã có tài khoản? <a href="/car-shop/account/login">đăng nhập thôi</a></span>
+                <span class="mt-3">Đã có tài khoản? <a href="/project/car-shop/account/login">đăng nhập thôi</a></span>
             </div>
         </form>
     </div>
@@ -118,7 +118,7 @@
                         email: true,
                         maxlength: 100,
                         remote: {
-                            url: "/car-shop/account/email-check",
+                            url: "/project/car-shop/account/email-check",
                             type: "post",
                             data: {
                                 username: function() {
@@ -133,7 +133,7 @@
                         minlength: 6,
                         maxlength: 100,
                         remote: {
-                            url: "/car-shop/account/username-check",
+                            url: "/project/car-shop/account/username-check",
                             type: "post",
                             data: {
                                 username: function() {

@@ -27,11 +27,11 @@
         <div class="row">
 
             <div class="col-md-8 d-flex flex-column align-items-center">
-                <a href="/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center">
+                <a href="/project/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center">
                     <?php if ($data_car['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_car['car_img_filename'])) : ?>
-                        <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-pay" alt="img-car-on-pay">
+                        <img src="/project/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-pay" alt="img-car-on-pay">
                     <?php else : ?>
-                        <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-pay" alt="img-car-on-pay">
+                        <img src="/project/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-pay" alt="img-car-on-pay">
                     <?php endif; ?>
                 </a>
                 <h1 class="mt-4"><?= $data_car['car_name'] ?></h1>
@@ -40,7 +40,7 @@
 
             <div class="col-md-4">
 
-                <form name="formDeposit" id="formDeposit" method="post" action="/car-shop/cart/deposit/deposit-required">
+                <form name="formDeposit" id="formDeposit" method="post" action="/project/car-shop/cart/deposit/deposit-required">
                     <div id="liveAlertPlaceholder" class="text-start"></div>
 
                     <div class="pt-2">
@@ -118,7 +118,7 @@
                         <button type="submit" name="btnDeposit" id="btn-deposit" class="btn btn-primary w-100">
                             Xác nhận đơn đặt cọc
                         </button>
-                        <a id="btn-back-to-registration-fee" class="mt-3" href="/car-shop/cart/registration-fee/<?= $car_id ?>">Quay về tính toán</a>
+                        <a id="btn-back-to-registration-fee" class="mt-3" href="/project/car-shop/cart/registration-fee/<?= $car_id ?>">Quay về tính toán</a>
                     </div>
                 </form>
             </div>
