@@ -26,7 +26,7 @@
                             <i class="bi bi-chevron-left"></i>
                         </button>
                         <span class="fs-5 ms-2"><b>Thông tin đơn yêu cầu</b></span>
-                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/project/car-shop/admin">
+                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
                             <i class="bi bi-telephone"></i>
                             Liên hệ
                         </button>
@@ -184,9 +184,9 @@
                         <div class="container text-center mt-5">
                             <div id="image-preview-container" class="form-group">
                                 <?php if ($user_deposit['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $user_deposit['car_img_filename'])) : ?>
-                                    <img src="/project/car-shop/assets/uploads/<?= $user_deposit['car_img_filename'] ?>" alt="no-img" id="preview-img" class="preview-img" />
+                                    <img src="/car-shop/assets/uploads/<?= $user_deposit['car_img_filename'] ?>" alt="no-img" id="preview-img" class="preview-img" />
                                 <?php else : ?>
-                                    <img src="/project/car-shop/assets/imgs/no-img.jpg" class="rounded-3 preview-img" alt="preview-img">
+                                    <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 preview-img" alt="preview-img">
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -209,7 +209,7 @@
         const btnGoBackHeader = document.querySelector('.btn-go-back-header');
 
         btnGoBackHeader.addEventListener("click", () => {
-            window.location = '/project/car-shop/admin/deposit';
+            window.location = '/car-shop/admin/deposit';
         });
     </script>
 

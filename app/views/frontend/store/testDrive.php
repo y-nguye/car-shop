@@ -26,11 +26,11 @@
 
         <div class="row">
             <div class="col-md-8 d-flex flex-column align-items-center">
-                <a href="/project/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center">
+                <a href="/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center">
                     <?php if ($data_car_img_filename['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_car_img_filename['car_img_filename'])) : ?>
-                        <img src="/project/car-shop/assets/uploads/<?= $data_car_img_filename['car_img_filename'] ?>" class="img-car-on-test-drive__test-drive-page" alt="img-car-on-test-drive__test-drive-page">
+                        <img src="/car-shop/assets/uploads/<?= $data_car_img_filename['car_img_filename'] ?>" class="img-car-on-test-drive__test-drive-page" alt="img-car-on-test-drive__test-drive-page">
                     <?php else : ?>
-                        <img src="/project/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-test-drive__test-drive-page" alt="img-car-on-test-drive__test-drive-page">
+                        <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-test-drive__test-drive-page" alt="img-car-on-test-drive__test-drive-page">
                     <?php endif; ?>
                 </a>
                 <h1 class="mt-4"><?= $data_car['car_name'] ?></h1>
@@ -39,7 +39,7 @@
 
             <div class="col-md-4">
                 <div id="liveAlertPlaceholder" class="text-start"></div>
-                <form id="formSignUpTestDrive" method="post" action="/project/car-shop/test-drive/register">
+                <form id="formSignUpTestDrive" method="post" action="/car-shop/test-drive/register">
                     <div class="pt-2">
                         <label for="user_province_id" class="text-dark m-0">Địa điểm lái thử</label>
                         <select name="user_province_id" id="user_province_id" class="form-select mt-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover">

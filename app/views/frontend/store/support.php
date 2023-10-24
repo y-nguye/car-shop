@@ -16,7 +16,7 @@
     ?>
 
     <div class="container-lg pt-3 position-relative push-footer-down-page">
-        <img src="/project/car-shop/assets/imgs/support/getsupport-bg.jpg" alt="repair-services-1" class="rounded-3 support-img__support-page">
+        <img src="/car-shop/assets/imgs/support/getsupport-bg.jpg" alt="repair-services-1" class="rounded-3 support-img__support-page">
         <h1 class="text-center mt-5 position-absolute top-0">Nhận sự hỗ trợ bạn cần.</h1>
         <div class="position-absolute container-content-banner__support-page">
             <p class="content-banner__support-page">Hãy cung cấp một số thông tin chi tiết, chúng tôi sẽ đưa ra giải pháp tốt nhất. Kết nối qua điện thoại, email và các phương thức khác.</p>

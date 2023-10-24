@@ -86,7 +86,7 @@
         $(function() {
             $('#danhsach').DataTable({
                 language: {
-                    url: '/project/car-shop/assets/plugin/datatables-language/vi.json',
+                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
                 },
             });
         });
@@ -96,7 +96,7 @@
         const btnSave = document.querySelector('.btn-save');
 
         btnGoBackHeader.addEventListener("click", () => {
-            window.location.href = "/project/car-shop/admin";
+            window.location.href = "/car-shop/admin";
         });
 
         formAdmin.addEventListener('change', () => {

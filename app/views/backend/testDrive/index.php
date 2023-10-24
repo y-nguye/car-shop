@@ -23,7 +23,7 @@
                 <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
                     <div class="container-fluid justify-content-start">
                         <span class="fs-5"><b>Danh sách lái thử</b></span>
-                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/project/car-shop/admin">
+                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
                             <i class="bi bi-telephone"></i>
                             Liên hệ
                         </button>
@@ -79,7 +79,7 @@
                 ],
                 pageLength: 50,
                 language: {
-                    url: '/project/car-shop/assets/plugin/datatables-language/vi.json',
+                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
                 },
             });
         });

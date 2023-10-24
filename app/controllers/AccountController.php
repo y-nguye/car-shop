@@ -37,7 +37,7 @@ class AccountController extends AccessController
             if ($data_user && password_verify($user_password, $data_user["user_password"])) {
                 $DB['db_user']->deleteData($user_username);
                 $DB['db_user']->disconnect();
-                echo '<script>location.href = "/project/car-shop/account/logout"</script>';
+                echo '<script>location.href = "/car-shop/account/logout"</script>';
             } else {
                 $errors['user_password'][] = [
                     'rule' => 'is_password_valid',
@@ -46,7 +46,7 @@ class AccountController extends AccessController
                     'msg' => 'Sai mật khẩu, xoá tài khoản thất bại',
                 ];
                 $this->setErrorsToSession($errors);
-                echo '<script>location.href = "/project/car-shop/account"</script>';
+                echo '<script>location.href = "/car-shop/account"</script>';
             }
         }
     }
@@ -80,7 +80,7 @@ class AccountController extends AccessController
     {
         // Nếu đã đăng nhập thì chuyển sang trang cá nhân
         if (isset($_SESSION["logged"]) && $_SESSION["logged"]) {
-            echo '<script>location.href = "/project/car-shop/account"</script>';
+            echo '<script>location.href = "/car-shop/account"</script>';
             die();
         }
 
@@ -111,7 +111,7 @@ class AccountController extends AccessController
                 $this->syncDataCart($DB);
 
                 if ($_SESSION["user_is_admin"]) {
-                    echo '<script>location.href = "/project/car-shop/admin"</script>';
+                    echo '<script>location.href = "/car-shop/admin"</script>';
                 } else {
                     echo '<script>window.history.back();</script>';
                 }
@@ -141,7 +141,7 @@ class AccountController extends AccessController
     {
         // Nếu đã đăng nhập
         if (isset($_SESSION["logged"]) && $_SESSION["logged"]) {
-            echo '<script>location.href = "/project/car-shop/account"</script>';
+            echo '<script>location.href = "/car-shop/account"</script>';
             die();
         }
 
@@ -182,7 +182,7 @@ class AccountController extends AccessController
                 $hashedPassword = password_hash($user_password, PASSWORD_BCRYPT);
                 $DB['db_user']->setData($user_username, $hashedPassword, $user_fullname, $user_tel, $user_email, $user_address);
                 $DB['db_user']->disconnect();
-                echo '<script>location.href = "/project/car-shop/account/login"</script>';
+                echo '<script>location.href = "/car-shop/account/login"</script>';
             } else {
                 $this->showErrorsAlert($errors);
             }
@@ -214,10 +214,10 @@ class AccountController extends AccessController
                 $_SESSION["user_tel"] = $user_tel;
                 $_SESSION["user_province_id"] = $user_province_id;
 
-                echo '<script>location.href = "/project/car-shop/account"</script>';
+                echo '<script>location.href = "/car-shop/account"</script>';
             } else {
                 $this->setErrorsToSession($errors);
-                echo '<script>location.href = "/project/car-shop/account"</script>';
+                echo '<script>location.href = "/car-shop/account"</script>';
             }
         } else {
             $this->pageNotFound();
@@ -239,7 +239,7 @@ class AccountController extends AccessController
                 // Cập nhật lại session
                 $_SESSION["user_avt"] = $data_user['user_avt'];
                 $DB['db_user']->disconnect();
-                echo '<script>location.href = "/project/car-shop/account"</script>';
+                echo '<script>location.href = "/car-shop/account"</script>';
             }
         } else {
             $this->pageNotFound();

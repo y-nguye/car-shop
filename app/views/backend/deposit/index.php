@@ -23,7 +23,7 @@
                 <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
                     <div class="container-fluid justify-content-start">
                         <span class="fs-5"><b>Danh sách các đơn yêu cầu đặt cọc</b></span>
-                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/project/car-shop/admin">
+                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
                             <i class="bi bi-telephone"></i>
                             Liên hệ
                         </button>
@@ -63,7 +63,7 @@
                                     <td class="text-center"><?php if ($data['user_deposit_is_payed']) echo '<i class="bi bi-check-circle-fill green-check"></i>';
                                                             else echo ''; ?></td>
                                     <td class="text-center">
-                                        <a href="/project/car-shop/admin/deposit/see-more/<?= $data['user_deposit_id'] ?>" class="p-2">
+                                        <a href="/car-shop/admin/deposit/see-more/<?= $data['user_deposit_id'] ?>" class="p-2">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </td>
@@ -96,7 +96,7 @@
                 }],
                 pageLength: 50,
                 language: {
-                    url: '/project/car-shop/assets/plugin/datatables-language/vi.json',
+                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
                 },
             });
         });

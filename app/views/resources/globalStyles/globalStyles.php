@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="/project/car-shop/vendor/twbs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="/project/car-shop/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css" type="text/css" />
-<link rel="stylesheet" href="/project/car-shop/vendor/datatables.net/datatables.net-bs5/css/dataTables.bootstrap5.min.css" type="text/css" />
+<link rel="stylesheet" href="/car-shop/vendor/twbs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="/car-shop/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css" type="text/css" />
+<link rel="stylesheet" href="/car-shop/vendor/datatables.net/datatables.net-bs5/css/dataTables.bootstrap5.min.css" type="text/css" />
 <style>
     @font-face {
         font-family: 'Saira Semi Condensed';

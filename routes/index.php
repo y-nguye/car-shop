@@ -2,18 +2,11 @@
 
 use FastRoute\RouteCollector;
 
-// Định nghĩa route bên trong thư mục htdoc
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
-    // Thư mục project
-    $r->addGroup('/project', function (RouteCollector $r) {
-        // Thư mục car-shop
-        $r->addGroup('/car-shop', function (RouteCollector $r) {
-            $r->addGroup('', require __DIR__ . '/store.php');
-            $r->addGroup('/cart', require __DIR__ . '/cart.php');
-            $r->addGroup('/account', require __DIR__ . '/account.php');
-            $r->addGroup('/admin', require __DIR__ . '/admin.php');
-        });
-    });
+    $r->addGroup('/car-shop', require __DIR__ . '/store.php');
+    $r->addGroup('/car-shop/cart', require __DIR__ . '/cart.php');
+    $r->addGroup('/car-shop/account', require __DIR__ . '/account.php');
+    $r->addGroup('/car-shop/admin', require __DIR__ . '/admin.php');
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];

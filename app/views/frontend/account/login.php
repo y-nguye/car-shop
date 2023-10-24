@@ -29,7 +29,7 @@
                     <label for="user_password">Mật khẩu</label>
                 </div>
                 <button type="submit" name="loginBtn" class="btn btn-secondary p-3">Đăng nhập</button>
-                <span class="mt-3 mb-5">Chưa có tài khoản? <a href="/project/car-shop/account/signup">tạo ngay nào</a></span>
+                <span class="mt-3 mb-5">Chưa có tài khoản? <a href="/car-shop/account/signup">tạo ngay nào</a></span>
             </div>
         </form>
 

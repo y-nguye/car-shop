@@ -24,7 +24,7 @@
                         <div class="pt-3 pb-3">
                             <div class="d-flex align-items-center justify-content-between">
                                 <h3 class="text-dark mb-0">Xin chào, <?= $lastName ?></h3>
-                                <a href="/project/car-shop/account/logout">Đăng xuất</a>
+                                <a href="/car-shop/account/logout">Đăng xuất</a>
                             </div>
                         </div>
                     </div>
@@ -37,13 +37,13 @@
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-3">
-                        <form name="formAvatar" method="post" action="/project/car-shop/account/edit-avatar" enctype="multipart/form-data">
+                        <form name="formAvatar" method="post" action="/car-shop/account/edit-avatar" enctype="multipart/form-data">
                             <input type="file" name="user_avt" id="avatarInput" style="display: none;" accept="image/*" />
                             <div class="avatar-container rounded-circle">
                                 <?php if ($user_avt && $user_avt && file_exists(__DIR__ . '/../../../../assets/imgs/avt/' . $user_avt)) : ?>
-                                    <img id="avatar" class="rounded-circle border border-1 avatar" src="/project/car-shop/assets/imgs/avt/<?= $user_avt ?>" alt="avt">
+                                    <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/<?= $user_avt ?>" alt="avt">
                                 <?php else : ?>
-                                    <img id="avatar" class="rounded-circle border border-1 avatar" src="/project/car-shop/assets/imgs/avt/no-avt.jpg" alt="no-avt">
+                                    <img id="avatar" class="rounded-circle border border-1 avatar" src="/car-shop/assets/imgs/avt/no-avt.jpg" alt="no-avt">
                                 <?php endif ?>
                                 <div class="rounded-circle d-flex align-items-center justify-content-center avatar-edit"><i class="bi bi-camera fs-1 text-white"></i></div>
                                 <div class="update-button-group">
@@ -61,14 +61,14 @@
                             <span>@<?= $user_username ?></span>
                         </div>
                         <div class="mt-3">
-                            <a class="mt-1" href="/project/car-shop/account">
+                            <a class="mt-1" href="/car-shop/account">
                                 Thông tin cá nhân
                             </a>
                         </div>
 
                         <?php if ($user_is_admin) : ?>
                             <div class="mt-2 mb-3">
-                                <a href="/project/car-shop/admin">
+                                <a href="/car-shop/admin">
                                     Truy cập hệ thống quản trị
                                 </a>
                             </div>
@@ -96,9 +96,9 @@
                                     <div class="me-2 bg-light shadow-sm rounded w-100 <?php if (count($data_all_user_deposit) - 1 != $index) echo "mb-3" ?>">
                                         <div class="p-2 d-flex align-items-center">
                                             <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
-                                                <img src="/project/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
+                                                <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
                                             <?php else : ?>
-                                                <img src="/project/car-shop/assets/imgs/no-img.jpg" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
+                                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
                                             <?php endif; ?>
 
 
