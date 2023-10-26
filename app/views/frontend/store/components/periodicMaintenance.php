@@ -7,7 +7,7 @@
 </p>
 
 <div class="row">
-    <div class="col-8">
+    <div class="col-md-8">
         <h3>BẢO DƯỠNG NHANH</h3>
         <p class="text-justify">
             Với nỗ lực đáp ứng tối đa nhu cầu chăm sóc cho chiếc xe nhằm mang lại sự hài lòng cho khách hàng,
@@ -18,13 +18,12 @@
             Dịch vụ Bảo Dưỡng Nhanh sẽ giúp Quý khách hàng rút ngắn được thời gian chờ đợi tại trạm dịch vụ giảm xuống chỉ còn 60 phút (tính từ khi Quý khách ký lệnh sửa chữa bàn giao xe cho đến lúc xe sẵn sàng được giao),
             trong khi quy trình bảo dưỡng thông thường phải mất đến 150 phút.
         </p>
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center justify-content-between mb-5">
             <img src="/car-shop/assets/imgs/repair-services/auto-repair.jpg" alt="repair-services-1" class="rounded-3 periodic-maintenance-img-1__service-page">
             <img src="/car-shop/assets/imgs/repair-services/auto-repair-2.jpg" alt="repair-services-1" class="rounded-3 periodic-maintenance-img-1__service-page">
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-md-4">
         <img src="/car-shop/assets/imgs/repair-services/frame-maintenance.png" alt="repair-services-1" class="rounded-3 periodic-maintenance-services-img-2__service-page">
-
     </div>
 </div>

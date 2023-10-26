@@ -42,7 +42,7 @@
         <div class="container-lg">
             <div class="pt-4">
                 <div class="row">
-                    <div class="col-1"></div>
+                    <div class="col-md-1"></div>
                     <div class="col-md-3">
                         <form name="formAvatar" method="post" action="/car-shop/account/edit-avatar" enctype="multipart/form-data">
                             <input type="file" name="user_avt" id="avatarInput" style="display: none;" accept="image/*" />
@@ -66,13 +66,13 @@
                         <div class="text-secondary">
                             <span>@<?= $user_username ?></span>
                         </div>
-                        <div class="mt-3">
+                        <div class="mt-3 mb-2">
                             <a href="/car-shop/account/deposit">
                                 Xem đơn hàng
                             </a>
                         </div>
                         <?php if ($user_is_admin) : ?>
-                            <div class="mt-2">
+                            <div class="mb-2">
                                 <a href="/car-shop/admin">
                                     Truy cập hệ thống quản trị
                                 </a>
@@ -80,7 +80,7 @@
                         <?php endif; ?>
 
                         <form id="deleteForm" method="post" action="">
-                            <div class="mt-2 mb-3">
+                            <div class="mb-2">
                                 <a class="text-danger" href="" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                     Xoá tài khoản
                                 </a>
@@ -118,10 +118,10 @@
                         <div id="liveAlertPlaceholder" class="text-start"></div>
 
                         <form name="editForm" id="editForm" class="edit-form" method="post" action="/car-shop/account/edit-person-info">
-                            <div class="d-flex flex-wrap">
-                                <div class="col-6">
-                                    <div class="me-2 mb-2 bg-light shadow-sm rounded card-custom">
-                                        <div class=" rounded-3 p-3 pt-2 text-dark">
+                            <div class="row">
+                                <div class="col-md-6 mt-3">
+                                    <div class="mb-2 bg-light shadow-sm rounded">
+                                        <div class="rounded-3 p-3 pt-2 text-dark">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <h5 class="text-dark m-0">Tên đầy đủ</h5>
                                                 <i class="bi bi-person text-primary fs-4"></i>
@@ -131,8 +131,8 @@
                                     </div>
                                 </div>
 
-                                <div class="col-6">
-                                    <div class="ms-2 mb-2 bg-light shadow-sm rounded card-custom">
+                                <div class="col-md-6 mt-3">
+                                    <div class="mb-2 bg-light shadow-sm rounded">
                                         <div class="rounded-3 p-3 pt-2 text-dark">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <h5 class="text-dark m-0">Số điện thoại</h5>
@@ -143,8 +143,8 @@
                                     </div>
                                 </div>
 
-                                <div class="col-6">
-                                    <div class="me-2 mt-2 bg-light shadow-sm rounded card-custom">
+                                <div class="col-md-6 mt-3">
+                                    <div class="mb-2 bg-light shadow-sm rounded">
                                         <div class="rounded-3 p-3 pt-2 text-dark">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <h5 class="text-dark m-0">Nơi đăng kí xe</h5>

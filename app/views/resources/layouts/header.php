@@ -7,7 +7,7 @@ include_once __DIR__ . '/headerStyles.php';
 <nav class="navbar d-block fixed-top navbar-expand-lg custom-navbar">
     <div class="container-lg">
         <a class="navbar-brand text-dark car-logo ps-2 pe-2 m-0" href="/car-shop"><i class="bi bi-car-front-fill"></i></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="h4"><i class="bi bi-list"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -114,6 +114,10 @@ include_once __DIR__ . '/headerStyles.php';
 <div class="empty-space-below-navbar"></div>
 
 <script>
+    const navbarCollapse = document.querySelectorAll('.nav-item');
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    var navbarMenu = document.querySelector('#navbarSupportedContent');
+
     const bag = document.querySelector('.bag');
     const bagInto = document.querySelector('.bag-into');
     const expandNavBar = document.querySelector('.expand-navbar-by-bag');
@@ -125,36 +129,85 @@ include_once __DIR__ . '/headerStyles.php';
         return acc + child.clientHeight + parseInt(window.getComputedStyle(child).marginTop)
     }, 0);
 
+    var isExpandNavBar = false;
+    var isBagClicked = false;
+
+    // Trường hợp web không bị thu nhỏ
     bag.addEventListener('click', () => {
-        expandNavBar.classList.toggle('extension-navbar');
-        blurBelowNavBar.classList.toggle('blurred');
-
-        if (document.querySelector('.extension-navbar')) {
-            expandNavBar.style.height = `${totalHeight + 80}px`;
+        if (!isExpandNavBar) {
+            handleExpandNavBar();
+            if (window.innerWidth < 992) {
+                isBagClicked = true;
+                navbarToggler.click();
+            }
         } else {
-            expandNavBar.style.height = '0px';
-        }
-
-        bagInto.classList.toggle('extension-bag-into');
-
-        if (!document.querySelector('.blurred')) {
-            setTimeout(function() {
-                blurBelowNavBar.style.visibility = "hidden";
-            }, 320)
-        } else {
-            blurBelowNavBar.style.visibility = "visible";
+            handleShrinkNavbar();
         }
     });
 
+    // ---------------------------------
+
+    // Trường hợp web bị thu nhỏ
+    navbarToggler.addEventListener('click', function() {
+        // Xử lý sự kiện khi nút được nhấn
+        if (navbarToggler.getAttribute('aria-expanded') === 'true') {
+            // Nút đang mở rộng (expanded)
+            handleShrinkNavbar(false);
+            handleTurnOnBlurBelowNavBar();
+        } else {
+            // Nút không mở rộng (collapsed)
+            if (!isBagClicked) {
+                handleTurnOffBlurBelowNavBar();
+            }
+            isBagClicked = false;
+        }
+    });
+
+
     blurBelowNavBar.addEventListener('mouseover', () => {
+        var chieuNgangTrang = window.innerWidth;
+        if (chieuNgangTrang >= 992) {
+            handleShrinkNavbar();
+            if (navbarToggler.getAttribute('aria-expanded') === 'true') {
+                // navbarToggler.click();
+            }
+        }
+    });
+
+    blurBelowNavBar.addEventListener('click', () => {
+        handleShrinkNavbar();
+        if (navbarToggler.getAttribute('aria-expanded') === 'true') {
+            navbarToggler.click();
+        }
+    });
+
+    function handleExpandNavBar(useBlurBelowNavBar = true) {
+        expandNavBar.classList.add('extension-navbar');
+        expandNavBar.style.height = `${totalHeight + 80}px`;
+        bagInto.classList.add('extension-bag-into');
+        if (useBlurBelowNavBar) handleTurnOnBlurBelowNavBar();
+        isExpandNavBar = true;
+    }
+
+    function handleShrinkNavbar(useBlurBelowNavBar = true) {
         expandNavBar.classList.remove('extension-navbar');
-        blurBelowNavBar.classList.remove('blurred');
         expandNavBar.style.height = '0px';
         bagInto.classList.remove('extension-bag-into');
+        if (useBlurBelowNavBar) handleTurnOffBlurBelowNavBar();
+        isExpandNavBar = false;
+    }
+
+    function handleTurnOnBlurBelowNavBar() {
+        blurBelowNavBar.classList.add('blurred');
+        blurBelowNavBar.style.visibility = "visible";
+    }
+
+    function handleTurnOffBlurBelowNavBar() {
+        blurBelowNavBar.classList.remove('blurred');
         setTimeout(function() {
             blurBelowNavBar.style.visibility = "hidden";
         }, 320)
-    });
+    }
 
     if (cartBtn) {
         cartBtn.addEventListener('click', () => {

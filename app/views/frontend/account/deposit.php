@@ -35,8 +35,8 @@
         <div class="container-lg">
             <div class="pt-4">
                 <div class="row">
-                    <div class="col-1"></div>
-                    <div class="col-3">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
                         <form name="formAvatar" method="post" action="/car-shop/account/edit-avatar" enctype="multipart/form-data">
                             <input type="file" name="user_avt" id="avatarInput" style="display: none;" accept="image/*" />
                             <div class="avatar-container rounded-circle">
@@ -60,14 +60,14 @@
                         <div class="text-secondary">
                             <span>@<?= $user_username ?></span>
                         </div>
-                        <div class="mt-3">
-                            <a class="mt-1" href="/car-shop/account">
+                        <div class="mt-3 mb-2">
+                            <a href="/car-shop/account">
                                 Thông tin cá nhân
                             </a>
                         </div>
 
                         <?php if ($user_is_admin) : ?>
-                            <div class="mt-2 mb-3">
+                            <div class="mb-2">
                                 <a href="/car-shop/admin">
                                     Truy cập hệ thống quản trị
                                 </a>
@@ -75,7 +75,7 @@
                         <?php endif; ?>
 
                     </div>
-                    <div class="col-7">
+                    <div class="col-md-7">
 
                         <h3>Các đơn yêu cầu đặt cọc</h3>
                         <div class="mb-3">
@@ -83,44 +83,45 @@
                         </div>
                         <div class="rounded-3 container-deposit-list">
                             <div class="d-flex flex-wrap">
-
-                                <?php if (empty($data_all_user_deposit)) : ?>
-                                    <div class="w-100">
-                                        <div class="p-2 d-flex justify-content-center bg-light">
-                                            <span class="fs-3">Hiện bạn chưa có đơn yêu cầu nào...</span>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-
-                                <?php foreach ($data_all_user_deposit as $index => $data) : ?>
-                                    <div class="me-2 bg-light shadow-sm rounded w-100 <?php if (count($data_all_user_deposit) - 1 != $index) echo "mb-3" ?>">
-                                        <div class="p-2 d-flex align-items-center">
-                                            <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
-                                                <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
-                                            <?php else : ?>
-                                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
-                                            <?php endif; ?>
-
-
-                                            <div class="d-flex flex-column pe-3 border-end min-width-250px">
-                                                <span><b><?= $data['car_name'] ?></b></span>
-                                                <span>Mã đơn hàng: #<?= $data['user_deposit_id'] ?></span>
-                                                <?php $timestamp = strtotime($data['user_deposit_at']); ?>
-                                                <span>Ngày: <?= date("d/m/Y", $timestamp);  ?></span>
-                                            </div>
-
-                                            <div class="ms-3 d-flex flex-column">
-                                                <span><?= $data['user_deposit_where'] ?></span>
-                                                <span>Phương thức: <?= $data['pay_method_name'] ?></span>
-                                                <span>Phí đặt cọc: <?= number_format($data['user_deposit_price'], 0, ',', '.')  ?> ₫</span>
+                                <div class="col-md-12">
+                                    <?php if (empty($data_all_user_deposit)) : ?>
+                                        <div class="w-100">
+                                            <div class="p-2 d-flex justify-content-center bg-light">
+                                                <span class="fs-3">Hiện bạn chưa có đơn yêu cầu nào...</span>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php endforeach; ?>
+                                    <?php endif; ?>
+
+                                    <?php foreach ($data_all_user_deposit as $index => $data) : ?>
+                                        <div class="me-2 bg-light shadow-sm rounded w-100 <?php if (count($data_all_user_deposit) - 1 != $index) echo "mb-3" ?>">
+                                            <div class="p-2 d-flex align-items-center">
+                                                <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
+                                                    <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
+                                                <?php else : ?>
+                                                    <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 me-4 img-car-deposit" alt="img-car-deposit">
+                                                <?php endif; ?>
+
+
+                                                <div class="d-flex flex-column pe-3 border-end min-width-250px">
+                                                    <span><b><?= $data['car_name'] ?></b></span>
+                                                    <span>Mã đơn hàng: #<?= $data['user_deposit_id'] ?></span>
+                                                    <?php $timestamp = strtotime($data['user_deposit_at']); ?>
+                                                    <span>Ngày: <?= date("d/m/Y", $timestamp);  ?></span>
+                                                </div>
+
+                                                <div class="ms-3 d-flex flex-column">
+                                                    <span><?= $data['user_deposit_where'] ?></span>
+                                                    <span>Phương thức: <?= $data['pay_method_name'] ?></span>
+                                                    <span>Phí đặt cọc: <?= number_format($data['user_deposit_price'], 0, ',', '.')  ?> ₫</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-1"></div>
+                    <div class="col-md-1"></div>
                 </div>
             </div>
         </div>

@@ -1,7 +1,13 @@
 <style>
-    @media (max-width: 1024px) {
+    @media (max-width: 1399px) {
         .column-info-car {
             padding-left: 10px !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .slide__product-page {
+            margin-bottom: 20px;
         }
     }
 
@@ -147,6 +153,7 @@
 
     .support-img__support-page {
         width: 100%;
+        min-height: 250px;
         object-fit: cover;
     }
 

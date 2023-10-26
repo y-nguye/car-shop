@@ -100,25 +100,25 @@
                 </div>
             </div>
 
-            <div class="d-flex flex-column col-md-5 ps-5 column-info-car">
+            <div class="col-md-5 d-flex flex-column ps-5 column-info-car">
                 <h1 class="text-dark"><?= $data_car['car_name'] ?></h1>
                 <span class="fs-3"><?= number_format($data_car['car_price'], 0, ',', '.') ?> ₫</span>
 
                 <div class="mt-4 pb-3 border-start border-end">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Kiểu dáng</span>
                                 <span class="mt-2 p-1 fs-4"><?= $data_car['car_type_name'] ?></span>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Số chỗ ngồi</span>
                                 <span class="mt-2 p-1 fs-4"><?= $data_car['car_seat'] ?></span>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Loại hộp số</span>
                                 <span class="text-center p-1 mt-2 fs-4"><?= $data_car['car_transmission'] ?></span>
@@ -129,7 +129,7 @@
 
                 <div class="mb-4 border-start border-end">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Hãng sản xuất</span>
                                 <?php if (empty($data_car['car_producer_name'])) : ?>
@@ -139,7 +139,7 @@
                                 <?php endif ?>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Nhiên liệu</span>
                                 <?php if (empty($data_car['car_fuel'])) : ?>
@@ -149,7 +149,7 @@
                                 <?php endif ?>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-4">
                             <div class="text-center d-flex flex-column align-items-center justify-content-center">
                                 <span>Động cơ</span>
                                 <span class="mt-2 p-1 fs-4"><?= $data_car['car_engine'] ?></span>

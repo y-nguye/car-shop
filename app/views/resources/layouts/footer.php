@@ -14,11 +14,11 @@ include_once __DIR__ .  '/footerStyles.php';
             <div class="ms-auto">Việt Nam</div>
         </div>
         <div class="mt-2">
-            <ul class="d-flex fs-7">
-                <li class="pe-3 border-end"><a class="text-dark" href="">Chính sách quyền riêng tư</a></li>
-                <li class="ps-3 pe-3 border-end"><a class="text-dark" href="">Điều khoản sử dụng</a></li>
-                <li class="ps-3 pe-3 border-end"><a class="text-dark" href="">Bán hàng và hoàn tiền</a></li>
-                <li class="ps-3"><a class="text-dark" href="">Pháp lý</a></li>
+            <ul class="d-flex flex-wrap fs-7 pb-3 policy-list">
+                <li class="pe-3 border-end policy-item"><span class="text-dark" href="">Chính sách quyền riêng tư</span></li>
+                <li class="ps-3 pe-3 border-end policy-item"><span class="text-dark" href="">Điều khoản sử dụng</span></li>
+                <li class="ps-3 pe-3 border-end policy-item"><span class="text-dark" href="">Bán hàng và hoàn tiền</span></li>
+                <li class="ps-3 policy-item"><span class="text-dark" href="">Pháp lý</span></li>
             </ul>
         </div>
     </div>

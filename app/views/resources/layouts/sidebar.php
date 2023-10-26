@@ -15,9 +15,9 @@ $sidebar_items = [
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
             <?php if (isset($_SESSION["user_avt"]) && file_exists(__DIR__ . '/../../../../assets/imgs/avt/' . $_SESSION["user_avt"])) : ?>
-                <img id="avatar" class="rounded-circle ms-2 me-2" src="/car-shop/assets/imgs/avt/<?= $_SESSION["user_avt"] ?>" alt="avt-img" width="32" height="32">
+                <img id="avatar" class="rounded-circle ms-2 me-2 avt-img" src="/car-shop/assets/imgs/avt/<?= $_SESSION["user_avt"] ?>" alt="avt-img">
             <?php else : ?>
-                <img id="avatar" class="rounded-circle ms-2 me-2" src="/car-shop/assets/imgs/avt/no-avt.jpg" alt="no-avt" width="32" height="32">
+                <img id="avatar" class="rounded-circle ms-2 me-2 avt-img" src="/car-shop/assets/imgs/avt/no-avt.jpg" alt="no-avt">
             <?php endif ?>
             <b><?= $_SESSION["user_fullname"] ?></b>
         </a>

@@ -9,9 +9,24 @@
 
     @media (max-width: 991px) {
         .navbar .nav-item {
-            margin-left: 0 !important;
-            margin-bottom: -12px;
+            margin-left: 5px !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
             padding: 8px 0;
+        }
+
+        .extension-navbar {
+            /* position: absolute;
+            top: 0; */
+        }
+
+        .expand-navbar-by-bag {
+            /* position: absolute;
+            top: 0; */
+            /* height: 0; */
+            /* transition: all 0.3s ease; */
+            /* visibility: hidden; */
+            /* overflow: hidden; */
         }
     }
 

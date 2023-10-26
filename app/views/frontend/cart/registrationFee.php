@@ -32,7 +32,7 @@
                     <?php endif; ?>
                 </a>
                 <h1 class="mt-4"><?= $data_car['car_name'] ?></h1>
-                <span class="text-center fs-4"><?= $data_car['car_describe'] ?></span>
+                <span class="mb-4 text-center fs-4"><?= $data_car['car_describe'] ?></span>
             </div>
 
             <div class="col-md-4">

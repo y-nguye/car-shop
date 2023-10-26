@@ -17,8 +17,8 @@
     <div class="container-lg text-center d-flex flex-column justify-content-center push-footer-down-page">
 
         <form name="formSignup" id="formSignup" method="post" action="">
-            <div class="container d-flex flex-column justify-content-center" style="width: 25rem;">
-                <h3 class="mb-4">Đăng ký</h3>
+            <div class="container d-flex flex-column justify-content-center" style="max-width: 25rem;">
+                <h3 class="pt-4 mb-4">Đăng ký</h3>
                 <div id="liveAlertPlaceholder" class="text-start"></div>
 
                 <div class="form-floating mb-3">

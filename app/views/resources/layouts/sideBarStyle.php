@@ -5,4 +5,10 @@
         top: 5px;
         border: 1px solid rgba(209, 213, 219, 1);
     }
+
+    .avt-img {
+        width: 32px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+    }
 </style>

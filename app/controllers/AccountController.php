@@ -8,12 +8,16 @@ class AccountController extends AccessController
         $this->authentication();
 
         $user_username  = $_SESSION["user_username"];
-        $user_fullname  = $_SESSION['user_fullname'];
-        $user_tel       = $_SESSION['user_tel'];
         $user_email     = $_SESSION['user_email'];
-        $user_avt       = $_SESSION['user_avt'];
-        $user_province_id = $_SESSION["user_province_id"];
         $user_is_admin  = $_SESSION['user_is_admin'];
+
+        $DB['db_user']->connect();
+        $data_user = $DB['db_user']->getData($user_username);
+
+        $user_fullname      = $data_user["user_fullname"];
+        $user_tel           = $data_user["user_tel"];
+        $user_province_id   = $data_user["user_province_id"];
+        $user_avt           = $data_user["user_avt"];
 
         $lastName = strrchr($_SESSION['user_fullname'], ' ');
 
@@ -134,7 +138,7 @@ class AccountController extends AccessController
         unset($_SESSION["user_avt"]);
         unset($_SESSION["user_is_admin"]);
         unset($_SESSION['cart']);
-        echo '<script>window.history.back();</script>';
+        echo '<script>location.href = "/car-shop"</script>';
     }
 
     public function signup($DB)
