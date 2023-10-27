@@ -1,6 +1,42 @@
 <style>
+    @media (max-width: 1024px) {
+        .img-car-on-cart {
+            width: 200px !important;
+        }
+
+        .car-name__cart-page {
+            font-size: 20px;
+        }
+
+        .car-price__cart-page {
+            font-size: 18px !important;
+        }
+
+        .registration-fee__cart-page {
+            font-size: 16px !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .img-car-on-cart {
+            width: 100px !important;
+        }
+
+        .car-name__cart-page {
+            font-size: 16px;
+        }
+
+        .car-price__cart-page {
+            font-size: 14px !important;
+        }
+
+        .registration-fee__cart-page {
+            font-size: 12px !important;
+        }
+    }
+
     .img-car-on-cart {
-        width: 500px;
+        max-width: 500px;
         aspect-ratio: 16/9;
         object-fit: cover;
     }

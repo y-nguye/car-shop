@@ -43,10 +43,11 @@
                                 <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-cart" alt="img-car-on-cart">
                             <?php endif; ?>
                         </a>
-                        <div class="d-flex flex-column ms-5">
-                            <h1 class="m-0"><?= $data['car_name'] ?></h1>
-                            <p class="fs-3 m-0"><?= number_format($data['car_price'], 0, ',', '.') ?> ₫</p>
-                            <a class="fs-5 icon-link icon-link-hover" href="/car-shop/cart/registration-fee/<?= $data['car_id'] ?>">Dự toán chi phí <i class="bi bi-arrow-right align-middle "></i></a>
+
+                        <div class="d-flex flex-column ms-3">
+                            <h1 class="m-0 car-name__cart-page"><?= $data['car_name'] ?></h1>
+                            <p class="fs-3 m-0 car-price__cart-page"><?= number_format($data['car_price'], 0, ',', '.') ?> ₫</p>
+                            <a class="fs-5 icon-link icon-link-hover registration-fee__cart-page" href="/car-shop/cart/registration-fee/<?= $data['car_id'] ?>">Dự toán chi phí <i class="bi bi-arrow-right align-middle "></i></a>
                         </div>
                         <a class="btn-close fs-5 ms-auto me-1" aria-label="Close" href="/car-shop/cart/delete/<?= $data['car_id'] ?>"></a>
                     </div>
