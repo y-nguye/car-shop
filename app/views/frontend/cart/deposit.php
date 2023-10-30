@@ -116,7 +116,7 @@
 
                     <div class="d-flex flex-column align-items-center justify-content-between">
                         <button type="submit" name="btnDeposit" id="btn-deposit" class="btn btn-primary w-100">
-                            Xác nhận đơn đặt cọc
+                            Yêu cầu đặt cọc
                         </button>
                         <a id="btn-back-to-registration-fee" class="mt-3" href="/car-shop/cart/registration-fee/<?= $car_id ?>">Quay về tính toán</a>
                     </div>
