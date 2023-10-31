@@ -1,7 +1,5 @@
 <?php
 
-include_once 'app/models/Database_manager.php';
-
 class TestDriveData extends DatabaseManager
 {
     private $table = "user_test_drive";

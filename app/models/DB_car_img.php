@@ -1,5 +1,4 @@
 <?php
-include_once 'app/models/Database_manager.php';
 
 class CarImgData extends DatabaseManager
 {

@@ -1,7 +1,5 @@
 <?php
 
-include_once 'app/models/Database_manager.php';
-
 class PayMethodData extends DatabaseManager
 {
     private $table = "pay_method";

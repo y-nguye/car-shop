@@ -1,7 +1,5 @@
 <?php
 
-include_once 'app/models/Database_manager.php';
-
 class CarFuelData extends DatabaseManager
 {
     private $table = "car_fuel";

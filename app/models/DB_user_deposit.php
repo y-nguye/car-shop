@@ -1,7 +1,5 @@
 <?php
 
-include_once 'app/models/Database_manager.php';
-
 class UserDepositData extends DatabaseManager
 {
     private $table = "user_deposit";
