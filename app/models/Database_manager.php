@@ -2,13 +2,22 @@
 
 class DatabaseManager
 {
-    private $hostname = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $dbname = "car_shop";
+    private $hostname;
+    private $username;
+    private $password;
+    private $dbname;
+
     public $conn = null;
     public $result = null;
     public $id = null;
+
+    public function __construct()
+    {
+        $this->hostname = $_ENV['DB_HOST'];
+        $this->username = $_ENV['DB_USERNAME'];
+        $this->password = $_ENV['DB_PASSWORD'];
+        $this->dbname = $_ENV['DB_DATABASE'];
+    }
 
     public function connect()
     {

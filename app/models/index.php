@@ -1,5 +1,11 @@
 <?php
 
+use Dotenv\Dotenv;
+// Đường dẫn đến tệp .env
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../..');
+// Nạp biến môi trường từ tệp .env
+$dotenv->load();
+
 include_once __DIR__ . '/DB_cars.php';
 include_once __DIR__ . '/DB_car_seat.php';
 include_once __DIR__ . '/DB_car_fuel.php';
