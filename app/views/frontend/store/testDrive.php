@@ -116,6 +116,13 @@
         const checkboxHaveDriverLicense = document.getElementById('checkbox-have-driver-license');
         const btnTestDriveRegister = document.querySelector('.btn-test-drive-register');
 
+        // Hàm kiểm tra ngày không ở quá khứ hoặc hôm nay
+        $.validator.addMethod("notPastDate", function(value, element) {
+            var selectedDate = new Date(value);
+            var currentDate = new Date();
+            return selectedDate >= currentDate;
+        }, "Date cannot be in the past");
+
         $(document).ready(function() {
             $('#formSignUpTestDrive').validate({
                 errorClass: "is-invalid",
@@ -135,6 +142,7 @@
                     },
                     user_test_drive_day: {
                         required: true,
+                        notPastDate: true
                     },
                     user_test_drive_time: {
                         required: true,
@@ -161,6 +169,7 @@
                     },
                     user_test_drive_day: {
                         required: "Không được để trống",
+                        notPastDate: "Không chọn hôm nay hoặc quá khứ"
                     },
                     user_test_drive_time: {
                         required: "Không được để trống",
