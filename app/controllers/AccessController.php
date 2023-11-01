@@ -3,6 +3,13 @@ session_start();
 
 class AccessController
 {
+    public $DB;
+
+    public function __construct($DB)
+    {
+        $this->DB = $DB;
+    }
+
     public function authentication()
     {
         if (!isset($_SESSION["logged"])) {

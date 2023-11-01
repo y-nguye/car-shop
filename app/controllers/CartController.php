@@ -9,47 +9,47 @@ class CartController extends AccessController
     private $emailSendName = "nhyd23021@cusc.ctu.edu.vn";
     private $emailSendPassword = "nguyeny@cu\$c";
 
-    public function index($DB)
+    public function index()
     {
         $cart = [];
         if (isset($_SESSION['cart'])) {
             $cart = $_SESSION['cart'];
         }
         // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
         include_once __DIR__ . "/../views/frontend/cart/index.php";
     }
 
-    public function delete($DB, $vars)
+    public function delete($vars)
     {
         $car_id = $vars['id'];
 
         // Không có sản phẩm trong giỏ hàng thì không truy cập được
         if (!isset($_SESSION['cart'][$car_id])) $this->pageNotFound();
 
-        $DB['db_user_cart_item']->connect();
-        $DB['db_user_cart_item']->deleteData($car_id);
-        $DB['db_user_cart_item']->disconnect();
+        $this->DB['db_user_cart_item']->connect();
+        $this->DB['db_user_cart_item']->deleteData($car_id);
+        $this->DB['db_user_cart_item']->disconnect();
 
         unset($_SESSION['cart'][$car_id]);
         echo '<script>location.href = "/car-shop/cart"</script>';
     }
 
-    public function registrationFee($DB, $vars)
+    public function registrationFee($vars)
     {
         $car_id = $vars['id'];
 
         // Không có sản phẩm trong giỏ hàng thì không truy cập được
         if (!isset($_SESSION['cart'][$car_id])) $this->pageNotFound();
 
-        $DB['db_user_province']->connect();
-        $data_all_user_province = $DB['db_user_province']->getAllData();
+        $this->DB['db_user_province']->connect();
+        $data_all_user_province = $this->DB['db_user_province']->getAllData();
 
         // Lấy dữ liệu xe từ SESSION
         $data_car = $this->getDataCarFromSessionByCarID($car_id);
 
         // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
         include_once __DIR__ . "/../views/frontend/cart/registrationFee.php";
 
         // Hiển thị toast
@@ -59,7 +59,7 @@ class CartController extends AccessController
         }
     }
 
-    public function deposit($DB, $vars)
+    public function deposit($vars)
     {
         $car_id = $vars['id'];
 
@@ -102,34 +102,34 @@ class CartController extends AccessController
             $data_user_province_id = $_SESSION["user_province_id"];
         }
 
-        $DB['db_user_province']->connect();
-        $DB['db_pay_method']->connect();
-        $data_all_user_province = $DB['db_user_province']->getAllData();
-        $data_all_pay_method = $DB['db_pay_method']->getAllData();
+        $this->DB['db_user_province']->connect();
+        $this->DB['db_pay_method']->connect();
+        $data_all_user_province = $this->DB['db_user_province']->getAllData();
+        $data_all_pay_method = $this->DB['db_pay_method']->getAllData();
 
         $depositPrice = $data_car['total_price'] * 0.1;
 
         // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
         include_once __DIR__ . "/../views/frontend/cart/deposit.php";
 
         // Validate: báo lỗi (Nếu có)
         $this->getErrorsFromSessionAndShowAlert();
 
-        $DB['db_user_province']->disconnect();
-        $DB['db_pay_method']->disconnect();
+        $this->DB['db_user_province']->disconnect();
+        $this->DB['db_pay_method']->disconnect();
     }
 
-    public function depositRequired($DB)
+    public function depositRequired()
     {
         // Tránh truy cập trái phép
         // Nếu không nhấn nút xác nhận đặt cọc thì không vào được
         if (!isset($_POST['btnDeposit'])) $this->pageNotFound();
 
-        $DB['db_cars']->connect();
-        $DB['db_user_province']->connect();
-        $DB['db_user_deposit']->connect();
-        $DB['db_pay_method']->connect();
+        $this->DB['db_cars']->connect();
+        $this->DB['db_user_province']->connect();
+        $this->DB['db_user_deposit']->connect();
+        $this->DB['db_pay_method']->connect();
 
         $car_id = $_POST['car_id'];
         $user_deposit_fullname = $_POST['user_fullname'];
@@ -139,7 +139,7 @@ class CartController extends AccessController
         $user_deposit_price = $_POST['user_deposit_price'];
 
         $pay_method_id = $_POST['pay_method_id'];
-        $data_pay_method = $DB['db_pay_method']->getDataByID($pay_method_id);
+        $data_pay_method = $this->DB['db_pay_method']->getDataByID($pay_method_id);
         $pay_method_name = $data_pay_method['pay_method_name'];
 
         $depositInfo = [
@@ -153,12 +153,12 @@ class CartController extends AccessController
         $errors = $this->validationSeverSide($depositInfo);
 
         if (empty($errors)) {
-            $user_deposit_where = $DB['db_user_province']->getDataByID($_POST['user_province_id']);
+            $user_deposit_where = $this->DB['db_user_province']->getDataByID($_POST['user_province_id']);
             $user_deposit_where = 'Showroom ' . $user_deposit_where["user_province_name"];
 
             isset($_SESSION['user_id']) ? $user_id = $_SESSION["user_id"] : $user_id = "NULL";
 
-            $DB['db_user_deposit']->setData(
+            $this->DB['db_user_deposit']->setData(
                 $user_deposit_fullname,
                 $user_deposit_tel,
                 $user_deposit_email,
@@ -171,7 +171,7 @@ class CartController extends AccessController
             );
 
             // Lấy id của đơn đăt cọc vừa thêm
-            $user_deposit_id = $DB['db_user_deposit']->id;
+            $user_deposit_id = $this->DB['db_user_deposit']->id;
 
             // Lấy dữ liệu xe từ SESSION
             $data_car = $this->getDataCarFromSessionByCarID($car_id);
@@ -191,31 +191,31 @@ class CartController extends AccessController
 
             $this->sendMailDepositRequired($depositInfo);
 
-            $DB['db_cars']->disconnect();
-            $DB['db_user_province']->disconnect();
-            $DB['db_user_deposit']->disconnect();
-            $DB['db_pay_method']->disconnect();
+            $this->DB['db_cars']->disconnect();
+            $this->DB['db_user_province']->disconnect();
+            $this->DB['db_user_deposit']->disconnect();
+            $this->DB['db_pay_method']->disconnect();
         } else {
             $this->setErrorsToSession($errors);
             echo '<script>location.href = "/car-shop/cart/deposit/' . $car_id . '"</script>';
         }
     }
 
-    public function mailSendSuccess($DB)
+    public function mailSendSuccess()
     {
         if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
-            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+            $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
             include_once __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
             unset($_SESSION['mail-send-success']);
         } else {
             $this->pageNotFound();
         }
     }
-    public function mailSendError($DB)
+    public function mailSendError()
     {
         if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
             $error = $_GET['error'];
-            $data_all_car_type = $this->getAllCarTypesForHeader($DB);
+            $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
             include_once __DIR__ . "/../views/frontend/cart/mailResponse/mailSentError.php";
             unset($_SESSION['mail-send-success']);
         } else {
@@ -225,11 +225,11 @@ class CartController extends AccessController
 
     // ---------------- Các phương thức private ----------------
 
-    private function getAllCarTypesForHeader($DB)
+    private function getAllCarTypesForHeader()
     {
-        $DB['db_car_type']->connect();
-        $data_all_car_type = $DB['db_car_type']->getAllData();
-        $DB['db_car_type']->disconnect();
+        $this->DB['db_car_type']->connect();
+        $data_all_car_type = $this->DB['db_car_type']->getAllData();
+        $this->DB['db_car_type']->disconnect();
         return $data_all_car_type;
     }
 

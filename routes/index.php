@@ -27,7 +27,7 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         http_response_code(404);
         require __DIR__ . '/../app/controllers/AccessController.php';
-        $controller = new AccessController();
+        $controller = new AccessController($DB);
         call_user_func([$controller, 'pageNotFound']);
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
@@ -41,7 +41,7 @@ switch ($routeInfo[0]) {
         // Chia chuỗi $handler thành một mảng $controllerName và $methodName bằng cách sử dụng ký tự '@' như dấu phân tách
         [$controllerName, $methodName] = explode('@', $handler);
         require __DIR__ . '/../app/controllers/' . $controllerName . '.php';
-        $controller = new $controllerName();
-        call_user_func([$controller, $methodName], $DB, $vars);
+        $controller = new $controllerName($DB);
+        call_user_func([$controller, $methodName], $vars);
         break;
 }

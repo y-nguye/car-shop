@@ -3,38 +3,38 @@ require_once __DIR__ . '/AccessController.php';
 
 class ProductController extends AccessController
 {
-    public function index($DB)
+    public function index()
     {
         $this->authentication();
         $this->authorization();
 
-        $DB['db_cars']->connect();
-        $data_cars = $DB['db_cars']->getAllData();
+        $this->DB['db_cars']->connect();
+        $data_cars = $this->DB['db_cars']->getAllData();
         include_once __DIR__ . "/../views/backend/product/index.php";
-        $DB['db_cars']->disconnect();
+        $this->DB['db_cars']->disconnect();
         unset($_SESSION['pathname']);
     }
 
-    public function add($DB)
+    public function add()
     {
         $this->authentication();
         $this->authorization();
 
         // UPDATES
         // Kết nối và lấy dữ liệu
-        $DB['db_cars']->connect();
-        $DB['db_car_seat']->connect();
-        $DB['db_car_fuel']->connect();
-        $DB['db_car_type']->connect();
-        $DB['db_car_transmission']->connect();
-        $DB['db_car_producer']->connect();
-        $DB['db_car_img']->connect();
+        $this->DB['db_cars']->connect();
+        $this->DB['db_car_seat']->connect();
+        $this->DB['db_car_fuel']->connect();
+        $this->DB['db_car_type']->connect();
+        $this->DB['db_car_transmission']->connect();
+        $this->DB['db_car_producer']->connect();
+        $this->DB['db_car_img']->connect();
 
-        $data_all_car_seat = $DB['db_car_seat']->getAllData();
-        $data_all_car_type = $DB['db_car_type']->getAllData();
-        $data_all_car_fuel = $DB['db_car_fuel']->getAllData();
-        $data_all_car_transmission = $DB['db_car_transmission']->getAllData();
-        $data_all_car_producer = $DB['db_car_producer']->getAllData();
+        $data_all_car_seat = $this->DB['db_car_seat']->getAllData();
+        $data_all_car_type = $this->DB['db_car_type']->getAllData();
+        $data_all_car_fuel = $this->DB['db_car_fuel']->getAllData();
+        $data_all_car_transmission = $this->DB['db_car_transmission']->getAllData();
+        $data_all_car_producer = $this->DB['db_car_producer']->getAllData();
 
         // USES
         include_once __DIR__ . "/../views/backend/product/add.php";
@@ -76,7 +76,7 @@ class ProductController extends AccessController
             // Người dùng không vi phạm quy luật nào cả --> tiến hành lưu
             if (empty($errors)) {
 
-                $DB['db_cars']->setData(
+                $this->DB['db_cars']->setData(
                     $car_name,
                     $car_price,
                     $car_quantity,
@@ -91,22 +91,22 @@ class ProductController extends AccessController
                 );
 
                 // Lấy id của sản phẩm vừa thêm
-                $new_car_id = $DB['db_cars']->id;
+                $new_car_id = $this->DB['db_cars']->id;
 
                 // Nếu người dùng có thêm ảnh
                 if (!empty($_FILES['car_img_filename']['name'][0])) {
                     $uploadDir = __DIR__ . '/../../assets/uploads/';
-                    $DB['db_car_img']->setData($_FILES['car_img_filename'], $new_car_id, $uploadDir);
+                    $this->DB['db_car_img']->setData($_FILES['car_img_filename'], $new_car_id, $uploadDir);
                 }
 
                 // Ngắt kết nối cho các đối tượng con
-                $DB['db_cars']->disconnect();
-                $DB['db_car_type']->disconnect();
-                $DB['db_car_seat']->disconnect();
-                $DB['db_car_fuel']->disconnect();
-                $DB['db_car_transmission']->disconnect();
-                $DB['db_car_producer']->disconnect();
-                $DB['db_car_img']->disconnect();
+                $this->DB['db_cars']->disconnect();
+                $this->DB['db_car_type']->disconnect();
+                $this->DB['db_car_seat']->disconnect();
+                $this->DB['db_car_fuel']->disconnect();
+                $this->DB['db_car_transmission']->disconnect();
+                $this->DB['db_car_producer']->disconnect();
+                $this->DB['db_car_img']->disconnect();
 
                 // Trở về danh sách
                 echo '<script>location.href = "./"</script>';
@@ -118,13 +118,13 @@ class ProductController extends AccessController
         }
     }
 
-    public function addProducer($DB)
+    public function addProducer()
     {
         $this->authentication();
         $this->authorization();
 
-        $DB['db_car_producer']->connect();
-        $data_all_car_producer = $DB['db_car_producer']->getAllData();
+        $this->DB['db_car_producer']->connect();
+        $data_all_car_producer = $this->DB['db_car_producer']->getAllData();
 
         include_once __DIR__ . "/../views/backend/product/addProducer.php";
 
@@ -137,8 +137,8 @@ class ProductController extends AccessController
             $errors = $this->validationMaxLengthServerSide($car_producer_name, 50);
 
             if (empty($errors)) {
-                $DB['db_car_producer']->setData($car_producer_name);
-                $DB['db_car_producer']->disconnect();
+                $this->DB['db_car_producer']->setData($car_producer_name);
+                $this->DB['db_car_producer']->disconnect();
 
                 echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
             } else {
@@ -148,30 +148,30 @@ class ProductController extends AccessController
 
         // Xoá hãng xe
         if (isset($_POST['btnDeleteProducer'])) {
-            $DB['db_car_producer']->deleteData($_POST['car_producer_ids']);
-            $DB['db_car_producer']->disconnect();
+            $this->DB['db_car_producer']->deleteData($_POST['car_producer_ids']);
+            $this->DB['db_car_producer']->disconnect();
 
             echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
         }
     }
 
-    public function addProducerCheck($DB)
+    public function addProducerCheck()
     {
         $this->authentication();
         $this->authorization();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $DB['db_car_producer']->connect();
-            $producerExists = $DB['db_car_producer']->checkData($_POST['car_producer_name']);
+            $this->DB['db_car_producer']->connect();
+            $producerExists = $this->DB['db_car_producer']->checkData($_POST['car_producer_name']);
 
             if ($producerExists) echo 'false';
             else echo 'true';
 
-            $DB['db_car_producer']->disconnect();
+            $this->DB['db_car_producer']->disconnect();
         }
     }
 
-    public function edit($DB, $var)
+    public function edit($var)
     {
         $this->authentication();
         $this->authorization();
@@ -179,24 +179,24 @@ class ProductController extends AccessController
         $car_id = $var['id'];
 
         // Kết nối và lấy dữ liệu
-        $DB['db_cars']->connect();
-        $data_car = $DB['db_cars']->getDataByID($car_id);
+        $this->DB['db_cars']->connect();
+        $data_car = $this->DB['db_cars']->getDataByID($car_id);
         $this->checkNull($data_car);
 
-        $DB['db_car_type']->connect();
-        $DB['db_car_seat']->connect();
-        $DB['db_car_fuel']->connect();
-        $DB['db_car_transmission']->connect();
-        $DB['db_car_producer']->connect();
-        $DB['db_car_img']->connect();
+        $this->DB['db_car_type']->connect();
+        $this->DB['db_car_seat']->connect();
+        $this->DB['db_car_fuel']->connect();
+        $this->DB['db_car_transmission']->connect();
+        $this->DB['db_car_producer']->connect();
+        $this->DB['db_car_img']->connect();
 
         // getData thì trả về mảng 1 chiều, getAllData thì trả về mảng 2 chiều
-        $data_all_car_img = $DB['db_car_img']->getAllDataByCarID($car_id);
-        $data_all_car_type = $DB['db_car_type']->getAllData();
-        $data_all_car_seat = $DB['db_car_seat']->getAllData();
-        $data_all_car_fuel = $DB['db_car_fuel']->getAllData();
-        $data_all_car_transmission = $DB['db_car_transmission']->getAllData();
-        $data_all_car_producer = $DB['db_car_producer']->getAllData();
+        $data_all_car_img = $this->DB['db_car_img']->getAllDataByCarID($car_id);
+        $data_all_car_type = $this->DB['db_car_type']->getAllData();
+        $data_all_car_seat = $this->DB['db_car_seat']->getAllData();
+        $data_all_car_fuel = $this->DB['db_car_fuel']->getAllData();
+        $data_all_car_transmission = $this->DB['db_car_transmission']->getAllData();
+        $data_all_car_producer = $this->DB['db_car_producer']->getAllData();
 
         // Render ra trang
         include_once __DIR__ . "/../views/backend/product/edit.php";
@@ -237,7 +237,7 @@ class ProductController extends AccessController
             // Người dùng không vi phạm quy luật nào cả --> tiến hành lưu
             if (empty($errors)) {
 
-                $DB['db_cars']->updateData(
+                $this->DB['db_cars']->updateData(
                     $car_id,
                     $car_name,
                     $car_price,
@@ -254,17 +254,17 @@ class ProductController extends AccessController
 
                 if (!empty($_FILES['car_img_filename']['name'][0])) {
                     $uploadDir = __DIR__ . '/../../assets/uploads/';
-                    $DB['db_car_img']->updateData($data_all_car_img, $_FILES['car_img_filename'], $car_id, $uploadDir);
+                    $this->DB['db_car_img']->updateData($data_all_car_img, $_FILES['car_img_filename'], $car_id, $uploadDir);
                 }
 
                 // Ngắt kết nối cho các đối tượng con
-                $DB['db_cars']->disconnect();
-                $DB['db_car_type']->disconnect();
-                $DB['db_car_seat']->disconnect();
-                $DB['db_car_fuel']->disconnect();
-                $DB['db_car_transmission']->disconnect();
-                $DB['db_car_producer']->disconnect();
-                $DB['db_car_img']->disconnect();
+                $this->DB['db_cars']->disconnect();
+                $this->DB['db_car_type']->disconnect();
+                $this->DB['db_car_seat']->disconnect();
+                $this->DB['db_car_fuel']->disconnect();
+                $this->DB['db_car_transmission']->disconnect();
+                $this->DB['db_car_producer']->disconnect();
+                $this->DB['db_car_img']->disconnect();
 
                 echo '<script>location.href = "../"</script>';
             } else {
@@ -273,7 +273,7 @@ class ProductController extends AccessController
         }
     }
 
-    public function softDelete($DB)
+    public function softDelete()
     {
         $this->authentication();
         $this->authorization();
@@ -281,47 +281,47 @@ class ProductController extends AccessController
         // Kiểm soát truy cập
         if (!isset($_POST['btnDelete'])) $this->pageNotFound();
 
-        $DB['db_cars']->connect();
-        $DB['db_cars']->softDelete($_POST['car_ids']);
+        $this->DB['db_cars']->connect();
+        $this->DB['db_cars']->softDelete($_POST['car_ids']);
 
         // Xoá sản phẩm trong giỏ hàng
         foreach ($_POST['car_ids'] as $car_id) {
             if (isset($_SESSION['cart'][$car_id])) unset($_SESSION['cart'][$car_id]);
         }
 
-        $DB['db_cars']->disconnect();
+        $this->DB['db_cars']->disconnect();
         echo '<script>location.href = "./"</script>';
     }
 
-    public function trash($DB)
+    public function trash()
     {
         $this->authentication();
         $this->authorization();
 
-        $DB['db_cars']->connect();
-        $data_cars = $DB['db_cars']->getAllDataDeleted();
+        $this->DB['db_cars']->connect();
+        $data_cars = $this->DB['db_cars']->getAllDataDeleted();
         include_once __DIR__ . "/../views/backend/product/trash.php";
-        $DB['db_cars']->disconnect();
+        $this->DB['db_cars']->disconnect();
     }
 
-    public function restore($DB)
+    public function restore()
     {
         if (!isset($_POST['btnRestore'])) $this->pageNotFound();
 
-        $DB['db_cars']->connect();
-        $DB['db_cars']->restore($_POST['car_ids']);
-        $DB['db_cars']->disconnect();
+        $this->DB['db_cars']->connect();
+        $this->DB['db_cars']->restore($_POST['car_ids']);
+        $this->DB['db_cars']->disconnect();
         echo '<script>location.href = "./"</script>';
     }
 
-    public function forceDelete($DB)
+    public function forceDelete()
     {
         if (!isset($_POST['btnForceDelete'])) $this->pageNotFound();
 
         $uploadDir = __DIR__ . '/../../assets/uploads/';
-        $DB['db_cars']->connect();
-        $DB['db_cars']->forceDelete($_POST['car_ids'], $uploadDir);
-        $DB['db_cars']->disconnect();
+        $this->DB['db_cars']->connect();
+        $this->DB['db_cars']->forceDelete($_POST['car_ids'], $uploadDir);
+        $this->DB['db_cars']->disconnect();
         echo '<script>location.href = "./"</script>';
     }
 
