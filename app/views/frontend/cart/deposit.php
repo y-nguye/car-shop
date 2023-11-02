@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="pt-2 mt-2">
-                        <label for="user_province_id">Bàn giao tại cửa hàng</label>
+                        <label for="user_province_id">Ký hợp đồng tại</label>
                         <select class="form-select mt-2" id="user_province_id" name="user_province_id" readonly>
                             <?php foreach ($data_all_user_province as $data) : ?>
                                 <?php if ($data['user_province_id'] == $data_user_province_id) : ?>

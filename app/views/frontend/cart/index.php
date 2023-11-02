@@ -18,7 +18,7 @@
 
         <div class="container-lg pt-3 ">
             <?php if (empty($cart)) : ?>
-                <h2 class="mb-0 mb-5">Giỏ hàng của bạn đang trống</h2>
+                <h2 class="mb-0 mb-5">Giỏ hàng của bạn đang trống.</h2>
             <?php else : ?>
                 <h2 class="mb-0">Giỏ hàng</h2>
             <?php endif; ?>

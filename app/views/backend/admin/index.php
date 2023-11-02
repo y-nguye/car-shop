@@ -23,9 +23,8 @@
                 <nav class="navbar mb-4 shadow sticky-top rounded-3 toolbar-custom">
                     <div class="container-fluid justify-content-start">
                         <span class="fs-5"><b>Trang chủ Admin</b></span>
-                        <button type="button" class="btn btn-sm btn-primary ms-auto">
-                            <i class="bi bi-telephone"></i>
-                            Liên hệ
+                        <button type="button" class="btn btn-sm btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#contactModal">
+                            Liên hệ hỗ trợ
                         </button>
                     </div>
                 </nav>
@@ -55,6 +54,23 @@
                         </a>
 
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="contactModalLabel">Liên hệ hỗ trợ</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>Nếu bạn cần sự trợ giúp, hãy liên hệ với chúng tôi qua các phương thức: </div>
+                    <div class="mt-2">Điện thoại:<b> 0123456789</b></div>
+                    <div>Email: <b>carshop.support@carshop.com.vn</b></div>
                 </div>
             </div>
         </div>

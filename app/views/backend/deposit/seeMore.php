@@ -26,9 +26,8 @@
                             <i class="bi bi-chevron-left"></i>
                         </button>
                         <span class="fs-5 ms-2"><b>Thông tin đơn yêu cầu</b></span>
-                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" href="/car-shop/admin">
-                            <i class="bi bi-telephone"></i>
-                            Liên hệ
+                        <button type="button" class="btn btn-sm btn-primary ms-auto btn-add" data-bs-toggle="modal" data-bs-target="#contactModal">
+                            Liên hệ hỗ trợ
                         </button>
                     </div>
                 </nav>
@@ -192,6 +191,23 @@
                         </div>
 
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="contactModalLabel">Liên hệ hỗ trợ</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>Nếu bạn cần sự trợ giúp, hãy liên hệ với chúng tôi qua các phương thức: </div>
+                    <div class="mt-2">Điện thoại:<b> 0123456789</b></div>
+                    <div>Email: <b>carshop.support@carshop.com.vn</b></div>
                 </div>
             </div>
         </div>
