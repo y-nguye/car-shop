@@ -61,7 +61,7 @@
                     <h3 class="mt-4">Thông tin khách hàng</h3>
 
                     <div class="pt-2">
-                        <label for="user_test_drive_fullname">Tên đầy đủ</label>
+                        <label for="user_test_drive_fullname">Họ và tên</label>
                         <?php if ($user_test_drive_fullname) : ?>
                             <input type="text" name="user_test_drive_fullname" id="user_test_drive_fullname" class="form-control mt-2" value="<?= $user_test_drive_fullname ?>" readonly />
                         <?php else : ?>

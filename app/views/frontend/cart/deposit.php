@@ -44,7 +44,7 @@
                     <div id="liveAlertPlaceholder" class="text-start"></div>
 
                     <div class="pt-2">
-                        <label for="user_fullname">Tên khách hàng</label>
+                        <label for="user_fullname">Họ và tên</label>
                         <?php if ($data_user_fullname) : ?>
                             <input type="text" name="user_fullname" id="user_fullname" class="form-control mt-2" value="<?= $data_user_fullname ?>" readonly />
                         <?php else : ?>
