@@ -16,7 +16,7 @@ class CartController extends AccessController
             $cart = $_SESSION['cart'];
         }
         // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/cart/index.php";
     }
 
@@ -49,7 +49,7 @@ class CartController extends AccessController
         $data_car = $this->getDataCarFromSessionByCarID($car_id);
 
         // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/cart/registrationFee.php";
 
         // Hiển thị toast
@@ -110,7 +110,7 @@ class CartController extends AccessController
         $depositPrice = $data_car['total_price'] * 0.1;
 
         // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/cart/deposit.php";
 
         // Validate: báo lỗi (Nếu có)
@@ -204,7 +204,7 @@ class CartController extends AccessController
     public function mailSendSuccess()
     {
         if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
-            $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
+            $data_all_car_type = $this->getAllCarTypesForHeader();
             include_once __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
             unset($_SESSION['mail-send-success']);
         } else {
@@ -215,7 +215,7 @@ class CartController extends AccessController
     {
         if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
             $error = $_GET['error'];
-            $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
+            $data_all_car_type = $this->getAllCarTypesForHeader();
             include_once __DIR__ . "/../views/frontend/cart/mailResponse/mailSentError.php";
             unset($_SESSION['mail-send-success']);
         } else {

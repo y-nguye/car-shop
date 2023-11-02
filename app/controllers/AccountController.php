@@ -25,7 +25,7 @@ class AccountController extends AccessController
         $data_all_user_province = $this->DB['db_user_province']->getAllData();
 
         // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/account/index.php";
         $this->getErrorsFromSessionAndShowAlert();
 
@@ -73,7 +73,7 @@ class AccountController extends AccessController
 
         $lastName = strrchr($_SESSION['user_fullname'], ' ');
 
-        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/account/deposit.php";
 
         $this->DB['db_user']->disconnect();
@@ -90,7 +90,7 @@ class AccountController extends AccessController
 
         $this->DB['db_user']->connect();
 
-        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/account/login.php";
 
         if (isset($_POST["loginBtn"])) {
@@ -154,7 +154,7 @@ class AccountController extends AccessController
         $data_all_user_province = $this->DB['db_user_province']->getAllData();
 
         // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader($this->DB);
+        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/account/signup.php";
         $this->DB['db_user_province']->disconnect();
 
