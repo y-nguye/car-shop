@@ -20,8 +20,6 @@ class ProductController extends AccessController
         $this->authentication();
         $this->authorization();
 
-        // UPDATES
-        // Kết nối và lấy dữ liệu
         $this->DB['db_cars']->connect();
         $this->DB['db_car_seat']->connect();
         $this->DB['db_car_fuel']->connect();
@@ -36,12 +34,10 @@ class ProductController extends AccessController
         $data_all_car_transmission = $this->DB['db_car_transmission']->getAllData();
         $data_all_car_producer = $this->DB['db_car_producer']->getAllData();
 
-        // USES
         include_once __DIR__ . "/../views/backend/product/add.php";
 
         $_SESSION['pathname'] = '/car-shop/admin/product';
 
-        // MANIPULATES
         if (isset($_POST['btnAdd'])) {
 
             $car_name = $_POST['car_name'];
@@ -115,59 +111,6 @@ class ProductController extends AccessController
             else {
                 $this->showErrorsAlert($errors);
             }
-        }
-    }
-
-    public function addProducer()
-    {
-        $this->authentication();
-        $this->authorization();
-
-        $this->DB['db_car_producer']->connect();
-        $data_all_car_producer = $this->DB['db_car_producer']->getAllData();
-
-        include_once __DIR__ . "/../views/backend/product/addProducer.php";
-
-        echo '<script> const pathname = "' . $_SESSION['pathname'] . '";</script>';
-
-        // Thêm hãng xe
-        if (isset($_POST['btnAddProducer'])) {
-            $car_producer_name = $_POST['car_producer_name'];
-            // Validation phía server, maxlength 50
-            $errors = $this->validationMaxLengthServerSide($car_producer_name, 50);
-
-            if (empty($errors)) {
-                $this->DB['db_car_producer']->setData($car_producer_name);
-                $this->DB['db_car_producer']->disconnect();
-
-                echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
-            } else {
-                $this->showErrorsAlert($errors);
-            }
-        }
-
-        // Xoá hãng xe
-        if (isset($_POST['btnDeleteProducer'])) {
-            $this->DB['db_car_producer']->deleteData($_POST['car_producer_ids']);
-            $this->DB['db_car_producer']->disconnect();
-
-            echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
-        }
-    }
-
-    public function addProducerCheck()
-    {
-        $this->authentication();
-        $this->authorization();
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $this->DB['db_car_producer']->connect();
-            $producerExists = $this->DB['db_car_producer']->checkData($_POST['car_producer_name']);
-
-            if ($producerExists) echo 'false';
-            else echo 'true';
-
-            $this->DB['db_car_producer']->disconnect();
         }
     }
 
@@ -324,6 +267,60 @@ class ProductController extends AccessController
         $this->DB['db_cars']->disconnect();
         echo '<script>location.href = "./"</script>';
     }
+
+    public function addProducer()
+    {
+        $this->authentication();
+        $this->authorization();
+
+        $this->DB['db_car_producer']->connect();
+        $data_all_car_producer = $this->DB['db_car_producer']->getAllData();
+
+        include_once __DIR__ . "/../views/backend/product/addProducer.php";
+
+        echo '<script> const pathname = "' . $_SESSION['pathname'] . '";</script>';
+
+        // Thêm hãng xe
+        if (isset($_POST['btnAddProducer'])) {
+            $car_producer_name = $_POST['car_producer_name'];
+            // Validation phía server, maxlength 50
+            $errors = $this->validationMaxLengthServerSide($car_producer_name, 50);
+
+            if (empty($errors)) {
+                $this->DB['db_car_producer']->setData($car_producer_name);
+                $this->DB['db_car_producer']->disconnect();
+
+                echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
+            } else {
+                $this->showErrorsAlert($errors);
+            }
+        }
+
+        // Xoá hãng xe
+        if (isset($_POST['btnDeleteProducer'])) {
+            $this->DB['db_car_producer']->deleteData($_POST['car_producer_ids']);
+            $this->DB['db_car_producer']->disconnect();
+
+            echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
+        }
+    }
+
+    public function addProducerCheck()
+    {
+        $this->authentication();
+        $this->authorization();
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->DB['db_car_producer']->connect();
+            $producerExists = $this->DB['db_car_producer']->checkData($_POST['car_producer_name']);
+
+            if ($producerExists) echo 'false';
+            else echo 'true';
+
+            $this->DB['db_car_producer']->disconnect();
+        }
+    }
+
 
     // ---------------- Các phương thức private  ----------------
 
