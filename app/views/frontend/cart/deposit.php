@@ -15,7 +15,7 @@ get_header('Yêu cầu đặt cọc', 'cart/cartPagesStyles', $this);
     <div class="row">
 
         <div class="col-md-8 d-flex flex-column align-items-center">
-            <a href="/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center">
+            <a href="/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center w-100">
                 <?php if ($data_car['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_car['car_img_filename'])) : ?>
                     <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-pay" alt="img-car-on-pay">
                 <?php else : ?>

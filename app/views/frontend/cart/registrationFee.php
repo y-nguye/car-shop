@@ -13,7 +13,7 @@ get_header('Tính toán chi phí', 'cart/cartPagesStyles', $this);
         <div class="col-md-8 d-flex flex-column align-items-center">
             <a href="/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center w-100">
                 <?php if ($data_car['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_car['car_img_filename'])) : ?>
-                    <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-registration-fee" alt="img-car-on-cart">
+                    <img src="/car-shop/assets/uploads/<?= $data_car['car_img_filename'] ?>" class="img-car-on-registration-fee" alt="img-car-on-registration-fee">
                 <?php else : ?>
                     <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 img-car-on-registration-fee" alt="img-car-on-cart">
                 <?php endif; ?>

@@ -14,7 +14,7 @@ get_header('Đăng ký lái thử', 'store/storePagesStyles', $this);
 
     <div class="row">
         <div class="col-md-8 d-flex flex-column align-items-center">
-            <a href="/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center">
+            <a href="/car-shop/product/<?= $data_car['car_id'] ?>" class="text-center w-100">
                 <?php if ($data_car_img_filename['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_car_img_filename['car_img_filename'])) : ?>
                     <img src="/car-shop/assets/uploads/<?= $data_car_img_filename['car_img_filename'] ?>" class="img-car-on-test-drive__test-drive-page" alt="img-car-on-test-drive__test-drive-page">
                 <?php else : ?>
