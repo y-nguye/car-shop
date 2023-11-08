@@ -2,15 +2,7 @@
 get_header('Tài khoản', 'account/accountPagesStyles', $this);
 ?>
 
-<?php
-$user_info = [
-    ['Tên đầy đủ', '<i class="bi bi-person text-primary fs-4"></i>', 'user_fullname', $user_fullname],
-    ['Số điện thoại', '<i class="bi bi-telephone text-primary fs-4"></i>', 'user_tel', $user_tel],
-];
-?>
-
 <div class="push-footer-down-page">
-
     <div class="bg-light">
         <div class="container-lg">
             <div class="row">
