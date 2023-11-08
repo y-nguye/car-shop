@@ -1,10 +1,11 @@
 <?php
-require_once __DIR__ . '/AccessController.php';
+require_once __DIR__ . '/Controller.php';
+require_once __DIR__ . '/../views/resources/layouts/header.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class CartController extends AccessController
+class CartController extends Controller
 {
     private $emailSendName = "nhyd23021@cusc.ctu.edu.vn";
     private $emailSendPassword = "nguyeny@cu\$c";
@@ -15,8 +16,6 @@ class CartController extends AccessController
         if (isset($_SESSION['cart'])) {
             $cart = $_SESSION['cart'];
         }
-        // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/cart/index.php";
     }
 
@@ -48,8 +47,6 @@ class CartController extends AccessController
         // Lấy dữ liệu xe từ SESSION
         $data_car = $this->getDataCarFromSessionByCarID($car_id);
 
-        // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/cart/registrationFee.php";
 
         // Hiển thị toast
@@ -109,8 +106,6 @@ class CartController extends AccessController
 
         $depositPrice = $data_car['total_price'] * 0.1;
 
-        // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/cart/deposit.php";
 
         // Validate: báo lỗi (Nếu có)
@@ -204,7 +199,6 @@ class CartController extends AccessController
     public function mailSendSuccess()
     {
         if (isset($_SESSION['mail-send-success']) && $_SESSION['mail-send-success']) {
-            $data_all_car_type = $this->getAllCarTypesForHeader();
             include_once __DIR__ . "/../views/frontend/cart/mailResponse/mailSentSuccess.php";
             unset($_SESSION['mail-send-success']);
         } else {
@@ -215,7 +209,6 @@ class CartController extends AccessController
     {
         if (isset($_SESSION['mail-send-success']) && !$_SESSION['mail-send-success']) {
             $error = $_GET['error'];
-            $data_all_car_type = $this->getAllCarTypesForHeader();
             include_once __DIR__ . "/../views/frontend/cart/mailResponse/mailSentError.php";
             unset($_SESSION['mail-send-success']);
         } else {
@@ -224,14 +217,6 @@ class CartController extends AccessController
     }
 
     // ---------------- Các phương thức private ----------------
-
-    private function getAllCarTypesForHeader()
-    {
-        $this->DB['db_car_type']->connect();
-        $data_all_car_type = $this->DB['db_car_type']->getAllData();
-        $this->DB['db_car_type']->disconnect();
-        return $data_all_car_type;
-    }
 
     private function getDataCarFromSessionByCarID($car_id)
     {

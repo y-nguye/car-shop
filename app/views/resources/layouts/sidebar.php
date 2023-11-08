@@ -1,7 +1,5 @@
 <?php
 
-include_once __DIR__ . '/sideBarStyle.php';
-
 $sidebar_items = [
     ["admin", "/car-shop/admin", "<i class=' bi bi-house-door me-2'></i> Trang chủ"],
     ["test-drive", "/car-shop/admin/test-drive", "<i class='bi bi-p-circle me-2'></i>Danh sách lái thử"],

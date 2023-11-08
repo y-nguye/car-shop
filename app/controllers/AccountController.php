@@ -1,7 +1,8 @@
 <?php
-require_once __DIR__ . '/AccessController.php';
+require_once __DIR__ . '/Controller.php';
+require_once __DIR__ . '/../views/resources/layouts/header.php';
 
-class AccountController extends AccessController
+class AccountController extends Controller
 {
     public function index()
     {
@@ -287,14 +288,6 @@ class AccountController extends AccessController
 
     // Vì vậy, có thể không cần đọc code trong private cũng có thể hiểu cách hoạt động của code public.
     // -------
-
-    private function getAllCarTypesForHeader()
-    {
-        $this->DB['db_car_type']->connect();
-        $data_all_car_type = $this->DB['db_car_type']->getAllData();
-        $this->DB['db_car_type']->disconnect();
-        return $data_all_car_type;
-    }
 
     private function syncDataCart()
     {

@@ -1,10 +1,11 @@
 <?php
-require_once __DIR__ . '/AccessController.php';
+require_once __DIR__ . '/Controller.php';
+require_once __DIR__ . '/../views/resources/layouts/header.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class StoreController extends AccessController
+class StoreController extends Controller
 {
     private $emailSendName = "nhyd23021@cusc.ctu.edu.vn";
     private $emailSendPassword = "nguyeny@cu\$c";
@@ -19,7 +20,6 @@ class StoreController extends AccessController
         $data_all_car_by_car_ids_to_display_four_newest = $this->DB['db_cars']->getAllDataWithSecondImg(null, 4);
         $data_all_car_by_car_ids_to_display_luxury = $this->DB['db_cars']->getAllDataWithSecondImg([60, 54, 59], 4);
 
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/store/index.php";
         $this->DB['db_cars']->disconnect();
     }
@@ -62,7 +62,6 @@ class StoreController extends AccessController
         $data_all_car_img = $this->DB['db_car_img']->getAllDataByCarID($car_id);
         $data_all_with_img = $this->DB['db_cars']->getAllDataWithFirstImg($data_car['car_type_id'], $car_id, 3);
 
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/store/product.php";
         $this->DB['db_cars']->disconnect();
 
@@ -108,13 +107,11 @@ class StoreController extends AccessController
 
     public function service()
     {
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/store/service.php";
     }
 
     public function support()
     {
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/store/support.php";
     }
 
@@ -145,7 +142,6 @@ class StoreController extends AccessController
             $user_test_drive_email = $_SESSION["user_email"];
         }
 
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/store/testDrive.php";
 
         // Validate: báo lỗi (Nếu có)
@@ -226,14 +222,6 @@ class StoreController extends AccessController
     // Giúp cho khả năng hiểu code dễ dàng hơn
     // bằng cách gom lại những nhiệm vụ dài lê thê
     // vào trong các phương thức private
-
-    private function getAllCarTypesForHeader()
-    {
-        $this->DB['db_car_type']->connect();
-        $data_all_car_type = $this->DB['db_car_type']->getAllData();
-        $this->DB['db_car_type']->disconnect();
-        return $data_all_car_type;
-    }
 
     private function showToastTestDriveResult()
     {

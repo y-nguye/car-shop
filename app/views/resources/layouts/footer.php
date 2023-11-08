@@ -1,7 +1,4 @@
-<?php
-include_once __DIR__ .  '/footerStyles.php';
-?>
-<div class="bg-light">
+<footer class="bg-light">
     <div class="container-lg footer-custom">
         <div class="pt-3 fs-7 text-secondary">
             <span>Hotline: 0772884452</span>
@@ -22,4 +19,8 @@ include_once __DIR__ .  '/footerStyles.php';
             </ul>
         </div>
     </div>
-</div>
+</footer>
+
+<?php
+include_once __DIR__ . '/../globalScript/globalScript.php';
+?>

@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/AccessController.php';
+require_once __DIR__ . '/Controller.php';
 
-class TestDriveController extends AccessController
+class TestDriveController extends Controller
 {
     public function index()
     {
