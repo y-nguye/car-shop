@@ -3,14 +3,18 @@ session_start();
 
 class Controller
 {
-    public $DB;
+    protected $DB;
+    protected $emailSendName;
+    protected $emailSendPassword;
 
     public function __construct($DB = null)
     {
         $this->DB = $DB;
+        $this->emailSendName = $_ENV['EMAIL_HOST'];
+        $this->emailSendPassword = $_ENV['EMAIL_PASSWORD'];
     }
 
-    public function authentication()
+    protected function authentication()
     {
         if (!isset($_SESSION["logged"])) {
             echo '<script>location.href = "/car-shop/account/login"</script>';
@@ -23,14 +27,14 @@ class Controller
         }
     }
 
-    public function authorization()
+    protected function authorization()
     {
         if (isset($_SESSION["user_is_admin"]) && !$_SESSION["user_is_admin"]) {
             $this->pageNotFound();
         }
     }
 
-    public function checkNull($var)
+    protected function checkNull($var)
     {
         if (!$var) {
             $this->pageNotFound();

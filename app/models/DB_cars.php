@@ -120,7 +120,8 @@ class CarsData extends DatabaseManager
             $car_ids = implode(' ,', $car_ids);
             $conditionWhere = " AND car.car_id IN ($car_ids)";
         }
-        if ($car_update_order_by_desc_limit == true) $orderByQuery = ' ORDER BY car.car_update_at DESC LIMIT ' . $car_update_order_by_desc_limit;
+        if ($car_update_order_by_desc_limit === true) $orderByQuery = ' ORDER BY car.car_update_at DESC LIMIT ' . $car_update_order_by_desc_limit;
+
         $sql = "SELECT
                 car.car_id,
                 car.car_name,

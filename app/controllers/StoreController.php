@@ -7,9 +7,6 @@ use PHPMailer\PHPMailer\Exception;
 
 class StoreController extends Controller
 {
-    private $emailSendName = "nhyd23021@cusc.ctu.edu.vn";
-    private $emailSendPassword = "nguyeny@cu\$c";
-
     public function index()
     {
         $this->DB['db_cars']->connect();
