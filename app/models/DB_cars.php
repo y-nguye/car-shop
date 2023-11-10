@@ -188,7 +188,6 @@ class CarsData extends DatabaseManager
         $car_transmission_id,
         $car_producer_id
     ) {
-
         $sql = "INSERT INTO $this->table
                     (car_id,
                     car_name,
@@ -207,22 +206,50 @@ class CarsData extends DatabaseManager
                     car_deleted_at)
                 VALUES (
                     null,
-                    '$car_name',
-                    $car_price,
-                    $car_quantity,
-                    '$car_describe',
-                    '$car_detail_describe',
-                    '$car_engine',
-                    $car_type_id,
-                    $car_seat_id,
-                    $car_fuel_id,
-                    $car_transmission_id,
-                    $car_producer_id,
+                    ?,
+                    ?,
+                    ?,
+                    ?,
+                    ?,
+                    ?,
+                    ?,
+                    ?,
+                    ?,
+                    ?,
+                    ?,
+                    ?,
                     NOW(),
                     0,
                     null);";
 
-        $this->execute($sql);
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
+        }
+
+        $stmt->bind_param(
+            'ssdsssiidii',
+            $car_name,
+            $car_price,
+            $car_quantity,
+            $car_describe,
+            $car_detail_describe,
+            $car_engine,
+            $car_type_id,
+            $car_seat_id,
+            $car_fuel_id,
+            $car_transmission_id,
+            $car_producer_id
+        );
+
+        $stmt->execute();
+
+        if ($stmt->affected_rows === -1) {
+            die("Lỗi khi thêm dữ liệu: " . $stmt->error);
+        }
+
+        $stmt->close();
     }
 
     public function updateData(
@@ -240,22 +267,51 @@ class CarsData extends DatabaseManager
         $car_producer_id
     ) {
         $sql = "UPDATE $this->table
-                SET car_name = '$car_name',
-                    car_price = $car_price,
-                    car_quantity = $car_quantity,
-                    car_describe = '$car_describe',
-                    car_detail_describe = '$car_detail_describe',
-                    car_engine = '$car_engine',
-                    car_type_id = $car_type_id,
-                    car_seat_id = $car_seat_id,
-                    car_fuel_id = $car_fuel_id,
-                    car_transmission_id = $car_transmission_id,
-                    car_producer_id = $car_producer_id,
+                SET car_name = ?,
+                    car_price = ?,
+                    car_quantity = ?,
+                    car_describe = ?,
+                    car_detail_describe = ?,
+                    car_engine = ?,
+                    car_type_id = ?,
+                    car_seat_id = ?,
+                    car_fuel_id = ?,
+                    car_transmission_id = ?,
+                    car_producer_id = ?,
                     car_update_at = NOW()
-                WHERE car_id = $car_id;";
+                WHERE car_id = ?;";
 
-        return $this->execute($sql);
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
+        }
+
+        $stmt->bind_param(
+            'sdssssiiiiii',
+            $car_name,
+            $car_price,
+            $car_quantity,
+            $car_describe,
+            $car_detail_describe,
+            $car_engine,
+            $car_type_id,
+            $car_seat_id,
+            $car_fuel_id,
+            $car_transmission_id,
+            $car_producer_id,
+            $car_id
+        );
+
+        $stmt->execute();
+
+        if ($stmt->affected_rows === -1) {
+            die("Lỗi khi cập nhật: " . $stmt->error);
+        }
+
+        $stmt->close();
     }
+
 
     public function restore($ids)
     {

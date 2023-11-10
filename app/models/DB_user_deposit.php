@@ -116,9 +116,9 @@ class UserDepositData extends DatabaseManager
                 car_id)
             VALUES (
                 null,
-                '$user_deposit_fullname',
-                '$user_deposit_tel',
-                '$user_deposit_email',
+                ?,
+                ?,
+                ?,
                 $user_deposit_total_price,
                 $user_deposit_price,
                 '$user_deposit_where',
@@ -129,8 +129,28 @@ class UserDepositData extends DatabaseManager
                 $user_id,
                 $car_id);";
 
-        $this->execute($sql);
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
+        }
+
+        $stmt->bind_param(
+            'sss',
+            $user_deposit_fullname,
+            $user_deposit_tel,
+            $user_deposit_email,
+        );
+
+        $stmt->execute();
+
+        if ($stmt->affected_rows === -1) {
+            die("Lỗi khi thêm dữ liệu: " . $stmt->error);
+        }
+
+        $stmt->close();
     }
+
 
     public function updateData($user_deposit_id, $user_deposit_is_contacted, $user_deposit_is_payed)
     {

@@ -210,10 +210,10 @@ get_header($data_car['car_name'], 'store/storePagesStyles', $this);
 </div>
 
 <!-- HTML cho một toast -->
-<div id="toast-result-test-drive" class="toast align-items-center text-white bg-primary fixed-top toast-custom" role="alert" aria-live="assertive" aria-atomic="true">
+<div id="toast-result-test-drive" class="toast align-items-center fixed-top bg-light toast-custom" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
         <div class="toast-body"></div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
 </div>
 
@@ -232,7 +232,6 @@ include_once __DIR__ . '/../../resources/layouts/footer.php';
             toast.hide();
         }, 3000);
     });
-
 
     // -------------------- Hiển thị hình ảnh toàn màn hình ---------------------------
     const body = document.body;

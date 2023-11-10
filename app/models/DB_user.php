@@ -6,20 +6,43 @@ class UserData extends DatabaseManager
 
     public function getData($user_username)
     {
-        $sql = "SELECT * FROM $this->table WHERE user_username = '$user_username' OR user_email = '$user_username';";
-        $this->result = $this->execute($sql);
+        $sql = "SELECT * FROM $this->table WHERE user_username = ? OR user_email = ?";
+        $stmt = $this->conn->prepare($sql);
 
-        if ($this->result->num_rows > 0) {
-            return $this->result->fetch_assoc();
+        if ($stmt === false) {
+            die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
         }
+
+        $stmt->bind_param('ss', $user_username, $user_username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result === false) {
+            die("Lỗi khi lấy dữ liệu tài khoản: " . $stmt->error);
+        }
+
+        $data = $result->fetch_assoc();
+        $stmt->close();
+
+        return $data;
     }
 
     public function checkDataByUsername($user_username)
     {
-        $sql = "SELECT * FROM $this->table WHERE user_username = '$user_username';";
-        $this->result = $this->execute($sql);
+        $sql = "SELECT * FROM $this->table WHERE user_username = ?";
+        $stmt = $this->conn->prepare($sql);
 
-        if ($this->result->num_rows > 0) {
+        if ($stmt === false) {
+            die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
+        }
+
+        $stmt->bind_param('s', $user_username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
             return true;
         }
         return false;
@@ -27,14 +50,26 @@ class UserData extends DatabaseManager
 
     public function checkDataByEmail($user_email)
     {
-        $sql = "SELECT * FROM $this->table WHERE user_email = '$user_email';";
-        $this->result = $this->execute($sql);
+        $sql = "SELECT * FROM $this->table WHERE user_email = ?";
 
-        if ($this->result->num_rows > 0) {
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
+        }
+
+        $stmt->bind_param('s', $user_email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $stmt->close();
+
+        if ($result->num_rows > 0) {
             return true;
         }
         return false;
     }
+
 
     public function getAllData()
     {
@@ -50,34 +85,62 @@ class UserData extends DatabaseManager
     public function setData($user_username, $user_password, $user_fullname, $user_tel, $user_email, $user_province_id)
     {
         $sql = "INSERT INTO $this->table
-                (user_id,
-                user_username,
-                user_password,
-                user_fullname,
-                user_tel,
-                user_email,
-                user_province_id,
-                user_avt,
-                user_is_admin)
-                VALUES (
-                null,
-                '$user_username',
-                '$user_password',
-                '$user_fullname',
-                '$user_tel',
-                '$user_email',
-                '$user_province_id',
-                NULL,
-                0);";
+            (user_id,
+            user_username,
+            user_password,
+            user_fullname,
+            user_tel,
+            user_email,
+            user_province_id,
+            user_avt,
+            user_is_admin)
+            VALUES (
+            null,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            NULL,
+            0);";
 
-        $this->execute($sql);
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
+        }
+
+        $stmt->bind_param('sssssi', $user_username, $user_password, $user_fullname, $user_tel, $user_email, $user_province_id);
+        $stmt->execute();
+
+        if ($stmt->affected_rows === -1) {
+            die("Lỗi khi thêm dữ liệu: " . $stmt->error);
+        }
+
+        $stmt->close();
     }
 
     public function updateData($user_id, $user_fullname, $user_tel, $user_province_id)
     {
-        $sql = "UPDATE $this->table SET user_fullname = '$user_fullname', user_tel = '$user_tel', user_province_id = '$user_province_id' 
-        WHERE user_id = $user_id;";
-        return $this->execute($sql);
+        $sql = "UPDATE $this->table SET user_fullname = ?, user_tel = ?, user_province_id = ? WHERE user_id = ?";
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
+        }
+
+        $stmt->bind_param('ssii', $user_fullname, $user_tel, $user_province_id, $user_id);
+        $stmt->execute();
+
+        // Kiểm tra lỗi khi thực hiện câu truy vấn
+        if ($stmt->affected_rows === -1) {
+            die("Lỗi khi cập nhật dữ liệu: " . $stmt->error);
+        }
+
+        $stmt->close();
+
+        return true;
     }
 
     public function updateAvatar($user_id, $user_avt_new,  $user_avt_old, $uploadDir)

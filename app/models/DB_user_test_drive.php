@@ -61,11 +61,30 @@ class TestDriveData extends DatabaseManager
                 '$user_test_drive_day',
                 '$user_test_drive_time',
                 '$user_test_drive_where',
-                '$user_test_drive_fullname',
-                '$user_test_drive_tel',
-                '$user_test_drive_email',
+                ?,
+                ?,
+                ?,
                 $car_id);";
 
-        $this->execute($sql);
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
+        }
+
+        $stmt->bind_param(
+            'sss',
+            $user_test_drive_fullname,
+            $user_test_drive_tel,
+            $user_test_drive_email,
+        );
+
+        $stmt->execute();
+
+        if ($stmt->affected_rows === -1) {
+            die("Lỗi khi thêm dữ liệu: " . $stmt->error);
+        }
+
+        $stmt->close();
     }
 }

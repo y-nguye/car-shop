@@ -7,7 +7,7 @@ class Controller
     protected $emailSendName;
     protected $emailSendPassword;
 
-    public function __construct($DB = null)
+    public function __construct($DB)
     {
         $this->DB = $DB;
         $this->emailSendName = $_ENV['EMAIL_HOST'];
