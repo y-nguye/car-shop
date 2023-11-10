@@ -8,7 +8,7 @@
     <?php include_once __DIR__ . '/../../resources/layouts/sideBarStyle.php'; ?>
     <?php include_once __DIR__ . '/../../resources/layouts/footerStyles.php'; ?>
     <?php include_once __DIR__ . '/depositPagesStyles.php'; ?>
-    <title>Danh sách đơn hàng</title>
+    <title>Danh sách đơn yêu cầu</title>
 </head>
 
 <body>

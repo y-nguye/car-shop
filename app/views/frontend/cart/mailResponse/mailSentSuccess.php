@@ -1,5 +1,5 @@
 <?php
-get_header('Có lỗi xảy ra', 'cart/mailResponse/mailSentStyles', $this);
+get_header('yêu cầu thành công', 'cart/mailResponse/mailSentStyles', $this);
 ?>
 
 <div class="container-lg pt-3 push-footer-down-page">
