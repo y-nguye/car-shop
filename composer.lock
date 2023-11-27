@@ -109,12 +109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/DataTables/Dist-DataTables.git",
-                "reference": "2700597c290fc702653728bf307a491c869ac5e3"
+                "reference": "7f15d78192f19e523103eba5ece12a4aee9d8368"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables/zipball/2700597c290fc702653728bf307a491c869ac5e3",
-                "reference": "2700597c290fc702653728bf307a491c869ac5e3",
+                "url": "https://api.github.com/repos/DataTables/Dist-DataTables/zipball/7f15d78192f19e523103eba5ece12a4aee9d8368",
+                "reference": "7f15d78192f19e523103eba5ece12a4aee9d8368",
                 "shasum": ""
             },
             "require": {
@@ -143,7 +143,7 @@
                 "forum": "https://datatables.net/forums",
                 "source": "https://github.com/DataTables/Dist-DataTables"
             },
-            "time": "2023-10-25T09:00:35+00:00"
+            "time": "2023-11-03T14:31:08+00:00"
         },
         {
             "name": "datatables.net/datatables.net-bs5",
@@ -151,12 +151,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/DataTables/Dist-DataTables-Bootstrap5.git",
-                "reference": "911a9084d2ce1ece843ff40beaa5088b1a572b18"
+                "reference": "6d98c7b7da5539dd336224e65cd308f0c7365cc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Bootstrap5/zipball/911a9084d2ce1ece843ff40beaa5088b1a572b18",
-                "reference": "911a9084d2ce1ece843ff40beaa5088b1a572b18",
+                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Bootstrap5/zipball/6d98c7b7da5539dd336224e65cd308f0c7365cc7",
+                "reference": "6d98c7b7da5539dd336224e65cd308f0c7365cc7",
                 "shasum": ""
             },
             "require": {
@@ -189,7 +189,7 @@
                 "issues": "https://github.com/DataTables/Dist-DataTables-Bootstrap5/issues",
                 "source": "https://github.com/DataTables/Dist-DataTables-Bootstrap5"
             },
-            "time": "2023-10-25T09:01:39+00:00"
+            "time": "2023-11-03T14:33:21+00:00"
         },
         {
             "name": "graham-campbell/result-type",
