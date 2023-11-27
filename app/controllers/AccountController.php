@@ -42,7 +42,7 @@ class AccountController extends Controller
             if ($data_user && password_verify($user_password, $data_user["user_password"])) {
                 $this->DB['db_user']->deleteData($user_username);
                 $this->DB['db_user']->disconnect();
-                echo '<script>location.href = "/car-shop/account/logout"</script>';
+                echo '<script>location.href = "' . BASE_URL . '/account/logout"</script>';
             } else {
                 $errors['user_password'][] = [
                     'rule' => 'is_password_valid',
@@ -51,7 +51,7 @@ class AccountController extends Controller
                     'msg' => 'Sai mật khẩu, xoá tài khoản thất bại',
                 ];
                 $this->setErrorsToSession($errors);
-                echo '<script>location.href = "/car-shop/account"</script>';
+                echo '<script>location.href = "' . BASE_URL . '/account"</script>';
             }
         }
     }
@@ -85,7 +85,7 @@ class AccountController extends Controller
     {
         // Nếu đã đăng nhập thì chuyển sang trang cá nhân
         if (isset($_SESSION["logged"]) && $_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/account"</script>';
             die();
         }
 
@@ -116,7 +116,7 @@ class AccountController extends Controller
                 $this->syncDataCart();
 
                 if ($_SESSION["user_is_admin"]) {
-                    echo '<script>location.href = "/car-shop/admin"</script>';
+                    echo '<script>location.href = "' . BASE_URL . '/admin"</script>';
                 } else {
                     echo '<script>window.history.back();</script>';
                 }
@@ -139,14 +139,14 @@ class AccountController extends Controller
         unset($_SESSION["user_avt"]);
         unset($_SESSION["user_is_admin"]);
         unset($_SESSION['cart']);
-        echo '<script>location.href = "/car-shop"</script>';
+        echo '<script>location.href = "' . BASE_URL . '"</script>';
     }
 
     public function signup()
     {
         // Nếu đã đăng nhập
         if (isset($_SESSION["logged"]) && $_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/account"</script>';
             die();
         }
 
@@ -187,7 +187,7 @@ class AccountController extends Controller
                 $hashedPassword = password_hash($user_password, PASSWORD_BCRYPT);
                 $this->DB['db_user']->setData($user_username, $hashedPassword, $user_fullname, $user_tel, $user_email, $user_address);
                 $this->DB['db_user']->disconnect();
-                echo '<script>location.href = "/car-shop/account/login"</script>';
+                echo '<script>location.href = "' . BASE_URL . '/account/login"</script>';
             } else {
                 $this->showErrorsAlert($errors);
             }
@@ -219,10 +219,10 @@ class AccountController extends Controller
                 $_SESSION["user_tel"] = $user_tel;
                 $_SESSION["user_province_id"] = $user_province_id;
 
-                echo '<script>location.href = "/car-shop/account"</script>';
+                echo '<script>location.href = "' . BASE_URL . '/account"</script>';
             } else {
                 $this->setErrorsToSession($errors);
-                echo '<script>location.href = "/car-shop/account"</script>';
+                echo '<script>location.href = "' . BASE_URL . '/account"</script>';
             }
         } else {
             $this->pageNotFound();
@@ -244,7 +244,7 @@ class AccountController extends Controller
                 // Cập nhật lại session
                 $_SESSION["user_avt"] = $data_user['user_avt'];
                 $this->DB['db_user']->disconnect();
-                echo '<script>location.href = "/car-shop/account"</script>';
+                echo '<script>location.href = "' . BASE_URL . '/account"</script>';
             }
         } else {
             $this->pageNotFound();

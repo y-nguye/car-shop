@@ -191,9 +191,9 @@
 
                                             <!-- Xử lý trường hợp bị mất hình ảnh trong thư mục uploads -->
                                             <?php if ($img['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $img['car_img_filename'])) : ?>
-                                                <img src="/car-shop/assets/uploads/<?= $img['car_img_filename'] ?>" alt="preview-img" class="preview-img" />
+                                                <img src="<?= BASE_URL ?>/assets/uploads/<?= $img['car_img_filename'] ?>" alt="preview-img" class="preview-img" />
                                             <?php else : ?>
-                                                <img src="/car-shop/assets/imgs/no-img.jpg" class="rounded-3 preview-img" alt="preview-img">
+                                                <img src="<?= BASE_URL ?>/assets/imgs/no-img.jpg" class="rounded-3 preview-img" alt="preview-img">
                                             <?php endif; ?>
 
                                             <?php if ($index == 0) : ?>
@@ -297,13 +297,13 @@
 
         // -------------- Các nút ---------------
         btnAddProducer.addEventListener("click", () => {
-            window.location.href = "/car-shop/admin/product/add-producer";
+            window.location.href = "<?= BASE_URL ?>/admin/product/add-producer";
         });
         btnGoBack.addEventListener("click", () => {
-            window.location.href = "/car-shop/admin/product";
+            window.location.href = "<?= BASE_URL ?>/admin/product";
         });
         btnGoBackHeader.addEventListener("click", () => {
-            window.location.href = "/car-shop/admin/product";
+            window.location.href = "<?= BASE_URL ?>/admin/product";
         });
         btnBackToTop.addEventListener("click", () => {
             window.scrollTo({

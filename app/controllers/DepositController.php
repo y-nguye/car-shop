@@ -34,7 +34,7 @@ class DepositController extends Controller
             $this->DB['db_user_deposit']->updateData($user_deposit_id, $user_deposit_is_contacted, $user_deposit_is_payed);
             $this->DB['db_user_deposit']->disconnect();
 
-            echo '<script>location.href = "/car-shop/admin/deposit/see-more/' . $user_deposit_id . '"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/admin/deposit/see-more/' . $user_deposit_id . '"</script>';
         }
     }
 }

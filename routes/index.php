@@ -1,12 +1,14 @@
 <?php
 
+define('BASE_URL', $_ENV['BASE_URL']);
+
 use FastRoute\RouteCollector;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
-    $r->addGroup('/car-shop', require __DIR__ . '/store.php');
-    $r->addGroup('/car-shop/cart', require __DIR__ . '/cart.php');
-    $r->addGroup('/car-shop/account', require __DIR__ . '/account.php');
-    $r->addGroup('/car-shop/admin', require __DIR__ . '/admin.php');
+    $r->addGroup(BASE_URL, require __DIR__ . '/store.php');
+    $r->addGroup(BASE_URL . '/cart', require __DIR__ . '/cart.php');
+    $r->addGroup(BASE_URL . '/account', require __DIR__ . '/account.php');
+    $r->addGroup(BASE_URL . '/admin', require __DIR__ . '/admin.php');
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];

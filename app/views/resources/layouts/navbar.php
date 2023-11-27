@@ -2,7 +2,7 @@
 
 <nav class="navbar d-block fixed-top navbar-expand-lg custom-navbar">
     <div class="container-lg">
-        <a class="navbar-brand text-dark car-logo ps-2 pe-2 m-0" href="/car-shop"><i class="bi bi-car-front-fill"></i></a>
+        <a class="navbar-brand text-dark car-logo ps-2 pe-2 m-0" href="<?= BASE_URL ?>"><i class="bi bi-car-front-fill"></i></a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="h4"><i class="bi bi-list"></i></span>
         </button>
@@ -12,16 +12,16 @@
                 <?php foreach ($data_all_car_type as $data) : ?>
                     <?=
                     '<li class="nav-item ms-4">
-                        <a class="nav-link text-dark" href="/car-shop/type-' . convertToSlug($data['car_type_name']) . '">' . $data['car_type_name'] . '</a>
+                        <a class="nav-link text-dark" href="' . BASE_URL . '/type-' . convertToSlug($data['car_type_name']) . '">' . $data['car_type_name'] . '</a>
                     </li>'
                     ?>
                 <?php endforeach; ?>
 
                 <li class="nav-item ms-auto me-4">
-                    <a class="nav-link text-dark" href="/car-shop/service">Dịch vụ</a>
+                    <a class="nav-link text-dark" href="<?= BASE_URL ?>/service">Dịch vụ</a>
                 </li>
                 <li class="nav-item me-4">
-                    <a class="nav-link text-dark" href="/car-shop/support">Hỗ trợ</a>
+                    <a class="nav-link text-dark" href="<?= BASE_URL ?>/support">Hỗ trợ</a>
                 </li>
                 <li class="nav-item">
                     <button type="button" class="nav-link btn text-dark position-relative bag">
@@ -35,7 +35,6 @@
                 </li>
             </ul>
         </div>
-
     </div>
     <div class="expand-navbar-by-bag">
         <div class="container-lg bag-into">
@@ -50,12 +49,12 @@
                     <?php foreach ($_SESSION['cart'] as $data_cart) : ?>
                         <?php if ($index < 3) : ?>
                             <li class="mt-4">
-                                <a class="text-dark" href="/car-shop/product/<?= $data_cart['car_id'] ?>">
+                                <a class="text-dark" href="<?= BASE_URL ?>/product/<?= $data_cart['car_id'] ?>">
                                     <div>
                                         <?php if ($data_cart['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_cart['car_img_filename'])) : ?>
-                                            <img src="/car-shop/assets/uploads/<?= $data_cart['car_img_filename'] ?>" class="rounded-3 me-3 img-item-on-bag" alt="mb">
+                                            <img src="<?= BASE_URL ?>/assets/uploads/<?= $data_cart['car_img_filename'] ?>" class="rounded-3 me-3 img-item-on-bag" alt="mb">
                                         <?php else : ?>
-                                            <img src="/car-shop/assets/imgs/no-img.jpg" alt="mb" class="rounded-3 me-3 img-item-on-bag">
+                                            <img src="<?= BASE_URL ?>/assets/imgs/no-img.jpg" alt="mb" class="rounded-3 me-3 img-item-on-bag">
                                         <?php endif; ?>
                                         <span><?= $data_cart['car_name'] ?></span>
                                     </div>
@@ -75,12 +74,12 @@
                 </div>
                 <?php if (isset($_SESSION['logged'])) : ?>
                     <?php if ($_SESSION['logged']) : ?>
-                        <div class="mt-4"><a class="text-dark text-decoration-underline" href="/car-shop/">Mua sắm ngay</a></div>
+                        <div class="mt-4"><a class="text-dark text-decoration-underline" href="<?= BASE_URL ?>/">Mua sắm ngay</a></div>
                     <?php else : ?>
-                        <div class="mt-4"><a class="text-dark text-decoration-underline" href="/car-shop/account/login">Đăng nhập</a> để xem bạn có món hàng nào được lưu hay không</div>
+                        <div class="mt-4"><a class="text-dark text-decoration-underline" href="<?= BASE_URL ?>/account/login">Đăng nhập</a> để xem bạn có món hàng nào được lưu hay không</div>
                     <?php endif; ?>
                 <?php else : ?>
-                    <div class="mt-4"><a class="text-dark text-decoration-underline" href="/car-shop/account/login">Đăng nhập</a> để xem bạn có món hàng nào được lưu hay không</div>
+                    <div class="mt-4"><a class="text-dark text-decoration-underline" href="<?= BASE_URL ?>/account/login">Đăng nhập</a> để xem bạn có món hàng nào được lưu hay không</div>
                 <?php endif; ?>
             <?php endif ?>
 
@@ -88,19 +87,19 @@
             <ul>
                 <?php if (isset($_SESSION['logged'])) : ?>
                     <?php if ($_SESSION['logged'] == true) : ?>
-                        <li class="mt-2 fs-7"><a href="/car-shop/account/deposit"><i class="bi bi-box align-middle me-2"></i>Đơn hàng</a></li>
-                        <li class="mt-2 fs-7"><a href="/car-shop/account"><i class="bi bi-person-circle align-middle me-2"></i>Tài khoản</a></li>
+                        <li class="mt-2 fs-7"><a href="<?= BASE_URL ?>/account/deposit"><i class="bi bi-box align-middle me-2"></i>Đơn hàng</a></li>
+                        <li class="mt-2 fs-7"><a href="<?= BASE_URL ?>/account"><i class="bi bi-person-circle align-middle me-2"></i>Tài khoản</a></li>
 
                         <?php if ($_SESSION['user_is_admin']) : ?>
-                            <li class="mt-2 fs-7"><a href="/car-shop/admin"><i class="bi bi-server align-middle me-2"></i>Truy cập hệ thống quản trị</a></li>
+                            <li class="mt-2 fs-7"><a href="<?= BASE_URL ?>/admin"><i class="bi bi-server align-middle me-2"></i>Truy cập hệ thống quản trị</a></li>
                         <?php endif; ?>
 
-                        <li class="mt-2 fs-7"><a href="/car-shop/account/logout"><i class="bi bi-box-arrow-left align-middle me-2"></i>Đăng xuất</a></li>
+                        <li class="mt-2 fs-7"><a href="<?= BASE_URL ?>/account/logout"><i class="bi bi-box-arrow-left align-middle me-2"></i>Đăng xuất</a></li>
                     <?php else : ?>
-                        <li class="mt-2 fs-7"><a href="/car-shop/account/login"><i class="bi bi-box-arrow-left align-middle me-2"></i>Đăng nhập</a></li>
+                        <li class="mt-2 fs-7"><a href="<?= BASE_URL ?>/account/login"><i class="bi bi-box-arrow-left align-middle me-2"></i>Đăng nhập</a></li>
                     <?php endif ?>
                 <?php else : ?>
-                    <li class="mt-2 fs-7"><a href="/car-shop/account/login"><i class="bi bi-box-arrow-in-right align-middle me-2"></i>Đăng nhập</a></li>
+                    <li class="mt-2 fs-7"><a href="<?= BASE_URL ?>/account/login"><i class="bi bi-box-arrow-in-right align-middle me-2"></i>Đăng nhập</a></li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -164,8 +163,9 @@
         var chieuNgangTrang = window.innerWidth;
         if (chieuNgangTrang >= 992) {
             handleShrinkNavbar();
+            // Ngăn một số lỗi khi navbar đang mở rộng và sau đó có thêm thao tác thu nhỏ/mở rộng trình duyệt
             if (navbarToggler.getAttribute('aria-expanded') === 'true') {
-                // navbarToggler.click();
+                navbarToggler.click();
             }
         }
     });
@@ -207,7 +207,7 @@
 
     if (cartBtn) {
         cartBtn.addEventListener('click', () => {
-            window.location.href = "/car-shop/cart";
+            window.location.href = "<?= BASE_URL ?>/cart";
         });
     }
 </script>

@@ -114,7 +114,7 @@
                 }],
                 pageLength: 50,
                 language: {
-                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
+                    url: '<?= BASE_URL ?>/assets/plugin/datatables-language/vi.json',
                 },
             });
         });
@@ -133,12 +133,12 @@
         // ----------------------------- Xử lý các sự kiện Button -----------------------------------
 
         btnRestore.addEventListener('click', function() {
-            trashCarsForm.action = '/car-shop/admin/product/trash/restore';
+            trashCarsForm.action = '<?= BASE_URL ?>/admin/product/trash/restore';
             trashCarsForm.submit();
         });
 
         btnForceDelete.addEventListener('click', function() {
-            trashCarsForm.action = '/car-shop/admin/product/trash/force-delete';
+            trashCarsForm.action = '<?= BASE_URL ?>/admin/product/trash/force-delete';
             trashCarsForm.submit();
         });
 

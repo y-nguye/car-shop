@@ -1,6 +1,4 @@
-<?php
-get_header('Đăng ký', 'account/accountPagesStyles', $this);
-?>
+<?php get_header('Đăng ký', 'account/accountPagesStyles', $this); ?>
 
 <div class="container-lg text-center d-flex flex-column justify-content-center push-footer-down-page">
 
@@ -43,7 +41,7 @@ get_header('Đăng ký', 'account/accountPagesStyles', $this);
                 <label for="user_password_confirm">Nhập lại mật khẩu</label>
             </div>
             <button type="submit" name="signupBtn" class="btn btn-secondary p-3">Đăng kí</button>
-            <span class="mt-3">Đã có tài khoản? <a href="/car-shop/account/login">Đăng nhập thôi</a></span>
+            <span class="mt-3">Đã có tài khoản? <a href="<?= BASE_URL ?>/account/login">Đăng nhập thôi</a></span>
         </div>
     </form>
 </div>
@@ -102,7 +100,7 @@ include_once __DIR__ . '/../../resources/layouts/footer.php';
                     email: true,
                     maxlength: 100,
                     remote: {
-                        url: "/car-shop/account/email-check",
+                        url: "<?= BASE_URL ?>/account/email-check",
                         type: "post",
                         data: {
                             username: function() {
@@ -117,7 +115,7 @@ include_once __DIR__ . '/../../resources/layouts/footer.php';
                     minlength: 6,
                     maxlength: 100,
                     remote: {
-                        url: "/car-shop/account/username-check",
+                        url: "<?= BASE_URL ?>/account/username-check",
                         type: "post",
                         data: {
                             username: function() {

@@ -1,66 +1,66 @@
-<link rel="stylesheet" href="/car-shop/vendor/twbs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="/car-shop/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css" type="text/css" />
-<link rel="stylesheet" href="/car-shop/vendor/datatables.net/datatables.net-bs5/css/dataTables.bootstrap5.min.css" type="text/css" />
+<link rel="stylesheet" href="<?= BASE_URL ?>/vendor/twbs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="<?= BASE_URL ?>/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css" type="text/css" />
+<link rel="stylesheet" href="<?= BASE_URL ?>/vendor/datatables.net/datatables.net-bs5/css/dataTables.bootstrap5.min.css" type="text/css" />
 <style>
     @font-face {
         font-family: 'Saira Semi Condensed';
-        src: url('/car-shop/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Black.ttf') format('TrueType');
+        src: url('<?= BASE_URL ?>/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Black.ttf') format('TrueType');
         font-weight: 900;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Saira Semi Condensed';
-        src: url('/car-shop/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-ExtraBold.ttf') format('TrueType');
+        src: url('<?= BASE_URL ?>/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-ExtraBold.ttf') format('TrueType');
         font-weight: 800;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Saira Semi Condensed';
-        src: url('/car-shop/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Bold.ttf') format('TrueType');
+        src: url('<?= BASE_URL ?>/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Bold.ttf') format('TrueType');
         font-weight: 700;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Saira Semi Condensed';
-        src: url('/car-shop/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-SemiBold.ttf') format('TrueType');
+        src: url('<?= BASE_URL ?>/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-SemiBold.ttf') format('TrueType');
         font-weight: 600;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Saira Semi Condensed';
-        src: url('/car-shop/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Medium.ttf') format('TrueType');
+        src: url('<?= BASE_URL ?>/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Medium.ttf') format('TrueType');
         font-weight: 500;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Saira Semi Condensed';
-        src: url('/car-shop/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Regular.ttf') format('TrueType');
+        src: url('<?= BASE_URL ?>/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Regular.ttf') format('TrueType');
         font-weight: 400;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Saira Semi Condensed';
-        src: url('/car-shop/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Light.ttf') format('TrueType');
+        src: url('<?= BASE_URL ?>/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Light.ttf') format('TrueType');
         font-weight: 300;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Saira Semi Condensed';
-        src: url('/car-shop/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-ExtraLight.ttf') format('TrueType');
+        src: url('<?= BASE_URL ?>/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-ExtraLight.ttf') format('TrueType');
         font-weight: 200;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Saira Semi Condensed';
-        src: url('/car-shop/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Thin.ttf') format('TrueType');
+        src: url('<?= BASE_URL ?>/assets/font/Saira-Semi-Condensed/SairaSemiCondensed-Thin.ttf') format('TrueType');
         font-weight: 100;
         font-style: normal;
     }

@@ -1,6 +1,4 @@
-<?php
-get_header('yêu cầu thành công', 'cart/mailResponse/mailSentStyles', $this);
-?>
+<?php get_header('yêu cầu thành công', 'cart/mailResponse/mailSentStyles', $this); ?>
 
 <div class="container-lg pt-3 push-footer-down-page">
     <h2 class="mb-0">Yêu cầu đặt cọc thành công</h2>

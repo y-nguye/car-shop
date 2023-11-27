@@ -1,6 +1,4 @@
-<?php
-get_header('Dịch vụ', 'store/storePagesStyles', $this);
-?>
+<?php get_header('Dịch vụ', 'store/storePagesStyles', $this); ?>
 
 <div class="container-lg pt-3 push-footer-down-page">
     <ul class="nav nav-tabs mb-3">
@@ -55,7 +53,7 @@ include_once __DIR__ . '/../../resources/globalScript/globalScript.php';
 
             // Sử dụng phương thức AJAX để tải nội dung từ tệp PHP
             $.ajax({
-                url: "/car-shop/app/views/frontend/store/components/" + uri + ".php",
+                url: "<?= BASE_URL ?>/app/views/frontend/store/components/" + uri + ".php",
                 type: "GET",
                 dataType: "html", // Loại dữ liệu muốn nhận lại
                 success: function(response) {

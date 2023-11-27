@@ -93,7 +93,7 @@
                 ],
                 pageLength: 50,
                 language: {
-                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
+                    url: '<?= BASE_URL ?>/assets/plugin/datatables-language/vi.json',
                 },
             });
         });

@@ -17,12 +17,12 @@ class Controller
     protected function authentication()
     {
         if (!isset($_SESSION["logged"])) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/account/login"</script>';
             die();
         }
 
         if (isset($_SESSION["logged"]) && !$_SESSION["logged"]) {
-            echo '<script>location.href = "/car-shop/account/login"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/account/login"</script>';
             die();
         }
     }

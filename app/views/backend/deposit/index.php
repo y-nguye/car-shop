@@ -64,7 +64,7 @@
                                     <td class="text-center"><?php if ($data['user_deposit_is_payed']) echo '<i class="bi bi-check-circle-fill green-check"></i>';
                                                             else echo ''; ?></td>
                                     <td class="text-center">
-                                        <a href="/car-shop/admin/deposit/see-more/<?= $data['user_deposit_id'] ?>" class="p-2">
+                                        <a href="<?= BASE_URL ?>/admin/deposit/see-more/<?= $data['user_deposit_id'] ?>" class="p-2">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </td>
@@ -110,7 +110,7 @@
                 }],
                 pageLength: 50,
                 language: {
-                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
+                    url: '<?= BASE_URL ?>/assets/plugin/datatables-language/vi.json',
                 },
             });
         });

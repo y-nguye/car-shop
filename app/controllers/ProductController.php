@@ -36,7 +36,7 @@ class ProductController extends Controller
 
         include_once __DIR__ . "/../views/backend/product/add.php";
 
-        $_SESSION['pathname'] = '/car-shop/admin/product';
+        $_SESSION['pathname'] = BASE_URL . '/admin/product';
 
         if (isset($_POST['btnAdd'])) {
 
@@ -144,7 +144,7 @@ class ProductController extends Controller
         // Render ra trang
         include_once __DIR__ . "/../views/backend/product/edit.php";
 
-        $_SESSION['pathname'] = '/car-shop/admin/product/edit/' . $car_id . '';
+        $_SESSION['pathname'] = BASE_URL . '/admin/product/edit/' . $car_id;
 
         if (isset($_POST['btnEdit'])) {
 
@@ -290,7 +290,7 @@ class ProductController extends Controller
                 $this->DB['db_car_producer']->setData($car_producer_name);
                 $this->DB['db_car_producer']->disconnect();
 
-                echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
+                echo '<script>location.href = "' . BASE_URL . '/admin/product/add-producer"</script>';
             } else {
                 $this->showErrorsAlert($errors);
             }
@@ -301,7 +301,7 @@ class ProductController extends Controller
             $this->DB['db_car_producer']->deleteData($_POST['car_producer_ids']);
             $this->DB['db_car_producer']->disconnect();
 
-            echo '<script>location.href = "/car-shop/admin/product/add-producer"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/admin/product/add-producer"</script>';
         }
     }
 

@@ -122,7 +122,7 @@
                     searchable: false
                 }],
                 language: {
-                    url: '/car-shop/assets/plugin/datatables-language/vi.json',
+                    url: '<?= BASE_URL ?>/assets/plugin/datatables-language/vi.json',
                 },
             });
         });
@@ -177,7 +177,7 @@
 
         // // -------------- Nút "Xác nhận xoá" ------------------
         // btnDeleteConfrim.addEventListener('click', () => {
-        //     carsForm.action = '/car-shop/admin/product/delete';
+        //     carsForm.action = '<?= BASE_URL ?>/admin/product/delete';
         //     carsForm.submit();
         // });
 
@@ -257,7 +257,7 @@
                     car_producer_name: {
                         maxlength: 100,
                         remote: {
-                            url: "/car-shop/admin/product/add-producer-check",
+                            url: "<?= BASE_URL ?>/admin/product/add-producer-check",
                             type: "post",
                             data: {
                                 username: function() {

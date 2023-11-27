@@ -80,7 +80,7 @@ class StoreController extends Controller
             $this->addItemsToCart($carInfo);
 
             $_SESSION['from-registration-fee'] = true;
-            echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/cart/registration-fee/' . $car_id . '"</script>';
         }
 
         if (isset($_POST['btnAddCarToCart'])) {
@@ -98,7 +98,7 @@ class StoreController extends Controller
 
             $this->addItemsToCart($carInfo);
 
-            echo '<script>location.href = "/car-shop/product/' . $car_id . '"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/product/' . $car_id . '"</script>';
         }
     }
 
@@ -208,10 +208,10 @@ class StoreController extends Controller
 
             $this->DB['db_user_test_drive']->disconnect();
 
-            echo '<script>location.href = "/car-shop/product/' . $car_id . '"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/product/' . $car_id . '"</script>';
         } else {
             $this->setErrorsToSession($errors);
-            echo '<script>location.href = "/car-shop/test-drive/' . $car_id . '"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/test-drive/' . $car_id . '"</script>';
         }
     }
 

@@ -28,7 +28,7 @@ class CartController extends Controller
         $this->DB['db_user_cart_item']->disconnect();
 
         unset($_SESSION['cart'][$car_id]);
-        echo '<script>location.href = "/car-shop/cart"</script>';
+        echo '<script>location.href = "' . BASE_URL . '/cart"</script>';
     }
 
     public function registrationFee($vars)
@@ -59,7 +59,7 @@ class CartController extends Controller
 
         // Nếu không có thao tác nhấn nút "tiến hành đặt cọc" và validate không có lỗi thì trở về trang tính toán
         if (!isset($_POST['btnDeposits']) && !isset($_SESSION['errors'])) {
-            echo '<script>location.href = "/car-shop/cart/registration-fee/' . $car_id . '"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/cart/registration-fee/' . $car_id . '"</script>';
             die();
         }
 
@@ -189,7 +189,7 @@ class CartController extends Controller
             $this->DB['db_pay_method']->disconnect();
         } else {
             $this->setErrorsToSession($errors);
-            echo '<script>location.href = "/car-shop/cart/deposit/' . $car_id . '"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/cart/deposit/' . $car_id . '"</script>';
         }
     }
 
@@ -393,11 +393,11 @@ class CartController extends Controller
             $_SESSION['mail-send-success'] = true;
             // Xoá khỏi giỏ hàng
             unset($_SESSION['cart'][$car_id]);
-            echo '<script>location.href = "/car-shop/cart/deposit/mail-send-success"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/cart/deposit/mail-send-success"</script>';
         } catch (Exception $e) {
             // Kiểm soát truy cập 
             $_SESSION['mail-send-success'] = false;
-            echo '<script>location.href = "/car-shop/cart/deposit/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
+            echo '<script>location.href = "' . BASE_URL . '/cart/deposit/mail-send-error?error=' . $mail->ErrorInfo . '"</script>';
         }
     }
 

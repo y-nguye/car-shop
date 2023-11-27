@@ -1,6 +1,4 @@
-<?php
-get_header($data_car['car_name'], 'store/storePagesStyles', $this);
-?>
+<?php get_header($data_car['car_name'], 'store/storePagesStyles', $this); ?>
 
 <div class="overlay bg-dark overlay-custom__product-page">
     <button class="btn-close fs-5 p-3 m-4 bg-gray-light rounded-circle position-absolute btn-close__product-page" aria-label="Close"></button>
@@ -9,7 +7,7 @@ get_header($data_car['car_name'], 'store/storePagesStyles', $this);
             <div class="carousel-inner">
                 <?php if (empty($data_all_car_img[1])) : ?>
                     <div class="carousel-item carousel-item-custom__product-page--overlay active">
-                        <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
+                        <img src="<?= BASE_URL ?>/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
                     </div>
                 <?php endif ?>
 
@@ -18,11 +16,11 @@ get_header($data_car['car_name'], 'store/storePagesStyles', $this);
                     <?php if ($index == 0) continue; ?>
                     <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                         <div class="carousel-item carousel-item-custom__product-page--overlay" data-index="<?= $index ?>">
-                            <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="d-block w-100">
+                            <img src="<?= BASE_URL ?>/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="d-block w-100">
                         </div>
                     <?php else : ?>
                         <div class="carousel-item carousel-item-custom__product-page--overlay" data-index="<?= $index ?>">
-                            <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
+                            <img src="<?= BASE_URL ?>/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
                         </div>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -56,7 +54,7 @@ get_header($data_car['car_name'], 'store/storePagesStyles', $this);
                     <div class="carousel-inner">
                         <?php if (empty($data_all_car_img[1])) : ?>
                             <div class="carousel-item carousel-item-custom__product-page active">
-                                <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
+                                <img src="<?= BASE_URL ?>/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
                             </div>
                         <?php endif ?>
 
@@ -65,11 +63,11 @@ get_header($data_car['car_name'], 'store/storePagesStyles', $this);
                             <?php if ($index == 0) continue; ?>
                             <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
                                 <div class="carousel-item carousel-item-custom__product-page <?php if ($index == 1) echo 'active'; ?> " data-index="<?= $index ?>">
-                                    <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="d-block w-100">
+                                    <img src="<?= BASE_URL ?>/assets/uploads/<?= $data['car_img_filename'] ?>" alt="" class="d-block w-100">
                                 </div>
                             <?php else : ?>
                                 <div class="carousel-item carousel-item-custom__product-page" data-index="<?= $index ?>">
-                                    <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
+                                    <img src="<?= BASE_URL ?>/assets/imgs/no-img.jpg" alt="" class="d-block w-100">
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
@@ -157,7 +155,7 @@ get_header($data_car['car_name'], 'store/storePagesStyles', $this);
                     <button type="submit" name="btnRegistrationFee" class="btn btn-primary mb-2 w-100">Dự toán chi phí</button>
                     <div class="d-flex">
                         <button type="submit" name="btnAddCarToCart" class="btn btn-outline-primary w-50 me-2">Thêm vào giỏ hàng</button>
-                        <a class="btn btn-outline-secondary w-50" href="/car-shop/test-drive/<?= $data_car['car_id'] ?>">Đăng ký lái thử</a>
+                        <a class="btn btn-outline-secondary w-50" href="<?= BASE_URL ?>/test-drive/<?= $data_car['car_id'] ?>">Đăng ký lái thử</a>
                     </div>
                 </div>
 
@@ -173,9 +171,9 @@ get_header($data_car['car_name'], 'store/storePagesStyles', $this);
     <div class="row mt-3">
         <div class="d-flex align-items-center justify-content-center mb-5">
             <?php if (isset($data_all_car_img[0]['car_img_filename']) && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data_all_car_img[0]['car_img_filename'])) : ?>
-                <img src="/car-shop/assets/uploads/<?= $data_all_car_img[0]['car_img_filename'] ?>" alt="" class=" w-50">
+                <img src="<?= BASE_URL ?>/assets/uploads/<?= $data_all_car_img[0]['car_img_filename'] ?>" alt="" class=" w-50">
             <?php else : ?>
-                <img src="/car-shop/assets/imgs/no-img.jpg" alt="" class="w-50">
+                <img src="<?= BASE_URL ?>/assets/imgs/no-img.jpg" alt="" class="w-50">
             <?php endif ?>
         </div>
         <h4 class="">Thông tin sản phẩm</h4>
@@ -189,12 +187,12 @@ get_header($data_car['car_name'], 'store/storePagesStyles', $this);
 
         <?php foreach ($data_all_with_img as $data) : ?>
             <div class="col-md-4 mb-4">
-                <a href="/car-shop/product/<?= $data['car_id'] ?>">
+                <a href="<?= BASE_URL ?>/product/<?= $data['car_id'] ?>">
                     <div class="d-flex flex-column align-items-center justify-content-center text-dark rounded-3 p-2 card-custom__type-page">
                         <?php if ($data['car_img_filename'] && file_exists(__DIR__ . '/../../../../assets/uploads/' . $data['car_img_filename'])) : ?>
-                            <img src="/car-shop/assets/uploads/<?= $data['car_img_filename'] ?>" class="card-img-top img-on-card__type-page rounded-3" alt="img-card">
+                            <img src="<?= BASE_URL ?>/assets/uploads/<?= $data['car_img_filename'] ?>" class="card-img-top img-on-card__type-page rounded-3" alt="img-card">
                         <?php else : ?>
-                            <img src="/car-shop/assets/imgs/no-img.jpg" class="card-img-top img-on-card__type-page rounded-3" alt="img-card">
+                            <img src="<?= BASE_URL ?>/assets/imgs/no-img.jpg" class="card-img-top img-on-card__type-page rounded-3" alt="img-card">
                         <?php endif; ?>
                         <div class="card-body text-center">
                             <h5 class="card-title"><?= $data['car_name'] ?></h5>

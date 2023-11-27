@@ -3,7 +3,6 @@
 function get_header($headTitle, $stylesPage, $controllerClass)
 {
     ob_start(); // Bắt đầu bộ đệm đầu ra
-
     // Bao gồm các tệp CSS
     include_once __DIR__ . '/../../resources/globalStyles/globalStyles.php';
     include_once __DIR__ . '/headerStyles.php';
