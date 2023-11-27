@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d5c39ac3fc30dd99a607017fcf169a3",
+    "content-hash": "82a6752bf59be5e1ebcaca248af1e7f9",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -56,16 +56,16 @@
         },
         {
             "name": "components/jquery",
-            "version": "v3.7.1",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "8edc7785239bb8c2ad2b83302b856a1d61de60e7"
+                "reference": "6cf38ee1fd04b6adf8e7dda161283aa35be818c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/8edc7785239bb8c2ad2b83302b856a1d61de60e7",
-                "reference": "8edc7785239bb8c2ad2b83302b856a1d61de60e7",
+                "url": "https://api.github.com/repos/components/jquery/zipball/6cf38ee1fd04b6adf8e7dda161283aa35be818c3",
+                "reference": "6cf38ee1fd04b6adf8e7dda161283aa35be818c3",
                 "shasum": ""
             },
             "type": "component",
@@ -101,7 +101,7 @@
                 "source": "https://github.com/jquery/jquery",
                 "wiki": "http://docs.jquery.com/"
             },
-            "time": "2023-09-22T01:43:46+00:00"
+            "time": "2021-03-20T19:13:42+00:00"
         },
         {
             "name": "datatables.net/datatables.net",
@@ -109,12 +109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/DataTables/Dist-DataTables.git",
-                "reference": "7f15d78192f19e523103eba5ece12a4aee9d8368"
+                "reference": "d0edfbe90fdc72344da23d13886bf9338ed1af77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables/zipball/7f15d78192f19e523103eba5ece12a4aee9d8368",
-                "reference": "7f15d78192f19e523103eba5ece12a4aee9d8368",
+                "url": "https://api.github.com/repos/DataTables/Dist-DataTables/zipball/d0edfbe90fdc72344da23d13886bf9338ed1af77",
+                "reference": "d0edfbe90fdc72344da23d13886bf9338ed1af77",
                 "shasum": ""
             },
             "require": {
@@ -143,7 +143,7 @@
                 "forum": "https://datatables.net/forums",
                 "source": "https://github.com/DataTables/Dist-DataTables"
             },
-            "time": "2023-11-03T14:31:08+00:00"
+            "time": "2023-11-20T09:45:31+00:00"
         },
         {
             "name": "datatables.net/datatables.net-bs5",
@@ -151,12 +151,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/DataTables/Dist-DataTables-Bootstrap5.git",
-                "reference": "6d98c7b7da5539dd336224e65cd308f0c7365cc7"
+                "reference": "1a928ff711d8c5dc1aa81e83429b5c03af2fde22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Bootstrap5/zipball/6d98c7b7da5539dd336224e65cd308f0c7365cc7",
-                "reference": "6d98c7b7da5539dd336224e65cd308f0c7365cc7",
+                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Bootstrap5/zipball/1a928ff711d8c5dc1aa81e83429b5c03af2fde22",
+                "reference": "1a928ff711d8c5dc1aa81e83429b5c03af2fde22",
                 "shasum": ""
             },
             "require": {
@@ -189,28 +189,28 @@
                 "issues": "https://github.com/DataTables/Dist-DataTables-Bootstrap5/issues",
                 "source": "https://github.com/DataTables/Dist-DataTables-Bootstrap5"
             },
-            "time": "2023-11-03T14:33:21+00:00"
+            "time": "2023-11-20T09:46:31+00:00"
         },
         {
             "name": "graham-campbell/result-type",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrahamCampbell/Result-Type.git",
-                "reference": "672eff8cf1d6fe1ef09ca0f89c4b287d6a3eb831"
+                "reference": "fbd48bce38f73f8a4ec8583362e732e4095e5862"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Result-Type/zipball/672eff8cf1d6fe1ef09ca0f89c4b287d6a3eb831",
-                "reference": "672eff8cf1d6fe1ef09ca0f89c4b287d6a3eb831",
+                "url": "https://api.github.com/repos/GrahamCampbell/Result-Type/zipball/fbd48bce38f73f8a4ec8583362e732e4095e5862",
+                "reference": "fbd48bce38f73f8a4ec8583362e732e4095e5862",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2.5 || ^8.0",
-                "phpoption/phpoption": "^1.9.1"
+                "phpoption/phpoption": "^1.9.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.5.32 || ^9.6.3 || ^10.0.12"
+                "phpunit/phpunit": "^8.5.34 || ^9.6.13 || ^10.4.2"
             },
             "type": "library",
             "autoload": {
@@ -239,7 +239,7 @@
             ],
             "support": {
                 "issues": "https://github.com/GrahamCampbell/Result-Type/issues",
-                "source": "https://github.com/GrahamCampbell/Result-Type/tree/v1.1.1"
+                "source": "https://github.com/GrahamCampbell/Result-Type/tree/v1.1.2"
             },
             "funding": [
                 {
@@ -251,7 +251,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-25T20:23:15+00:00"
+            "time": "2023-11-12T22:16:48+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -305,16 +305,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.8.1",
+            "version": "v6.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "e88da8d679acc3824ff231fdc553565b802ac016"
+                "reference": "df16b615e371d81fb79e506277faea67a1be18f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/e88da8d679acc3824ff231fdc553565b802ac016",
-                "reference": "e88da8d679acc3824ff231fdc553565b802ac016",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/df16b615e371d81fb79e506277faea67a1be18f1",
+                "reference": "df16b615e371d81fb79e506277faea67a1be18f1",
                 "shasum": ""
             },
             "require": {
@@ -324,13 +324,13 @@
                 "php": ">=5.5.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
                 "doctrine/annotations": "^1.2.6 || ^1.13.3",
                 "php-parallel-lint/php-console-highlighter": "^1.0.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
                 "phpcompatibility/php-compatibility": "^9.3.5",
                 "roave/security-advisories": "dev-latest",
-                "squizlabs/php_codesniffer": "^3.7.2",
+                "squizlabs/php_codesniffer": "^3.7.1",
                 "yoast/phpunit-polyfills": "^1.0.4"
             },
             "suggest": {
@@ -373,7 +373,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.8.1"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.8.0"
             },
             "funding": [
                 {
@@ -381,20 +381,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-08-29T08:26:30+00:00"
+            "time": "2023-03-06T14:43:22+00:00"
         },
         {
             "name": "phpoption/phpoption",
-            "version": "1.9.1",
+            "version": "1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-option.git",
-                "reference": "dd3a383e599f49777d8b628dadbb90cae435b87e"
+                "reference": "80735db690fe4fc5c76dfa7f9b770634285fa820"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/dd3a383e599f49777d8b628dadbb90cae435b87e",
-                "reference": "dd3a383e599f49777d8b628dadbb90cae435b87e",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/80735db690fe4fc5c76dfa7f9b770634285fa820",
+                "reference": "80735db690fe4fc5c76dfa7f9b770634285fa820",
                 "shasum": ""
             },
             "require": {
@@ -402,7 +402,7 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.32 || ^9.6.3 || ^10.0.12"
+                "phpunit/phpunit": "^8.5.34 || ^9.6.13 || ^10.4.2"
             },
             "type": "library",
             "extra": {
@@ -444,7 +444,7 @@
             ],
             "support": {
                 "issues": "https://github.com/schmittjoh/php-option/issues",
-                "source": "https://github.com/schmittjoh/php-option/tree/1.9.1"
+                "source": "https://github.com/schmittjoh/php-option/tree/1.9.2"
             },
             "funding": [
                 {
@@ -456,7 +456,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-25T19:38:58+00:00"
+            "time": "2023-11-12T21:59:55+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -758,16 +758,16 @@
         },
         {
             "name": "twbs/bootstrap-icons",
-            "version": "v1.11.1",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/icons.git",
-                "reference": "8d7bc695fb407627378cb184976b348e6a128d59"
+                "reference": "cb6c54dd6b224df8e6e22f23f2ee298528ba0bc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/icons/zipball/8d7bc695fb407627378cb184976b348e6a128d59",
-                "reference": "8d7bc695fb407627378cb184976b348e6a128d59",
+                "url": "https://api.github.com/repos/twbs/icons/zipball/cb6c54dd6b224df8e6e22f23f2ee298528ba0bc1",
+                "reference": "cb6c54dd6b224df8e6e22f23f2ee298528ba0bc1",
                 "shasum": ""
             },
             "type": "library",
@@ -791,9 +791,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twbs/icons/issues",
-                "source": "https://github.com/twbs/icons/tree/v1.11.1"
+                "source": "https://github.com/twbs/icons/tree/v1.10.0"
             },
-            "time": "2023-09-17T14:09:28+00:00"
+            "time": "2022-11-11T17:15:35+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

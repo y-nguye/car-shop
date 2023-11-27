@@ -25,8 +25,6 @@ class AccountController extends Controller
         $this->DB['db_user_province']->connect();
         $data_all_user_province = $this->DB['db_user_province']->getAllData();
 
-        // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/account/index.php";
         $this->getErrorsFromSessionAndShowAlert();
 
@@ -74,7 +72,6 @@ class AccountController extends Controller
 
         $lastName = strrchr($_SESSION['user_fullname'], ' ');
 
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/account/deposit.php";
 
         $this->DB['db_user']->disconnect();
@@ -91,7 +88,6 @@ class AccountController extends Controller
 
         $this->DB['db_user']->connect();
 
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/account/login.php";
 
         if (isset($_POST["loginBtn"])) {
@@ -118,7 +114,7 @@ class AccountController extends Controller
                 if ($_SESSION["user_is_admin"]) {
                     echo '<script>location.href = "' . BASE_URL . '/admin"</script>';
                 } else {
-                    echo '<script>window.history.back();</script>';
+                    echo '<script>location.href = "' . BASE_URL . '/account"</script>';
                 }
             } else {
                 // Đăng nhập thất bại
@@ -154,8 +150,6 @@ class AccountController extends Controller
         $this->DB['db_user_province']->connect();
         $data_all_user_province = $this->DB['db_user_province']->getAllData();
 
-        // Hiển thị header
-        $data_all_car_type = $this->getAllCarTypesForHeader();
         include_once __DIR__ . "/../views/frontend/account/signup.php";
         $this->DB['db_user_province']->disconnect();
 
@@ -185,7 +179,7 @@ class AccountController extends Controller
             if (empty($errors)) {
                 // Hash bằng thuật toán bcrypt
                 $hashedPassword = password_hash($user_password, PASSWORD_BCRYPT);
-                $this->DB['db_user']->setData($user_username, $hashedPassword, $user_fullname, $user_tel, $user_email, $user_address);
+                $this->DB['db_user']->setData($user_username, $hashedPassword, $user_fullname, $user_tel, $user_email, $user_province_id);
                 $this->DB['db_user']->disconnect();
                 echo '<script>location.href = "' . BASE_URL . '/account/login"</script>';
             } else {

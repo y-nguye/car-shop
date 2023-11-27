@@ -101,7 +101,7 @@ class UserData extends DatabaseManager
             ?,
             ?,
             ?,
-            ?,
+            $user_province_id,
             NULL,
             0);";
 
@@ -111,7 +111,7 @@ class UserData extends DatabaseManager
             die("Lỗi khi chuẩn bị lệnh query: " . $this->conn->error);
         }
 
-        $stmt->bind_param('sssssi', $user_username, $user_password, $user_fullname, $user_tel, $user_email, $user_province_id);
+        $stmt->bind_param('sssss', $user_username, $user_password, $user_fullname, $user_tel, $user_email);
         $stmt->execute();
 
         if ($stmt->affected_rows === -1) {

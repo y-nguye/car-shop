@@ -218,7 +218,6 @@ class CarsData extends DatabaseManager
                     ?,
                     ?,
                     ?,
-                    ?,
                     NOW(),
                     0,
                     null);";
@@ -230,7 +229,7 @@ class CarsData extends DatabaseManager
         }
 
         $stmt->bind_param(
-            'ssdsssiidii',
+            'sdisssiiiii',
             $car_name,
             $car_price,
             $car_quantity,
@@ -245,6 +244,8 @@ class CarsData extends DatabaseManager
         );
 
         $stmt->execute();
+
+        $this->id = $stmt->insert_id;
 
         if ($stmt->affected_rows === -1) {
             die("Lỗi khi thêm dữ liệu: " . $stmt->error);
@@ -289,7 +290,7 @@ class CarsData extends DatabaseManager
         }
 
         $stmt->bind_param(
-            'sdssssiiiiii',
+            'sdisssiiiiii',
             $car_name,
             $car_price,
             $car_quantity,
