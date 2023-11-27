@@ -75,9 +75,10 @@ class CarImgData extends DatabaseManager
                 $sql = "UPDATE $this->table SET car_img_filename = '$name', car_img_update_at = NOW(), car_id = $car_id
                         WHERE car_img_id = " . $data_all_car_img[$index]['car_img_id'] . ";";
                 $this->execute($sql);
-                $this->deleteRedundantColumnsAndDeleteImgOnUploadsDir($data_all_car_img, $whenNumberOfImageOnInputEqualIndex, $index, $uploadDir);
+                // Xoá hàng thừa
+                $this->deleteRedundantRowsAndDeleteImgOnUploadsDir($data_all_car_img, $whenNumberOfImageOnInputEqualIndex, $index, $uploadDir);
             }
-            // Dữ liệu hình ảnh thêm nhiều hơn so với trước khi cập nhật thì tạo thêm cột
+            // Dữ liệu hình ảnh thêm nhiều hơn so với trước khi cập nhật thì tạo thêm hàng
             else {
                 $this->moveUploadedFile($carImgFilesFromInput, $index, $name, $uploadDir);
                 $sql = "INSERT INTO $this->table (car_img_id, car_img_filename, car_img_update_at, car_id) VALUES (null, '$name', NOW(), $car_id);";
@@ -99,12 +100,12 @@ class CarImgData extends DatabaseManager
         return rtrim($valuesInsertIntoQuery, ',');
     }
 
-    private function deleteRedundantColumnsAndDeleteImgOnUploadsDir($data_all_car_img, $whenNumberOfImageOnInputEqualIndex, $index, $uploadDir)
+    private function deleteRedundantRowsAndDeleteImgOnUploadsDir($data_all_car_img, $whenNumberOfImageOnInputEqualIndex, $index, $uploadDir)
     {
         if ($whenNumberOfImageOnInputEqualIndex) {
             // Tiếp tục tại index cuối
             $indexContinue = $index + 1;
-            // Bắt đầu vòng lặp xoá cột thừa
+            // Bắt đầu vòng lặp xoá hàng thừa
             for ($i = $indexContinue; $i <= count($data_all_car_img) - 1; $i++) {
                 if ($data_all_car_img[$i]['car_img_filename'] && file_exists($uploadDir . $data_all_car_img[$i]['car_img_filename'])) {
                     unlink($uploadDir . $data_all_car_img[$i]['car_img_filename']);

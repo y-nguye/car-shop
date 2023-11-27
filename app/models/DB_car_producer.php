@@ -41,7 +41,6 @@ class CarProducerData extends DatabaseManager
     {
         $ids = implode(' ,', $car_producer_ids);
         $sql = "DELETE FROM $this->table WHERE car_producer_id IN ($ids);";
-        var_dump($sql);
         $this->result = $this->execute($sql);
     }
 }
