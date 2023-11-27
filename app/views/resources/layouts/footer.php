@@ -1,9 +1,10 @@
 <footer class="bg-light">
     <div class="container-lg footer-custom">
-        <div class="pt-3 fs-7 text-secondary">
+        <div class="d-flex pt-3 fs-7 text-secondary">
             <span>Hotline: 0772884452</span>
             <span> - </span>
             <span>Email: nguyenhoaiy7@gmail.com</span>
+            <span class="ms-auto"><a href="https://ynguyen.id.vn">&larr; ynguyen.id.vn</a></span>
         </div>
         <hr class="mt-2 mb-2">
         <div class="d-flex fs-7 text-secondary">
