@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82a6752bf59be5e1ebcaca248af1e7f9",
+    "content-hash": "bc6cc353f21d19b3b62c4246ccd31f3e",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -758,16 +758,16 @@
         },
         {
             "name": "twbs/bootstrap-icons",
-            "version": "v1.10.0",
+            "version": "v1.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/icons.git",
-                "reference": "cb6c54dd6b224df8e6e22f23f2ee298528ba0bc1"
+                "reference": "108565f11f099f177b31929e3eafc2c8d497fcd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/icons/zipball/cb6c54dd6b224df8e6e22f23f2ee298528ba0bc1",
-                "reference": "cb6c54dd6b224df8e6e22f23f2ee298528ba0bc1",
+                "url": "https://api.github.com/repos/twbs/icons/zipball/108565f11f099f177b31929e3eafc2c8d497fcd1",
+                "reference": "108565f11f099f177b31929e3eafc2c8d497fcd1",
                 "shasum": ""
             },
             "type": "library",
@@ -791,9 +791,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twbs/icons/issues",
-                "source": "https://github.com/twbs/icons/tree/v1.10.0"
+                "source": "https://github.com/twbs/icons/tree/v1.11.2"
             },
-            "time": "2022-11-11T17:15:35+00:00"
+            "time": "2023-11-21T20:06:00+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
