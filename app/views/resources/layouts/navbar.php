@@ -205,6 +205,7 @@
         }, 320)
     }
 
+    // Nút xem giỏ hàng
     if (cartBtn) {
         cartBtn.addEventListener('click', () => {
             window.location.href = "<?= BASE_URL ?>/cart";

@@ -26,7 +26,7 @@ class StoreController extends Controller
         $type = $type['slug'];
         $this->DB['db_cars']->connect();
         // Lấy dữ liệu loại xe, sử dụng chung cho việc phân loại và hiển thị
-        $data_all_car_type = $this->getAllCarTypesForHeader();
+        $data_all_car_type = $this->getAllCarTypesForNavBar();
         $isExistType = false;
 
         foreach ($data_all_car_type as $data) {

@@ -48,7 +48,7 @@ class Controller
         die();
     }
 
-    public function getAllCarTypesForHeader()
+    public function getAllCarTypesForNavBar()
     {
         $this->DB['db_car_type']->connect();
         $data_all_car_type = $this->DB['db_car_type']->getAllData();

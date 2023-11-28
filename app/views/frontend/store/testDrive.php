@@ -88,10 +88,6 @@
 include_once __DIR__ . '/../../resources/layouts/footer.php';
 ?>
 
-<?php
-include_once __DIR__ . '/../../resources/globalScript/globalScript.php';
-?>
-
 <script>
     const overlay = document.getElementById('overlay');
     const spinner = document.getElementById('spinner');

@@ -23,7 +23,7 @@ function get_header($headTitle, $stylesPage, $controllerClass)
     <body>
     EOT;
 
-    $data_all_car_type = $controllerClass->getAllCarTypesForHeader();
+    $data_all_car_type = $controllerClass->getAllCarTypesForNavBar();
 
     echo $html;
     include_once __DIR__ . '/../../resources/layouts/navbar.php';
