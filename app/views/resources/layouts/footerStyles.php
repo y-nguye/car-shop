@@ -14,6 +14,10 @@
         }
     }
 
+    footer a:hover {
+        text-decoration: underline;
+    }
+
     .footer-custom {
         min-height: var(--footer-height);
         margin-top: var(--footer-margin-top);

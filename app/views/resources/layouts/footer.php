@@ -7,8 +7,8 @@
         </div>
         <hr class="mt-2 mb-2">
         <div class="d-flex fs-7 text-secondary">
-            <div class="">Bản quyền &copy; <?php echo date("Y"); ?> bởi Ý Đẹp Trai</div>
-            <div class="ms-auto">Việt Nam</div>
+            <div class="">Bản quyền &copy; <?php echo date("Y"); ?> bởi Ý Đẹp Chai - <a class="text-secondary" href="https://cusc.vn/cms">Trung tâm Công nghệ Phần mềm Đại học Cần Thơ - CUSC</a></div>
+            <div class=""></div>
         </div>
         <div class="mt-2">
             <ul class="d-flex flex-wrap fs-7 pb-3 policy-list">
