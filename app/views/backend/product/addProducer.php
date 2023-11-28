@@ -87,13 +87,13 @@
                                         </thead>
 
                                         <tbody>
-                                            <?php foreach ($data_all_car_producer as $data) { ?>
+                                            <?php foreach ($data_all_car_producer as $data) : ?>
                                                 <tr class="car_producer_item_row">
                                                     <td name="checkbox-td" class="text-center"><input class="form-check-input" type="checkbox" name="car_producer_ids[]" value="<?= $data['car_producer_id'] ?>"></td>
                                                     <td><?= $data['car_producer_id'] ?></td>
                                                     <td><?= $data['car_producer_name'] ?></td>
                                                 </tr>
-                                            <?php } ?>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -174,12 +174,6 @@
         const checkboxTd = document.querySelectorAll("td[name='checkbox-td']");
         const checkboxItemsNodelist = document.querySelectorAll('.car_producer_item_row');
         const checkboxItems = [...checkboxItemsNodelist]; // Spread operator
-
-        // // -------------- Nút "Xác nhận xoá" ------------------
-        // btnDeleteConfrim.addEventListener('click', () => {
-        //     carsForm.action = '<?= BASE_URL ?>/admin/product/delete';
-        //     carsForm.submit();
-        // });
 
         // ----------------------------- Xử lý các sự kiện checkbox -----------------------------------
         checkboxAll.addEventListener('change', function() {

@@ -43,7 +43,7 @@
     </div>
 
     <?php if (empty($cart)) : ?>
-        <div class="border-top border-bottom mt-5">
+        <div class="border-top border-bottom mt-4">
             <div class="container-lg pt-3 pb-3 fs-5">
                 Bạn cần hỗ trợ thêm? gọi 0123456789.
             </div>

@@ -23,9 +23,6 @@
 include_once __DIR__ . '/../../resources/layouts/footer.php';
 ?>
 
-<?php
-include_once __DIR__ . '/../../resources/globalScript/globalScript.php';
-?>
 
 <script>
     const navItem = document.querySelectorAll('.nav-link__service-page');

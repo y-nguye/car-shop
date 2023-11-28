@@ -20,9 +20,6 @@
 include_once __DIR__ . '/../../../resources/layouts/footer.php';
 ?>
 
-<script>
-</script>
-
 </body>
 
 </html>

@@ -361,8 +361,6 @@ class ProductController extends Controller
         $car_type_id = $carInfo['car_type_id'];
         $car_seat_id = $carInfo['car_seat_id'];
         $car_transmission_id = $carInfo['car_transmission_id'];
-        // $car_fuel_id = $carInfo['car_fuel_id'];
-        // $car_producer_id = $carInfo['car_producer_id'];
 
         // Validation phía server
         $errors = [];
