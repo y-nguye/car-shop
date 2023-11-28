@@ -143,7 +143,6 @@
         });
 
         // ----------------------- Loading ------------------------------
-
         setTimeout(function() {
             danhSach.classList.remove('invisible');
             spinner.classList.add('invisible');

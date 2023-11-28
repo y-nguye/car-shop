@@ -175,12 +175,6 @@
         const checkboxItemsNodelist = document.querySelectorAll('.car_producer_item_row');
         const checkboxItems = [...checkboxItemsNodelist]; // Spread operator
 
-        // // -------------- Nút "Xác nhận xoá" ------------------
-        // btnDeleteConfrim.addEventListener('click', () => {
-        //     carsForm.action = '<?= BASE_URL ?>/admin/product/delete';
-        //     carsForm.submit();
-        // });
-
         // ----------------------------- Xử lý các sự kiện checkbox -----------------------------------
         checkboxAll.addEventListener('change', function() {
             var isCheckedAll = this.checked;
